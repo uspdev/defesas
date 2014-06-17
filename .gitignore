@@ -1,0 +1,6 @@
+nbproject/
+*~
+dumps/
+config.php
+libraries
+admin/db_erros.txt
