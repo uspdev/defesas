@@ -1,0 +1,23 @@
+---
+server:
+    install: '1'
+    timezone: America/Sao_Paulo
+    locale: pt_BR.UTF-8
+vagrant_local:
+    install: '1'
+    vm: { base_box: trusty32, hostname: defesas, ip: 192.168.100.100, memory: '512', sharedfolder: ./, syncType: nfs }
+apache:
+    install: '1'
+    docroot: /vagrant
+    servername: myApp.vb
+pgsql:
+    install: '1'
+    database: defesas_database
+    user: defesas_user
+    password: defesas_password
+    dump: dbschemas/defesas.sql
+php:
+    install: '1'
+    ppa: php5-5.6
+    packages: [php5-cli, php5-intl, php5-mcrypt, php5-curl, php5-pgsql]
+
