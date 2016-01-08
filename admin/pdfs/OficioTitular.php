@@ -66,9 +66,9 @@ function paginapdf($candidato,$docente,$info_banco,$cabecalhoFFLCH,$html,$ultima
 	$html .= "<div class=\"moremargin\">Título do Trabalho: <i>{$candidato['titulo']} </i></div>";
 	$html .= "<br>";
 	$html .= "<div class=\"importante\"> {$info_banco[0]['importante_oficio']} </div>";
-	$html .= "<br> <p> <u>Data e hora da defesa:</u> <b> {$candidato['data_placa']} </b> <br> ";
-	$html .= " <u>Local:</u> <b> {$candidato['nome_sala']} </b> - {$candidato['predio']} </p>  ";
-	$html .= "<u>Composição da banca examinadora:</u> ";
+	$html .= "<br> <p> <i>Data e hora da defesa:  </i> <b> {$candidato['data_placa']} </b> <br> ";
+	$html .= " <i>Local:</i> <b> {$candidato['nome_sala']} </b> - {$candidato['predio']} </p>  ";
+	$html .= "<i>Composição da banca examinadora:</i> ";
 	$html .= "
 <table border=\"0\" width=\"16cm\">
 <tr>
