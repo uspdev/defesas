@@ -22,14 +22,24 @@ if(!empty($_GET['id_candidato'])) {
 	if(!$candidato) die("Candidato não cadastrado");
 }
 
-
 if(!empty($_POST)){ 
-	if($_POST['nivel']=='Mestrado') {
-		$_POST['titular4'] = NULL;
-		$_POST['titular5'] = NULL;
-	}
-	$obj_candidato->alterarCandidato($_POST,$_GET['id_candidato']); 
-	header('location:proximasDefesas.php');
+  if($_POST['regimento'] == 'antigo') {
+    $_POST['titular1'] = $_POST['orientador'];
+
+    if($_POST['nivel'] == 'Mestrado') {
+      unset($_POST['titular4']);
+      unset($_POST['titular5']);
+    }
+  }
+  else if($_POST['regimento'] == 'novo') {
+    unset($_POST['titular4']);
+    unset($_POST['titular5']);
+    if($_POST['orientador_votante'] == 'sim'){
+      $_POST['titular1'] = $_POST['orientador'];
+    }
+  }
+  $obj_candidato->alterarCandidato($_POST,$_GET['id_candidato']); 
+  header('location:proximasDefesas.php');
 }
 
 ?>
@@ -38,12 +48,14 @@ if(!empty($_POST)){
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-	<title> </title>
-	<script type="text/javascript" src="../js/jquery1.7.1.js"></script>
-	<script type="text/javascript" src="../js/custom/js/jquery-ui-1.8.17.custom.min.js"></script>
+	
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
 	<script type="text/javascript" src="../js/defesas.js"></script>
 	<script type="text/javascript" src="../js/ui.datepicker-pt-BR.js"></script>
-	<link rel="stylesheet" href="../js/custom/css/start/jquery-ui-1.8.17.custom.css" type="text/css" media="all" />
+
 	<link rel="stylesheet" href="../defesas.css" type="text/css" media="all" />
 	<title></title>
 </head>
@@ -67,6 +79,20 @@ if(!empty($_POST)){
 
 <label>Número USP </label> 
 <input class="requerido" type="text" name="codpes" size="4" value="<?php echo $dados['codpes']; ?>" /> 
+
+<label>Regimento</label> 
+<select name="regimento" id="regimento"> 
+  <option value="antigo" <?php if($dados['regimento']=='antigo') echo 'selected="selected"'; ?> >antigo</option>
+  <option value="novo" <?php if($dados['regimento']=='novo') echo 'selected="selected"'; ?> >novo</option>
+</select> <br /> 
+
+<div id="div_orientador_votante">
+  <label>Orientador votante</label> 
+  <select name="orientador_votante" id="orientador_votante"> 
+    <option value="sim" <?php if($dados['orientador_votante']=='sim') echo 'selected="selected"'; ?> >sim</option>
+    <option value="nao" <?php if($dados['orientador_votante']=='nao') echo 'selected="selected"'; ?> >nao</option>
+  </select> 
+</div> 
 
 <label> Sexo </label>
 <select name="sexo_pessoa"> 
@@ -143,7 +169,8 @@ $dados['data'] = implode('/',array_reverse(explode('-',$aux[0])));
 
 
 <?php 
-	$orientador = $obj_docente->verDocente($dados['orientador']); 
+	$orientador = $obj_docente->verDocente($dados['orientador']);
+        $titular1 = $obj_docente->verDocente($dados['titular1']);
 	$titular2 = $obj_docente->verDocente($dados['titular2']); 
 	$titular3 = $obj_docente->verDocente($dados['titular3']); 
 	$suplente1 = $obj_docente->verDocente($dados['suplente1']); 
@@ -156,19 +183,21 @@ $dados['data'] = implode('/',array_reverse(explode('-',$aux[0])));
 <label>Orientador</label> 
 <input class="autocomplete apagar" type="text" name="orientador" value="<?php echo $orientador[0]['nome']; ?>"/> 
 
+<label>Primeiro Titular</label> 
+<input class="autocomplete apagar" type="text"  name="titular1" id='titular1' value="<?php echo $titular1[0]['nome']; ?>"/> 
+
 <label>Segundo Titular</label> 
 <input class="autocomplete apagar" type="text"  name="titular2" value="<?php echo $titular2[0]['nome']; ?>"/> 
 
 <label>Terceiro Titular</label> 
 <input class="autocomplete apagar" type="text" name="titular3" value="<?php echo $titular3[0]['nome']; ?>" />  
 
-<div id="oculto" >
-	<label>Quarto Titular</label> 
-	<input class="autocomplete  apagar" type="text"  name="titular4" value="<?php if(isset($titular4[0]['nome'])) echo $titular4[0]['nome']; ?>" />  
+<label>Quarto Titular</label> 
+<input class="autocomplete  apagar" type="text" id="titular4" name="titular4" value="<?php if(isset($titular4[0]['nome'])) echo $titular4[0]['nome']; ?>" />  
 
-	<label>Quinto Titular</label> 
-	<input class="autocomplete  apagar" type="text" name="titular5" value="<?php if(isset($titular5[0]['nome'])) echo $titular5[0]['nome']; ?>"/>  
-</div>
+<label>Quinto Titular</label> 
+<input class="autocomplete  apagar" type="text" id="titular5" name="titular5" value="<?php if(isset($titular5[0]['nome'])) echo $titular5[0]['nome']; ?>"/>  
+
 <label>Suplente 1</label> 
 <input class="autocomplete apagar" type="text"  name="suplente1"value="<?php echo $suplente1[0]['nome']; ?>"/>  
 
@@ -178,15 +207,15 @@ $dados['data'] = implode('/',array_reverse(explode('-',$aux[0])));
 <br />
 <input type="submit" value="Aplicar Alterações" >
 
-<input type="hidden" class="requerido2" id="orientador" name="orientador" value="<?php echo $orientador[0]['id_docente']; ?>">
-<input type="hidden" class="requerido2" id="titular2" name="titular2" value="<?php echo $titular2[0]['id_docente']; ?>">
-<input type="hidden" class="requerido2" id="titular3" name="titular3" value="<?php echo $titular3[0]['id_docente']; ?>">
+<input type="hidden" class="requerido_docente" id="orientador_id" name="orientador" value="<?php echo $orientador[0]['id_docente']; ?>">
+<input type="hidden" class="requerido_docente" id="titular1_id" name="titular1" value="<?php echo $titular1[0]['id_docente']; ?>">
+<input type="hidden" class="requerido_docente" id="titular2_id" name="titular2" value="<?php echo $titular2[0]['id_docente']; ?>">
+<input type="hidden" class="requerido_docente" id="titular3_id" name="titular3" value="<?php echo $titular3[0]['id_docente']; ?>">
+<input type="hidden" class="requerido_docente" id="titular4_id" name="titular4" value="<?php if(isset($titular4[0]['id_docente'])) echo $titular4[0]['id_docente']; ?>" >
+<input type="hidden" class="requerido_docente" id="titular5_id" name="titular5" value="<?php if(isset($titular5[0]['id_docente'])) echo $titular5[0]['id_docente']; ?>">
+<input type="hidden" class="requerido_docente" id="suplente1_id" name="suplente1" value="<?php echo $suplente1[0]['id_docente']; ?>">
+<input type="hidden" class="requerido_docente" id="suplente2_id" name="suplente2" value="<?php echo $suplente2[0]['id_docente']; ?>"> 
 
-<input type="hidden" id="titular4" name="titular4" value="<?php if(isset($titular4[0]['id_docente'])) echo $titular4[0]['id_docente']; ?>" >
-<input type="hidden" id="titular5" name="titular5" value="<?php if(isset($titular5[0]['id_docente'])) echo $titular5[0]['id_docente']; ?>">
-
-<input type="hidden" class="requerido2" id="suplente1" name="suplente1" value="<?php echo $suplente1[0]['id_docente']; ?>">
-<input type="hidden" class="requerido2" id="suplente2" name="suplente2" value="<?php echo $suplente2[0]['id_docente']; ?>"> 
 <?php } ?>
 </form>
 

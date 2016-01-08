@@ -11,16 +11,28 @@ $todas_salas = $sala->listarSalas();
 $todas_areas = $area->listarAreas();
 $configdocs = new ConfigDocs;
 $info = $configdocs->ver();
-if($status != 2 && $status != 1) 	die('Você não possui acesso a esta área');
+if($status != 2 && $status != 1)
+ die('Você não possui acesso a esta área');
 
 
 if(!empty($_POST)){ 
- if($_POST['nivel'] == 'Mestrado') {
-  unset($_POST['titular4']);
-  unset($_POST['titular5']);
- }
-	$candidato->cadastrarCandidato($_POST);
-	header('location:proximasDefesas.php');
+  if($_POST['regimento'] == 'antigo') {
+    $_POST['titular1'] = $_POST['orientador'];
+
+    if($_POST['nivel'] == 'Mestrado') {
+      unset($_POST['titular4']);
+      unset($_POST['titular5']);
+    }
+  }
+  else if($_POST['regimento'] == 'novo') {
+    unset($_POST['titular4']);
+    unset($_POST['titular5']);
+    if($_POST['orientador_votante'] == 'sim'){
+      $_POST['titular1'] = $_POST['orientador'];
+    }
+  }
+  $candidato->cadastrarCandidato($_POST);
+  header('location:proximasDefesas.php');
 }
 
 
@@ -31,11 +43,14 @@ if(!empty($_POST)){
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<title> </title>
-	<script type="text/javascript" src="../js/jquery1.7.1.js"></script>
-	<script type="text/javascript" src="../js/custom/js/jquery-ui-1.8.17.custom.min.js"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	
 	<script type="text/javascript" src="../js/defesas.js"></script>
 	<script type="text/javascript" src="../js/ui.datepicker-pt-BR.js"></script>
-	<link rel="stylesheet" href="../js/custom/css/start/jquery-ui-1.8.17.custom.css" type="text/css" media="all" />
+
 	<link rel="stylesheet" href="../defesas.css" type="text/css" media="all" />
 
 </head>
@@ -60,11 +75,25 @@ if(!empty($_POST)){
 <label>Número USP </label> 
 <input class="requerido campomenor" type="text" name="codpes" />  
 
+<label>Regimento</label> 
+<select id="regimento" name="regimento"> 
+	<option value="antigo" > antigo </option>
+	<option value="novo" selected="selected"> novo </option>
+</select>
+
+<div id="div_orientador_votante">
+  <label>Orientador votante</label> 
+  <select id="orientador_votante" name="orientador_votante"> 
+	<option value="sim" selected="selected"> sim </option>
+	<option value="nao"> nao </option>
+  </select>
+</div>
+
 <label>Sexo</label>
 <select name="sexo_pessoa"> 
 	<option value="Masculino" selected="selected"> Masculino </option>
 	<option value="Femininio"> Feminino </option>
-</select>   
+</select>
 
 <label>Nível</label> 
 <select id="nivel" name="nivel"> 
@@ -122,19 +151,21 @@ if(!empty($_POST)){
 <label>Orientador</label> 
 <input class="autocomplete apagar" type="text"  name="orientador"  />  
 
+<label>Primeiro Titular</label> 
+<input  class="autocomplete apagar" type="text"  name="titular1" id='titular1'/>  
+
 <label>Segundo Titular</label> 
 <input  class="autocomplete apagar" type="text"  name="titular2" />  
 
 <label>Terceiro Titular</label> 
 <input  class="autocomplete apagar" type="text" name="titular3"  />  
 
-<div id="oculto">
-	<label>Quarto Titular</label> 
-	<input class="autocomplete apagar" type="text"  name="titular4"  /> 
+<label>Quarto Titular</label> 
+<input class="autocomplete apagar" id="titular4" type="text"  name="titular4"  /> 
 
-	<label>Quinto Titular</label> 
-	<input class="autocomplete apagar" type="text" name="titular5"  />  
-</div>
+<label>Quinto Titular</label> 
+<input class="autocomplete apagar" id="titular5" type="text" name="titular5"  />  
+
 <label>Suplente 1</label> 
 <input  class="autocomplete apagar" type="text"  name="suplente1" />  
 
@@ -144,13 +175,14 @@ if(!empty($_POST)){
 <br />
 <input id="" type="submit" value="Cadastrar" >
 
-<input type="hidden" class="requerido2" name="orientador" id="orientador">
-<input type="hidden" class="requerido2"  name="titular2" id="titular2" >
-<input type="hidden" class="requerido2" name="titular3" id="titular3">
-<input type="hidden" name="titular4" id="titular4">
-<input type="hidden" name="titular5" id="titular5" >
-<input type="hidden" class="requerido2" name="suplente1" id="suplente1">
-<input type="hidden" class="requerido2" name="suplente2" id="suplente2"> 
+<input type="hidden" class="requerido_docente" name="orientador" id="orientador_id">
+<input type="hidden" class="requerido_docente" name="titular1" id="titular1_id" >
+<input type="hidden" class="requerido_docente" name="titular2" id="titular2_id" >
+<input type="hidden" class="requerido_docente" name="titular3" id="titular3_id">
+<input type="hidden" class="requerido_docente" name="titular4" id="titular4_id">
+<input type="hidden" class="requerido_docente" name="titular5" id="titular5_id" >
+<input type="hidden" class="requerido_docente" name="suplente1" id="suplente1_id">
+<input type="hidden" class="requerido_docente" name="suplente2" id="suplente2_id"> 
 
 </form>
 </div>

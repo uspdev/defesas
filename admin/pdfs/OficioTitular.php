@@ -17,15 +17,25 @@ if(isset($html_to_PDF)) unset($html_to_PDF);
 $usuario = $user->verUsuario($_SESSION['codpes']);
 
 if(isset($candidato['nivel'])) {
-	$html_to_PDF = paginapdf($candidato,$orientador,$info_banco,$cabecalhoFFLCH,$htmlFFLCH);
-	$html_to_PDF = paginapdf($candidato,$titular2,$info_banco,$cabecalhoFFLCH,$html_to_PDF);
-	if($candidato['nivel'] == 'Mestrado') $html_to_PDF = paginapdf($candidato,$titular3,$info_banco,$cabecalhoFFLCH,$html_to_PDF,TRUE);
-		else $html_to_PDF = paginapdf($candidato,$titular3,$info_banco,$cabecalhoFFLCH,$html_to_PDF);
+  if($candidato['orientador_votante']=='nao'){
+    $html_to_PDF = paginapdf($candidato,$orientador,$info_banco,$cabecalhoFFLCH,$htmlFFLCH);
+    $html_to_PDF = paginapdf($candidato,$titular2,$info_banco,$cabecalhoFFLCH,$html_to_PDF);
+  }
+  else
+    $html_to_PDF = paginapdf($candidato,$titular1,$info_banco,$cabecalhoFFLCH,$htmlFFLCH);
 
-	if($candidato['nivel'] == 'Doutorado'){
-  	$html_to_PDF = paginapdf($candidato,$titular4,$info_banco,$cabecalhoFFLCH,$html_to_PDF);	
-  	$html_to_PDF = paginapdf($candidato,$titular5,$info_banco,$cabecalhoFFLCH,$html_to_PDF,TRUE);	
-	}
+  $html_to_PDF = paginapdf($candidato,$titular2,$info_banco,$cabecalhoFFLCH,$html_to_PDF);
+
+  // Qual vai ser a última página?
+  if($candidato['nivel'] == 'Mestrado' & $candidato['regimento'] == 'antigo') 
+    $html_to_PDF = paginapdf($candidato,$titular3,$info_banco,$cabecalhoFFLCH,$html_to_PDF,TRUE);
+  else if($candidato['regimento'] == 'novo')
+    $html_to_PDF = paginapdf($candidato,$titular3,$info_banco,$cabecalhoFFLCH,$html_to_PDF,TRUE);
+  else if($candidato['nivel'] == 'Doutorado' & $candidato['regimento'] == 'antigo') {
+    $html_to_PDF = paginapdf($candidato,$titular3,$info_banco,$cabecalhoFFLCH,$html_to_PDF);
+    $html_to_PDF = paginapdf($candidato,$titular4,$info_banco,$cabecalhoFFLCH,$html_to_PDF);	
+    $html_to_PDF = paginapdf($candidato,$titular5,$info_banco,$cabecalhoFFLCH,$html_to_PDF,TRUE);	
+  }
 }
 
 $html_to_PDF .= '</div> </body> </html>';
@@ -60,16 +70,22 @@ function paginapdf($candidato,$docente,$info_banco,$cabecalhoFFLCH,$html,$ultima
 	$html .= " <u>Local:</u> <b> {$candidato['nome_sala']} </b> - {$candidato['predio']} </p>  ";
 	$html .= "<u>Composição da banca examinadora:</u> ";
 	$html .= "
-		<table border=\"0\" width=\"16cm\">
-		<tr>
-   	 <td> {$candidato['titular2']} </td> 
-			<td> {$candidato['titular2_lotado']} 	</td>
-		</tr>
-		<tr>
-   	 <td> {$candidato['titular3']} </td> 
-			<td> {$candidato['titular3_lotado']} 	</td> 
-		</tr>";
-	if ($candidato['nivel'] == 'Doutorado') {
+<table border=\"0\" width=\"16cm\">
+<tr>
+  <td> {$candidato['titular1']} </td> 
+  <td> {$candidato['titular1_lotado']} 	</td>
+</tr>
+<tr>
+  <td> {$candidato['titular2']} </td> 
+  <td> {$candidato['titular2_lotado']} 	</td> 
+</tr>
+<tr>
+  <td> {$candidato['titular3']} </td> 
+  <td> {$candidato['titular3_lotado']} 	</td> 
+</tr>
+
+";
+	if ($candidato['nivel'] == 'Doutorado' & $candidato['regimento'] == 'antigo') {
 	$html .= "
 		<tr>
    	 <td> {$candidato['titular4']} </td> 

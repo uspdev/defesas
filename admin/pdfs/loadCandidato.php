@@ -98,6 +98,12 @@ if(isset($candidato['orientador'])) {
  $orientador = $orientador[0];
  $candidato['orientador'] = $orientador['nome'];
 }
+if(isset($candidato['titular1'])) { 
+ $titular1 = $docente->verDocente($candidato['titular1']);
+ $titular1 = $titular1[0];
+ $candidato['titular1'] = $titular1['nome'];
+ $candidato['titular1_lotado'] = $titular1['lotado'];
+}
 if(isset($candidato['titular2'])) { 
  $titular2 = $docente->verDocente($candidato['titular2']);
  $titular2 = $titular2[0];
@@ -110,17 +116,19 @@ if(isset($candidato['titular3'])) {
  $candidato['titular3'] = $titular3['nome'];
  $candidato['titular3_lotado'] = $titular3['lotado'];
 }
-if(isset($candidato['titular4'])) { 
- $titular4 = $docente->verDocente($candidato['titular4']);
- $titular4 = $titular4[0];
- $candidato['titular4'] = $titular4['nome'];
- $candidato['titular4_lotado'] = $titular4['lotado'];
-}
-if(isset($candidato['titular5'])) { 
- $titular5 = $docente->verDocente($candidato['titular5']);
- $titular5 = $titular5[0];
- $candidato['titular5'] = $titular5['nome'];
- $candidato['titular5_lotado'] = $titular5['lotado'];
+if($candidato['regimento'] == 'antigo' & $candidato['nivel'] == 'Doutorado'){
+  if(isset($candidato['titular4'])) { 
+    $titular4 = $docente->verDocente($candidato['titular4']);
+    $titular4 = $titular4[0];
+    $candidato['titular4'] = $titular4['nome'];
+    $candidato['titular4_lotado'] = $titular4['lotado'];
+  }
+  if(isset($candidato['titular5'])) { 
+    $titular5 = $docente->verDocente($candidato['titular5']);
+    $titular5 = $titular5[0];
+    $candidato['titular5'] = $titular5['nome'];
+    $candidato['titular5_lotado'] = $titular5['lotado'];
+  }
 }
 if(isset($candidato['suplente1'])) { 
  $suplente1 = $docente->verDocente($candidato['suplente1']);
@@ -143,6 +151,7 @@ $candidato['departamento'] = "Departamento de " . $candidato['departamento'];
 $docentes_externos=array();
 $docentes_internos=array();
 ($orientador['docente_usp']=='nao')? array_push($docentes_externos,$orientador) :array_push($docentes_internos,$orientador);
+($titular1['docente_usp']=='nao')? array_push($docentes_externos,$titular1) :array_push($docentes_internos,$titular1);
 ($titular2['docente_usp']=='nao')? array_push($docentes_externos,$titular2) :array_push($docentes_internos,$titular2);
 ($titular3['docente_usp']=='nao')? array_push($docentes_externos,$titular3) :array_push($docentes_internos,$titular3);
 

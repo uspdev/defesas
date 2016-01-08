@@ -84,5 +84,13 @@ if($status != 2 && $status != 1) 	die('Você não possui acesso a esta área');
 	</div>
 </div>
 
+	
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
+<script type="text/javascript" src="../js/defesas.js"></script>
+<script type="text/javascript" src="../js/ui.datepicker-pt-BR.js"></script>
+
 </body>
 </html>

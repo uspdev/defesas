@@ -27,6 +27,7 @@ td {margin-left:0.5cm;}
 <body>';
 /*Formato das etiquetas*/
 $orientador_etiqueta = "Ilmo(a) Sr(a). <br> {$orientador['nome']}";
+
 $orientador_etiqueta .=  "<br> {$orientador['endereco']}";
 if(isset($orientador['bairro'])) 
 	$orientador_etiqueta .=  "<br> {$orientador['bairro']}";
@@ -34,6 +35,15 @@ if(isset($orientador['cep']))
 	$orientador_etiqueta .=  " {$orientador['cep']}";
 if(isset($orientador['estado']) && isset($orientador['cidade'])) 
 	$orientador_etiqueta .=  "<br> {$orientador['cidade']}-{$orientador['estado']}";
+
+$titular1_etiqueta = "Ilmo(a) Sr(a). <br> {$titular1['nome']}";
+$titular1_etiqueta .=  "<br> {$titular1['endereco']}";
+if(isset($titular1['bairro'])) 
+	$titular1_etiqueta .=  "<br> {$titular1['bairro']}";
+if(isset($titular1['cep'])) 
+	$titular1_etiqueta .=  " {$titular1['cep']}";
+if(isset($titular1['estado']) && isset($titular1['cidade'])) 
+	$titular1_etiqueta .=  "<br> {$titular1['cidade']}-{$titular1['estado']}";
 
 $titular2_etiqueta = "Ilmo(a) Sr(a). <br> {$titular2['nome']}";
 $titular2_etiqueta .=  "<br> {$titular2['endereco']}";
@@ -97,19 +107,19 @@ if(isset($titular5)) {
 $html_to_PDF .= "
 		<table border=\"0\" width=\"19cm\" class=\"etiqueta\">
 		<tr>
-   	  <td width=\"9.85cm\" height=\"3.33cm\"> $orientador_etiqueta </td> 
+   	  <td width=\"9.85cm\" height=\"3.33cm\"> $titular1_etiqueta </td> 
 			<td width=\"9.85cm\"> $titular2_etiqueta </td>
 		</tr>
 		<tr>
    	  <td  height=\"3.33cm\"> $titular3_etiqueta  </td> 
-			<td > $suplente1_etiqueta </td> 
+			<td > $titular4_etiqueta </td> 
 		</tr>
 		<tr>
-   	  <td  height=\"3.33cm\"> $suplente2_etiqueta  </td> 
-			<td>  $titular4_etiqueta 	</td> 
+   	  <td  height=\"3.33cm\"> $titular5_etiqueta  </td> 
+			<td> 	</td> 
 		</tr>
 		<tr>
-   	 <td height=\"3.33cm\">  $titular5_etiqueta </td> 
+   	 <td height=\"3.33cm\">   </td> 
 			<td> 	</td>
 		</tr> ";
 

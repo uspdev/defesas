@@ -20,11 +20,13 @@ if(!empty($_POST['docente'])){
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<title> </title>
-	<script type="text/javascript" src="../js/jquery1.7.1.js"></script>
-	<script type="text/javascript" src="../js/custom/js/jquery-ui-1.8.17.custom.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
 	<script type="text/javascript" src="../js/defesas.js"></script>
 	<script type="text/javascript" src="../js/ui.datepicker-pt-BR.js"></script>
-	<link rel="stylesheet" href="../js/custom/css/start/jquery-ui-1.8.17.custom.css" type="text/css" media="all" />
+
 	<link rel="stylesheet" href="../defesas.css" type="text/css" media="all" />
 
 </head>
