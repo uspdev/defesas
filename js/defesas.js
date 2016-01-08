@@ -29,7 +29,8 @@ function bancaConfig(){
       $("input[id='titular5_id']").removeClass("requerido_docente");
     }
     else if( nivel == 'Doutorado' ) {
-      $("#titular5").prop('disabled',true);
+      $("#titular4").prop('disabled',false);
+      $("#titular5").prop('disabled',false);
     }  
   }
   else if (regimento == 'novo') {
