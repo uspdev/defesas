@@ -7,16 +7,19 @@ $candidato = new Candidato;
 $status = $usuarios->verificarStatus();
 $configdocs = new ConfigDocs;
 $info = $configdocs->ver();
-if($status != 2 && $status != 1) 	die('Você não possui acesso a esta área');
 
-if(!empty($_POST['docente'])){ 
-	header("location:alterarDocente.php?id_docente={$_POST['docente']}");
+if($status != 2 && $status != 1) 
+  die('Você não possui acesso a esta área');
+
+if(!empty($_POST['docente_id'])){ 
+  header("location:alterarDocente.php?id_docente={$_POST['docente_id']}");
 }
+
 
 ?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<title> </title>
@@ -43,14 +46,14 @@ if(!empty($_POST['docente'])){
 	</div>
 
 <div id="bodycontent">
-<form action="buscarDocente.php" method="POST">
+<form action="buscarDocente.php" method="post" enctype="multipart/form-data">
 	
-<label>Docente: </label> 
-<input class="autocomplete requerido apagar" type="text" name="docente"/>  
+  <label>Docente: </label> 
+  <input class="autocomplete requerido apagar" type="text" id='docente' name="docente"/>  
+  <input type="hidden" id="docente_id" name="docente_">
 
-<input id="" type="submit" size="20" value="Editar" >
+  <input id="submit" name="submit" type="submit" size="20" value="Editar" >
 
-<input type="hidden" id="docente" name="docente">
 </form>
 
 </div>
@@ -61,12 +64,3 @@ if(!empty($_POST['docente'])){
 
 </body>
 </html>
-
-
-
-<?php
-if(isset($_GET['alterado']) && $_GET['alterado'] == 'sim') {
-	echo "<script LANGUAGE=\"Javascript\" > alert(\"Alterações realizadas com sucesso!\"); 
-   self.location = 'buscarDocente.php';
-   </script>";
-}

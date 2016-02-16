@@ -130,6 +130,7 @@ $(document).ready(function(){
     select: function( event, ui ) {
       var nome= '#' + $(this).attr('name') + '_id';
       $(nome).val(ui.item.id);	
+      console.log($(nome));	
     }
   });
   bancaChanges();

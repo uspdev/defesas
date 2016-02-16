@@ -80,7 +80,7 @@ function paginapdf($candidato,$docente,$info_banco,$cabecalhoFFLCH,$html,$ultima
 
 	$html .= $cabecalhoFFLCH;
 	$html .= "<div class=\"data_hoje\">São Paulo, {$candidato['data_proex']}</div>";
-	$html .= "<center> <u> <h1> DECLARAÇÃO </h1> </u></center>"; 
+	$html .= "<center>  <h1> DECLARAÇÃO </h1> </center>"; 
 	$html .= "<br><br><br>";
 	$html .= "<p class=\"recuo justificar\" style=\"line-height: 190%;\"> {$info_banco['declaracao']} </p> <br><br>";
 
