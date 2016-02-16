@@ -64,7 +64,6 @@ function bancaChanges(){
   //Quando ação mudança de nível ocorre para Doutorado mostra titular 4 e 5 no regimento antigo
   $('#regimento').change(
     function(){
-   console.log('kdçlw');
       if($(this).val() == 'novo'){
         $("#div_orientador_votante").css('display','block');
         $("#titular4").prop('disabled',true); 
@@ -128,9 +127,11 @@ $(document).ready(function(){
     source: "../buscaDocentes.php",
     minLength: 2,
     select: function( event, ui ) {
-      var nome= '#' + $(this).attr('name') + '_id';
-      $(nome).val(ui.item.id);	
-      console.log($(nome));	
+      var nome = '#' + $(this).attr('name') + '_id';
+      $(nome).val(ui.item.id);
+
+      $('#docente_id').val = $(nome).val(); 
+      console.log($('#docente_id').val());	
     }
   });
   bancaChanges();

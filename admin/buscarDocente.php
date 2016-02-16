@@ -11,6 +11,7 @@ $info = $configdocs->ver();
 if($status != 2 && $status != 1) 
   die('Você não possui acesso a esta área');
 
+//print_r($_POST);
 if(!empty($_POST['docente_id'])){ 
   header("location:alterarDocente.php?id_docente={$_POST['docente_id']}");
 }
@@ -50,7 +51,7 @@ if(!empty($_POST['docente_id'])){
 	
   <label>Docente: </label> 
   <input class="autocomplete requerido apagar" type="text" id='docente' name="docente"/>  
-  <input type="hidden" id="docente_id" name="docente_">
+  <input type="hidden" id="docente_id" name="docente_id">
 
   <input id="submit" name="submit" type="submit" size="20" value="Editar" >
 
