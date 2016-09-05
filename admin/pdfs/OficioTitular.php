@@ -24,7 +24,7 @@ if(isset($candidato['nivel'])) {
   }
   else {
     $html_to_PDF = paginapdf($candidato,$orientador,$info_banco,$cabecalhoFFLCH,$htmlFFLCH);
-    $html_to_PDF = paginapdf($candidato,$titular2,$info_banco,$cabecalhoFFLCH,$htmlFFLCH);
+    $html_to_PDF = paginapdf($candidato,$titular2,$info_banco,$cabecalhoFFLCH,$html_to_PDF);
   }
   // Qual vai ser a última página?
   if($candidato['nivel'] == 'Mestrado' & $candidato['regimento'] == 'antigo') 
