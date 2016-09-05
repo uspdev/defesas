@@ -34,5 +34,3 @@ Passos para deploy no ambiente dev:
     cd libraries/dompdf6
     git submodule init
     git submodule update
-
-

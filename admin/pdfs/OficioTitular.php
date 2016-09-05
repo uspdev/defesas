@@ -17,15 +17,15 @@ if(isset($html_to_PDF)) unset($html_to_PDF);
 $usuario = $user->verUsuario($_SESSION['codpes']);
 
 if(isset($candidato['nivel'])) {
-  if($candidato['orientador_votante']=='nao'){
+  if($candidato['orientador_votante']=='nao') {
     $html_to_PDF = paginapdf($candidato,$orientador,$info_banco,$cabecalhoFFLCH,$htmlFFLCH);
+    $html_to_PDF = paginapdf($candidato,$titular1,$info_banco,$cabecalhoFFLCH,$html_to_PDF);
     $html_to_PDF = paginapdf($candidato,$titular2,$info_banco,$cabecalhoFFLCH,$html_to_PDF);
   }
-  else
-    $html_to_PDF = paginapdf($candidato,$titular1,$info_banco,$cabecalhoFFLCH,$htmlFFLCH);
-
-  $html_to_PDF = paginapdf($candidato,$titular2,$info_banco,$cabecalhoFFLCH,$html_to_PDF);
-
+  else {
+    $html_to_PDF = paginapdf($candidato,$orientador,$info_banco,$cabecalhoFFLCH,$htmlFFLCH);
+    $html_to_PDF = paginapdf($candidato,$titular2,$info_banco,$cabecalhoFFLCH,$htmlFFLCH);
+  }
   // Qual vai ser a última página?
   if($candidato['nivel'] == 'Mestrado' & $candidato['regimento'] == 'antigo') 
     $html_to_PDF = paginapdf($candidato,$titular3,$info_banco,$cabecalhoFFLCH,$html_to_PDF,TRUE);

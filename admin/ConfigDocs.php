@@ -59,7 +59,7 @@ if($status != 2 && $status != 1) 	die('Você não possui acesso a esta área');
 	<label>Mensagem Importante no Ofício dos titulares</label>  
 	<textarea rows="10" cols="70" name="importante_oficio"><?php  echo $info[0]['importante_oficio']; ?></textarea> <br><br>
 
-	<label>Regimento - Artigo 95 no Ofício dos titulares</label>  
+	<label>Regimento - Artigo no Ofício dos titulares</label>  
 	<textarea rows="10" cols="70" name="regimento"><?php  echo $info[0]['regimento']; ?></textarea> <br><br>
 
 	<label>Ofício Suplente </label>  
