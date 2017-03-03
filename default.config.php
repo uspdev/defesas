@@ -1,10 +1,10 @@
 <?php
 
 //banco principal
-define('DBHOST','x');
-define('DBNAME','x');
-define('DBUSER','x');
-define('DBSENHA','x');
+define('DBHOST','localhost');
+define('DBNAME','defesas');
+define('DBUSER','defesas');
+define('DBSENHA','defesas');
 
 session_start();
 
