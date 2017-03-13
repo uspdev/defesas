@@ -1,5 +1,5 @@
 Sistema para geração e gerenciamento de documentos na pré e pós banca das 
-defesas da pós-graduação da FFLCH. 
+defesas do setor de pós-graduação da FFLCH. 
  
 Pacotes para Ubuntu 16.04:
   
@@ -40,7 +40,6 @@ Acessar via web:
     Usuário padrão: 123
     Senha padrão: 123
 
+[dica] Dump do banco de dados de produção para testes locais:
 
-
-    #No servidor de produção:
     pg_dump -U defesas defesas -h 0.0.0.0 -W > dump.sql
