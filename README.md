@@ -3,16 +3,19 @@ defesas do setor de pós-graduação da FFLCH.
  
 Pacotes para Ubuntu 16.04:
   
-    sudo apt-get install apache2 php7.0 libapache2-mod-php7.0 -y
+    sudo apt-get install apache2 php libapache2-mod-php php-mbstring php-xml -y
     sudo apt-get install postgresql php-pgsql php-gd
     dpkg-reconfigure locales # escolher en_US.UTF-8
+
+Instalação do composer:
+
+    wget https://getcomposer.org/installer
+    php installer
+    sudo mv composer.phar /usr/local/bin/composer
 
 Preparando banco de dados:
 
     su postgres
-    export LANGUAGE="en_US.UTF-8"
-    export LANG="en_US.UTF-8"
-    export LC_ALL="en_US.UTF-8"
     psql
     CREATE USER defesas WITH PASSWORD 'defesas'; # \du para ver os usuários
     CREATE DATABASE defesas WITH OWNER=defesas ENCODING='UTF-8' LC_COLLATE='en_US.utf8' LC_CTYPE='en_US.utf8' TEMPLATE template0;
@@ -20,7 +23,7 @@ Preparando banco de dados:
     exit
     psql -U defesas defesas -h localhost -W -f dbschemas/defesas_1.0.sql 
 
-Aplicar refatorações no banco:
+Aplicar updates do banco:
 
     psql -U defesas defesas -h localhost -W -f dbschemas/update_1.0-1.1.sql 
 
@@ -28,12 +31,9 @@ Informações de acesso ao banco:
 
     cp default.config.php config.php
     
-Colocar biblioteca dompdf versão 6 em libraries/dompdf6:
+Dependências:
  
-    git clone https://github.com/dompdf/dompdf.git libraries/dompdf6
-    cd libraries/dompdf6
-    git submodule init
-    git submodule update
+    composer install
 
 Acessar via web:
 
@@ -43,3 +43,9 @@ Acessar via web:
 [dica] Dump do banco de dados de produção para testes locais:
 
     pg_dump -U defesas defesas -h 0.0.0.0 -W > dump.sql
+
+[extra] Configuração mínima do apache2:
+
+    cp extras/defesas.local.conf /etc/apache2/sites-available
+    a2ensite defesas.local
+    service apache2 reload

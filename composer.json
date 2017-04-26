@@ -1,0 +1,8 @@
+{
+    "name": "fflch/defesas",
+    "description": "defesas",
+    "type": "project",
+    "require": {
+        "dompdf/dompdf": "^0.8.0"
+    }
+}

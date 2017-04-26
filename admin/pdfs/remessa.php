@@ -11,7 +11,8 @@ $info_banco = $configdocs->ver();
 
 if($status != 2 && $status != 1) 	die('Você não possui acesso a esta área');
 include('./loadCandidato.php');
-include_once("../../libraries/dompdf6/dompdf_config.inc.php");
+require "../../vendor/autoload.php";
+use Dompdf\Dompdf;
 
 $html_to_PDF = '<html> <head> <style type="text/css">
 body {margin:0px; padding:0px;}

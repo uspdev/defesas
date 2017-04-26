@@ -1,6 +1,7 @@
 <?php 
 header("Content-type: text/html;charset=utf-8");
 require('config.php');
+
 /*COLOCAR RESTRIÇÃO PARA ADMINISTRADORES?*/
 //if($status != 1) 	die('Você não possui acesso a esta área');
 
