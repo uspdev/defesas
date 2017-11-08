@@ -5,7 +5,7 @@ Pacotes para Ubuntu 16.04:
   
     sudo apt-get install apache2 php libapache2-mod-php php-mbstring php-xml -y
     sudo apt-get install postgresql php-pgsql php-gd
-    dpkg-reconfigure locales # escolher en_US.UTF-8
+    dpkg-reconfigure locales # escolher pt_BR.UTF-8
 
 Instalação do composer:
 
@@ -13,14 +13,15 @@ Instalação do composer:
     php installer
     sudo mv composer.phar /usr/local/bin/composer
 
-Preparando banco de dados:
+Criação de usuário e banco de dados:
 
     su postgres
     psql
-    CREATE USER defesas WITH PASSWORD 'defesas'; # \du para ver os usuários
-    CREATE DATABASE defesas WITH OWNER=defesas ENCODING='UTF-8' LC_COLLATE='en_US.utf8' LC_CTYPE='en_US.utf8' TEMPLATE template0;
-    \q
-    exit
+    CREATE USER defesas WITH PASSWORD 'defesas';
+    CREATE DATABASE defesas WITH OWNER defesas;
+
+Import do dump:
+
     psql -U defesas defesas -h localhost -W -f dbschemas/defesas_1.0.sql 
 
 Aplicar updates do banco:
@@ -44,8 +45,7 @@ Acessar via web:
 
     pg_dump -U defesas defesas -h 0.0.0.0 -W > dump.sql
 
-[extra] Configuração mínima do apache2:
+Subir server local para desenvolvimento:
 
-    cp extras/defesas.local.conf /etc/apache2/sites-available
-    a2ensite defesas.local
-    service apache2 reload
+    cd defesas
+    php -S localhost:8787 -t .

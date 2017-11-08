@@ -97,7 +97,7 @@ if(!empty($_POST)){
 <label>Telefones </label> 
 <input type="text"  name="telefone"   />  
 
-<label> Sigla da Universidade </label> 
+<label> Nome e sigla da Universidade na qual tem vínculo profissional </label> 
 <input type="text"  class="requerido" name="lotado" />  
 
 <label>E-mail </label> 

@@ -9,7 +9,15 @@ $status = $user->verificarStatus();
 $configdocs = new ConfigDocs;
 $info_banco = $configdocs->ver();
 
-if($status != 2 && $status != 1) 	die('Você não possui acesso a esta área');
+if($status != 2 && $status != 1) die('Você não possui acesso a esta área');
+
+if(empty($_GET['membro'])) {
+    die('Especificar membro...');
+}
+
+$membro = $docente->verDocente($_GET['membro']);
+$membro = $membro[0];
+
 include('./loadCandidato.php');
 
 # DOMPDF
@@ -20,44 +28,7 @@ if(isset($html_to_PDF)) unset($html_to_PDF);
 
 $usuario = $user->verUsuario($_SESSION['codpes']);
 
-if(isset($candidato['nivel'])) {
-  if($candidato['orientador_votante']=='nao'){
-    $html_to_PDF = paginapdf($candidato,$orientador,$info_banco,$cabecalhoFFLCH,$htmlFFLCH);
-    $html_to_PDF = paginapdf($candidato,$titular1,$info_banco,$cabecalhoFFLCH,$html_to_PDF);
-    $html_to_PDF = paginapdf($candidato,$titular2,$info_banco,$cabecalhoFFLCH,$html_to_PDF);
-  }
-  else {
-    $html_to_PDF = paginapdf($candidato,$orientador,$info_banco,$cabecalhoFFLCH,$htmlFFLCH);
-    $html_to_PDF = paginapdf($candidato,$titular2,$info_banco,$cabecalhoFFLCH,$html_to_PDF);
-  }
-
-  // Qual vai ser a última página?
-  if($candidato['nivel'] == 'Mestrado' & $candidato['regimento'] == 'antigo') 
-    $html_to_PDF = paginapdf($candidato,$titular3,$info_banco,$cabecalhoFFLCH,$html_to_PDF,TRUE);
-  else if($candidato['regimento'] == 'novo')
-    $html_to_PDF = paginapdf($candidato,$titular3,$info_banco,$cabecalhoFFLCH,$html_to_PDF,TRUE);
-  else if($candidato['nivel'] == 'Doutorado' & $candidato['regimento'] == 'antigo') {
-    $html_to_PDF = paginapdf($candidato,$titular3,$info_banco,$cabecalhoFFLCH,$html_to_PDF);
-    $html_to_PDF = paginapdf($candidato,$titular4,$info_banco,$cabecalhoFFLCH,$html_to_PDF);	
-    $html_to_PDF = paginapdf($candidato,$titular5,$info_banco,$cabecalhoFFLCH,$html_to_PDF,TRUE);	
-  }
-}
-
-
-/*
-if(isset($candidato['nivel'])) {
-	$html_to_PDF = paginapdf($candidato,$orientador,$info_banco,$cabecalhoFFLCH,$htmlFFLCH);
-	$html_to_PDF = paginapdf($candidato,$titular2,$info_banco,$cabecalhoFFLCH,$html_to_PDF);
-	if($candidato['nivel'] == 'Mestrado') $html_to_PDF = paginapdf($candidato,$titular3,$info_banco,$cabecalhoFFLCH,$html_to_PDF,TRUE);	
-		else $html_to_PDF = paginapdf($candidato,$titular3,$info_banco,$cabecalhoFFLCH,$html_to_PDF);	
-	if($candidato['nivel'] == 'Doutorado'){
-  	$html_to_PDF = paginapdf($candidato,$titular4,$info_banco,$cabecalhoFFLCH,$html_to_PDF);	
-  	$html_to_PDF = paginapdf($candidato,$titular5,$info_banco,$cabecalhoFFLCH,$html_to_PDF,TRUE);	
-	}
-}
-*/
-
-
+$html_to_PDF = paginapdf($candidato,$membro,$info_banco,$cabecalhoFFLCH,$htmlFFLCH,TRUE);
 $html_to_PDF .= '</div> </body> </html>';
 
 $htmlFFLCH = utf8_encode($html_to_PDF); 
@@ -65,7 +36,7 @@ $dompdf = new DOMPDF();
 $dompdf->set_paper("a4");
 $dompdf->load_html($html_to_PDF);
 $dompdf->render();
-$dompdf->stream("declaracao_{$candidato['nome']}.pdf");
+$dompdf->stream("declaraco_{$membro['nome']}.pdf");
 
 
 /*********************************************************

@@ -9,7 +9,15 @@ $status = $user->verificarStatus();
 $configdocs = new ConfigDocs;
 $info_banco = $configdocs->ver();
 
-if($status != 2 && $status != 1) 	die('Você não possui acesso a esta área');
+if($status != 2 && $status != 1) die('Você não possui acesso a esta área');
+
+if(empty($_GET['membro'])) {
+    die('Especificar membro...');
+}
+
+$membro = $docente->verDocente($_GET['membro']);
+$membro = $membro[0];
+
 include('./loadCandidato.php');
 require "../../vendor/autoload.php";
 
@@ -27,33 +35,12 @@ function sendpdf($html,$filename) {
     $dompdf->stream("{$filename}.pdf");
 }
 
-if(isset($candidato['nivel'])) {
-  if($candidato['orientador_votante']=='nao') {
-    $html_to_PDF = paginapdf($candidato,$orientador,$info_banco,$cabecalhoFFLCH,$htmlFFLCH);
-    $html_to_PDF = paginapdf($candidato,$titular1,$info_banco,$cabecalhoFFLCH,$html_to_PDF);
-    $html_to_PDF = paginapdf($candidato,$titular2,$info_banco,$cabecalhoFFLCH,$html_to_PDF);
-  }
-  else {
-    $html_to_PDF = paginapdf($candidato,$orientador,$info_banco,$cabecalhoFFLCH,$htmlFFLCH);
-    $html_to_PDF = paginapdf($candidato,$titular2,$info_banco,$cabecalhoFFLCH,$html_to_PDF);
-  }
-  // Qual vai ser a última página?
-  if($candidato['nivel'] == 'Mestrado' & $candidato['regimento'] == 'antigo') 
-    $html_to_PDF = paginapdf($candidato,$titular3,$info_banco,$cabecalhoFFLCH,$html_to_PDF,TRUE);
-  else if($candidato['regimento'] == 'novo')
-    $html_to_PDF = paginapdf($candidato,$titular3,$info_banco,$cabecalhoFFLCH,$html_to_PDF,TRUE);
-  else if($candidato['nivel'] == 'Doutorado' & $candidato['regimento'] == 'antigo') {
-    $html_to_PDF = paginapdf($candidato,$titular3,$info_banco,$cabecalhoFFLCH,$html_to_PDF);
-    $html_to_PDF = paginapdf($candidato,$titular4,$info_banco,$cabecalhoFFLCH,$html_to_PDF);	
-    $html_to_PDF = paginapdf($candidato,$titular5,$info_banco,$cabecalhoFFLCH,$html_to_PDF,TRUE);	
-  }
-}
-
+$html_to_PDF = paginapdf($candidato,$membro,$info_banco,$cabecalhoFFLCH,$htmlFFLCH,TRUE);
 $html_to_PDF .= '</div> </body> </html>';
 
 $htmlFFLCH = utf8_encode($html_to_PDF); 
 
-sendpdf($html_to_PDF,'titulares_' . $candidato['nome']);
+sendpdf($html_to_PDF, $membro['nome']);
 
 /*********************************************************
 Cada vez que a função paginapdf é chamada, uma nova página 
@@ -76,8 +63,8 @@ function paginapdf($candidato,$docente,$info_banco,$cabecalhoFFLCH,$html,$ultima
 	$html .= " <i>Local:</i> <b> {$candidato['nome_sala']} </b> - {$candidato['predio']} </p>  ";
 	$html .= "<i>Composição da banca examinadora:</i> ";
 	$html .= "
-<table border=\"0\" width=\"16cm\">
-<tr border=\"0\">
+<table width=\"16cm\">
+<tr>
   <td> {$candidato['titular1']} </td> 
   <td> {$candidato['titular1_lotado']} 	</td>
 </tr>

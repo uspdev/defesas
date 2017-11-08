@@ -57,17 +57,22 @@ $html_to_PDF .= "
     <td>  (&nbsp;&nbsp;) </td> 
   </tr>
   <tr> 
-    <td>ENVIO  ___/____   </td> 
+    <td>ENVIO IMPRESSO ___/____   </td> 
     <td>  (&nbsp;&nbsp;)  </td> 
   </tr>
   <tr> 
-    <td>  COMUNICADO    </td> 
-    <td>  (&nbsp;&nbsp;)  </td> 
-  </tr>
-  <tr> 
-    <td>  NOTEBOOK </td> 
+    <td>  ENVIO PDF ___/____ </td> 
     <td>  (&nbsp;&nbsp; ) </td> 
   </tr>
+  <tr> 
+    <td>  SITE    </td> 
+    <td>  (&nbsp;&nbsp;)  </td> 
+  </tr>
+  <tr> 
+    <td>  PRÓ-LABORE </td> 
+    <td>  (&nbsp;&nbsp; ) </td> 
+  </tr>
+
 </table>
 
 <hr>
@@ -77,13 +82,13 @@ $miolo = "
 <table style=\"border: 1px solid black; border-spacing: 5px; width: 18cm; \">
   <tr> 
     <td>
-      Prof:_____________________________________________
+      Prof: <b>__nome__</b>
     </td>
   </tr>
 
   <tr> 
     <td>
-      PASSAGEM:_________/SP (_____)/_______ Ida: ___/___ Hora: ____ Volta: ____/____ Hora: _____
+      PASSAGEM: __cidade__/__estado__ (_____)/_______ Ida: ___/___ Hora: ____ Volta: ____/____ Hora: _____
     </td>
   </tr>
 
@@ -117,36 +122,22 @@ $miolo = "
     </td>
   </tr>
 
+  <tr>
+    <td>
+      Videoconferência? Sim(  )  Não (  )
+    </td>
+  </tr>
+
 </table> <br />
 ";
 
-/*
-<p> Prof. _______________________________________________________________________________ </p>
-<p>PASSAGEM:_________/SP (_______)/__________ Ida: ____/____ Hora: ___________ </p>
-<p>Obs._____________________________________________. Volta: ____/____ Hora: ____________ </p>
-<p>Cotação: _____/_____ Compra:_____/_____ . HOTEL: _____________ Pedido de Reserva em: _____/_____ - Reserva ok ( ) </p>
-<p>DIÁRIAS: ½ ( ) 1 ( ) 2 ( )          Pedido ok ( ) </p>
-<p>E-mail enviado? Sim (  ) Não (   ) </p> 
-<p>Cadastro no http://www.usetaxi.com.br/ ok? (   ) </p> 
-<p>Skype? Sim(  )  Não (  )</p>
-<hr>"
 
-*/
-
-$html_to_PDF .= $miolo;
-$html_to_PDF .= $miolo;
-$html_to_PDF .= $miolo;
-
-
-$html_to_PDF .= "
-<b>
-<table width=\"18cm\">
-  <tr> 
-    <td width=\"9cm\"> Banca marcada em: _____/_____  </td> 
-    <td>  Todos os dados ok. (  ) </td> 
-  </tr>
-</table>
-</b>";
+foreach ($docentes_externos as $externo) { 
+    $miolo_ok = str_replace('__nome__',$externo['nome'],$miolo);
+    $miolo_ok = str_replace('__cidade__',$externo['cidade'],$miolo_ok);
+    $miolo_ok = str_replace('__estado__',$externo['estado'],$miolo_ok);
+    $html_to_PDF .= $miolo_ok;
+}
 
 $html_to_PDF .= '</body> </html>';
 
@@ -155,7 +146,7 @@ $dompdf = new DOMPDF();
 $dompdf->set_paper("a4");
 $dompdf->load_html($html_to_PDF);
 $dompdf->render();
-$dompdf->stream("zero.pdf");
+$dompdf->stream("zero_{$candidato['nome']}.pdf");
 
 ?>
 

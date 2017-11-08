@@ -119,7 +119,7 @@ if(!empty($_POST)){
 <label>Telefones </label> 
 <input type="text" name="telefone" value="<?php echo $dados['telefone']; ?>" />  
 
-<label>Sigla da Universidade</label>
+<label>Nome e sigla da Universidade na qual tem vínculo profissional</label>
 <input type="text" name="lotado" class="requerido" value="<?php echo $dados['lotado']; ?>" />  
 
 <label>E-mail</label>

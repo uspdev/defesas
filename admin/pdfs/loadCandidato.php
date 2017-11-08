@@ -180,7 +180,17 @@ p.recuo {text-indent: 0.5cm;}
 .importante {border:1px solid; margin-top:0.3cm; margin-bottom:0.3cm; width: 15cm; font-size:12px; margin-left:0.5cm;}
 .negrito {font-weight: bolder;}
 .justificar{text-align: justify;}
-table { background #fff; border-collapse: collapse; }
+
+
+table {
+border-collapse: collapse;
+border: 0px solid #000;
+}
+table th, table td {
+border: 0px solid #000;
+}
+
+
 tr, td { border: 1px #000 solid; padding: 3 }
 body{ margin-top: -2.1cm; margin-bottom: -2.1cm; font-family: DejaVu Sans, sans-serif; font-size: 12px; }
 #footer {
@@ -194,13 +204,14 @@ body{ margin-top: -2.1cm; margin-bottom: -2.1cm; font-family: DejaVu Sans, sans-
   height: 100px;
 }
 
+
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head> 
 <body><div  class="conteudo"> ';
 $cabecalhoFFLCH = '
 		<div id="headerFFLCH" >
-		<table border="0" padding="0">
+		<table>
 		<tr>
    	 <td width="2cm"> <img src="../../images/fflch.gif" width="95%"/> </td> 
 			<td width="14cm"> <center style="font-style:normal; font-size:17px"> Universidade de São Paulo  <br /> 

@@ -12,8 +12,8 @@ require('./pdfs/loadCandidato.php');
 
 ?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -46,19 +46,79 @@ require('./pdfs/loadCandidato.php');
 <p>Defesa: <?php echo $candidato['data_placa']; ?>  </p> <br>
 
 
-<h5>Titulares</h5>
-<h4><?php echo $orientador['nome'];?></h4>
-<h4><?php echo $titular2['nome']; ?> </h4>
-<h4><?php echo $titular3['nome']; ?> </h4>
+<h3> Banca </h3>
+
+<table class="table" cellspacing='0'>
+	<tr>
+		<th>Nome</th>
+		<th>Tipo</th>
+        <th>Ofícios titulares</th>
+        <th>Ofício suplentes</th>
+        <th>Declaração de Participação</th>
+	</tr>
+
+    <tr>
+        <td><?php echo $orientador['nome'];?></td>
+        <td> Titular </td>
+        <td> <a href="./pdfs/OficioTitularPorMembro.php<?php echo '?id_candidato='.$candidato['id_candidato'].'&membro='.$orientador['id_docente']; ?>"> <img src="../images/pdf.png"></a> </td>
+        <td> #  </td>
+        <td> <a href="./pdfs/declaracaoPorMembro.php<?php echo '?id_candidato='.$candidato['id_candidato'].'&membro='.$orientador['id_docente']; ?>"> <img src="../images/pdf.png"></a> </td>
+    </tr>
+
+    <tr>
+        <td><?php echo $titular2['nome'];?></td>
+        <td> Titular </td>
+        <td> <a href="./pdfs/OficioTitularPorMembro.php<?php echo '?id_candidato='.$candidato['id_candidato'].'&membro='.$titular2['id_docente']; ?>"> <img src="../images/pdf.png"></a> </td>
+        <td> # </td>
+        <td> <a href="./pdfs/declaracaoPorMembro.php<?php echo '?id_candidato='.$candidato['id_candidato'].'&membro='.$titular2['id_docente']; ?>"> <img src="../images/pdf.png"></a> </td>
+    </tr>
+
+    <tr>
+        <td><?php echo $titular3['nome'];?></td>
+        <td> Titular </td>
+        <td> <a href="./pdfs/OficioTitularPorMembro.php<?php echo '?id_candidato='.$candidato['id_candidato'].'&membro='.$titular3['id_docente']; ?>"> <img src="../images/pdf.png"></a> </td>
+        <td> # </td>
+        <td> <a href="./pdfs/declaracaoPorMembro.php<?php echo '?id_candidato='.$candidato['id_candidato'].'&membro='.$titular3['id_docente']; ?>"> <img src="../images/pdf.png"></a> </td>
+    </tr>
 
 <?php 
- if($candidato['nivel'] == 'Doutorado') { ?> 
-<h4><?php echo $titular4['nome']; ?> </h4>
-<h4><?php echo $titular5['nome']; ?> </h4>
+if($candidato['nivel'] == 'Doutorado') { ?> 
+
+    <tr>
+        <td><?php echo $titular4['nome'];?></td>
+        <td> Titular </td>
+        <td> <a href="./pdfs/OficioTitularPorMembro.php<?php echo '?id_candidato='.$candidato['id_candidato'].'&membro='.$titular4['id_docente']; ?>"> <img src="../images/pdf.png"></a> </td>
+        <td> #  </td>
+        <td> <a href="./pdfs/declaracaoPorMembro.php<?php echo '?id_candidato='.$candidato['id_candidato'].'&membro='.$titular4['id_docente']; ?>"> <img src="../images/pdf.png"></a> </td>
+    </tr>
+
+    <tr>
+        <td><?php echo $titular5['nome'];?></td>
+        <td> Titular </td>
+        <td> <a href="./pdfs/OficioTitularPorMembro.php<?php echo '?id_candidato='.$candidato['id_candidato'].'&membro='.$titular5['id_docente']; ?>"> <img src="../images/pdf.png"></a> </td>
+        <td> #  </td>
+        <td> <a href="./pdfs/declaracaoPorMembro.php<?php echo '?id_candidato='.$candidato['id_candidato'].'&membro='.$titular5['id_docente']; ?>"> <img src="../images/pdf.png"></a> </td>
+    </tr>
+
 <?php } ?>
-<h5>Suplentes</h5>
-<h4><?php echo $suplente1['nome']; ?> </h4>
-<h4><?php echo $suplente2['nome']; ?> </h4>
+
+    <tr>
+        <td><?php echo $suplente1['nome'];?></td>
+        <td> Suplente </td>
+        <td> #</td>
+        <td> <a href="./pdfs/OficioSuplentePorMembro.php<?php echo '?id_candidato='.$candidato['id_candidato'].'&membro='.$suplente1['id_docente']; ?>"> <img src="../images/pdf.png"></a> </td>
+        <td> <a href="./pdfs/declaracaoPorMembro.php<?php echo '?id_candidato='.$candidato['id_candidato'].'&membro='.$suplente1['id_docente']; ?>"> <img src="../images/pdf.png"></a> </td>
+    </tr>
+
+    <tr>
+        <td><?php echo $suplente2['nome'];?></td>
+        <td> Suplente </td>
+        <td> # </td>
+        <td> <a href="./pdfs/OficioSuplentePorMembro.php<?php echo '?id_candidato='.$candidato['id_candidato'].'&membro='.$suplente2['id_docente']; ?>"> <img src="../images/pdf.png"></a> </td>
+        <td> <a href="./pdfs/declaracaoPorMembro.php<?php echo '?id_candidato='.$candidato['id_candidato'].'&membro='.$suplente2['id_docente']; ?>"> <img src="../images/pdf.png"></a> </td>
+    </tr>
+
+</table>
 
 <br>
 <h3>Documentos Gerais</h3>

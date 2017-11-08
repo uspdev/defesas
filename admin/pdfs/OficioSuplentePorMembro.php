@@ -10,6 +10,14 @@ $configdocs = new ConfigDocs;
 $info_banco = $configdocs->ver();
 
 if($status != 2 && $status != 1) 	die('Você não possui acesso a esta área');
+
+if(empty($_GET['membro'])) {
+    die('Especificar membro...');
+}
+
+$membro = $docente->verDocente($_GET['membro']);
+$membro = $membro[0];
+
 include('./loadCandidato.php');
 require "../../vendor/autoload.php";
 use Dompdf\Dompdf;
@@ -17,8 +25,7 @@ if(isset($html_to_PDF)) unset($html_to_PDF);
 
 $usuario = $user->verUsuario($_SESSION['codpes']);
 
-$html_to_PDF = paginapdf($candidato,$suplente1,$info_banco,$cabecalhoFFLCH,$htmlFFLCH);
-$html_to_PDF = paginapdf($candidato,$suplente2,$info_banco,$cabecalhoFFLCH,$html_to_PDF,TRUE);
+$html_to_PDF = paginapdf($candidato,$membro,$info_banco,$cabecalhoFFLCH,$htmlFFLCH,TRUE);
 
 $html_to_PDF .= '</div> </body> </html>';
 
@@ -27,7 +34,7 @@ $dompdf = new DOMPDF();
 $dompdf->set_paper("a4");
 $dompdf->load_html($html_to_PDF);
 $dompdf->render();
-$dompdf->stream("suplentes_{$candidato['nome']}.pdf");
+$dompdf->stream("{$membro['nome']}.pdf");
 
 
 /*********************************************************
