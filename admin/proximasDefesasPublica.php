@@ -5,6 +5,7 @@ $user = new Users;
 $docente = new Docente;
 $candidato =  new Candidato;
 $area_obj =  new Area;
+$sala_obj = new Sala;
 $status = $user->verificarStatus();
 $hoje = date('Y-m-d H:i:s');
 $where = "data_horario >= '$hoje'";
@@ -39,7 +40,7 @@ $info = $configdocs->ver();
 <table class="table" cellspacing='0'>
 <tr>
 <th>Data defesa</th>
-<th>Horário</th>
+<th>Local</th>
 <th>Programa/Área</th>
 <th>Nome</th>
 <th>Nível</th>
@@ -60,9 +61,13 @@ $info = $configdocs->ver();
         $data = array_reverse(explode('-',$data[0]));
         echo implode('/',$data);  
   ?>
+  <?php echo $horario; ?>
  </td>
  <td>
-  <?php echo $horario; ?>
+  <?php 
+    $sala = $sala_obj->verSala($value['sala']); 
+    echo $sala[0]["nome_sala"];
+  ?>
  </td>
 
  <td>
