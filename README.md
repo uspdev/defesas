@@ -1,51 +1,79 @@
-Sistema para geração e gerenciamento de documentos na pré e pós banca das 
-defesas do setor de pós-graduação da FFLCH. 
- 
-Pacotes para Ubuntu 16.04:
-  
-    sudo apt-get install apache2 php libapache2-mod-php php-mbstring php-xml -y
-    sudo apt-get install postgresql php-pgsql php-gd
-    dpkg-reconfigure locales # escolher pt_BR.UTF-8
+<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
 
-Instalação do composer:
+<p align="center">
+<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
+</p>
 
-    wget https://getcomposer.org/installer
-    php installer
-    sudo mv composer.phar /usr/local/bin/composer
+## About Laravel
 
-Criação de usuário e banco de dados:
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-    su postgres
-    psql
-    CREATE USER defesas WITH PASSWORD 'defesas';
-    CREATE DATABASE defesas WITH OWNER defesas;
+- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- [Powerful dependency injection container](https://laravel.com/docs/container).
+- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Robust background job processing](https://laravel.com/docs/queues).
+- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Import do dump:
+Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-    psql -U defesas defesas -h localhost -W -f dbschemas/defesas_1.0.sql 
+## Learning Laravel
 
-Aplicar updates do banco:
+Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-    psql -U defesas defesas -h localhost -W -f dbschemas/update_1.0-1.1.sql 
+If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-Informações de acesso ao banco:
+## Laravel Sponsors
 
-    cp default.config.php config.php
-    
-Dependências:
- 
-    composer install
+We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
-Acessar via web:
+- **[Vehikl](https://vehikl.com/)**
+- **[Tighten Co.](https://tighten.co)**
+- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+- **[64 Robots](https://64robots.com)**
+- **[Cubet Techno Labs](https://cubettech.com)**
+- **[Cyber-Duck](https://cyber-duck.co.uk)**
+- **[Many](https://www.many.co.uk)**
+- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
+- **[DevSquad](https://devsquad.com)**
+- [UserInsights](https://userinsights.com)
+- [Fragrantica](https://www.fragrantica.com)
+- [SOFTonSOFA](https://softonsofa.com/)
+- [User10](https://user10.com)
+- [Soumettre.fr](https://soumettre.fr/)
+- [CodeBrisk](https://codebrisk.com)
+- [1Forge](https://1forge.com)
+- [TECPRESSO](https://tecpresso.co.jp/)
+- [Runtime Converter](http://runtimeconverter.com/)
+- [WebL'Agence](https://weblagence.com/)
+- [Invoice Ninja](https://www.invoiceninja.com)
+- [iMi digital](https://www.imi-digital.de/)
+- [Earthlink](https://www.earthlink.ro/)
+- [Steadfast Collective](https://steadfastcollective.com/)
+- [We Are The Robots Inc.](https://watr.mx/)
+- [Understand.io](https://www.understand.io/)
+- [Abdel Elrafa](https://abdelelrafa.com)
+- [Hyper Host](https://hyper.host)
+- [Appoly](https://www.appoly.co.uk)
+- [OP.GG](https://op.gg)
+- [云软科技](http://www.yunruan.ltd/)
 
-    Usuário padrão: 123
-    Senha padrão: 123
+## Contributing
 
-[dica] Dump do banco de dados de produção para testes locais:
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-    pg_dump -U defesas defesas -h 0.0.0.0 -W > dump.sql
+## Code of Conduct
 
-Subir server local para desenvolvimento:
+In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-    cd defesas
-    php -S localhost:8787 -t .
+## Security Vulnerabilities
+
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+
+## License
+
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
