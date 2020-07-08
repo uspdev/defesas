@@ -1,3 +1,6 @@
+@extends('laravel-usp-theme::master')
+
+@section('content')
 <a href="/agendamentos/create">Agendar Defesa</a>
 </br></br>
 <form method="GET" action="/agendamentos">
@@ -13,7 +16,7 @@
 <div class="card">
     <div class="card-header">Agendamentos de Defesa</div>
     <div class="card-body">
-        <table>
+        <table class="table">
             <tr>
                 <td>Nº USP</td>
                 <td>Nome</td>
@@ -41,3 +44,4 @@
     </div>
 </div>
 {{ $agendamentos->appends(request()->query())->links() }}
+@endsection('content')

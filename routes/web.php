@@ -15,3 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/','AgendamentoController@index');
 Route::resource('agendamentos','AgendamentoController');
+
+// rotas para pdfs
+Route::get('/documento_zero/{agendamento}','PdfController@documento_zero');

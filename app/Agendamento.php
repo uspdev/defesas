@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Agendamento extends Model
 {
-    public function sexoOptions(){
+    public static function sexoOptions(){
         return [
             'Masculino',
             'Feminino'

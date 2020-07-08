@@ -1,12 +1,18 @@
+@extends('laravel-usp-theme::master')
+
+@section('content')
+
 <a href="/agendamentos/create">Agendar Defesa</a></br>
 <a href="/agendamentos/{{$agendamento->id}}/edit">Editar Defesa</a>
+
+@inject('pessoa','Uspdev\Replicado\Pessoa')
 
 <div class="card">
     <div class="card-header">Agendamento de Defesa</div>
     <div class="card-body">
         <b>Título da Tese:</b> {{$agendamento->titulo}}</br>
-        <b>Nome:</b> {{$agendamento->nome}}</br>
-        <b>Nº USP:</b> {{$agendamento->codpes}}</br>
+        <b>Nome:</b> {{$pessoa::dump($agendamento->codpes)['nompes'] }} </br>
+        <b>Nº USP:</b> {{ $agendamento->codpes }}</br>
         <b>Sexo:</b> {{$agendamento->sexo}}</br>
         <b>Regimento:</b> {{$agendamento->regimento}}</br>
         <b>Nível:</b> {{$agendamento->nivel}}</br>
@@ -27,4 +33,12 @@
     </div>
 </div>
 
+<div class="card">
+    <div class="card-header">Documentos Gerais</div>
+    <div class="card-body">
+        <a href="/documento_zero/{{$agendamento->id}}" class="btn btn-info">Documento Zero</a>
+    </div>
+</div
+
 <a href="/agendamentos">Página Inicial</a></br>
+@endsection('content')
