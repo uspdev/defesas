@@ -13,8 +13,7 @@ class AgendamentoSeeder extends Seeder
     public function run()
     {
         $agendamento = [
-            'nome'=> 'Davi Arrigucci',
-            'codpes' => 777,
+            'codpes' => 10270025,
             'regimento' => 'Antigo',
             'orientador_votante' => 'Sim',
             'sexo' => 'Masculino',

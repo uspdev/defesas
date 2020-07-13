@@ -11,7 +11,7 @@ $factory->define(Agendamento::class, function (Faker $faker) {
     $nivel = ['Mestrado','Doutorado']; 
     $orientador_votante = ['Sim','Nao']; 
     return [
-        'codpes' => $faker->posgraduacao,
+        'codpes' => $faker->unique()->posgraduacao(),
         'regimento' => $regimento[array_rand($regimento)],
         'orientador_votante' => $orientador_votante[array_rand($orientador_votante)],
         'sexo' => $sexo[array_rand($sexo)],
@@ -20,6 +20,6 @@ $factory->define(Agendamento::class, function (Faker $faker) {
         'area_programa' => $faker->numberBetween($min = 4, $max = 32),
         'data_horario' => $faker->dateTime,
         'sala' => $faker->numberBetween($min = 4, $max = 11),
-        'orientador' => $faker->docente, 
+        'orientador' => $faker->docente(), 
     ];
 });
