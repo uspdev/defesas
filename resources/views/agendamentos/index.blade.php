@@ -13,6 +13,9 @@
     </div>
   </div>
 </form>
+
+@inject('pessoa','Uspdev\Replicado\Pessoa')
+
 <div class="card">
     <div class="card-header">Agendamentos de Defesa</div>
     <div class="card-body">
@@ -27,7 +30,7 @@
             @foreach ($agendamentos as $agendamento)
                 <tr>
                     <td>{{ $agendamento->codpes }}</td>
-                    <td><a href="/agendamentos/{{$agendamento->id}}">{{ $agendamento->nome }}</a></td>
+                    <td><a href="/agendamentos/{{$agendamento->id}}">{{ $pessoa::dump($agendamento->codpes)['nompes'] }}</a></td>
                     <td>{{ Carbon\Carbon::parse($agendamento->data_horario)->format('d/m/Y') }}</td>
                     <td>{{ Carbon\Carbon::parse($agendamento->data_horario)->format('H:i')}}</td>
                     <td>

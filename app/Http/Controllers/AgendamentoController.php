@@ -43,7 +43,6 @@ class AgendamentoController extends Controller
     public function store(Request $request)
     {
         $agendamento = new Agendamento;
-        $agendamento->nome = $request->nome;
         $agendamento->codpes = $request->codpes;
         $agendamento->regimento = $request->regimento;
         $agendamento->orientador_votante = $request->orientador_votante;
@@ -97,7 +96,6 @@ class AgendamentoController extends Controller
      */
     public function update(Request $request, Agendamento $agendamento)
     {
-        $agendamento->nome = $request->nome;
         $agendamento->codpes = $request->codpes;
         $agendamento->regimento = $request->regimento;
         $agendamento->orientador_votante = $request->orientador_votante;

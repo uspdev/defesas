@@ -16,7 +16,6 @@ class CreateAgendamentosTable extends Migration
         Schema::create('agendamentos', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('nome');
             $table->integer('codpes');
             $table->string('regimento');
             $table->string('orientador_votante');

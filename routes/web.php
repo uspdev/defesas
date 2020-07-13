@@ -18,3 +18,8 @@ Route::resource('agendamentos','AgendamentoController');
 
 // rotas para pdfs
 Route::get('/documento_zero/{agendamento}','PdfController@documento_zero');
+
+// rotas para login/logout
+Route::get('/login', 'LoginController@redirectToProvider');
+Route::get('/callback', 'LoginController@handleProviderCallback');
+Route::get('/logout', 'LoginController@logout');
