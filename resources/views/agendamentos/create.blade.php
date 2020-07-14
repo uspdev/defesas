@@ -10,5 +10,4 @@
         </form>
     </div>
 </div>
-<a href="/agendamentos">Página Inicial</a></br>
 @endsection('content')

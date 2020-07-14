@@ -2,8 +2,26 @@
 
 @section('content')
 
-<a href="/agendamentos/create">Agendar Defesa</a></br>
-<a href="/agendamentos/{{$agendamento->id}}/edit">Editar Defesa</a>
+<div class="row">
+    <div class="col-sm">
+        <a href="/agendamentos/create" class="btn btn-primary">Agendar Nova Defesa</a></br>
+    </div>
+    <div class="col-sm ">
+        <div class="row float-right">
+            <div class="col-auto">
+                <a href="/agendamentos/{{$agendamento->id}}/edit" class="btn btn-warning">Editar Defesa</a>
+            </div>
+            <div class="col-auto">
+                <form method="POST" action="/agendamentos/{{ $agendamento->id }}">
+                    @csrf 
+                    @method('delete')
+                    <button type="submit" class="btn btn-danger">Apagar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
 
 @inject('pessoa','Uspdev\Replicado\Pessoa')
 
@@ -17,28 +35,26 @@
         <b>Regimento:</b> {{$agendamento->regimento}}</br>
         <b>Nível:</b> {{$agendamento->nivel}}</br>
         @foreach ($agendamento->programaOptions() as $option)
-            @if ($option["id"] == $agendamento->area_programa)
-                <b>Programa:</b> {{$option["programa"]}}</br>
+            @if ($option == $agendamento->area_programa)
+                <b>Programa:</b> {{$option}}</br>
             @endif
         @endforeach
-        <b>Orientador Votante:</b> {{$agendamento->orientador_votante}}</br>
+        <b>Orientador Votante:</b> {{$pessoa::dump($agendamento->orientador)['nompes']}}</br>
         <b>Orientador:</b> {{$agendamento->orientador}}</br>
         <b>Data:</b> {{$agendamento->data}}</br>
         <b>Horário:</b> {{$agendamento->horario}}</br>
         @foreach ($agendamento->salaOptions() as $option)
-            @if ($option["id"] == $agendamento->sala)
-                <b>Local:</b> {{$option["nome_sala"]}}</br>
+            @if ($option == $agendamento->sala)
+                <b>Local:</b> {{$option}}</br>
             @endif
         @endforeach
     </div>
 </div>
-
+<br>
 <div class="card">
     <div class="card-header">Documentos Gerais</div>
     <div class="card-body">
         <a href="/documento_zero/{{$agendamento->id}}" class="btn btn-info">Documento Zero</a>
     </div>
-</div
-
-<a href="/agendamentos">Página Inicial</a></br>
+</div>
 @endsection('content')

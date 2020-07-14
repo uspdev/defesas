@@ -1,25 +1,28 @@
-<div class="row form-group">
-    <div class="col-sm form-group">
-        <label for="titulo">Título da Tese</label> 
-        <input type="text" name="titulo" value="{{ old('titulo', $agendamento->titulo) }}">
-    </div> 
-</div>
+@inject('pessoa','Uspdev\Replicado\Pessoa')
 
-<div class="row form-group">
+<div class="form-group">
+    <label for="titulo">Título da Tese</label> 
+    <input type="text" name="titulo" class="form-control" value="{{ old('titulo', $agendamento->titulo) }}">
+</div> 
+
+<div class="form-group row">
     <div class="col-sm form-group">
-        <label for="nome">Nome Completo</label> 
-        <input type="text" name="nome" value="{{ old('nome', $agendamento->nome) }}">
+        <label for="nome">Nome Completo</label>
+        {{-- 1. Situação em que não houve tentativa de submissão e é uma edição --}}
+        @if ($agendamento->codpes != '')
+            <input type="text" name="nome" class="form-control" value="{{ old('nome', $pessoa::dump($agendamento->codpes)['nompes']) }}">
+        {{-- 2. Situação em que houve tentativa de submissão, o valor de old prevalece --}}
+        @else
+            <input type="text" name="nome" class="form-control" value="{{ old('nome') }}">
+        @endif
     </div>
     <div class="col-sm form-group">
         <label for="codpes">Número USP </label> 
-        <input type="text" name="codpes" value="{{ old('codpes', $agendamento->codpes) }}"> 
+        <input type="text" name="codpes" class="form-control" value="{{ old('codpes', $agendamento->codpes) }}"> 
     </div>
-</div>
-
-<div class="row form-group">
     <div class="col-sm form-group">
         <label for="sexo">Sexo</label>
-        <select name="sexo">
+        <select class="form-control" name="sexo">
             <option value="" selected="">- Selecione -</option>
             @foreach ($agendamento->sexoOptions() as $option)
                 {{-- 1. Situação em que não houve tentativa de submissão e é uma edição --}}
@@ -37,11 +40,10 @@
         </select>
     </div>
 </div>
-
 <div class="row form-group">
     <div class="col-sm form-group">
         <label for="regimento">Regimento</label>
-        <select name="regimento">
+        <select class="form-control" name="regimento">
             <option value="" selected="">- Selecione -</option>
             @foreach ($agendamento->regimentoOptions() as $option)
                 {{-- 1. Situação em que não houve tentativa de submissão e é uma edição --}}
@@ -60,7 +62,7 @@
     </div>
     <div class="col-sm form-group">
         <label for="nivel">Nível</label>
-        <select name="nivel">
+        <select class="form-control" name="nivel">
             <option value="" selected="">- Selecione -</option>
             @foreach ($agendamento->nivelOptions() as $option)
                 {{-- 1. Situação em que não houve tentativa de submissão e é uma edição --}}
@@ -76,37 +78,31 @@
                 @endif
             @endforeach
         </select> 
-    </div>  
-</div>
-
-<div class="row form-group">
+    </div>
     <div class="col-sm form-group">
         <label for="area_programa">Programa</label>
-        <select name="area_programa">
+        <select class="form-control" name="area_programa">
             <option value="" selected="">- Selecione -</option>
             @foreach ($agendamento->programaOptions() as $option)
                 {{-- 1. Situação em que não houve tentativa de submissão e é uma edição --}}
                 @if (old('area_programa') == '' and isset($agendamento->area_programa))
-                <option value="{{$option['id']}}" {{ ( $agendamento->area_programa == $option["id"]) ? 'selected' : ''}}>
-                    {{$option["programa"]}}
+                <option value="{{ $option }}" {{ ( $agendamento->area_programa == $option) ? 'selected' : ''}}>
+                    {{$option}}
                 </option>
                 {{-- 2. Situação em que houve tentativa de submissão, o valor de old prevalece --}}
                 @else
-                <option value="{{$option['id']}}" {{ ( old('area_programa') == $option["id"]) ? 'selected' : ''}}>
-                    {{$option["programa"]}}
+                <option value="{{$option}}" {{ ( old('area_programa') == $option) ? 'selected' : ''}}>
+                    {{$option}}
                 </option>
                 @endif
             @endforeach
         </select> 
-    </div> 
+    </div>   
 </div>
-
-
-
 <div class="row form-group">
     <div class="col-sm form-group">
         <label for="orientador_votante">Orientador Votante</label>
-        <select name="orientador_votante">
+        <select class="form-control" name="orientador_votante">
             <option value="" selected="">- Selecione -</option>
             @foreach ($agendamento->orientadorvotanteOptions() as $option)
                 {{-- 1. Situação em que não houve tentativa de submissão e é uma edição --}}
@@ -124,46 +120,47 @@
         </select>
     </div>
     <div class="col-sm form-group">
-        <label for="orientador">Orientador</label> 
-        <input type="text"  name="orientador" value="{{ old('orientador', $agendamento->orientador) }}"> 
+        <label for="orientador">Orientador</label>
+        {{-- 1. Situação em que não houve tentativa de submissão e é uma edição --}}
+        @if ($agendamento->orientador != '')
+            <input type="text"  name="orientador" class="form-control" value="{{ old('orientador', $pessoa::dump($agendamento->orientador)['nompes']) }}"> 
+        {{-- 2. Situação em que houve tentativa de submissão, o valor de old prevalece --}}
+        @else
+            <input type="text" name="nome" class="form-control" value="{{ old('orientador') }}">
+        @endif 
     </div> 
 </div>
 
 <div class="row form-group">
     <div class="col-sm form-group">
         <label for="data">Data</label> 
-        <input type="text" name="data" value="{{ old('data', $agendamento->data) }}"> 
+        <input type="text" name="data" class="form-control" value="{{ old('data', $agendamento->data) }}"> 
     </div>
     <div class="col-sm form-group">
         <label for="horario">Horário</label> 
-        <input type="text" name="horario" value="{{ old('horario', $agendamento->horario) }}">
+        <input type="text" name="horario" class="form-control" value="{{ old('horario', $agendamento->horario) }}">
     </div> 
 </div>
 
-<div class="row form-group">
-    <div class="col-sm form-group">
-        <label for="sala">Local</label>
-        <select name="sala">
-            <option value="" selected="">- Selecione -</option>
-            @foreach ($agendamento->salaOptions() as $option)
-                {{-- 1. Situação em que não houve tentativa de submissão e é uma edição --}}
-                @if (old('sala') == '' and isset($agendamento->sala))
-                <option value="{{$option['id']}}" {{ ( $agendamento->sala == $option["id"]) ? 'selected' : ''}}>
-                    {{$option["nome_sala"]}}
-                </option>
-                {{-- 2. Situação em que houve tentativa de submissão, o valor de old prevalece --}}
-                @else
-                <option value="{{$option['id']}}" {{ ( old('sala') == $option["id"]) ? 'selected' : ''}}>
-                    {{$option["nome_sala"]}}
-                </option>
-                @endif
-            @endforeach
-        </select> 
-    </div> 
-</div>
-
-<div class="row form-group">
-    <div class="col-sm form-group">
-        <button type="submit">Enviar</button> 
-    </div> 
-</div>
+<div class="form-group">
+    <label for="sala">Local</label>
+    <select class="form-control" name="sala">
+        <option value="" selected="">- Selecione -</option>
+        @foreach ($agendamento->salaOptions() as $option)
+            {{-- 1. Situação em que não houve tentativa de submissão e é uma edição --}}
+            @if (old('sala') == '' and isset($agendamento->sala))
+            <option value="{{$option}}" {{ ( $agendamento->sala == $option) ? 'selected' : ''}}>
+                {{$option}}
+            </option>
+            {{-- 2. Situação em que houve tentativa de submissão, o valor de old prevalece --}}
+            @else
+            <option value="{{$option}}" {{ ( old('sala') == $option) ? 'selected' : ''}}>
+                {{$option}}
+            </option>
+            @endif
+        @endforeach
+    </select> 
+</div> 
+<div class="form-group">
+    <button type="submit" class="btn btn-success float-right">Enviar</button> 
+</div> 

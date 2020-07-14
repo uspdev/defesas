@@ -1,10 +1,22 @@
 @extends('laravel-usp-theme::master')
 
 @section('content')
-<a href="/agendamentos/create">Agendar Nova Defesa</a>
+<div class="row">
+    <div class="col-sm">
+        <a href="/agendamentos/create" class="btn btn-primary">Agendar Nova Defesa</a></br>
+    </div>
+    <div class="col-auto float-right">
+        <form method="POST" action="/agendamentos/{{ $agendamento->id }}">
+            @csrf 
+            @method('delete')
+            <button type="submit" class="btn btn-danger">Apagar</button>
+        </form>
+    </div>
+</div>
+<br>
 
 <div class="card">
-    <div class="card-header">Editar Agendamento de Defesa</div>
+    <div class="card-header"><h4>Editar - Agendamento de Defesa</h4></div>
     <div class="card-body">
         <form action="/agendamentos/{{$agendamento->id}}" method="POST">
             @csrf
@@ -13,5 +25,4 @@
         </form>
     </div>
 </div>
-<a href="/agendamentos">Página Inicial</a></br>
 @endsection('content')
