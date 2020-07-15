@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Agendamento;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
+use App\Http\Requests\AgendamentoRequest;
 
 class AgendamentoController extends Controller
 {
@@ -16,9 +16,12 @@ class AgendamentoController extends Controller
     public function index(Request $request)
     {
         if ($request->busca != null) {
-            $agendamentos = Agendamento::where('nome', 'LIKE', "%{$request->busca}%")->orderBy('data_horario', 'desc')->paginate(10);
+            $agendamentos = Agendamento::where('codpes', '=', $request->busca)->orderBy('data_horario', 'desc')->paginate(20);
         } else {
-            $agendamentos = Agendamento::orderBy('data_horario', 'desc')->paginate(10);
+            $agendamentos = Agendamento::orderBy('data_horario', 'desc')->paginate(20);
+        }
+        if ($agendamentos->count() == null) {
+            $request->session()->flash('alert-danger', 'Não há registros!');
         }
         return view('agendamentos.index')->with('agendamentos',$agendamentos);
     }
@@ -40,20 +43,10 @@ class AgendamentoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AgendamentoRequest $request)
     {
-        $agendamento = new Agendamento;
-        $agendamento->codpes = $request->codpes;
-        $agendamento->regimento = $request->regimento;
-        $agendamento->orientador_votante = $request->orientador_votante;
-        $agendamento->sexo = $request->sexo;
-        $agendamento->nivel = $request->nivel;
-        $agendamento->titulo = $request->titulo;
-        $agendamento->area_programa = $request->area_programa;
-        $agendamento->sala = $request->sala;
-        $agendamento->data_horario = Carbon::CreatefromFormat('d/m/Y H:i', "$request->data $request->horario");
-        $agendamento->orientador = $request->orientador;
-        $agendamento->save();
+        $validated = $request->validated();
+        $agendamento = Agendamento::create($validated);
         return redirect("/agendamentos/$agendamento->id");
     }
 
@@ -65,10 +58,7 @@ class AgendamentoController extends Controller
      */
     public function show(Agendamento $agendamento)
     {
-        $data = Carbon::parse($agendamento->data_horario)->format('d/m/Y');
-        $horario = Carbon::parse($agendamento->data_horario)->format('H:i:s');
-        $agendamento->data = $data;
-        $agendamento->horario = $horario;
+        $agendamento->setDataHorario($agendamento);
         return view('agendamentos.show')->with('agendamento', $agendamento);
     }
 
@@ -80,10 +70,7 @@ class AgendamentoController extends Controller
      */
     public function edit(Agendamento $agendamento)
     {
-        $data = Carbon::parse($agendamento->data_horario)->format('d/m/Y');
-        $horario = Carbon::parse($agendamento->data_horario)->format('H:i:s');
-        $agendamento->data = $data;
-        $agendamento->horario = $horario;
+        $agendamento->setDataHorario($agendamento);
         return view('agendamentos.edit')->with('agendamento', $agendamento);
     }
 
@@ -94,19 +81,10 @@ class AgendamentoController extends Controller
      * @param  \App\Agendamento  $agendamento
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Agendamento $agendamento)
+    public function update(AgendamentoRequest $request, Agendamento $agendamento)
     {
-        $agendamento->codpes = $request->codpes;
-        $agendamento->regimento = $request->regimento;
-        $agendamento->orientador_votante = $request->orientador_votante;
-        $agendamento->sexo = $request->sexo;
-        $agendamento->nivel = $request->nivel;
-        $agendamento->titulo = $request->titulo;
-        $agendamento->area_programa = $request->area_programa;
-        $agendamento->data_horario = Carbon::CreatefromFormat('d/m/Y H:i:s', "$request->data $request->horario");
-        $agendamento->sala = $request->sala;
-        $agendamento->orientador = $request->orientador;
-        $agendamento->save();
+        $validated = $request->validated();
+        $agendamento->update($validated);
         return redirect("/agendamentos/$agendamento->id");
     }
 

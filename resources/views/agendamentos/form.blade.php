@@ -1,7 +1,7 @@
 @inject('pessoa','Uspdev\Replicado\Pessoa')
 
 <div class="form-group">
-    <label for="titulo">Título da Tese</label> 
+    <label for="titulo" class="required">Título da Tese</label> 
     <input type="text" name="titulo" class="form-control" value="{{ old('titulo', $agendamento->titulo) }}">
 </div> 
 
@@ -17,11 +17,11 @@
         @endif
     </div>
     <div class="col-sm form-group">
-        <label for="codpes">Número USP </label> 
+        <label for="codpes" class="required">Número USP </label> 
         <input type="text" name="codpes" class="form-control" value="{{ old('codpes', $agendamento->codpes) }}"> 
     </div>
     <div class="col-sm form-group">
-        <label for="sexo">Sexo</label>
+        <label for="sexo" class="required">Sexo</label>
         <select class="form-control" name="sexo">
             <option value="" selected="">- Selecione -</option>
             @foreach ($agendamento->sexoOptions() as $option)
@@ -42,7 +42,7 @@
 </div>
 <div class="row form-group">
     <div class="col-sm form-group">
-        <label for="regimento">Regimento</label>
+        <label for="regimento" class="required">Regimento</label>
         <select class="form-control" name="regimento">
             <option value="" selected="">- Selecione -</option>
             @foreach ($agendamento->regimentoOptions() as $option)
@@ -61,7 +61,7 @@
         </select> 
     </div>
     <div class="col-sm form-group">
-        <label for="nivel">Nível</label>
+        <label for="nivel" class="required">Nível</label>
         <select class="form-control" name="nivel">
             <option value="" selected="">- Selecione -</option>
             @foreach ($agendamento->nivelOptions() as $option)
@@ -80,7 +80,7 @@
         </select> 
     </div>
     <div class="col-sm form-group">
-        <label for="area_programa">Programa</label>
+        <label for="area_programa" class="required">Programa</label>
         <select class="form-control" name="area_programa">
             <option value="" selected="">- Selecione -</option>
             @foreach ($agendamento->programaOptions() as $option)
@@ -101,7 +101,7 @@
 </div>
 <div class="row form-group">
     <div class="col-sm form-group">
-        <label for="orientador_votante">Orientador Votante</label>
+        <label for="orientador_votante" class="required">Orientador Votante</label>
         <select class="form-control" name="orientador_votante">
             <option value="" selected="">- Selecione -</option>
             @foreach ($agendamento->orientadorvotanteOptions() as $option)
@@ -120,30 +120,34 @@
         </select>
     </div>
     <div class="col-sm form-group">
-        <label for="orientador">Orientador</label>
+        <label for="orientador" class="required">Nº USP Orientador</label>
+        <input type="text" name="orientador" class="form-control" value="{{ old('orientador', $agendamento->orientador) }}"> 
+    </div>
+    <div class="col-sm form-group">
+        <label for="orientador_nome">Orientador</label>
         {{-- 1. Situação em que não houve tentativa de submissão e é uma edição --}}
         @if ($agendamento->orientador != '')
-            <input type="text"  name="orientador" class="form-control" value="{{ old('orientador', $pessoa::dump($agendamento->orientador)['nompes']) }}"> 
+            <input type="text"  name="orientador_nome" class="form-control" value="{{ old('orientador_nome', $pessoa::dump($agendamento->orientador)['nompes']) }}"> 
         {{-- 2. Situação em que houve tentativa de submissão, o valor de old prevalece --}}
         @else
-            <input type="text" name="nome" class="form-control" value="{{ old('orientador') }}">
+            <input type="text" name="orientador_nome" class="form-control" value="{{ old('orientador_nome') }}">
         @endif 
     </div> 
 </div>
 
 <div class="row form-group">
     <div class="col-sm form-group">
-        <label for="data">Data</label> 
-        <input type="text" name="data" class="form-control" value="{{ old('data', $agendamento->data) }}"> 
+        <label for="data" class="required">Data</label> 
+        <input type="text" name="data" class="form-control datepicker" autocomplete="off" value="{{ old('data', $agendamento->data) }}"> 
     </div>
     <div class="col-sm form-group">
-        <label for="horario">Horário</label> 
-        <input type="text" name="horario" class="form-control" value="{{ old('horario', $agendamento->horario) }}">
+        <label for="horario" class="required">Horário</label> 
+        <input type="text" name="horario" class="form-control horario" value="{{ old('horario', $agendamento->horario) }}">
     </div> 
 </div>
 
 <div class="form-group">
-    <label for="sala">Local</label>
+    <label for="sala" class="required">Local</label>
     <select class="form-control" name="sala">
         <option value="" selected="">- Selecione -</option>
         @foreach ($agendamento->salaOptions() as $option)

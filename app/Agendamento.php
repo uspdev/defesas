@@ -3,9 +3,20 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Agendamento extends Model
 {
+    protected $guarded = ['id'];
+
+    public function setDataHorario($agendamento){
+        $data = Carbon::parse($agendamento->data_horario)->format('d/m/Y');
+        $horario = Carbon::parse($agendamento->data_horario)->format('H:i');
+        $agendamento->data = $data;
+        $agendamento->horario = $horario;
+        return $agendamento;
+    }
+    
     public static function sexoOptions(){
         return [
             'Masculino',

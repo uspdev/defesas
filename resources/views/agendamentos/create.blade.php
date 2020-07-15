@@ -1,6 +1,8 @@
 @extends('laravel-usp-theme::master')
 
 @section('content')
+@include('flash')
+
 <div class="card">
     <div class="card-header">Registrar Agendamento de Defesa</div>
     <div class="card-body">
