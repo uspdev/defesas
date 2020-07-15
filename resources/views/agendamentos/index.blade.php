@@ -1,12 +1,14 @@
 @extends('laravel-usp-theme::master')
 
 @section('content')
+@include('flash')
+
 <a href="/agendamentos/create" class="btn btn-primary">Agendar Defesa</a>
 </br></br>
 <form method="GET" action="/agendamentos">
   <div class="row form-group">
     <div class=" col-sm form-group">
-      <input type="text" class="form-control" name="busca" value="{{ Request()->busca}}">
+      <input type="text" class="form-control busca" autocomplete="off" name="busca" value="{{ Request()->busca}}" placeholder="Digite o número USP">
     </div>
     <div class=" col-auto form-group">
         <button type="submit" class="btn btn-success">Buscar</button>
@@ -40,7 +42,7 @@
                 <form method="POST" action="/agendamentos/{{ $agendamento->id }}">
                     @csrf 
                     @method('delete')
-                    <button type="submit" class="btn btn-danger">Apagar</button>
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Você tem certeza que deseja apagar?')">Apagar</button>
                 </form>
             </td>
         </tr>

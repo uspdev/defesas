@@ -19,10 +19,10 @@ class AgendamentoSeeder extends Seeder
             'sexo' => 'Masculino',
             'nivel' => 'Doutorado',
             'titulo' => 'Manuel Bandeira',
-            'area_programa' => '14',
+            'area_programa' => 'Teoria Literária e Literatura Comparada',
             'data_horario' => '1980-06-20 12:00:00',
-            'sala' => '10',
-            'orientador' => 'Antonio Candido',
+            'sala' => 'Sala da Direção',
+            'orientador' => '2202281',
         ];
         Agendamento::create($agendamento);
         factory(Agendamento::class, 100)->create();

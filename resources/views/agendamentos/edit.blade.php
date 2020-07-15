@@ -1,6 +1,8 @@
 @extends('laravel-usp-theme::master')
 
 @section('content')
+@include('flash')
+
 <div class="row">
     <div class="col-sm">
         <a href="/agendamentos/create" class="btn btn-primary">Agendar Nova Defesa</a></br>
@@ -9,7 +11,7 @@
         <form method="POST" action="/agendamentos/{{ $agendamento->id }}">
             @csrf 
             @method('delete')
-            <button type="submit" class="btn btn-danger">Apagar</button>
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Você tem certeza que deseja apagar?')">Apagar</button>
         </form>
     </div>
 </div>

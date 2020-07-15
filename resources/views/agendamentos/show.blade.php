@@ -15,7 +15,7 @@
                 <form method="POST" action="/agendamentos/{{ $agendamento->id }}">
                     @csrf 
                     @method('delete')
-                    <button type="submit" class="btn btn-danger">Apagar</button>
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Você tem certeza que deseja apagar?')">Apagar</button>
                 </form>
             </div>
         </div>
@@ -39,8 +39,8 @@
                 <b>Programa:</b> {{$option}}</br>
             @endif
         @endforeach
-        <b>Orientador Votante:</b> {{$pessoa::dump($agendamento->orientador)['nompes']}}</br>
-        <b>Orientador:</b> {{$agendamento->orientador}}</br>
+        <b>Orientador Votante:</b> {{$agendamento->orientador_votante}}</br>
+        <b>Orientador:</b> {{$pessoa::dump($agendamento->orientador)['nompes']}}</br>
         <b>Data:</b> {{$agendamento->data}}</br>
         <b>Horário:</b> {{$agendamento->horario}}</br>
         @foreach ($agendamento->salaOptions() as $option)
