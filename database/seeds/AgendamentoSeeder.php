@@ -25,6 +25,10 @@ class AgendamentoSeeder extends Seeder
             'orientador' => '2202281',
         ];
         Agendamento::create($agendamento);
-        factory(Agendamento::class, 100)->create();
+        //factory(Agendamento::class, 100)->create();
+        factory(Agendamento::class, 10)->create()->each(function ($agendamento) {           
+            $bancas = factory(App\Banca::class, 5)->make();
+            $agendamento->bancas()->saveMany($bancas);
+        });
     }
 }

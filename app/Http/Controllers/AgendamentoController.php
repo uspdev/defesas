@@ -3,11 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Agendamento;
+use App\Banca;
 use Illuminate\Http\Request;
 use App\Http\Requests\AgendamentoRequest;
 
 class AgendamentoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -47,6 +53,13 @@ class AgendamentoController extends Controller
     {
         $validated = $request->validated();
         $agendamento = Agendamento::create($validated);
+        if($validated['orientador_votante'] == 'Sim'){
+            $banca = new Banca;
+            $banca->codpes = $validated['orientador'];
+            $banca->presidente = 'Não'; 
+            $banca->agendamento_id = $agendamento->id;
+            $agendamento->bancas()->save($banca);
+        }
         return redirect("/agendamentos/$agendamento->id");
     }
 
@@ -84,6 +97,17 @@ class AgendamentoController extends Controller
     public function update(AgendamentoRequest $request, Agendamento $agendamento)
     {
         $validated = $request->validated();
+        if($validated['orientador_votante'] == 'Não'){
+            $banca = Banca::where('codpes',$validated['orientador'])->where('agendamento_id',$agendamento->id);
+            $banca->delete();
+        }
+        elseif($validated['orientador_votante'] == 'Sim'){
+            $banca = new Banca;
+            $banca->codpes = $validated['orientador'];
+            $banca->presidente = 'Não'; 
+            $banca->agendamento_id = $agendamento->id;
+            $agendamento->bancas()->save($banca);
+        }
         $agendamento->update($validated);
         return redirect("/agendamentos/$agendamento->id");
     }
@@ -96,6 +120,7 @@ class AgendamentoController extends Controller
      */
     public function destroy(Agendamento $agendamento)
     {
+        $agendamento->bancas()->delete();
         $agendamento->delete();
         return redirect('/');
     }

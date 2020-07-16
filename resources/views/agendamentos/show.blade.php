@@ -52,6 +52,44 @@
 </div>
 <br>
 <div class="card">
+    <div class="card-header">Banca</div>
+    <div class="card-body">
+        <a href="/agendamentos/{{ $agendamento->id }}/bancas/create" class="btn btn-success">Inserir Professor</a>
+        <br>
+        <br>
+        <table class="table table-striped">
+            <theader>
+                <tr>
+                    <th>Nº USP</th>
+                    <th>Nome</th>
+                    <th>Presidente</th>
+                    <th colspan="2">Ações</th>
+                </tr>
+            </theader>
+            <tbody>
+            @foreach ($agendamento->bancas as $banca)
+                <tr>
+                    <td>{{ $banca->codpes }}</td>
+                    <td><a href="/agendamentos/{{$agendamento->id}}">{{ $pessoa::dump($banca->codpes)['nompes'] }}</a></td>
+                    <td>{{ $banca->presidente }}</td>
+                    <td>
+                        <a href="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->id}}/edit" class="btn btn-warning">Editar</a>
+                    </td>
+                    <td>
+                        <form method="POST" action="/agendamentos/{{ $agendamento->id }}/bancas/{{$banca->id}}">
+                            @csrf 
+                            @method('delete')
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Você tem certeza que deseja apagar?')">Apagar</button>
+                        </form>
+                    </td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+<br>
+<div class="card">
     <div class="card-header">Documentos Gerais</div>
     <div class="card-body">
         <a href="/documento_zero/{{$agendamento->id}}" class="btn btn-info">Documento Zero</a>
