@@ -13,13 +13,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/','AgendamentoController@index');
+// rotas para login/logout
+Route::get('/','indexController@index')->name('index');
+Route::get('login','LoginController@redirectToProvider')->name('login');
+Route::get('callback', 'LoginController@handleProviderCallback');
+Route::get('logout','LoginController@logout')->name('logout');
+
+// rotas de Agendamento de Defesa
 Route::resource('agendamentos','AgendamentoController');
+
+// rotas de Banca das Defesas
+Route::get('/agendamentos/{agendamento}/bancas/create','BancaController@create');
+Route::get('/agendamentos/{agendamento}/bancas/{banca}/edit','BancaController@edit');
+Route::patch('/agendamentos/{agendamento}/bancas/{banca}','BancaController@update');
+Route::post('/agendamentos/{agendamento}/bancas','BancaController@store');
+Route::delete('/agendamentos/{agendamento}/bancas/{banca}','BancaController@destroy');
 
 // rotas para pdfs
 Route::get('/documento_zero/{agendamento}','PdfController@documento_zero');
 
-// rotas para login/logout
-Route::get('/login', 'LoginController@redirectToProvider');
-Route::get('/callback', 'LoginController@handleProviderCallback');
-Route::get('/logout', 'LoginController@logout');

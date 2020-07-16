@@ -9,6 +9,11 @@ class Agendamento extends Model
 {
     protected $guarded = ['id'];
 
+    public function bancas()
+    {
+        return $this->hasMany('App\Banca');
+    }
+
     public function setDataHorario($agendamento){
         $data = Carbon::parse($agendamento->data_horario)->format('d/m/Y');
         $horario = Carbon::parse($agendamento->data_horario)->format('H:i');

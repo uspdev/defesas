@@ -20,7 +20,7 @@ return [
     'login_url' => '/login',
     'menu' => [
         [
-            'text'    => 'Agendamentos de Defesas',
+            'text'    => 'Agendamentos',
             'submenu' => $submenu1,
         ], 
     ],

@@ -4,6 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Carbon\Carbon;
+use App\Agendamento;
+use Illuminate\Validation\Rule;
 
 class AgendamentoRequest extends FormRequest
 {
@@ -24,15 +26,16 @@ class AgendamentoRequest extends FormRequest
      */
     public function rules()
     {
+        $agendamento = new Agendamento;
         return [
             'codpes' => 'required',
-            'regimento' => 'required',
-            'orientador_votante' => 'required',
-            'sexo' => 'required',
-            'nivel' => 'required',
+            'regimento' => ['required',Rule::in($agendamento->regimentoOptions())],
+            'orientador_votante' => ['required',Rule::in($agendamento->orientadorvotanteOptions())],
+            'sexo' => ['required',Rule::in($agendamento->sexoOptions())],
+            'nivel' => ['required',Rule::in($agendamento->nivelOptions())],
             'titulo' => 'required',
-            'area_programa' => 'required',
-            'sala' => 'required',
+            'area_programa' => ['required',Rule::in($agendamento->programaOptions())],
+            'sala' => ['required',Rule::in($agendamento->salaOptions())],
             'data_horario' => 'required',
             'orientador' => 'required',
         ];

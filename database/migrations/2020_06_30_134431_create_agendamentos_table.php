@@ -14,7 +14,7 @@ class CreateAgendamentosTable extends Migration
     public function up()
     {
         Schema::create('agendamentos', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->timestamps();
             $table->integer('codpes');
             $table->string('regimento');

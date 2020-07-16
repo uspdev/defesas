@@ -9,13 +9,12 @@ $factory->define(Agendamento::class, function (Faker $faker) {
     $sexo = Agendamento::sexoOptions(); 
     $regimento = Agendamento::regimentoOptions(); 
     $nivel = Agendamento::nivelOptions(); 
-    $orientador_votante = Agendamento::orientadorvotanteOptions();
     $area_programa = Agendamento::programaOptions();
     $sala = Agendamento::salaOptions();
     return [
         'codpes' => $faker->unique()->posgraduacao(),
         'regimento' => $regimento[array_rand($regimento)],
-        'orientador_votante' => $orientador_votante[array_rand($orientador_votante)],
+        'orientador_votante' => 'Não',
         'sexo' => $sexo[array_rand($sexo)],
         'nivel' => $nivel[array_rand($nivel)],
         'titulo' => $faker->sentence($nbWords = 6, $variableNbWords = true),
