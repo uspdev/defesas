@@ -31,4 +31,10 @@ Route::delete('/agendamentos/{agendamento}/bancas/{banca}','BancaController@dest
 
 // rotas para pdfs
 Route::get('/documento_zero/{agendamento}','PdfController@documento_zero');
+Route::get('/placa/{agendamento}','PdfController@placa');
+Route::get('/etiqueta/{agendamento}','PdfController@etiqueta');
+Route::get('/titulares/{agendamento}','PdfController@titulares');
+Route::get('/suplentes/{agendamento}','PdfController@suplentes');
+Route::get('/declaracao/{agendamento}','PdfController@declaracao');
+Route::get('/recibos/{agendamento}','PdfController@recibos');
 

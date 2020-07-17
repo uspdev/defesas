@@ -3,65 +3,21 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
-    <style>
-        /**
-        @page { margin: 100px 100px 25px 25px; }
-        header { position: fixed; top: -60px; left: 0px; right: 0px; height: 100px; }
-        footer { position: fixed; bottom: -60px; left: 0px; right: 0px; height: 50px; }
-        .page-break {
-            page-break-after: always;
-            margin-top:160px;
-        }
-        p:last-child { page-break-after: never; }
-        .content {
-            margin-top:160px;
-        }
-        **/
-        footer { 
-            text-align: initial;
-            position: fixed;
-            bottom: -50px;
-            left: 0px;
-            right: 0px;
-            height: 110px;
-            padding: 0px ;
-        }
-        .page-break {
-            page-break-after: always;
-            margin-top:160px;
-        }
-        p:last-child { page-break-after: never; }
-        .content {
-            margin-top:0px;
-        }
-    </style>
+    @section('css_head')
+    @show
+    @yield('styles_head')
+    
 </head>
 
 <body>
     
 <header>
-    <table style='width:100%'>
-        <tr>
-            <td style='width:20%' style='text-align:left;'>
-                <img src='https://www.fflch.usp.br/themes/contrib/aegan-subtheme/images/logo.png' width='230px'/>
-            </td>
-            <td style='width:80%'; style='text-align:center;'>
-                <p align='center'><b>FACULDADE DE FILOSOFIA, LETRAS E CIÊNCIAS HUMANAS</b>
-                <br>Universidade de São Paulo<br>
-                Serviço de Pós-Graduação</p>
-            </td>
-        </tr>
-    </table>
-<hr>
+    @yield('header')
 </header>
-
-<footer><div class="footer">
-    <hr>
-</div></footer>
 
 <div class="content"> @yield('content') </div>
 
-<div class="footer"> @yield('footer') </div>
+<div id="footer" class="footer"> @yield('footer') </div>
 
 <script type="text/php">
   if ( isset($pdf) ) {

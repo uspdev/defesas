@@ -26,10 +26,10 @@
 @inject('pessoa','Uspdev\Replicado\Pessoa')
 
 <div class="card">
-    <div class="card-header">Agendamento de Defesa</div>
+    <div class="card-header">Defesa</div>
     <div class="card-body">
         <b>Título da Tese:</b> {{$agendamento->titulo}}</br>
-        <b>Nome:</b> {{$pessoa::dump($agendamento->codpes)['nompes'] }} </br>
+        <b>Candidato:</b> {{$pessoa::dump($agendamento->codpes)['nompes'] }} </br>
         <b>Nº USP:</b> {{ $agendamento->codpes }}</br>
         <b>Sexo:</b> {{$agendamento->sexo}}</br>
         <b>Regimento:</b> {{$agendamento->regimento}}</br>
@@ -92,7 +92,68 @@
 <div class="card">
     <div class="card-header">Documentos Gerais</div>
     <div class="card-body">
-        <a href="/documento_zero/{{$agendamento->id}}" class="btn btn-info">Documento Zero</a>
+
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <td>
+                        Documento Zero
+                    </td>
+                    <td>
+                        <a href="/documento_zero/{{$agendamento->id}}" class="btn btn-info"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+                    </td>
+                </tr>
+                   
+                <tr>
+                    <td>
+                        Placa
+                    </td>
+                    <td>
+                        <a href="/placa/{{$agendamento->id}}" class="btn btn-info"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Etiquetas
+                    </td>
+                    <td>
+                        <a href="/etiqueta/{{$agendamento->id}}" class="btn btn-info"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Ofício titulares
+                    </td>
+                    <td>
+                        <a href="/titulares/{{$agendamento->id}}" class="btn btn-info"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Ofício suplentes
+                    </td>
+                    <td>
+                        <a href="/suplentes/{{$agendamento->id}}" class="btn btn-info"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Declaração de Participação
+                    </td>
+                    <td>
+                        <a href="/declaracao/{{$agendamento->id}}" class="btn btn-info"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Recibos de remessa de documentos para docentes USP                    
+                    </td>
+                    <td>
+                        <a href="/recibos/{{$agendamento->id}}" class="btn btn-info"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 @endsection('content')
