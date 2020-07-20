@@ -57,6 +57,7 @@ class AgendamentoController extends Controller
             $banca = new Banca;
             $banca->codpes = $validated['orientador'];
             $banca->presidente = 'Não'; 
+            $banca->tipo = 'Suplente'; 
             $banca->agendamento_id = $agendamento->id;
             $agendamento->bancas()->save($banca);
         }
@@ -105,6 +106,7 @@ class AgendamentoController extends Controller
             $banca = new Banca;
             $banca->codpes = $validated['orientador'];
             $banca->presidente = 'Não'; 
+            $banca->tipo = 'Suplente'; 
             $banca->agendamento_id = $agendamento->id;
             $agendamento->bancas()->save($banca);
         }

@@ -1,15 +1,15 @@
 @extends('laravel-usp-theme::master')
 
 @section('content')
-@include('flash')
+    @include('flash')
 
-<div class="card">
-    <div class="card-header">Registrar Professor na Banca de Defesa</div>
-    <div class="card-body">
-        <form action="/agendamentos/{{$agendamento}}/bancas" method="POST">
-            @csrf
-            @include('agendamentos.bancas.form')
-        </form>
+    <div class="card">
+        <div class="card-header">Registrar Professor na Banca de Defesa</div>
+        <div class="card-body">
+            <form action="/agendamentos/{{$agendamento}}/bancas" method="POST">
+                @csrf
+                @include('agendamentos.bancas.form')
+            </form>
+        </div>
     </div>
-</div>
 @endsection('content')

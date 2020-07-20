@@ -19,6 +19,7 @@ class CreateBancasTable extends Migration
             $table->integer('agendamento_id')->unsigned();
             $table->foreign('agendamento_id')->references('id')->on('agendamentos');
             $table->string('presidente');
+            $table->string('tipo');
             $table->timestamps();
         });
     }

@@ -1,6 +1,6 @@
+@extends('pdfs.fflch')
 @inject('pessoa','Uspdev\Replicado\Pessoa')
 
-@extends('pdfs.fflch')
 @section('styles_head')
 <style type="text/css">
     #headerFFLCH {
@@ -94,41 +94,40 @@
         São Paulo, {{Carbon\Carbon::now()->formatLocalized('%d de %B de %Y')}}
     </div><br>
 
-    <h1 align="center"> DECLARAÇÃO </h1>
-        @php
-            $presidentes = $professores;
-        @endphp
-    <br><br><br>
+    Ilmo(a). Sr(a). {{$pessoa::dump($professor->codpes)['nompes']}}<br>
+	@php
+        $endereco = $pessoa::obterEndereco($professor->codpes);
+    @endphp
+    {{$endereco['nomtiplgr']}} {{$endereco['epflgr']}} {{$endereco['numlgr']}} {{$endereco['cpllgr']}} {{$endereco['nombro']}} 
+	CEP: {{$endereco['codendptl']}}
+	<br>  {{$endereco['cidloc']}}
+	- {{$endereco['sglest']}}
+	<br> telefone: 
+	<br>e-mail: {{$pessoa::emailusp($professor->codpes)}}
+    <br><br>
 
-    <p class="recuo justificar" style="line-height: 190%;">  
-    Declaro,  para  os  devidos  fins,  que  o(a)  Prof(a).  Dr(a).  {{$pessoa::dump($professor->codpes)['nompes']}} participou,  
-    nesta  data,  da  defesa  do  trabalho  de  {{$agendamento->nivel}}  do(a)  Sr(a)  {{$pessoa::dump($agendamento->codpes)['nompes']}},  intitulado:  
-    "{{$agendamento->titulo}}",  na  área {{$agendamento->area_programa}},  
-    sob  a  presidência  do(a)  Prof.(a)  Dr.(a)
-        @foreach($presidentes as $presidente)
-            @if($presidente['presidente'] == 'Sim')
-                {{$pessoa::dump($presidente->codpes)['nompes']}},
-            @endif
-        @endforeach
-        integrando  a  Comissão Julgadora, formada pelos Professores Doutores:
-    </p> <br><br>
+    <div class="boxSuplente">
+        <div class="moremargin">Assunto: Banca Examinadora de <b>{{$agendamento->nivel}}</b></div> 
+        <div class="moremargin">Candidato(a): <b>{{$pessoa::dump($agendamento->codpes)['nompes']}}</b> </div>
+        <div class="moremargin">Área: <b>{{$agendamento->area_programa}}</b> </div>
+        <div class="moremargin">Orientador(a) Prof(a). Dr(a). {{$pessoa::dump($agendamento->orientador)['nompes']}}</div>
+        <div class="moremargin">Título do Trabalho: <i>{{$agendamento->titulo}} </i></div>
+    </div>
 
-    <table width="16cm" style="border='0'; margin-left:4cm; align-items: center; justify-content: center;">
-        @php
-            $bancas = $professores;
-        @endphp
-        @foreach($bancas as $banca)    
-        <tr style="border='0'">
-            <td><b>{{$pessoa::dump($banca->codpes)['nompes']}}</b> </td> 
-            <td><b>{{$pessoa::cracha($banca->codpes)['nomorg']}}</b></td>
-        </tr>
-        @endforeach
-    </table>
+    <br><br>
+	<div class="oficioSuplente">Sr(a). Prof(a). {{$pessoa::dump($professor->codpes)['nompes']}} </div>
+
+    <div style="text-align:justify;">
+        Venho, pelo presente, informar que seu nome foi aprovado pela Comissão de Pós-Graduação para, na qualidade de membro suplente,
+        integrar a banca examinadora do(a) aluno(a) supracitado(a). A defesa está prevista para o dia {{Carbon\Carbon::createFromTimeStamp(strtotime($agendamento->data_horario))->formatLocalized('%d de %B de %Y')}} - {{$agendamento->horario}}, 
+        no(a) {{$agendamento->sala}} do Prédio da Administração da FFLCH. Na  impossibilidade  do  comparecimento  de  um  dos  membros  titulares,  
+        V.  Sa.  será  convidado(a)  a  integrar a referida banca, motivo pelo qual, segue anexo a versão PDF do trabalho.
+    </div>
 	<div style="margin-top:2cm;" align="center"> 
         Atenciosamente,<br>  
-        <b>
-            {{Auth::user()->name}} - Defesas de Mestrado e Doutorado da FFLCH /USP 
-        </b>
+		<b>
+			{{Auth::user()->name}} - Defesas de Mestrado e Doutorado da FFLCH /USP 
+		</b>
     </div> 
     <div id="footer">
         Serviço de Pós-Graduação<br>
@@ -137,3 +136,4 @@
         Rua do Lago 717, sala 118 - CEP 05508-080<br>
     </div>
 @endsection('content')
+

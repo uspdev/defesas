@@ -19,4 +19,11 @@ class Banca extends Model
             'Não'
         ];
     }
+
+    public static function tipoOptions(){
+        return [
+            'Titular',
+            'Suplente'
+        ];
+    }
 }
