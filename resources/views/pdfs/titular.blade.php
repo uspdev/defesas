@@ -1,6 +1,6 @@
+@extends('pdfs.fflch')
 @inject('pessoa','Uspdev\Replicado\Pessoa')
 
-@extends('pdfs.fflch')
 @section('styles_head')
 <style type="text/css">
     #headerFFLCH {
@@ -72,7 +72,7 @@
 @section('content')
     <br><br><br>
     <div id="headerFFLCH" style="text-align:center;">
-		<table>
+        <table>
             <tr>
                 <br>
                 <td width="2cm"> <img src="images/fflch.gif" width="95%"/> </td> 
@@ -83,8 +83,8 @@
                     </p>
                 </td>
             </tr>
- 	    </table>
-	</div>
+        </table>
+    </div>
 
     <div align="right">
         @php
@@ -92,26 +92,24 @@
             date_default_timezone_set('America/Sao_Paulo');
         @endphp
         São Paulo, {{Carbon\Carbon::now()->formatLocalized('%d de %B de %Y')}}
+    </div><br><br>
+
+    <div class="moremargin">Assunto: Banca Examinadora de <b>{{$agendamento->nivel}}</b></div> 
+    <div class="moremargin">Candidato(a): <b>{{$pessoa::dump($agendamento->codpes)['nompes']}}</b> </div>
+    <div class="moremargin">Área: <b>{{$agendamento->area_programa}}</b> </div>
+    <div class="moremargin">Orientador(a) Prof(a). Dr(a). {{$pessoa::dump($agendamento->orientador)['nompes']}}</div>
+    <div class="moremargin">Título do Trabalho: <i>{{$agendamento->titulo}} </i></div><br>
+    <div class="importante">
+        <b>IMPORTANTE!</b><br>
+        Junto com este ofício, V. Sa está recebendo o EXEMPLAR ORIGINAL do trabalho depositado pelo(a) aluno(a) dentro 
+        do prazo regimental e que deverá servir de instrumento para as arguições feitas a(o) candidato(a) no ato da defesa.
     </div><br>
+    <p>
+        <i>Data e hora da defesa:  </i> <b> {{$agendamento->data}} {{$agendamento->hora}} </b> <br> 
+        <i>Local:</i> <b> {{$agendamento->sala}} </b> - Administração da FFLCH 
+    </p>  
+    <i>Composição da banca examinadora:</i> 
 
-    <h1 align="center"> DECLARAÇÃO </h1>
-        @php
-            $presidentes = $professores;
-        @endphp
-    <br><br><br>
-
-    <p class="recuo justificar" style="line-height: 190%;">  
-    Declaro,  para  os  devidos  fins,  que  o(a)  Prof(a).  Dr(a).  {{$pessoa::dump($professor->codpes)['nompes']}} participou,  
-    nesta  data,  da  defesa  do  trabalho  de  {{$agendamento->nivel}}  do(a)  Sr(a)  {{$pessoa::dump($agendamento->codpes)['nompes']}},  intitulado:  
-    "{{$agendamento->titulo}}",  na  área {{$agendamento->area_programa}},  
-    sob  a  presidência  do(a)  Prof.(a)  Dr.(a)
-        @foreach($presidentes as $presidente)
-            @if($presidente['presidente'] == 'Sim')
-                {{$pessoa::dump($presidente->codpes)['nompes']}},
-            @endif
-        @endforeach
-        integrando  a  Comissão Julgadora, formada pelos Professores Doutores:
-    </p> <br><br>
 
     <table width="16cm" style="border='0'; margin-left:4cm; align-items: center; justify-content: center;">
         @php
@@ -119,21 +117,43 @@
         @endphp
         @foreach($bancas as $banca)    
         <tr style="border='0'">
-            <td><b>{{$pessoa::dump($banca->codpes)['nompes']}}</b> </td> 
-            <td><b>{{$pessoa::cracha($banca->codpes)['nomorg']}}</b></td>
+            <td> {{$pessoa::dump($banca->codpes)['nompes']}} </td> 
+            <td> {{$pessoa::cracha($banca->codpes)['nomorg']}}	</td>
         </tr>
         @endforeach
     </table>
-	<div style="margin-top:2cm;" align="center"> 
-        Atenciosamente,<br>  
-        <b>
-            {{Auth::user()->name}} - Defesas de Mestrado e Doutorado da FFLCH /USP 
-        </b>
-    </div> 
+
+	<br>
+	<div class="importante" align="center"> 
+        <b>Artigo 97 do Regimento de Pós-Graduação da USP</b><br>
+        O julgamento da dissertação de mestrado e da tese de doutorado será realizado de acordo com critérios previamente estabelecidos pela respectiva
+        CPG. § 1º - A arguição, após exposição de no máximo 30 minutos realizada pelo candidato, ocorrerá em sessão pública, e não deverá exceder o prazo 
+        de três horas para o mestrado, cinco horas para o doutorado (antigo regimento) e quatro horas para alunos do novo regimento (banca com 3 examinadores).
+    </div>
+    <p align="center">
+        Atenciosamente, 
+		<br>
+        <b> 
+			{{Auth::user()->name}} - Defesas de Mestrado e Doutorado da FFLCH /USP 
+		</b>
+    </p>
+    <br><br> 
+	Ilmo(a). Sr(a). {{$pessoa::dump($professor->codpes)['nompes']}}<br>
+	@php
+        $endereco = $pessoa::obterEndereco($professor->codpes);
+    @endphp
+    {{$endereco['nomtiplgr']}} {{$endereco['epflgr']}} {{$endereco['numlgr']}} {{$endereco['cpllgr']}} {{$endereco['nombro']}} 
+	CEP: {{$endereco['codendptl']}}
+	<br>  {{$endereco['cidloc']}}
+	- {{$endereco['sglest']}}
+	<br> telefone: 
+	<br>e-mail: {{$pessoa::emailusp($professor->codpes)}}
+
     <div id="footer">
         Serviço de Pós-Graduação<br>
         defesaspos.fflch@usp.br / 3091-4626<br>
         Prédio da Administração da FFLCH-USP<br>
         Rua do Lago 717, sala 118 - CEP 05508-080<br>
     </div>
+
 @endsection('content')

@@ -29,6 +29,7 @@ class BancaRequest extends FormRequest
         return [
             'codpes' => 'required',
             'presidente' => ['required',Rule::in($banca->presidenteOptions())],
+            'tipo' => ['required',Rule::in($banca->tipoOptions())],
         ];
     }
 }

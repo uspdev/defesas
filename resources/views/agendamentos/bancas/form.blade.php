@@ -35,6 +35,26 @@
             @endforeach
         </select>
     </div>
+
+    <div class="col-sm form-group">
+        <label for="tipo" class="required">Presidente</label>
+        <select class="form-control" name="tipo">
+            <option value="" selected="">- Selecione -</option>
+            @foreach ($banca->tipoOptions() as $option)
+                {{-- 1. Situação em que não houve tentativa de submissão e é uma edição --}}
+                @if (old('tipo') == '' and isset($banca->tipo))
+                <option value="{{$option}}" {{ ( $banca->tipo == $option) ? 'selected' : ''}}>
+                    {{$option}}
+                </option>
+                {{-- 2. Situação em que houve tentativa de submissão, o valor de old prevalece --}}
+                @else
+                <option value="{{$option}}" {{ ( old('tipo') == $option) ? 'selected' : ''}}>
+                    {{$option}}
+                </option>
+                @endif
+            @endforeach
+        </select>
+    </div>
 </div>
 
 <div class="form-group">
