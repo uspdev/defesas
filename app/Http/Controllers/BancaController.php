@@ -40,12 +40,13 @@ class BancaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Agendamento $agendamento, BancaRequest $request)
+    public function store(BancaRequest $request, Agendamento $agendamento)
     {
         $banca = new Banca;
         $validated = $request->validated();
         $banca->codpes = $validated['codpes'];
         $banca->presidente = $validated['presidente'];
+        $banca->tipo = $validated['tipo'];
         $banca->agendamento_id = $agendamento->id;
         $agendamento->bancas()->save($banca);
         return redirect("/agendamentos/$agendamento->id");

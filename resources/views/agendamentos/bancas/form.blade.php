@@ -37,7 +37,7 @@
     </div>
 
     <div class="col-sm form-group">
-        <label for="tipo" class="required">Presidente</label>
+        <label for="tipo" class="required">Tipo</label>
         <select class="form-control" name="tipo">
             <option value="" selected="">- Selecione -</option>
             @foreach ($banca->tipoOptions() as $option)

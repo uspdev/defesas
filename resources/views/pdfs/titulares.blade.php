@@ -88,10 +88,6 @@
         </div>
 
         <div align="right">
-            @php
-                setlocale(LC_ALL, 'pt_BR', 'pt_BR.UTF-8', 'pt_BR.utf-8', 'portuguese');
-                date_default_timezone_set('America/Sao_Paulo');
-            @endphp
             São Paulo, {{Carbon\Carbon::now()->formatLocalized('%d de %B de %Y')}}
         </div><br><br>
 
