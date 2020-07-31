@@ -20,8 +20,13 @@ return [
     'login_url' => '/login',
     'menu' => [
         [
+            'text'    => 'Configurações',
+            'url' => '/configs',
+        ],
+        [
             'text'    => 'Agendamentos',
             'submenu' => $submenu1,
-        ], 
+        ],
+         
     ],
 ];

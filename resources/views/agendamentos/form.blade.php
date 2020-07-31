@@ -122,16 +122,6 @@
     <div class="col-sm form-group">
         <label for="orientador" class="required">Nº USP Orientador</label>
         <input type="text" name="orientador" class="form-control" value="{{ old('orientador', $agendamento->orientador) }}"> 
-    </div>
-    <div class="col-sm form-group">
-        <label for="orientador_nome">Orientador</label>
-        {{-- 1. Situação em que não houve tentativa de submissão e é uma edição --}}
-        @if ($agendamento->orientador != '')
-            <input type="text"  name="orientador_nome" class="form-control" value="{{ old('orientador_nome', $pessoa::dump($agendamento->orientador)['nompes']) }}"> 
-        {{-- 2. Situação em que houve tentativa de submissão, o valor de old prevalece --}}
-        @else
-            <input type="text" name="orientador_nome" class="form-control" value="{{ old('orientador_nome') }}">
-        @endif 
     </div> 
 </div>
 

@@ -33,4 +33,8 @@ Route::delete('/agendamentos/{agendamento}/bancas/{banca}','BancaController@dest
 Route::get('/agendamentos/{agendamento}/{tipo}','PdfController@documentosGerais');
 Route::get('/agendamentos/{agendamento}/bancas/{banca}/{tipo}','PdfController@documentosIndividuais');
 
+// rotas para configs
+Route::get('/configs','ConfigController@edit');
+Route::post('/configs','ConfigController@store');
+
 

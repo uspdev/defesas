@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AgendamentoSeeder::class,
             BancaSeeder::class,
+            ConfigSeeder::class,
         ]);
         
     }
