@@ -87,23 +87,16 @@
 	</div>
 
     <div align="right">
-        @php
-            setlocale(LC_ALL, 'pt_BR', 'pt_BR.UTF-8', 'pt_BR.utf-8', 'portuguese');
-            date_default_timezone_set('America/Sao_Paulo');
-        @endphp
         São Paulo, {{Carbon\Carbon::now()->formatLocalized('%d de %B de %Y')}}
     </div><br>
 
     Ilmo(a). Sr(a). {{$pessoa::dump($professor->codpes)['nompes']}}<br>
-	@php
-        $endereco = $pessoa::obterEndereco($professor->codpes);
-    @endphp
-    {{$endereco['nomtiplgr']}} {{$endereco['epflgr']}} {{$endereco['numlgr']}} {{$endereco['cpllgr']}} {{$endereco['nombro']}} 
-	CEP: {{$endereco['codendptl']}}
-	<br>  {{$endereco['cidloc']}}
-	- {{$endereco['sglest']}}
-	<br> telefone: 
-	<br>e-mail: {{$pessoa::emailusp($professor->codpes)}}
+    {{$pessoa::obterEndereco($professor->codpes)['nomtiplgr']}} {{$pessoa::obterEndereco($professor->codpes)['epflgr']}} {{$pessoa::obterEndereco($professor->codpes)['numlgr']}} {{$pessoa::obterEndereco($professor->codpes)['cpllgr']}} {{$pessoa::obterEndereco($professor->codpes)['nombro']}} 
+    CEP: {{$pessoa::obterEndereco($professor->codpes)['codendptl']}}
+    <br>  {{$pessoa::obterEndereco($professor->codpes)['cidloc']}}
+    - {{$pessoa::obterEndereco($professor->codpes)['sglest']}}
+    <br> telefone: 
+    <br>e-mail: {{$pessoa::emailusp($professor->codpes)}}
     <br><br>
 
     <div class="boxSuplente">
@@ -117,11 +110,8 @@
     <br><br>
 	<div class="oficioSuplente">Sr(a). Prof(a). {{$pessoa::dump($professor->codpes)['nompes']}} </div>
 
-    <div style="text-align:justify;">
-        Venho, pelo presente, informar que seu nome foi aprovado pela Comissão de Pós-Graduação para, na qualidade de membro suplente,
-        integrar a banca examinadora do(a) aluno(a) supracitado(a). A defesa está prevista para o dia {{Carbon\Carbon::createFromTimeStamp(strtotime($agendamento->data_horario))->formatLocalized('%d de %B de %Y')}} - {{$agendamento->horario}}, 
-        no(a) {{$agendamento->sala}} do Prédio da Administração da FFLCH. Na  impossibilidade  do  comparecimento  de  um  dos  membros  titulares,  
-        V.  Sa.  será  convidado(a)  a  integrar a referida banca, motivo pelo qual, segue anexo a versão PDF do trabalho.
+    <div style="text-align:justify;">            
+        {!! $configs->oficio_suplente !!}
     </div>
 	<div style="margin-top:2cm;" align="center"> 
         Atenciosamente,<br>  
@@ -130,10 +120,7 @@
 		</b>
     </div> 
     <div id="footer">
-        Serviço de Pós-Graduação<br>
-        defesaspos.fflch@usp.br / 3091-4626<br>
-        Prédio da Administração da FFLCH-USP<br>
-        Rua do Lago 717, sala 118 - CEP 05508-080<br>
+
     </div>
 @endsection('content')
 

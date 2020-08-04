@@ -87,40 +87,22 @@
 	</div>
 
     <div align="right">
-        @php
-            setlocale(LC_ALL, 'pt_BR', 'pt_BR.UTF-8', 'pt_BR.utf-8', 'portuguese');
-            date_default_timezone_set('America/Sao_Paulo');
-        @endphp
         São Paulo, {{Carbon\Carbon::now()->formatLocalized('%d de %B de %Y')}}
     </div><br>
 
     <h1 align="center"> DECLARAÇÃO </h1>
-        @php
-            $presidentes = $professores;
-        @endphp
     <br><br><br>
 
     <p class="recuo justificar" style="line-height: 190%;">  
-    Declaro,  para  os  devidos  fins,  que  o(a)  Prof(a).  Dr(a).  {{$pessoa::dump($professor->codpes)['nompes']}} participou,  
-    nesta  data,  da  defesa  do  trabalho  de  {{$agendamento->nivel}}  do(a)  Sr(a)  {{$pessoa::dump($agendamento->codpes)['nompes']}},  intitulado:  
-    "{{$agendamento->titulo}}",  na  área {{$agendamento->area_programa}},  
-    sob  a  presidência  do(a)  Prof.(a)  Dr.(a)
-        @foreach($presidentes as $presidente)
-            @if($presidente['presidente'] == 'Sim')
-                {{$pessoa::dump($presidente->codpes)['nompes']}},
-            @endif
-        @endforeach
-        integrando  a  Comissão Julgadora, formada pelos Professores Doutores:
+        
+        {!!$configs->declaracao!!}
     </p> <br><br>
 
     <table width="16cm" style="border='0'; margin-left:4cm; align-items: center; justify-content: center;">
-        @php
-            $bancas = $professores;
-        @endphp
-        @foreach($bancas as $banca)    
+        @foreach($professores as $componente)    
         <tr style="border='0'">
-            <td><b>{{$pessoa::dump($banca->codpes)['nompes']}}</b> </td> 
-            <td><b>{{$pessoa::cracha($banca->codpes)['nomorg']}}</b></td>
+            <td><b>{{$pessoa::dump($componente->codpes)['nompes']}}</b> </td> 
+            <td><b>{{$pessoa::cracha($componente->codpes)['nomorg']}}</b></td>
         </tr>
         @endforeach
     </table>
@@ -131,9 +113,6 @@
         </b>
     </div> 
     <div id="footer">
-        Serviço de Pós-Graduação<br>
-        defesaspos.fflch@usp.br / 3091-4626<br>
-        Prédio da Administração da FFLCH-USP<br>
-        Rua do Lago 717, sala 118 - CEP 05508-080<br>
+        {!! $configs->rodape_oficios !!}
     </div>
 @endsection('content')

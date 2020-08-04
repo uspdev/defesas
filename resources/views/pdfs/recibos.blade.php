@@ -35,9 +35,6 @@
 @section('content')
 	@inject('pessoa','Uspdev\Replicado\Pessoa')
 	@foreach($professores as $professor)
-		@php
-			$endereco = $pessoa::obterEndereco($professor->codpes);
-		@endphp
 		<table width="18cm" class="negrito">
 			<tr>
 				<td> RECIBO DE REMESSA DE DOCUMENTOS </td> 
@@ -48,9 +45,9 @@
 			<tr>
 				<td> 
 					<u>DO:</u> SERVIÇO DE PÓS-GRADUAÇÃO DA FFLCH <br>
-					<u>PARA:</u> {{$endereco['nomtiplgr']}} {{$endereco['epflgr']}} {{$endereco['numlgr']}} {{$endereco['cpllgr']}} {{$endereco['nombro']}} 
-					CEP: {{$endereco['codendptl']}}
-					<br>  {{$endereco['cidloc']}} - {{$endereco['sglest']}}
+					<u>PARA:</u> {{$pessoa::obterEndereco($professor->codpes)['nomtiplgr']}} {{$pessoa::obterEndereco($professor->codpes)['epflgr']}} {{$pessoa::obterEndereco($professor->codpes)['numlgr']}} {{$pessoa::obterEndereco($professor->codpes)['cpllgr']}} {{$pessoa::obterEndereco($professor->codpes)['nombro']}} 
+					CEP: {{$pessoa::obterEndereco($professor->codpes)['codendptl']}}
+					<br>  {{$pessoa::obterEndereco($professor->codpes)['cidloc']}} - {{$pessoa::obterEndereco($professor->codpes)['sglest']}}
 					<div style="text-indent:1.5cm;">
 						A/C: Prof(a). Dr(a). {{$pessoa::dump($professor->codpes)['nompes']}}
 					</div> 
@@ -90,8 +87,8 @@
 			<tr>
 				<td>
 					<u>DO:</u> SERVIÇO DE PÓS-GRADUAÇÃO DA FFLCH <br>
-					<u>PARA:</u>  {{$endereco['nomtiplgr']}} {{$endereco['epflgr']}} {{$endereco['numlgr']}} {{$endereco['cpllgr']}} {{$endereco['nombro']}} 
-					CEP: {{$endereco['codendptl']}} - {{$endereco['cidloc']}}/{{$endereco['sglest']}}
+					<u>PARA:</u>  {{$pessoa::obterEndereco($professor->codpes)['nomtiplgr']}} {{$pessoa::obterEndereco($professor->codpes)['epflgr']}} {{$pessoa::obterEndereco($professor->codpes)['numlgr']}} {{$pessoa::obterEndereco($professor->codpes)['cpllgr']}} {{$pessoa::obterEndereco($professor->codpes)['nombro']}} 
+					CEP: {{$pessoa::obterEndereco($professor->codpes)['codendptl']}} - {{$pessoa::obterEndereco($professor->codpes)['cidloc']}}/{{$pessoa::obterEndereco($professor->codpes)['sglest']}}
 					<div style="text-indent:1.5cm;"> A/C: Prof(a). Dr(a). {{$pessoa::dump($professor->codpes)['nompes']}} </div> 
 				</td> 
 			</tr>

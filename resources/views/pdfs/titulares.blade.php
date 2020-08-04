@@ -97,9 +97,7 @@
         <div class="moremargin">Orientador(a) Prof(a). Dr(a). {{$pessoa::dump($agendamento->orientador)['nompes']}}</div>
         <div class="moremargin">Título do Trabalho: <i>{{$agendamento->titulo}} </i></div>
         <div class="importante" align="center">
-            <b>IMPORTANTE!</b><br>
-            Junto com este ofício, V. Sa está recebendo o EXEMPLAR ORIGINAL do trabalho depositado pelo(a) aluno(a) dentro 
-            do prazo regimental e que deverá servir de instrumento para as arguições feitas a(o) candidato(a) no ato da defesa.
+            {!! $configs->importante_oficio !!}
         </div>
         <p> 
             <i>Data e hora da defesa:  </i> <b> {{$agendamento->data}} {{$agendamento->hora}} </b> <br> 
@@ -109,9 +107,6 @@
 
 
         <table width="16cm" style="border='0'; margin-left:4cm; align-items: center; justify-content: center;">
-            @php
-                $bancas = $professores;
-            @endphp
             @foreach($bancas as $banca)    
             <tr style="border='0'">
                 <td> {{$pessoa::dump($banca->codpes)['nompes']}} </td> 
@@ -121,11 +116,8 @@
         </table>
 
         <br>
-        <div class="importante" align="center"> 
-            <b>Artigo 97 do Regimento de Pós-Graduação da USP</b><br>
-            O julgamento da dissertação de mestrado e da tese de doutorado será realizado de acordo com critérios previamente estabelecidos pela respectiva
-            CPG. § 1º - A arguição, após exposição de no máximo 30 minutos realizada pelo candidato, ocorrerá em sessão pública, e não deverá exceder o prazo 
-            de três horas para o mestrado, cinco horas para o doutorado (antigo regimento) e quatro horas para alunos do novo regimento (banca com 3 examinadores).
+        <div class="importante" align="center">
+            {!! $configs->regimento !!}
         </div>
         <p align="center">
             Atenciosamente, 
@@ -134,21 +126,15 @@
 			</b>
         </p><br><br> 
         Ilmo(a). Sr(a). {{$pessoa::dump($professor->codpes)['nompes']}}<br>
-        @php
-            $endereco = $pessoa::obterEndereco($professor->codpes);
-        @endphp
-        {{$endereco['nomtiplgr']}} {{$endereco['epflgr']}} {{$endereco['numlgr']}} {{$endereco['cpllgr']}} {{$endereco['nombro']}} 
-        CEP: {{$endereco['codendptl']}}
-        <br>  {{$endereco['cidloc']}}
-        - {{$endereco['sglest']}}
+        {{$pessoa::obterEndereco($professor->codpes)['nomtiplgr']}} {{$pessoa::obterEndereco($professor->codpes)['epflgr']}} {{$pessoa::obterEndereco($professor->codpes)['numlgr']}} {{$pessoa::obterEndereco($professor->codpes)['cpllgr']}} {{$pessoa::obterEndereco($professor->codpes)['nombro']}} 
+        CEP: {{$pessoa::obterEndereco($professor->codpes)['codendptl']}}
+        <br>  {{$pessoa::obterEndereco($professor->codpes)['cidloc']}}
+        - {{$pessoa::obterEndereco($professor->codpes)['sglest']}}
         <br> telefone: 
         <br>e-mail: {{$pessoa::emailusp($professor->codpes)}}
 
         <div id="footer">
-            Serviço de Pós-Graduação<br>
-            defesaspos.fflch@usp.br / 3091-4626<br>
-            Prédio da Administração da FFLCH-USP<br>
-            Rua do Lago 717, sala 118 - CEP 05508-080<br>
+            {!! $configs->rodape_oficios !!}
         </div>
         <p style="page-break-before: always">&nbsp;</p>
     @endforeach

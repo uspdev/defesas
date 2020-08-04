@@ -150,10 +150,7 @@
     <br/>
   @endforeach
   <div id="footer">
-    Serviço de Pós-Graduação<br>
-    defesaspos.fflch@usp.br / 3091-4626<br>
-    Prédio da Administração da FFLCH-USP<br>
-    Rua do Lago 717, sala 118 - CEP 05508-080<br>
+    {!! $configs->rodape_oficios !!}
   </div>
   <p style="page-break-before: always">&nbsp;</p>
 @endsection('content')
