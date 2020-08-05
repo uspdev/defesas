@@ -120,7 +120,7 @@
 		</b>
     </div> 
     <div id="footer">
-
+        {!! $configs->rodape_oficios !!}
     </div>
 @endsection('content')
 

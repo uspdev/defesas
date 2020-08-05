@@ -97,7 +97,7 @@
         <br><br><br>
 
         <p class="recuo justificar" style="line-height: 190%;">
-            {!! $configs->setConfigDeclaracao($configs,$agendamento,$bancas,$professor)->declaracao !!}
+            {!! App\Config::setConfigDeclaracao($agendamento,$bancas,$professor)->declaracao !!}
         </p><br><br>
 
         <table width="16cm" style="border='0'; margin-left:4cm; align-items: center; justify-content: center;">

@@ -10,7 +10,7 @@ use App\Config;
 
 class PdfController extends Controller
 {
-
+    //Bloco destinado aos documentos gerais
     public function documentosGerais(Agendamento $agendamento, $tipo){
         $configs = Config::orderbyDesc('created_at')->first();
         $agendamento->setDataHorario($agendamento);
@@ -25,8 +25,8 @@ class PdfController extends Controller
             return $pdf->download("$tipo.pdf");
         }
         elseif($tipo == 'suplentes'){
-            $configs = $configs->setConfigOficioSuplente($configs,$agendamento);
-            $professores = Banca::where('agendamento_id',$agendamento->id)->where('tipo', 'suplente')->get();
+            $configs = Config::setConfigOficioSuplente($agendamento);
+            $professores = Banca::where('agendamento_id',$agendamento->id)->where('tipo', 'Suplente')->get();
             $bancas = $professores;
             $pdf = PDF::loadView("pdfs.$tipo", compact(['agendamento','professores','configs','bancas']));
             return $pdf->download("$tipo.pdf");
@@ -39,20 +39,23 @@ class PdfController extends Controller
         }
     }
 
+    //Bloco destinado aos documentos individuais
     public function documentosIndividuais(Agendamento $agendamento, Banca $banca, $tipo){
-        $configs = Config::orderbyDesc('created_at')->first();
         $agendamento->setDataHorario($agendamento);
         if($tipo == 'titular' or $tipo == 'declaracao'){
             $professores = Banca::where('agendamento_id',$agendamento->id)->where('tipo', 'Titular')->get();
             $professor = $banca;
             if($tipo == 'declaracao'){
-                $configs = $configs->setConfigDeclaracao($configs,$agendamento,$professores,$professor);
+                $configs = Config::setConfigDeclaracao($agendamento,$professores,$professor);
+            }
+            else{
+                $configs = Config::orderbyDesc('created_at')->first();
             }
             $pdf = PDF::loadView("pdfs.$tipo", compact(['agendamento','professores','professor','configs']));
             return $pdf->download("$tipo.pdf");
         }
         elseif($tipo == 'suplente'){
-            $configs = $configs->setConfigOficioSuplente($configs,$agendamento);
+            $configs = Config::setConfigOficioSuplente($agendamento);
             $professor = $banca;
             $pdf = PDF::loadView("pdfs.$tipo", compact(['agendamento','professor','configs']));
             return $pdf->download("$tipo.pdf");
