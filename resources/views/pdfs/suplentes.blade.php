@@ -87,7 +87,8 @@
             </table>
         </div>
         <div align="right">
-            São Paulo, {{Carbon\Carbon::now()->formatLocalized('%d de %B de %Y')}}
+            @php(setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese'))
+            São Paulo, {{ strftime('%d de %B de %Y', strtotime('today')) }}
         </div><br><br>
 
         Ilmo(a). Sr(a). {{$pessoa::dump($professor->codpes)['nompes']}}<br>

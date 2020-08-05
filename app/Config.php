@@ -5,7 +5,6 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Agendamento;
 use Uspdev\Replicado\Pessoa;
-use Carbon\Carbon;
 
 class Config extends Model
 {
@@ -14,9 +13,10 @@ class Config extends Model
     //Função para modificar a mensagem padrão do Ofício de Suplente(s)
     public static function setConfigOficioSuplente($agendamento){
         $configs = Config::orderbyDesc('created_at')->first();
-        str_replace(
+        setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese');
+        $configs['oficio_suplente'] = str_replace(
             ["%data_oficio_suplente","%nome_sala","%predio"], 
-            [Carbon::createFromTimeStamp(strtotime($agendamento->data_horario))->formatLocalized('%d de %B de %Y')." - ". $agendamento['horario'], $agendamento['sala'], 'FFLCH'], 
+            [strftime('%d de %B de %Y', strtotime($agendamento->data_horario))." - ". $agendamento['horario'], $agendamento['sala'], 'FFLCH'], 
             $configs['oficio_suplente']
         );
         return $configs;
