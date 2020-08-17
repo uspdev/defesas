@@ -17,6 +17,7 @@ class ConfigController extends Controller
     {
         $this->authorize('logado');
         $config = Config::orderByDesc('created_at')->first();
+        if(!$config) $config =  new Config;
         return view('configs.edit', compact('config'));
     }
 
@@ -27,8 +28,4 @@ class ConfigController extends Controller
         Config::create($validated);
         return redirect('/configs');
     }
-
-    
-   
-
 }

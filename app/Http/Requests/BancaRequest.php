@@ -27,7 +27,7 @@ class BancaRequest extends FormRequest
     {
         $banca = new Banca;
         return [
-            'codpes' => 'required',
+            'codpes' => 'required|integer',
             'presidente' => ['required',Rule::in($banca->presidenteOptions())],
             'tipo' => ['required',Rule::in($banca->tipoOptions())],
         ];
