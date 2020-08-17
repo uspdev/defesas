@@ -10,8 +10,13 @@ use App\Config;
 
 class PdfController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     //Bloco destinado aos documentos gerais
     public function documentosGerais(Agendamento $agendamento, $tipo){
+        $this->authorize('logado');
         $configs = Config::orderbyDesc('created_at')->first();
         $agendamento->setDataHorario($agendamento);
         if($tipo == 'placa'){
@@ -41,6 +46,7 @@ class PdfController extends Controller
 
     //Bloco destinado aos documentos individuais
     public function documentosIndividuais(Agendamento $agendamento, Banca $banca, $tipo){
+        $this->authorize('logado');
         $agendamento->setDataHorario($agendamento);
         if($tipo == 'titular' or $tipo == 'declaracao'){
             $professores = Banca::where('agendamento_id',$agendamento->id)->where('tipo', 'Titular')->get();

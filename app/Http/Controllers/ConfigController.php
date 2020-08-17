@@ -15,12 +15,14 @@ class ConfigController extends Controller
     
     public function edit()
     {
+        $this->authorize('logado');
         $config = Config::orderByDesc('created_at')->first();
         return view('configs.edit', compact('config'));
     }
 
     public function store(ConfigRequest $request)
     {
+        $this->authorize('logado');
         $validated = $request->validated();
         Config::create($validated);
         return redirect('/configs');

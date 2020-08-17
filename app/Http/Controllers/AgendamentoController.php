@@ -21,6 +21,7 @@ class AgendamentoController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('logado');
         if ($request->busca != null) {
             $agendamentos = Agendamento::where('codpes', '=', $request->busca)->orderBy('data_horario', 'desc')->paginate(20);
         } else {
@@ -39,6 +40,7 @@ class AgendamentoController extends Controller
      */
     public function create()
     {
+        $this->authorize('logado');
         $agendamento = new Agendamento;
         return view('agendamentos.create')->with('agendamento', $agendamento);
     }
@@ -51,6 +53,7 @@ class AgendamentoController extends Controller
      */
     public function store(AgendamentoRequest $request)
     {
+        $this->authorize('logado');
         $validated = $request->validated();
         $agendamento = Agendamento::create($validated);
         if($validated['orientador_votante'] == 'Sim'){
@@ -72,6 +75,7 @@ class AgendamentoController extends Controller
      */
     public function show(Agendamento $agendamento)
     {
+        $this->authorize('logado');
         $agendamento->setDataHorario($agendamento);
         return view('agendamentos.show')->with('agendamento', $agendamento);
     }
@@ -84,6 +88,7 @@ class AgendamentoController extends Controller
      */
     public function edit(Agendamento $agendamento)
     {
+        $this->authorize('logado');
         $agendamento->setDataHorario($agendamento);
         return view('agendamentos.edit')->with('agendamento', $agendamento);
     }
@@ -97,6 +102,7 @@ class AgendamentoController extends Controller
      */
     public function update(AgendamentoRequest $request, Agendamento $agendamento)
     {
+        $this->authorize('logado');
         $validated = $request->validated();
         if($validated['orientador_votante'] == 'Não'){
             $banca = Banca::where('codpes',$validated['orientador'])->where('agendamento_id',$agendamento->id);
@@ -122,8 +128,9 @@ class AgendamentoController extends Controller
      */
     public function destroy(Agendamento $agendamento)
     {
+        $this->authorize('logado');
         $agendamento->bancas()->delete();
         $agendamento->delete();
-        return redirect('/');
+        return redirect('/agendamentos');
     }
 }
