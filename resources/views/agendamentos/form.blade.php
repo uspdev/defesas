@@ -1,5 +1,3 @@
-@inject('pessoa','Uspdev\Replicado\Pessoa')
-
 <div class="form-group">
     <label for="titulo" class="required">Título da Tese</label> 
     <input type="text" name="titulo" class="form-control" value="{{ old('titulo', $agendamento->titulo) }}">
@@ -8,13 +6,8 @@
 <div class="form-group row">
     <div class="col-sm form-group">
         <label for="nome">Nome Completo</label>
-        {{-- 1. Situação em que não houve tentativa de submissão e é uma edição --}}
-        @if ($agendamento->codpes != '')
-            <input type="text" name="nome" class="form-control" value="{{ old('nome', $pessoa::dump($agendamento->codpes)['nompes']) }}">
-        {{-- 2. Situação em que houve tentativa de submissão, o valor de old prevalece --}}
-        @else
-            <input type="text" name="nome" class="form-control" value="{{ old('nome') }}">
-        @endif
+        <input type="text" name="nome" class="form-control" value="{{ old('nome', $agendamento->nome) }}">
+        <span class="badge badge-warning">Se este campo ficar vazio, o nome utilizado será o cadastrado nos sistemas da USP</span>
     </div>
     <div class="col-sm form-group">
         <label for="codpes" class="required">Número USP </label> 
@@ -118,6 +111,11 @@
                 @endif
             @endforeach
         </select>
+    </div>
+    <div class="col-sm form-group">
+        <label for="orientador">Nome Orientador</label>
+        <input type="text" name="nome_orientador" class="form-control" value="{{ old('nome_orientador', $agendamento->nome_orientador) }}">
+        <span class="badge badge-warning">Se este campo ficar vazio, o nome utilizado será o cadastrado nos sistemas da USP</span> 
     </div>
     <div class="col-sm form-group">
         <label for="orientador" class="required">Nº USP Orientador</label>

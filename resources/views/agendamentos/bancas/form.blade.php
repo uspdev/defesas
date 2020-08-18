@@ -7,13 +7,8 @@
     </div>
     <div class="col-sm form-group">
         <label for="nome">Nome</label>
-        {{-- 1. Situação em que não houve tentativa de submissão e é uma edição --}}
-        @if ($banca->codpes != '')
-            <input type="text" name="nome" class="form-control" value="{{ old('nome', $pessoa::dump($banca->codpes)['nompes']) }}">
-        {{-- 2. Situação em que houve tentativa de submissão, o valor de old prevalece --}}
-        @else
-            <input type="text" name="nome" class="form-control" value="{{ old('nome') }}">
-        @endif
+        <input type="text" name="nome" class="form-control" value="{{ old('nome', $banca->nome) }}">
+        <span class="badge badge-warning">Se este campo ficar vazio, o nome utilizado será o cadastrado nos sistemas da USP</span> 
     </div>
     
     <div class="col-sm form-group">

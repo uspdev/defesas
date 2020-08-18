@@ -16,6 +16,7 @@ class CreateBancasTable extends Migration
         Schema::create('bancas', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('codpes');
+            $table->string('nome')->nullable();
             $table->integer('agendamento_id')->unsigned();
             $table->foreign('agendamento_id')->references('id')->on('agendamentos');
             $table->string('presidente');

@@ -29,6 +29,7 @@ class AgendamentoRequest extends FormRequest
         $agendamento = new Agendamento;
         return [
             'codpes' => 'required',
+            'nome' => '',
             'regimento' => ['required',Rule::in($agendamento->regimentoOptions())],
             'orientador_votante' => ['required',Rule::in($agendamento->orientadorvotanteOptions())],
             'sexo' => ['required',Rule::in($agendamento->sexoOptions())],
@@ -38,6 +39,7 @@ class AgendamentoRequest extends FormRequest
             'sala' => ['required',Rule::in($agendamento->salaOptions())],
             'data_horario' => 'required',
             'orientador' => 'required',
+            'nome_orientador' => '',
         ];
     }
 

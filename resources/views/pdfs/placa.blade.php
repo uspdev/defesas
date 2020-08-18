@@ -18,7 +18,6 @@
 @endsection('styles_head')
 
 @section('content')
-	@inject('pessoa','Uspdev\Replicado\Pessoa')
 	<br>
 	<div class="cabecalho">
 		Universidade de São Paulo<br>
@@ -26,7 +25,7 @@
 		Serviço de Pós-Graduação 
 	</div>
 	<br><br><br>
-	<div class="candidato">Candidato(a): {{$pessoa::dump($agendamento->codpes)['nompes']}}</div> 
+	<div class="candidato">Candidato(a): {{$agendamento->nome}}</div> 
 	<div class="candidato">Data: {{$agendamento->data}}.</div>  
 	<div class="candidato">Defesa de {{$agendamento->nivel}} em {{$agendamento->area_programa}}</div> 
 	<div class="candidato">Título: <i>"{{$agendamento->titulo}}"</i></div>

@@ -6,6 +6,8 @@ use App\Agendamento;
 use App\Banca;
 use Illuminate\Http\Request;
 use App\Http\Requests\AgendamentoRequest;
+use Carbon\Carbon;
+use Uspdev\Replicado\Pessoa;
 
 class AgendamentoController extends Controller
 {
@@ -22,11 +24,17 @@ class AgendamentoController extends Controller
     public function index(Request $request)
     {
         $this->authorize('logado');
-        if ($request->busca != null) {
-            $agendamentos = Agendamento::where('codpes', '=', $request->busca)->orderBy('data_horario', 'desc')->paginate(20);
-        } else {
-            $agendamentos = Agendamento::orderBy('data_horario', 'desc')->paginate(20);
+        if($request->filtro_busca == 'numero_usp') {
+            $agendamentos = Agendamento::where('codpes', '=', $request->busca_nusp)->paginate(20);
+        } 
+        elseif($request->filtro_busca == 'data'){
+            $data = Carbon::CreatefromFormat('d/m/Y H:i', "$request->busca_data 00:00");
+            $agendamentos = Agendamento::whereDate('data_horario','=', $data)->orderBy('data_horario', 'asc')->paginate(20);
         }
+        else{
+            $agendamentos = Agendamento::whereDate('data_horario','>=',date('Y-m-d'))->paginate(20);
+        }
+        
         if ($agendamentos->count() == null) {
             $request->session()->flash('alert-danger', 'Não há registros!');
         }
@@ -55,10 +63,17 @@ class AgendamentoController extends Controller
     {
         $this->authorize('logado');
         $validated = $request->validated();
+        if($validated['nome'] == ''){
+            $validated['nome'] = Pessoa::dump($validated['codpes'])['nompes'];
+        }
+        if($validated['nome_orientador'] == ''){
+            $validated['nome_orientador'] = Pessoa::dump($validated['orientador'])['nompes'];
+        }
         $agendamento = Agendamento::create($validated);
         if($validated['orientador_votante'] == 'Sim'){
             $banca = new Banca;
             $banca->codpes = $validated['orientador'];
+            $banca->nome = $validated['nome_orientador'];
             $banca->presidente = 'Não'; 
             $banca->tipo = 'Suplente'; 
             $banca->agendamento_id = $agendamento->id;
@@ -104,17 +119,27 @@ class AgendamentoController extends Controller
     {
         $this->authorize('logado');
         $validated = $request->validated();
+        if($validated['nome'] == ''){
+            $validated['nome'] = Pessoa::dump($validated['codpes'])['nompes'];
+        }
+        if($validated['nome_orientador'] == ''){
+            $validated['nome_orientador'] = Pessoa::dump($validated['orientador'])['nompes'];
+        }
         if($validated['orientador_votante'] == 'Não'){
             $banca = Banca::where('codpes',$validated['orientador'])->where('agendamento_id',$agendamento->id);
             $banca->delete();
         }
         elseif($validated['orientador_votante'] == 'Sim'){
-            $banca = new Banca;
-            $banca->codpes = $validated['orientador'];
-            $banca->presidente = 'Não'; 
-            $banca->tipo = 'Suplente'; 
-            $banca->agendamento_id = $agendamento->id;
-            $agendamento->bancas()->save($banca);
+            $busca = Banca::where('codpes', $validated['orientador'])->where('agendamento_id',$agendamento->id);
+            if($busca->count() == null){
+                $banca = new Banca;
+                $banca->codpes = $validated['orientador'];
+                $banca->nome = $validated['nome_orientador'];
+                $banca->presidente = 'Não'; 
+                $banca->tipo = 'Suplente'; 
+                $banca->agendamento_id = $agendamento->id;
+                $agendamento->bancas()->save($banca);
+            }
         }
         $agendamento->update($validated);
         return redirect("/agendamentos/$agendamento->id");

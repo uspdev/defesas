@@ -17,6 +17,7 @@ class CreateAgendamentosTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->integer('codpes');
+            $table->string('nome')->nullable();
             $table->string('regimento');
             $table->string('orientador_votante');
             $table->string('sexo');
@@ -26,6 +27,7 @@ class CreateAgendamentosTable extends Migration
             $table->dateTime('data_horario');
             $table->string('sala');
             $table->string('orientador');
+            $table->string('nome_orientador')->nullable();
         });
     }
 

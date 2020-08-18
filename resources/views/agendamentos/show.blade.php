@@ -22,9 +22,6 @@
         </div>
     </div>
     <br>
-
-    @inject('pessoa','Uspdev\Replicado\Pessoa')
-
     @include('agendamentos.partials.defesa')
     <br>
     @include('agendamentos.partials.banca')

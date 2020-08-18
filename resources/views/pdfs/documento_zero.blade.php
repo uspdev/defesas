@@ -55,12 +55,10 @@
 @endsection('header')
 
 @section('content')
-  @inject('pessoa','Uspdev\Replicado\Pessoa')
-
   <b>
     <table width="18cm">
       <tr>
-        <td width="9cm" > Nome: {{$pessoa::dump($agendamento->codpes)['nompes']}} </td>
+        <td width="9cm" > Nome: {{$agendamento->nome}} </td>
         <td> Data da Defesa: {{$agendamento->data}} </td>
       </tr>
       <tr>
@@ -108,7 +106,7 @@
     <table style="border: 1px solid black; border-spacing: 5px; width: 18cm;">
       <tr> 
         <td>
-          Prof: <b> {{$pessoa::dump($professor->codpes)['nompes']}}  </b>
+          Prof: <b> {{$professor->nome}}  </b>
         </td>
       </tr>
       <tr> 

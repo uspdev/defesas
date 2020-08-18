@@ -92,9 +92,9 @@
     </div><br><br>
 
     <div class="moremargin">Assunto: Banca Examinadora de <b>{{$agendamento->nivel}}</b></div> 
-    <div class="moremargin">Candidato(a): <b>{{$pessoa::dump($agendamento->codpes)['nompes']}}</b> </div>
+    <div class="moremargin">Candidato(a): <b>{{$agendamento->nome}}</b> </div>
     <div class="moremargin">Área: <b>{{$agendamento->area_programa}}</b> </div>
-    <div class="moremargin">Orientador(a) Prof(a). Dr(a). {{$pessoa::dump($agendamento->orientador)['nompes']}}</div>
+    <div class="moremargin">Orientador(a) Prof(a). Dr(a). {{$agendamento->nome_orientador}}</div>
     <div class="moremargin">Título do Trabalho: <i>{{$agendamento->titulo}} </i></div><br>
     <div class="importante">
         {!! $configs->importante_oficio !!}
@@ -109,7 +109,7 @@
     <table width="16cm" style="border='0'; margin-left:4cm; align-items: center; justify-content: center;">
         @foreach($professores as $componente)    
         <tr style="border='0'">
-            <td> {{$pessoa::dump($componente->codpes)['nompes']}} </td> 
+            <td> {{$componente->nome}} </td> 
             <td> {{$pessoa::cracha($componente->codpes)['nomorg']}}	</td>
         </tr>
         @endforeach
@@ -127,7 +127,7 @@
 		</b>
     </p>
     <br><br> 
-	Ilmo(a). Sr(a). {{$pessoa::dump($professor->codpes)['nompes']}}<br>
+	Ilmo(a). Sr(a). {{$professor->nome}}<br>
     {{$pessoa::obterEndereco($professor->codpes)['nomtiplgr']}} {{$pessoa::obterEndereco($professor->codpes)['epflgr']}} {{$pessoa::obterEndereco($professor->codpes)['numlgr']}} {{$pessoa::obterEndereco($professor->codpes)['cpllgr']}} {{$pessoa::obterEndereco($professor->codpes)['nombro']}} 
 	CEP: {{$pessoa::obterEndereco($professor->codpes)['codendptl']}}
 	<br>  {{$pessoa::obterEndereco($professor->codpes)['cidloc']}}

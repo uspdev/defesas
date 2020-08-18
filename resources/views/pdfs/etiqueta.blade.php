@@ -32,7 +32,7 @@
         <tr>
             <td width="9.85cm" height="3.33cm">
                 Ilmo(a) Sr(a).<br>
-                {{$pessoa::dump($professor->codpes)['nompes']}}<br>
+                {{$professor->nome}}<br>
                 {{$pessoa::obterEndereco($professor->codpes)['nomtiplgr']}} {{$pessoa::obterEndereco($professor->codpes)['epflgr']}} {{$pessoa::obterEndereco($professor->codpes)['numlgr']}} <br>
                 {{$pessoa::obterEndereco($professor->codpes)['cpllgr']}} {{$pessoa::obterEndereco($professor->codpes)['nombro']}} <br>
                 CEP: {{$pessoa::obterEndereco($professor->codpes)['codendptl']}} - {{$pessoa::obterEndereco($professor->codpes)['cidloc']}}/{{$pessoa::obterEndereco($professor->codpes)['sglest']}}

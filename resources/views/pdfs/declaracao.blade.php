@@ -102,7 +102,7 @@
     <table width="16cm" style="border='0'; margin-left:4cm; align-items: center; justify-content: center;">
         @foreach($professores as $componente)    
         <tr style="border='0'">
-            <td><b>{{$pessoa::dump($componente->codpes)['nompes']}}</b> </td> 
+            <td><b>{{$componente->nome}}</b> </td> 
             <td><b>{{$pessoa::cracha($componente->codpes)['nomorg']}}</b></td>
         </tr>
         @endforeach
