@@ -4,7 +4,7 @@
 
     <div class="row">
         <div class="col-sm">
-            <a href="/agendamentos/create" class="btn btn-primary">Agendar Nova Defesa</a></br>
+            <a href="/agendamentos/create" class="btn btn-success">Agendar Nova Defesa</a></br>
         </div>
         <div class="col-sm ">
             <div class="row float-right">
@@ -27,4 +27,6 @@
     @include('agendamentos.partials.banca')
     <br>
     @include('agendamentos.partials.documentos')
+    <br>
+    @include('agendamentos.partials.recibos')
 @endsection('content')

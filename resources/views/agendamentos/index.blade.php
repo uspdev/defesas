@@ -10,18 +10,19 @@
             <form method="GET" action="/agendamentos">
                 <div class="row form-group">
                     <div class="col-auto">
-                        <h5><b>Busca por: </b></h5>
+                        <label><h5><b>Busca por: </b></h5></label>
                     </div>
-                    <div class="col-auto">
-                        <input class="form-check-input" type="radio" name="filtro_busca" id="numero_usp" value="numero_usp" checked>
-                        <label class="form-check-label" for="numero_usp">Número USP</label>
-                    </div>
-                    <div class="col-auto">
-                        
-                        <input class="form-check-input" type="radio" name="filtro_busca" id="data" value="data" @if(Request()->filtro_busca == 'data') checked @endif>
-                        <label class="form-check-label" for="data">Data</label>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-light active">
+                            <input type="radio" name="filtro_busca" id="numero_usp" value="numero_usp" autocomplete="off" checked> Número USP
+                        </label>
+                        <label class="btn btn-light">
+                            <input type="radio" name="filtro_busca" id="data" value="data" autocomplete="off" @if(Request()->filtro_busca == 'data') checked @endif> Data
+                        </label>
                     </div>
                 </div>
+
+                
                 <div class="row form-group">
                     <div class="col-sm form-group" id="busca_nusp"  @if(Request()->filtro_busca == 'data') style="display:none;" @endif>
                         <input type="text" class="form-control busca" autocomplete="off" name="busca_nusp" value="{{ Request()->busca_nusp }}" placeholder="Digite o número USP">

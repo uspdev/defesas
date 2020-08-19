@@ -1,5 +1,5 @@
     <div class="card">
-        <div class="card-header">Defesa</div>
+        <div class="card-header"><b>Defesa</b></div>
         <div class="card-body">
             <b>Título da Tese:</b> {{$agendamento->titulo}}</br>
             <b>Candidato:</b> {{$agendamento->nome }} </br>
