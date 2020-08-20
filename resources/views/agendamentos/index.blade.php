@@ -10,11 +10,11 @@
             <form method="GET" action="/agendamentos">
                 <div class="row form-group">
                     <div class="col-auto">
-                        <label><h5><b>Busca por: </b></h5></label>
+                        <label style="margin-top:0.35em; margin-bottom:0em;"><h5><b>Busca por: </b></h5></label>
                     </div>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <label class="btn btn-light active">
-                            <input type="radio" name="filtro_busca" id="numero_usp" value="numero_usp" autocomplete="off" checked> Número USP
+                        <label class="btn btn-light">
+                            <input type="radio" name="filtro_busca" id="numero_usp" value="numero_usp" autocomplete="off" @if(Request()->filtro_busca == 'numero_usp' or Request()->filtro_busca == null) checked @endif> Número USP
                         </label>
                         <label class="btn btn-light">
                             <input type="radio" name="filtro_busca" id="data" value="data" autocomplete="off" @if(Request()->filtro_busca == 'data') checked @endif> Data

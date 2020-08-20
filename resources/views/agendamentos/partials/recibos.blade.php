@@ -1,39 +1,41 @@
 
 <div class="card">
     <div class="card-header"><b>Recibo de diária para docentes externos</b></div>
-    <form action="" method="POST">
-        <table class="table table-striped" style="text-align:center;">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col">Docente</th>
-                    <th scope="col">Ida</th>
-                    <th scope="col">Volta</th>		
-                    <th scope="col">Origem</th>
-                    <th scope="col">Diária</th>
-                    <th scope="col"></th> 
-                </tr>
-            </thead>
-            <tbody>
-                    <tr> 
-                        <td> Marta Denise da Rosa Jardim </td>
-                        <td> <input  type="text" size="6" name="ida" /> </td>
-                        <td> <input  type="text" size="6" name="volta" /> </td>
-                        <td> <input  type="text" size="6" name="origem" /> </td>
-                        <td> 	
-                            <select name="diaria"> 
-                                <option value="simples" selected="selected"> Simples </option>
-                                <option value="completa"> Completa </option>
-                                <option value="duas"> 2 diárias </option>
-                            </select>
-                        </td>
-                        <td> <input type="submit" class="btn btn-outline-success" value="Gerar Recibo"></td>
+    <table class="table table-striped" style="text-align:center;">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Docente</th>
+                <th scope="col">Ida</th>
+                <th scope="col">Volta</th>		
+                <th scope="col">Origem</th>
+                <th scope="col">Diária</th>
+                <th scope="col"></th> 
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($agendamento->bancas as $professor)
+                @if($pessoa::cracha($professor->codpes) == false)
+                    <tr>
+                        <form action="/emails/{{$agendamento->id}}/reciboexterno/{{$professor->id}}" method="POST">
+                            @csrf
+                            <td>{{$professor->nome}}</td>
+                            <td> <input type="text" class="datepicker" autocomplete="off" size="8" name="ida"> </td>
+                            <td> <input type="text" class="datepicker" autocomplete="off" size="8" name="volta"> </td>
+                            <td> <input type="text" size="8" name="origem"> </td>
+                            <td> 	
+                                <select name="diaria"> 
+                                    <option value="diaria_simples" selected="selected"> Simples </option>
+                                    <option value="diaria_completa"> Completa </option>
+                                    <option value="duas_diarias"> 2 diárias </option>
+                                </select>
+                            </td>
+                            <td> <input type="submit" class="btn btn-outline-success" value="Gerar Recibo"></td>
+                        </form>
                     </tr>
-                    <input type="hidden" name="nome_docente" value="Marta Denise da Rosa Jardim" />
-                    <input type="hidden" name="email_docente" value="martabane@gmail.com / m.jardim@unifesp.br" />
-                    <input type="hidden" name="nusp_docente" value="3777851" />		
-            </tbody>
-        </table>
-    </form>
+                @endif
+            @endforeach
+        </tbody>
+    </table>
 </div>
 <br>
 <div class="card">
@@ -179,24 +181,25 @@
 <br>
 <div class="card">
 <div class="card-header"><b>E-mails para docente</b></div>
-    <form action="" method="POST">
-        <table class="table table-striped" style="text-align:center;">
-            <thead class="thead-light">
-                <tr>
-                    <th>Docente</th>
-                    <th></th> 
-                </tr>
-            </thead>
-            <tbody>
-                <tr> 
-                    <td> Marta Denise da Rosa Jardim </td>
-                    <td> <input type="submit" size="4" class="btn btn-outline-success" value="Enviar E-mail" > </td> 
-                </tr>
-            </tbody>
-        </table>
-        <input type="hidden" name="nome_docente" value="Marta Denise da Rosa Jardim" />
-        <input type="hidden" name="n_usp" value="3777851" />
-        <input type="hidden" name="email_docente" value="martabane@gmail.com / m.jardim@unifesp.br" />
-        <input type="hidden" name="pis" value="11384127563" />	
-	</form>
+    <table class="table table-striped" style="text-align:center;">
+        <thead class="thead-light">
+            <tr>
+                <th>Docente</th>
+                <th></th> 
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($agendamento->bancas as $professor)
+                @if($pessoa::cracha($professor->codpes) == false)
+                    <tr>
+                        <form action="/emails/{{$agendamento->id}}/emaildocente/{{$professor->id}}" method="POST">
+                            @csrf 
+                            <td>{{$professor->nome}}</td>
+                            <td><input type="submit" size="4" class="btn btn-outline-success" value="Enviar E-mail" > </td>
+                        </form> 
+                    </tr>
+                @endif
+            @endforeach
+        </tbody>
+    </table>	
 </div>

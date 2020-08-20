@@ -158,4 +158,6 @@ class AgendamentoController extends Controller
         $agendamento->delete();
         return redirect('/agendamentos');
     }
+
+    
 }

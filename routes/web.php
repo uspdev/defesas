@@ -37,4 +37,7 @@ Route::get('/agendamentos/{agendamento}/bancas/{banca}/{tipo}','PdfController@do
 Route::get('/configs','ConfigController@edit');
 Route::post('/configs','ConfigController@store');
 
+// rotas para recibos
+Route::post('/emails/{agendamento}/reciboexterno/{banca}','EmailController@reciboExterno');
+Route::post('/emails/{agendamento}/emaildocente/{banca}','EmailController@emailDocente');
 

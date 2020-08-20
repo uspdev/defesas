@@ -36,4 +36,15 @@ class Config extends Model
         }
         return $configs;
     }
+
+    //Função para modificar o email padrão para docente externo
+    public static function setConfigEmail($agendamento, $professor){
+        $configs = Config::orderbyDesc('created_at')->first();
+        $configs['mail_docente'] = str_replace(
+            ["%docente_nome","%candidato_nome", "%data_defesa", "%local_defesa"], 
+            [$professor['nome'],$agendamento['nome'], $agendamento['data'], $agendamento['sala']], 
+            $configs['mail_docente']
+        );
+        return $configs;
+    }
 }
