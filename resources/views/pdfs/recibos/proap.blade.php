@@ -33,33 +33,34 @@
 @endsection('header')
 
 @section('content')
+@inject('pessoa','Uspdev\Replicado\Pessoa')
 
     <div id="proap">	
         <center> <span style="font-size:16px;"> <b> RECIBO DE DIÁRIAS - BANCA EXAMINADORA </b> </span> </center>	
-        <center> <span style="font-size:14px;"> <b> PROAP {$_POST['ano']} </b> </span> </center>
+        <center> <span style="font-size:14px;"> <b> PROAP {{$dados->ano}} </b> </span> </center>
         <hr>
         <table width="16.5cm" style="border:0px;">
 			<tr>
-				<td style="border:0px;" colspan="2">Nome do Convidado: {$_POST['nome_docente']} </td>
+				<td style="border:0px;" colspan="2">Nome do Convidado: {{$banca->nome}} </td>
 			</tr>
 			<tr>
-				<td style="border:0px;"> CPF: {$_POST['cpf_docente']}</td>
-				<td style="border:0px;">  RG: {$_POST['documento']}  </td>
+				<td style="border:0px;"> CPF: {{$pessoa::dump($banca->codpes)['numcpf']}}</td>
+				<td style="border:0px;">  RG: {{$pessoa::dump($banca->codpes)['numdocidf']}}  </td>
 			</tr>
 		</table>				
 	    <hr>
 	    <table width="16.5cm" style="border:0px;">
 			<tr>
 				<td style="border:0px;">Unidade: </td>
-				<td style="border:0px;"> {$_POST['lotado']} </td>
+				<td style="border:0px;"> {{$pessoa::cracha($banca->codpes)}} </td>
 				<td style="border:0px;">Cargo: </td>
 				<td style="border:0px;"> <b> Professor(a) Doutor(a) </b> </td>
 			</tr>
 			<tr>
 				<td style="border:0px;">Pós Graduação em: </td>
-				<td style="border:0px;"> {$candidato['nome_area']} </td>
+				<td style="border:0px;"> {{$agendamento->area_programa}} </td>
 				<td style="border:0px;"> Mês: </td>
-				<td style="border:0px;"> <b> {$candidato['data_mes']}</b> </td>
+				<td style="border:0px;"> <b> {{$agendamento->data}}</b> </td>
 			</tr>
 		</table>			
 	    <center>
@@ -79,37 +80,38 @@
 				<td style="border:1px solid;"> HORA </td>
 			</tr>
 			<tr>
-				<td style="border:1px solid;"> {$_POST['chegada']} </td>
+				<td style="border:1px solid;"> {{$dados->chegada}} </td>
 				<td style="border:1px solid;">  </td>
-				<td style="border:1px solid;"> {$_POST['origem']}  </td>
-				<td style="border:1px solid;"> {$_POST['saida']}  </td>
+				<td style="border:1px solid;"> {{$dados->origem}}  </td>
+				<td style="border:1px solid;"> {{$dados->saida}}  </td>
 				<td style="border:1px solid;">  </td>
-				<td style="border:1px solid;"> {$_POST['diaria_proap']} </td>
-				<td style="border:1px solid;"> {$_POST['valor_proap']}  </td>
+				<td style="border:1px solid;"> {{$dados->diaria_proap}} </td>
+				<td style="border:1px solid;"> {{$dados->valor_proap}}  </td>
 			</tr>
 			<tr>
 				<td style="border:0;" colspan="4">  Valor da Diária com pernoite </td>
-				<td style="border:0;"> {$info_banco[0]['diaria_com_pernoite']}   </td>
+				<td style="border:0;"> {{$configs->diaria_com_pernoite}}   </td>
 				<td style="border:1px solid;"> <b> TOTAL </b> </td>
-				<td style="border:1px solid;"> <b> {$_POST['valor_proap']}  </b> </td>
+				<td style="border:1px solid;"> <b> {{$dados->valor_proap}}  </b> </td>
 			</tr>
 		</table>
 	    </center>
-	    <br><br><br><br><br>Recebi o valor de {$_POST['valor_proap']} ({$_POST['extenso']}) <br><br><br>
+	    <br><br><br><br><br>Recebi o valor de {{$dados->valor_proap}} ({{$dados->extenso}}) <br><br><br>
 	    Referente às diárias a que fiz jus conforme demonstração supra. <br><br><br>
 	    São Paulo, {$candidato['data_proex']} <br><br><br><br>
 	    <table width="18cm"> 
 			<tr>
 				<td style="border:0;"> <hr style="width:10cm;"> 
-					{$_POST['nome_docente']} <br> 
-					<b>{$_POST['endereco']}</b>
+					{{$banca->nome}} <br> 
+					<b>{{$pessoa::obterEndereco($banca->codpes)['nomtiplgr']}} {{$pessoa::obterEndereco($banca->codpes)['epflgr']}} {{$pessoa::obterEndereco($banca->codpes) ['numlgr']}} {{$pessoa::obterEndereco($banca->codpes)['cpllgr']}} {{$pessoa::obterEndereco($banca->codpes)['nombro']}}
+                {{$pessoa::obterEndereco($banca->codpes)['cidloc']}}/{{$pessoa::obterEndereco($banca->codpes)['sglest']}} - {{$pessoa::obterEndereco($banca->codpes)['codendptl']}}</b>
 				</td>
 			</tr> 
 		</table>
 
-	    <center> <b> {$_POST['email_docente']} </b> </center>
-	    <br> <center> <b>RELATÓRIO </center></b> <br> <div class="justificar">  {$info_banco[0]['capes_proap']} </div> 
-	    Banca de: {$candidato['nome']} <br><br><br><br><br><br><br>
+	    <center> <b> {{$pessoa::email($banca->codpes)}} </b> </center>
+	    <br> <center> <b>RELATÓRIO </center></b> <br> <div class="justificar">  {!! $configs->capes_proap !!} </div> 
+	    Banca de: {{$agendamento->nome}} <br><br><br><br><br><br><br>
         <table width="18cm"> 
 			<tr>
 				<td style="border:0;"> <hr style="width:10cm;"> 

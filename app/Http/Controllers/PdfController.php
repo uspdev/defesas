@@ -7,6 +7,7 @@ use PDF;
 use App\Agendamento;
 use App\Banca;
 use App\Config;
+use Carbon\Carbon;
 
 class PdfController extends Controller
 {
@@ -68,8 +69,38 @@ class PdfController extends Controller
         }
     }
 
-    public function pdfRecibos(){
+    public function proex(Agendamento $agendamento, Banca $banca, Request $request){
         $this->authorize('logado');
-        
+        $dados = $request;
+        $agendamento->setDataHorario($agendamento);
+        $configs = Config::orderbyDesc('created_at')->first();
+        $pdf = PDF::loadView("pdfs.recibos.proex", compact(['agendamento','banca','dados','configs']));
+        return $pdf->download("proex.pdf");    }
+
+    public function proap(Agendamento $agendamento, Banca $banca, Request $request){
+        $this->authorize('logado');
+        $dados = $request;
+        $agendamento->data = Carbon::parse($agendamento->data_horario)->format('m');
+        $configs = Config::orderbyDesc('created_at')->first();
+        $pdf = PDF::loadView("pdfs.recibos.proap", compact(['agendamento','banca','dados','configs']));
+        return $pdf->download("proap.pdf");
+    }
+
+    public function passagem(Agendamento $agendamento, Banca $banca, Request $request){
+        $this->authorize('logado');
+        $dados = $request;
+        $agendamento->setDataHorario($agendamento);
+        $configs = Config::orderbyDesc('created_at')->first();
+        $pdf = PDF::loadView("pdfs.recibos.passagem", compact(['agendamento','banca','dados','configs']));
+        return $pdf->download("passagem.pdf");
+    }
+
+    public function passagemAuxilio(Agendamento $agendamento, Banca $banca, Request $request){
+        $this->authorize('logado');
+        $dados = $request;
+        $agendamento->setDataHorario($agendamento);
+        $configs = Config::orderbyDesc('created_at')->first();
+        $pdf = PDF::loadView("pdfs.recibos.passagemAuxilio", compact(['agendamento','banca','dados','configs']));
+        return $pdf->download("passagemAuxilio.pdf");
     }
 }

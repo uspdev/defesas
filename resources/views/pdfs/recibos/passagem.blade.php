@@ -33,24 +33,28 @@
 @endsection('header')
 
 @section('content')
+@inject('pessoa','Uspdev\Replicado\Pessoa')
 
-    <div class="data_hoje">{$candidato['hoje']}</div>
-	<left> {$info_banco[0]['agencia_viagem']} </left> 
+    <div class="data_hoje">
+      @php(setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese'))
+      São Paulo, {{ strftime('%d de %B de %Y', strtotime('today')) }}
+    </div>
+	<left> {!! $configs->agencia_viagem !!} </left> 
 	<br> 
     <ul> 
-		<li>Requisição passagem aérea nº <b>{$_POST['requisicao']} </b> </li>  
-		<li>Programa: <b>{$candidato['nome_area']} </b> </li>  
-		<li><b>{$candidato['nivel']} </b> </li>  
-		<li>Defesa do Sr.(a): <b> {$candidato['nome']} </b> </li>  
-		<li>Orientador(a): Prof(a) Dr(a)<b> {$candidato['orientador']} </b> </li>
+		<li>Requisição passagem aérea nº <b>{{$dados->requisicao}} </b> </li>  
+		<li>Programa: <b>{{$agendamento->area_programa}} </b> </li>  
+		<li><b>{{$agendamento->nivel}} </b> </li>  
+		<li>Defesa do Sr.(a): <b> {{$agendamento->nome}} </b> </li>  
+		<li>Orientador(a): Prof(a) Dr(a)<b> {{$agendamento->orientador}} </b> </li>
     </ul>
-	<div class="justificar" style="text-indent:1cm;" >{$info_banco[0]['agencia_texto']} </div>
+	<div class="justificar" style="text-indent:1cm;" >{!! $configs->agencia_texto !!} </div>
 	<div class="boxPassagem">  
-		Interessado(a): Prof(a). Dr(a). <b> {$_POST['nome_docente']}</b> <br>
-		E-mail: <b>{$_POST['email_docente']}</b> <br>
+		Interessado(a): Prof(a). Dr(a). <b> {{$banca->nome}}</b> <br>
+		E-mail: <b>{{$pessoa::email($banca->codpes)}}</b> <br>
 		Telefone:<b> {$_POST['telefone_docente']}</b> <br>
-		Data da defesa:<b> {$candidato['data_placa']}</b> <br>
-		Trajeto da passagem aérea <b> {$_POST['trajeto']}</b> <br>
+		Data da defesa:<b> {{$agendamento->data}}</b> <br>
+		Trajeto da passagem aérea <b> {{$dados->trajeto}}</b> <br>
 	</div> <br>
 	<table style="width:15.5cm;"> 
 		<tr> 
@@ -58,20 +62,20 @@
 			<td> <center><b>VOLTA </b> </center> </td>
 		</tr>
 		<tr>
-			<td> {$_POST['ida']} </td>
-			<td> {$_POST['volta']} </td>
+			<td> {{$dados->ida}} </td>
+			<td> {{$dados->volta}} </td>
 		</tr>
 	</table> <br>
 
 	<p><b> Solicitamos a gentileza no sentido de comunicar aos professores interessados, com antecedência, n° do PTA e nome da companhia aérea.  </b></p> <br> <br> 
-	<center><b> Favor faturar para: {$info_banco[0]['faturar_para']} </b></center> <br>
+	<center><b> Favor faturar para: {!! $configs->faturar_para !!} </b></center> <br>
 	<center> 
         <div style="margin-top:2cm;"> 
             Atenciosamente, 
         </div>
         <br><br><br>
         <b> 
-		    {$usuario[0]['nome']} 
+		    {{Auth::user()->name}} <br> 
 			<br> Serviço de Pós-Graduação - FFLCH/USP  
 		</b>
     </center>

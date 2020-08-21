@@ -30,10 +30,11 @@
 @endsection('header')
 
 @section('content')
+@inject('pessoa','Uspdev\Replicado\Pessoa')
 
 	<table width="17cm" class="negrito" style="margin-top:2.5cm">
 		<tr>
-   		    <td width="1.5cm" height="1.5cm" style="border-right:0px" > <img src="../../images/capes.png" style="float:left;"> </td>
+   		    <td width="1.5cm" height="1.5cm" style="border-right:0px" > <img width="80px" height="60px" src="images/capes.jpg" style="float:left;"> </td>
 			<td width="9.5cm" style="border-left:0px" >
                 <span style="font-size: 10px;">
 				    <center>CAPES - COORDENAÇÃO DE APERFEIÇOAMENTO DE PESSOAL DE NÍVEL SUPERIOR </center>
@@ -51,12 +52,12 @@
 		</tr> 
 		<tr>
 			<td>
-			<div class="justificar">	Recebi da Fundação CAPES / <b>{$candidato['coordenador']}</b> a importância de <b>{$_POST['importancia']}</b>, em caráter eventual e sem vínculo empregatício, a título de DIÁRIAS(S), no período de <b>{$_POST['periodo']}</b> pela participação na banca examinadora de <b>{$candidato['nivel']}</b> de <b>{$candidato['nome']}</b>, no dia <b>{$candidato['data_proex']}.</b></div> 
+			<div class="justificar">	Recebi da Fundação CAPES / <b>{$candidato['coordenador']}</b> a importância de <b>{{$dados->importancia}}</b>, em caráter eventual e sem vínculo empregatício, a título de DIÁRIAS(S), no período de <b>{{$dados->periodo}}</b> pela participação na banca examinadora de <b>{{$agendamento->nivel}}</b> de <b>{{$agendamento->nome}}</b>, no dia <b>{$candidato['data_proex']}.</b></div> 
 				<table width="15cm" style="border:0px;"> 
 					<tr style="border:0px;">
 						<td style="border:0px;"><b>Deduções(*)  </td>
-						<td style="border:0px;"> VALOR DA REMUNERAÇÃO <br> {$_POST['outro_tipo']} <br> Líquido recebido</td>
-						<td style="border:0px;"> {$_POST['valor']} <br> {$_POST['outro_valor']} <br> {$_POST['liquido']} </td>
+						<td style="border:0px;"> VALOR DA REMUNERAÇÃO <br> {{$dados->outro_tipo}} <br> Líquido recebido</td>
+						<td style="border:0px;"> {{$dados->valor}} <br> {{$dados->outro_valor}} <br> {{$dados->liquido}} </td>
 					</tr>
 				</table>
 			</td>
@@ -71,15 +72,18 @@
 			</td>
 		</tr> 
 		<tr>
-			<td> Nome: {$_POST['nome_docente']}	</td>
-			<td> CPF: {$_POST['cpf_docente']} </td>
+			<td> Nome: {{$banca->nome}}	</td>
+			<td> CPF: {{$pessoa::dump($banca->codpes)['numcpf']}} </td>
 		</tr>
 		<tr>
 			<td> Profissão: <br> PROFESSOR DOUTOR	</td>
-			<td> RG/Passaporte(se estrangeiro):<br> {$_POST['documento']} </td>
+			<td> RG/Passaporte(se estrangeiro):<br> {{$pessoa::dump($banca->codpes)['numdocidf']}} </td>
 		</tr>
 		<tr>
-			<td colspan="2"> Endereço Completo: <br> {$_POST['endereco']} </td>
+			<td colspan="2"> Endereço Completo: <br> 
+				{{$pessoa::obterEndereco($banca->codpes)['nomtiplgr']}} {{$pessoa::obterEndereco($banca->codpes)['epflgr']}} {{$pessoa::obterEndereco($banca->codpes) ['numlgr']}} {{$pessoa::obterEndereco($banca->codpes)['cpllgr']}} {{$pessoa::obterEndereco($banca->codpes)['nombro']}}
+                {{$pessoa::obterEndereco($banca->codpes)['cidloc']}}/{{$pessoa::obterEndereco($banca->codpes)['sglest']}} - {{$pessoa::obterEndereco($banca->codpes)['codendptl']}}
+			</td>
 		</tr>
 	</table> 
 	<br>
@@ -129,7 +133,7 @@
 		</tr>
 		<tr>
 			<td>  <b> <center>{$candidato['coordenador']}</b> </center>	</td>
-			<td> <b> <center>{$_POST['nome_docente']}</b> </center> </td>
+			<td> <b> <center>{{$banca->nome}}</b> </center> </td>
 		</tr>
 	</table> 
     <p style="font-size: 9px;"> <b>ATENÇÃO:</b> Utilizar esse modelo quando ocorrer pagamento de diárias ou remuneração de serviço a pessoas físicas que não possuam talonários de Notas Fiscais de Serviços (<b> Outros Serviços de Terceiros - Pessoas Físicas </b>) </p>

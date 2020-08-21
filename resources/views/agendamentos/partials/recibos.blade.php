@@ -16,20 +16,20 @@
             @foreach($agendamento->bancas as $professor)
                 @if($pessoa::cracha($professor->codpes) == false)
                     <tr>
-                        <form action="/emails/{{$agendamento->id}}/reciboexterno/{{$professor->id}}" method="POST">
+                        <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$professor->id}}/recibos/reciboExterno" class="form-group" method="POST">
                             @csrf
                             <td>{{$professor->nome}}</td>
-                            <td> <input type="text" class="datepicker" autocomplete="off" size="8" name="ida"> </td>
-                            <td> <input type="text" class="datepicker" autocomplete="off" size="8" name="volta"> </td>
-                            <td> <input type="text" size="8" name="origem"> </td>
+                            <td> <input type="text" class="datepicker form-control" size="7" autocomplete="off" name="ida"> </td>
+                            <td> <input type="text" class="datepicker form-control" size="7" autocomplete="off" name="volta"> </td>
+                            <td> <input type="text" class="form-control" size="7" name="origem"> </td>
                             <td> 	
-                                <select name="diaria"> 
+                                <select name="diaria" class="form-control"> 
                                     <option value="diaria_simples" selected="selected"> Simples </option>
                                     <option value="diaria_completa"> Completa </option>
                                     <option value="duas_diarias"> 2 diárias </option>
                                 </select>
                             </td>
-                            <td> <input type="submit" class="btn btn-outline-success" value="Gerar Recibo"></td>
+                            <td> <button type="submit" class="btn btn-outline-success"><b>Gerar Recibo</b></button></td>
                         </form>
                     </tr>
                 @endif
@@ -40,7 +40,6 @@
 <br>
 <div class="card">
     <div class="card-header"><b>PROEX</b></div>
-    <form action="./pdfs/proex.php?id_candidato=996" method="POST">
         <table class="table table-striped" style="text-align:center;">
             <thead class="thead-light">
                 <tr>
@@ -54,30 +53,30 @@
                 </tr>
             </thead>
             <tbody>
-                <tr> 
-                    <td> Marta Denise da Rosa Jardim </td>
-                    <td> <input type="text" size="6" name="importancia" /> </td>
-                    <td> <input type="text" size="6" name="periodo" /> </td>
-                    <td> <input type="text" size="6" name="valor" /> </td>
-                    <td><input type="text" size="4" name="outro_tipo" placeholder="Tipo"></td>
-                    <td><input type="text" size="4" name="outro_valor" placeholder="Valor"></td>
-                    <td> <input type="text" size="6" name="liquido" /> </td>
-                    <td> <input type="submit" size="4" class="btn btn-outline-success" value="Gerar Documento" > </td>
-                </tr>
-            </tbody>
-            <input type="hidden" name="nome_docente" value="Marta Denise da Rosa Jardim" />
-            <input type="hidden" name="telefone_docente" value="(11) 3384-8320" />
-            <input type="hidden" name="email_docente" value="martabane@gmail.com / m.jardim@unifesp.br" />	
-            <input type="hidden" name="cpf_docente" value="449.797.030-20" />	
-            <input type="hidden" name="documento" value="1028041299" />	
-            <input type="hidden" name="endereco" value=" R. Dr. Edmur de Castro Cotti, 218 Jardim Rizzo São Paulo SP 05587-130" />	
+                @foreach($agendamento->bancas as $professor)
+                    @if($pessoa::cracha($professor->codpes) == false)    
+                    <tr>
+                        <form class="form-group" action="/agendamentos/{{$agendamento->id}}/bancas/{{$professor->id}}/recibos/proex" method="POST">
+                            @csrf
+                            <td> {{$professor->nome}} </td>
+                            <td><input type="text" class="form-control" size="4" name="importancia"></td>
+                            <td><input type="text" class="form-control" size="4" name="periodo"></td>
+                            <td><input type="text" class="form-control" size="4" name="valor"></td>
+                            <td><input type="text" class="form-control" size="4" name="outro_tipo" placeholder="Tipo"></td>
+                            <td><input type="text" class="form-control" size="4" name="outro_valor" placeholder="Valor"></td>
+                            <td><input type="text" class="form-control" size="4" name="liquido"></td>
+                            <td><button type="submit" class="btn btn-outline-success"><b>Gerar Documento</b></button></td>
+                        </form>
+                    </tr>
+                    @endif
+                @endforeach
+            </tbody>	
         </table>
     </form>
 </div>
 <br>
 <div class="card">
     <div class="card-header"><b>Recibo de diárias - PROAP</b></div>
-    <form action="" method="POST">
         <table class="table table-striped" style="text-align:center;">
             <thead class="thead-light">
                 <tr>
@@ -93,33 +92,31 @@
                 </tr>
             </thead>
             <tbody>
-                <tr> 
-                    <td> Marta Denise da Rosa Jardim </td>
-                    <td> <input type="text" size="2" name="ano" /> </td>
-                    <td> <input type="text" size="1" name="diaria_proap" />  </td>
-                    <td> <input type="text" size="6" name="origem" /> </td>
-                    <td> <input type="text" size="6" name="chegada" /> </td>
-                    <td> <input type="text" size="6" name="saida" /> </td>
-                    <td> <input type="text" size="1" name="valor_proap" /> </td>
-                    <td> <input type="text" size="6" name="extenso" /> </td>
-                    <td> <input type="submit" size="4" class="btn btn-outline-success"  value="Gerar Documento" > </td>
-                </tr>
-            </tbody>
-
-            <input type="hidden" name="nome_docente" value="Marta Denise da Rosa Jardim" />
-            <input type="hidden" name="telefone_docente" value="(11) 3384-8320" />
-            <input type="hidden" name="email_docente" value="martabane@gmail.com / m.jardim@unifesp.br" />	
-            <input type="hidden" name="cpf_docente" value="449.797.030-20" />	
-            <input type="hidden" name="documento" value="1028041299" />	
-            <input type="hidden" name="lotado" value="UNIFESP" />	
-            <input type="hidden" name="endereco" value=" R. Dr. Edmur de Castro Cotti, 218 - Jardim Rizzo - São Paulo - SP - 05587-130" />	
+                @foreach($agendamento->bancas as $professor)
+                    @if($pessoa::cracha($professor->codpes) == false)    
+                        <tr>
+                            <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$professor->id}}/recibos/proap" class="form-group" method="POST">
+                                @csrf
+                                <td>{{$professor->nome}}</td>
+                                <td><input type="text" class="form-control" size="1" name="ano"></td>
+                                <td><input type="text" class="form-control" size="1" name="diaria_proap"></td>
+                                <td><input type="text" class="form-control" size="6" name="origem"></td>
+                                <td><input type="text" class="form-control datepicker" size="6" name="chegada"></td>
+                                <td><input type="text" class="form-control datepicker" size="6" name="saida"></td>
+                                <td><input type="text" class="form-control" size="2" name="valor_proap"></td>
+                                <td><input type="text" class="form-control" size="5" name="extenso"></td>
+                                <td><button type="submit" size="4" class="btn btn-outline-success"><b>Gerar Documento</b></button></td>
+                            </form>
+                        </tr>
+                    @endif
+                @endforeach
+            </tbody>	
         </table>
     </form>
 </div>
 <br>
 <div class="card">
     <div class="card-header"><b>Requisição de passagem aérea</b></div>
-    <form action="" method="POST">
         <table class="table table-striped" style="text-align:center;">
             <thead class="thead-light">
                 <tr>
@@ -132,25 +129,28 @@
                 </tr>
             </thead>
             <tbody>
-                <tr> 
-                    <td> Marta Denise da Rosa Jardim </td>
-                    <td> <input  type="text" size="6" name="ida" /> </td>
-                    <td> <input type="text" size="6" name="volta" /> </td>
-                    <td> <input  type="text" size="6" name="trajeto" /> </td>
-                    <td> <input type="text" size="6" name="requisicao" />	 </td>
-                    <td> <input type="submit" size="4" class="btn btn-outline-success" value="Gerar documento" > </td>
-                </tr>
-            </tbody>
-            <input type="hidden" name="nome_docente" value="Marta Denise da Rosa Jardim" />
-            <input type="hidden" name="telefone_docente" value="(11) 3384-8320" />
-            <input type="hidden" name="email_docente" value="martabane@gmail.com / m.jardim@unifesp.br" />	
+                @foreach($agendamento->bancas as $professor)
+                    @if($pessoa::cracha($professor->codpes) == false)
+                        <tr>
+                            <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$professor->id}}/recibos/passagem" class="form-group" method="POST">
+                                @csrf
+                                <td>{{$professor->nome}}</td>
+                                <td><input  type="text" class="form-control" size="6" name="ida"></td>
+                                <td><input type="text" class="form-control" size="6" name="volta"></td>
+                                <td><input  type="text" class="form-control" size="6" name="trajeto"></td>
+                                <td><input type="text" class="form-control" size="6" name="requisicao"></td>
+                                <td><button type="submit" size="4" class="btn btn-outline-success"><b>Gerar documento</b></button></td>
+                            </form>
+                        </tr>
+                    @endif
+                @endforeach
+            </tbody>	
         </table>
     </form>
 </div>
 <br>
 <div class="card">
 <div class="card-header"><b>Passagem aérea - Compra via auxílio</b></div>
-    <form action="" method="POST">
         <table class="table table-striped" style="text-align:center;">
             <thead class="thead-light">
                 <tr>
@@ -163,18 +163,22 @@
                 </tr>
             </thead>
             <tbody>
-                <tr> 
-                    <td> Marta Denise da Rosa Jardim </td>
-                    <td> <input  type="text" size="6" name="partida" /> </td>
-                    <td> <input  type="text" size="6" name="retorno" /> </td>
-                    <td> <input  type="text" size="6" name="itinerario" /> </td>
-                    <td> <input type="text" size="6" name="processo" />	 </td>
-                    <td> <input type="submit" size="4" class="btn btn-outline-success" value="Gerar Documento" > </td>
-                </tr>
+                @foreach($agendamento->bancas as $professor)
+                    @if($pessoa::cracha($professor->codpes) == false)
+                        <tr>
+                            <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$professor->id}}/recibos/passagemAuxilio" class="form-group" method="POST">
+                                @csrf
+                                <td>{{$professor->nome}}</td>
+                                <td><input  type="text" size="6" class="form-control datepicker" name="partida"></td>
+                                <td><input  type="text" size="6" class="form-control datepicker" name="retorno"></td>
+                                <td><input  type="text" size="6" class="form-control" name="itinerario"></td>
+                                <td><input type="text" size="6" class="form-control"name="processo"></td>
+                                <td><button type="submit" size="4" class="btn btn-outline-success"><b>Gerar Documento</b></button></td>
+                            </form>
+                        </tr>
+                    @endif
+                @endforeach
             </tbody>
-            <input type="hidden" name="nome_docente" value="Marta Denise da Rosa Jardim" />
-            <input type="hidden" name="telefone_docente" value="(11) 3384-8320" />
-            <input type="hidden" name="email_docente" value="martabane@gmail.com / m.jardim@unifesp.br" />	
         </table>
     </form>
 </div>
@@ -192,10 +196,10 @@
             @foreach($agendamento->bancas as $professor)
                 @if($pessoa::cracha($professor->codpes) == false)
                     <tr>
-                        <form action="/emails/{{$agendamento->id}}/emaildocente/{{$professor->id}}" method="POST">
+                        <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$professor->id}}/recibos/emailDocente" class="form-group" method="POST">
                             @csrf 
                             <td>{{$professor->nome}}</td>
-                            <td><input type="submit" size="4" class="btn btn-outline-success" value="Enviar E-mail" > </td>
+                            <td><button type="submit" size="4" class="btn btn-outline-success"><b>Enviar E-mail</b></button></td>
                         </form> 
                     </tr>
                 @endif

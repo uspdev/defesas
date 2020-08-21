@@ -25,7 +25,7 @@
       <td style='width:80%'; style='text-align:center;'>
         <p align='center'><b>FACULDADE DE FILOSOFIA, LETRAS E CIÊNCIAS HUMANAS</b>
         <br>Universidade de São Paulo<br>
-        Serviço de Pós-Graduação</p>
+        Serviço de Compras</p>
       </td>
     </tr>
   </table>
@@ -33,37 +33,33 @@
 @endsection('header')
 
 @section('content')
+@inject('pessoa','Uspdev\Replicado\Pessoa')
 
-    <h3>
-        <center>
-            UNIVERSIDADE DE SÃO PAULO<br>
-			FACULDADE DE FILOSOFIA, LETRAS E CIÊNCIAS HUMANAS<br>
-			SERVIÇO DE COMPRAS
-        </center>
-    </h3>
+    <left> {!! $configs->header_auxilio !!} </left> 
+    <left> <u><b>{{$dados->processo}}</b></u> </left> <br> 
 
-	<left> {$info_banco[0]['header_auxilio']} </left> 
-	<left> <u><b>{$_POST['processo']}</b></u> </left> <br> 
-
-	<p> Banca de defesa de <b> {$candidato['nome']} </p> 
-	<p> Passageiro(a) {$_POST['nome_docente']} </p> 
-	<p> Itinerário: {$_POST['itinerario']} </p> 
-	<p> Partida: {$_POST['partida']} </p> 
-	<p> Retorno: {$_POST['retorno']} </p> 
-	<p> Telefone: {$_POST['telefone_docente']} </p> 
-	<p> E-mail:  {$_POST['email_docente']} </p> 
-	<div class="justificar"> {$info_banco[0]['obs_passagem']} </div>
-					
-	<p>{$candidato['hoje']}</p>
-	<center> 
-        <br>
-        <p style="margin-top:3cm;">
-		    <b> 
-			{$usuario[0]['nome']} <br>
-			{$usuario[0]['codpes']}
-			<br> SPG-FFLCH-USP 
-		    </b> 
-        </p>
+    <p> Banca de defesa de <b> {{$agendamento->nome}} </p> 
+    <p> Passageiro(a) {{$banca->nome}} </p> 
+    <p> Itinerário: {{$dados->itinerario}} </p> 
+    <p> Partida: {{$dados->partida}}</p> 
+    <p> Retorno: {{$dados->retorno}} </p> 
+    <p> Telefone: {$telefone} </p> 
+    <p> E-mail:  {{$pessoa::email($banca->codpes)}} </p> 
+    <div class="justificar"> {!! $configs->obs_passagem !!} </div>
+            
+    <p> 
+      @php(setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese'))
+      São Paulo, {{ strftime('%d de %B de %Y', strtotime('today')) }}
+    </p>
+    <center> 
+      <br>
+      <p style="margin-top:3cm;">
+      <b> 
+        {{Auth::user()->name}} <br>
+        {{Auth::user()->codpes}}
+        <br> SPG-FFLCH-USP 
+      </b> 
+      </p>
     </center>
 
     <div id="footer">
