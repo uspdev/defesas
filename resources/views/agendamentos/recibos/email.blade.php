@@ -11,7 +11,8 @@
             <h4> <u> Pagamento de Pró-Labore para banca de {{$agendamento->nivel}} </u> </h4>
             <p>Candidato(a): <b> {{$agendamento->nome}} </b> </p>
             <p><b> {{$agendamento->area_programa}} </b> </p>
-            <p> Data da defesa:<b> {{$agendamento->data}} </b> </p>
+            @php(setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese'))
+            <p> Data da defesa:<b> {{strftime("%d de %B de %Y", strtotime($agendamento->data_horario))}} às {{$agendamento->horario}} </b> </p>
             <br>
             Item(s):
             <p>Prof. Dr. {{$banca->nome}} </p>

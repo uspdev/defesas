@@ -17,24 +17,23 @@
 @endsection('styles_head')
 
 @section('header')
-  <table style='width:100%'>
-    <tr>
-      <td style='width:20%' style='text-align:left;'>
-        <img src='https://www.fflch.usp.br/themes/contrib/aegan-subtheme/images/logo.png' width='230px'/>
-      </td>
-      <td style='width:80%'; style='text-align:center;'>
-        <p align='center'><b>FACULDADE DE FILOSOFIA, LETRAS E CIÊNCIAS HUMANAS</b>
-        <br>Universidade de São Paulo<br>
-        Serviço de Pós-Graduação</p>
-      </td>
-    </tr>
-  </table>
-  <hr>
+	<div id="headerFFLCH">
+		<table border="0" width="16cm">
+			<tr>
+   				<td width="2cm"> <img src="images/fflch.gif" width="95%"/> </td> 
+				<td width="16cm"> <span style="font-size:20px; font-style:normal; "> <b> UNIVERSIDADE DE SÃO PAULO </b> </span> <br>   
+					<span style="font-size:15px;">Faculdade de Filosofia, Letras e Ciências Humanas</span> <br>
+					<span style="font-size:12x; font-style:normal; "> <b>CNPJ. 63.025.530/0016-90</b> </span> <br> 
+					<span style="font-size:10px; font-style:normal; ">Rua do Lago, 717 - Sl. 131 - Cid. Universitária - CEP: 05508-900 - Fone/Fax: 3091-4878 </span> 
+				</td>
+			</tr>
+ 	 	</table>
+	</div>
 @endsection('header')
 
 @section('content')
 @inject('pessoa','Uspdev\Replicado\Pessoa')
-
+	<br>
     <div id="proap">	
         <center> <span style="font-size:16px;"> <b> RECIBO DE DIÁRIAS - BANCA EXAMINADORA </b> </span> </center>	
         <center> <span style="font-size:14px;"> <b> PROAP {{$dados->ano}} </b> </span> </center>
@@ -52,7 +51,7 @@
 	    <table width="16.5cm" style="border:0px;">
 			<tr>
 				<td style="border:0px;">Unidade: </td>
-				<td style="border:0px;"> {{$pessoa::cracha($banca->codpes)}} </td>
+				<td style="border:0px;"> {{$pessoa::cracha($banca->codpes)['nomorg']}} </td>
 				<td style="border:0px;">Cargo: </td>
 				<td style="border:0px;"> <b> Professor(a) Doutor(a) </b> </td>
 			</tr>
@@ -60,7 +59,8 @@
 				<td style="border:0px;">Pós Graduação em: </td>
 				<td style="border:0px;"> {{$agendamento->area_programa}} </td>
 				<td style="border:0px;"> Mês: </td>
-				<td style="border:0px;"> <b> {{$agendamento->data}}</b> </td>
+				@php(setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese'))
+				<td style="border:0px;"> <b> {{strftime("%B", strtotime($agendamento->data_horario))}}</b> </td>
 			</tr>
 		</table>			
 	    <center>
@@ -98,7 +98,7 @@
 	    </center>
 	    <br><br><br><br><br>Recebi o valor de {{$dados->valor_proap}} ({{$dados->extenso}}) <br><br><br>
 	    Referente às diárias a que fiz jus conforme demonstração supra. <br><br><br>
-	    São Paulo, {$candidato['data_proex']} <br><br><br><br>
+	    São Paulo, {{strftime("%d de %B de %Y", strtotime($agendamento->data_horario))}} <br><br><br><br>
 	    <table width="18cm"> 
 			<tr>
 				<td style="border:0;"> <hr style="width:10cm;"> 
@@ -121,9 +121,4 @@
 		</table>
 
 	</div>
-
-    <div id="footer">
-      {!! $configs->rodape_oficios !!}
-    </div>
-    <p style="page-break-before: always">&nbsp;</p>
 @endsection('content')

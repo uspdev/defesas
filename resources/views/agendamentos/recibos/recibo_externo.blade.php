@@ -15,7 +15,8 @@
             <p><b>E-mail:</b> {{$pessoa::email($banca->codpes)}} </p><br>
             <p>Banca de <b> {{$agendamento->area_programa}} / {{$agendamento->nivel}} </b> </p>
             <p>Do(a) aluno(a) <b> {{$agendamento->nome}} </b> </p>
-            <p><b>Data da defesa:</b> {{$agendamento->data}} </p></br></br>
+            @php(setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese'))
+            <p><b>Data da defesa:</b> {{strftime("%d de %B de %Y", strtotime($agendamento->data_horario))}} às {{$agendamento->horario}} </p></br></br>
             @if($dados->diaria == "diaria_simples")
             <p><b>Diária Simples:</b> {{$configs->diaria_simples}}</p>  
             @elseif($dados->diaria == "diaria_completa")

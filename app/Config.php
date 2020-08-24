@@ -40,9 +40,10 @@ class Config extends Model
     //Função para modificar o email padrão para docente externo
     public static function setConfigEmail($agendamento, $professor){
         $configs = Config::orderbyDesc('created_at')->first();
+        setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese');
         $configs['mail_docente'] = str_replace(
             ["%docente_nome","%candidato_nome", "%data_defesa", "%local_defesa"], 
-            [$professor['nome'],$agendamento['nome'], $agendamento['data'], $agendamento['sala']], 
+            [$professor['nome'],$agendamento['nome'], strftime("%d de %B de %Y", strtotime($agendamento->data_horario))." às ".$agendamento->horario, $agendamento['sala']], 
             $configs['mail_docente']
         );
         return $configs;
