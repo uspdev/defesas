@@ -34,7 +34,7 @@
     <p> Itinerário: {{$dados->itinerario}} </p> 
     <p> Partida: {{$dados->partida}}</p> 
     <p> Retorno: {{$dados->retorno}} </p> 
-    <p> Telefone: {$telefone} </p> 
+    <p> Telefone: {{$pessoa::telefones($banca->codpes)['0']}} </p> 
     <p> E-mail:  {{$pessoa::email($banca->codpes)}} </p> 
     <div class="justificar"> {!! $configs->obs_passagem !!} </div>
             

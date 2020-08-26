@@ -22,7 +22,7 @@ $factory->define(Agendamento::class, function (Faker $faker) {
         'sexo' => $sexo[array_rand($sexo)],
         'nivel' => $nivel[array_rand($nivel)],
         'titulo' => $faker->sentence($nbWords = 6, $variableNbWords = true),
-        'area_programa' => $area_programa[array_rand($area_programa)],
+        'area_programa' => $area_programa[array_rand($area_programa)]['codare'],
         'data_horario' => $faker->dateTimeBetween($startDate = 'now', $endDate = '+30 years'),
         'sala' => $sala[array_rand($sala)],
         'orientador' => $orientador,

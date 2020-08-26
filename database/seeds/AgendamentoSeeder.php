@@ -20,7 +20,7 @@ class AgendamentoSeeder extends Seeder
             'sexo' => 'Masculino',
             'nivel' => 'Doutorado',
             'titulo' => 'Manuel Bandeira',
-            'area_programa' => 'Teoria Literária e Literatura Comparada',
+            'area_programa' => '8142',
             'data_horario' => '2020-11-30 12:00:00',
             'sala' => 'Sala da Direção',
             'orientador' => '2202281',

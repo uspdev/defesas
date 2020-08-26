@@ -23,7 +23,7 @@ class CreateAgendamentosTable extends Migration
             $table->string('sexo');
             $table->string('nivel');
             $table->string('titulo');
-            $table->string('area_programa');
+            $table->integer('area_programa');
             $table->dateTime('data_horario');
             $table->string('sala');
             $table->string('orientador');

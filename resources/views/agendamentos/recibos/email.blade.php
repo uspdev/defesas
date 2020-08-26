@@ -2,6 +2,7 @@
 
 @section('content')
     @inject('pessoa','Uspdev\Replicado\Pessoa')
+    @inject('replicado','App\Utils\ReplicadoUtils')
 
     <div class="card">
         <div class="card-header">Recibo de diária para docentes externos</div>
@@ -17,7 +18,7 @@
             Item(s):
             <p>Prof. Dr. {{$banca->nome}} </p>
             <p>Número USP: {{$banca->codpes}} </p>
-            <p>PIS/PASEP:  </p> 
+            <p>PIS/PASEP: {{$replicado::pisPasep($banca->codpes)['numpispsp']}} </p> 
             <br>
 
             {!! $configs->mail_docente !!}

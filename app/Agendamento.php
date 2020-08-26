@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Uspdev\Replicado\Posgraduacao;
+use App\Utils\ReplicadoUtils;
 
 class Agendamento extends Model
 {
@@ -44,37 +46,7 @@ class Agendamento extends Model
     }
     
     public static function programaOptions(){
-        return [
-            "Filosofia",
-            "Teoria Literária e Literatura Comparada",
-            "Língua Espanhola e Literaturas Espanhola e Hispano-Americana",
-            "Estudos Linguísticos, Literários e Tradutológicos em Francês",
-            "Estudos Linguísticos e Literários em Inglês",
-            "Literatura e Cultura Russa",
-            "Língua, Literatura e Cultura Japonesa",
-            "Língua, Literatura e Cultura Italianas",
-            "Semiótica e Linguística Geral",
-            "Filologia e Língua Portuguesa",
-            "Literatura Brasileira",
-            "Língua e Literatura Alemã",
-            "Estudos Comparados de Literaturas de Língua Portuguesa",
-            "Letras Clássicas",
-            "Literatura Portuguesa",
-            "Estudos Judaicos e Árabes",
-            "Sociologia",
-            "Antropologia Social",
-            "Geografia Humana",
-            "Geografia Física",
-            "História Social",
-            "História Econômica",
-            "Ciência Política",
-            "Estudos da Tradução",
-            "Humanidades, Direitos e Outras Legitimidades",
-            "Profissional em Letras em Rede Nacional",
-            "Estudos Judaicos",
-            "Estudos Árabes",
-            "Letras Estrangeiras e Tradução (LETRA)",
-        ];
+        return ReplicadoUtils::areasProgramas(8);
     }
 
     public static function orientadorvotanteOptions(){

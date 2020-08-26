@@ -85,7 +85,7 @@
 	<div class="importante">  
 		Interessado(a): Prof(a). Dr(a). <b> {{$banca->nome}}</b> <br>
 		E-mail: <b>{{$pessoa::email($banca->codpes)}}</b> <br>
-		Telefone:<b> {$_POST['telefone_docente']}</b> <br>
+		Telefone:<b> {{$pessoa::telefones($banca->codpes)['0']}}</b> <br>
 		Data da defesa:<b> {{$agendamento->data}}</b> <br>
 		Trajeto da passagem aérea <b> {{$dados->trajeto}}</b> <br>
 	</div> <br>

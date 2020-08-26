@@ -8,8 +8,8 @@
             <b>Regimento:</b> {{$agendamento->regimento}}</br>
             <b>Nível:</b> {{$agendamento->nivel}}</br>
             @foreach ($agendamento->programaOptions() as $option)
-                @if ($option == $agendamento->area_programa)
-                    <b>Programa:</b> {{$option}}</br>
+                @if ($option['codare'] == $agendamento->area_programa)
+                    <b>Programa:</b> {{$option['nomare']}}</br>
                 @endif
             @endforeach
             <b>Orientador Votante:</b> {{$agendamento->orientador_votante}}</br>
