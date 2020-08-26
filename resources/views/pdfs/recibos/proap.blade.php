@@ -57,7 +57,7 @@
 			</tr>
 			<tr>
 				<td style="border:0px;">Pós Graduação em: </td>
-				<td style="border:0px;"> {{$agendamento->area_programa}} </td>
+				<td style="border:0px;"> {{$agendamento->nome_area}} </td>
 				<td style="border:0px;"> Mês: </td>
 				@php(setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese'))
 				<td style="border:0px;"> <b> {{strftime("%B", strtotime($agendamento->data_horario))}}</b> </td>

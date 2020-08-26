@@ -62,7 +62,7 @@
         <td> Data da Defesa: {{$agendamento->data}} </td>
       </tr>
       <tr>
-        <td> {{$agendamento->nivel}}: {{$agendamento->area_programa}} </td>
+        <td> {{$agendamento->nivel}}: {{$agendamento->nome_area}} </td>
         <td> Hora: {{$agendamento->horario}} </td>
       </tr>
       <tr>

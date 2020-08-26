@@ -13,6 +13,7 @@ class Banca extends Model
         return $this->belongsTo('App\Agendamento');
     }
 
+    //Função para devolver valores de select
     public static function presidenteOptions(){
         return [
             'Sim',
@@ -20,6 +21,7 @@ class Banca extends Model
         ];
     }
 
+    //Função para devolver valores de select
     public static function tipoOptions(){
         return [
             'Titular',

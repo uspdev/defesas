@@ -16,14 +16,25 @@ class Agendamento extends Model
         return $this->hasMany('App\Banca');
     }
 
+    //Função para formatar horário do agendamento
     public function setDataHorario($agendamento){
         $data = Carbon::parse($agendamento->data_horario)->format('d/m/Y');
         $horario = Carbon::parse($agendamento->data_horario)->format('H:i');
         $agendamento->data = $data;
         $agendamento->horario = $horario;
-        return $agendamento;
+    }
+
+    //Função para setar nome por extenso da área/programa através de seu código
+    public function setNomeArea($agendamento){
+        $programas = $agendamento->programaOptions();
+        foreach($programas as $p){
+            if($agendamento->area_programa == $p['codare']){
+                $agendamento->nome_area = $p['nomare'];
+            }
+        }
     }
     
+    //Função para devolver valores de select
     public static function sexoOptions(){
         return [
             'Masculino',
@@ -31,6 +42,7 @@ class Agendamento extends Model
         ];
     }
 
+    //Função para devolver valores de select
     public static function regimentoOptions(){
         return [
             'Antigo',
@@ -38,17 +50,21 @@ class Agendamento extends Model
         ];
     }
 
+    //Função para devolver valores de select
     public static function nivelOptions(){
         return [
             'Mestrado',
             'Doutorado'
         ];
     }
-    
+
+    //Função para devolver valores de select
     public static function programaOptions(){
+        //Em vez de usar a função do Uspdev, para facilitação foi criada uma personalizada no Utils que varre o array e disponibiliza apenas os códigos da área e seus nomes
         return ReplicadoUtils::areasProgramas(8);
     }
 
+    //Função para devolver valores de select
     public static function orientadorvotanteOptions(){
         return [
             'Sim',
@@ -56,7 +72,7 @@ class Agendamento extends Model
         ];
     }
 
-    
+    //Função para devolver valores de select
     public static function salaOptions(){
         return [
             "Sala de Defesas (120)",

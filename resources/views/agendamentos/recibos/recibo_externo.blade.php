@@ -13,7 +13,7 @@
             <p><b>Ida:</b> {{$dados->ida}} </p> 
             <p><b>Volta:</b> {{$dados->volta}} </p> 
             <p><b>E-mail:</b> {{$pessoa::email($banca->codpes)}} </p><br>
-            <p>Banca de <b> {{$agendamento->area_programa}} / {{$agendamento->nivel}} </b> </p>
+            <p>Banca de <b> {{$agendamento->nome_area}} / {{$agendamento->nivel}} </b> </p>
             <p>Do(a) aluno(a) <b> {{$agendamento->nome}} </b> </p>
             @php(setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese'))
             <p><b>Data da defesa:</b> {{strftime("%d de %B de %Y", strtotime($agendamento->data_horario))}} às {{$agendamento->horario}} </p></br></br>

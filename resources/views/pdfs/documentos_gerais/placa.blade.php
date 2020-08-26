@@ -26,7 +26,7 @@
 	</div>
 	<br><br><br>
 	<div class="candidato">Candidato(a): {{$agendamento->nome}}</div> 
-	<div class="candidato">Data: {{$agendamento->data}}.</div>  
-	<div class="candidato">Defesa de {{$agendamento->nivel}} em {{$agendamento->area_programa}}</div> 
+	<div class="candidato">Data: {{$agendamento->data}}.</div>
+	<div class="candidato">Defesa de {{$agendamento->nivel}} em {{$agendamento->nome_area}}</div> 
 	<div class="candidato">Título: <i>"{{$agendamento->titulo}}"</i></div>
 @endsection('content')

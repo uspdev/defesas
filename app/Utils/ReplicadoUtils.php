@@ -24,10 +24,24 @@ class ReplicadoUtils {
         return false;
     }
 
-    public static function cordenador($codare){
-        $query = "";
+    // Função criada para verificar se o codpes informado corresponde a algum docente externo
+    public static function verificaprofessorExterno($codpes){
+        $query = "SELECT * FROM fflch.dbo.LOCALIZAPESSOA l WHERE l.codpes = convert(int, :codpes) and l.tipvin = 'EXTERNO' and l.sitatl = 'A'";
         $param = [
-            '' => ,
+            'codpes' => $codpes,
+        ];
+        $result = DBreplicado::fetch($query, $param);
+        if($result) {
+            return true;
+        }
+        return false;
+    }
+
+    // Função para verificar a partir do código da Área qual é o coordenador - usado na geração dos PDFs PROAP e PROEX
+    public static function coordenadorArea($codare){
+        $query = "SELECT DISTINCT (l.nompes), a.codare from fflch.dbo.R10DOCCOOCUR rd INNER JOIN fflch.dbo.LOCALIZAPESSOA l ON l.codpes = rd.codpes INNER JOIN fflch.dbo.AREA a ON rd.codcur = a.codcur where codundclg = 8 and a.codare = convert(int, :codare) and fncpescur = 'COO' and sitatl = 'A' and nomfnc = 'Coord Prog Pg'";
+        $param = [
+            'codare' => $codare,
         ];
         $result = DBreplicado::fetch($query, $param);
         if(!empty($result)) {

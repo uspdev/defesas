@@ -2,6 +2,7 @@
 
 @section('content')
 @inject('pessoa','Uspdev\Replicado\Pessoa')
+@inject('replicado','App\Utils\ReplicadoUtils')
     <div class="row">
         <div class="col-sm">
             <a href="/agendamentos/create" class="btn btn-success">Agendar Nova Defesa</a></br>

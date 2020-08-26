@@ -92,6 +92,7 @@ class AgendamentoController extends Controller
     {
         $this->authorize('logado');
         $agendamento->setDataHorario($agendamento);
+        $agendamento->setNomeArea($agendamento);
         return view('agendamentos.show')->with('agendamento', $agendamento);
     }
 

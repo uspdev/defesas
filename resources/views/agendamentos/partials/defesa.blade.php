@@ -7,11 +7,7 @@
             <b>Sexo:</b> {{$agendamento->sexo}}</br>
             <b>Regimento:</b> {{$agendamento->regimento}}</br>
             <b>Nível:</b> {{$agendamento->nivel}}</br>
-            @foreach ($agendamento->programaOptions() as $option)
-                @if ($option['codare'] == $agendamento->area_programa)
-                    <b>Programa:</b> {{$option['nomare']}}</br>
-                @endif
-            @endforeach
+            <b>Programa:</b> {{$agendamento->nome_area}}</br>
             <b>Orientador Votante:</b> {{$agendamento->orientador_votante}}</br>
             <b>Orientador:</b> {{$agendamento->nome_orientador}}</br>
             <b>Data:</b> {{$agendamento->data}}</br>

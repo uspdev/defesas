@@ -12,7 +12,7 @@
     .moremargin {margin-bottom: 0.15cm;}
     .importante {border:2px solid; background-color:#cbcbcb; margin-top:0.3cm; margin-bottom:0.3cm;}
     .negrito {font-weight: bolder;}
-    .justificar{text-align: justify;}
+    .justificar{text-align: justify; margin-right:2em;}
     table { background #fff; border-collapse: collapse; }
     tr, td { border: 1px #000 solid; padding: 3 }
     #proap { font-family:Courier; font-size:13px; }

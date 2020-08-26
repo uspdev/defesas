@@ -28,6 +28,7 @@
 
 @section('content')
 @inject('pessoa','Uspdev\Replicado\Pessoa')
+@inject('replicado','App\Utils\ReplicadoUtils')
 	<br>
 	<table width="18cm" cellspacing="0" cellpadding="0">
 		<tr>
@@ -38,7 +39,7 @@
 		<tr>
 			<td>
 			@php(setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese'))
-			<div class="justificar">	Recebi da Fundação CAPES / <b>{$candidato['coordenador']}</b> a importância de <b>{{$dados->importancia}}</b>, em caráter eventual e sem vínculo empregatício, a título de DIÁRIAS(S), no período de <b>{{$dados->periodo}}</b> pela participação na banca examinadora de <b>{{$agendamento->nivel}}</b> de <b>{{$agendamento->nome}}</b>, no dia <b>{{strftime("%d de %B de %Y", strtotime($agendamento->data_horario))}}.</b></div> 
+			<div class="justificar">	Recebi da Fundação CAPES / <b>{{$replicado::coordenadorArea($agendamento->area_programa)['nompes']}}</b> a importância de <b>{{$dados->importancia}}</b>, em caráter eventual e sem vínculo empregatício, a título de DIÁRIAS(S), no período de <b>{{$dados->periodo}}</b> pela participação na banca examinadora de <b>{{$agendamento->nivel}}</b> de <b>{{$agendamento->nome}}</b>, no dia <b>{{strftime("%d de %B de %Y", strtotime($agendamento->data_horario))}}.</b></div> 
 				<table width="15cm" cellspacing="0" cellpadding="0"> 
 					<tr >
 						<td ><b>Deduções(*)  </td>
@@ -120,7 +121,7 @@
 			<td> Por ser verdade, firmo o presente recibo. <br> <br> <p style="text-align:right;"> São Paulo, {{strftime("%d de %B de %Y", strtotime($agendamento->data_horario))}} </p> <br><br></td>
 		</tr>
 		<tr>
-			<td>  <b> <center>{$candidato['coordenador']}</b> </center>	</td>
+			<td>  <b> <center>{{$replicado::coordenadorArea($agendamento->area_programa)['nompes']}}</b> </center>	</td>
 			<td> <b> <center>{{$banca->nome}}</b> </center> </td>
 		</tr>
 	</table> 

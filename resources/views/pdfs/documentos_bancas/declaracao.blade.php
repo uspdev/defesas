@@ -50,7 +50,7 @@
         border: 1px #000 solid; padding: 1
     }
     body{
-        margin-top: -2.1cm; margin-bottom: -2.1cm; font-family: DejaVu Sans, sans-serif; font-size: 12px;
+        margin-top: 0.2em; margin-left: 1.8em; font-family: DejaVu Sans, sans-serif; font-size: 12px;
     }
     #footer {
         position: fixed;
@@ -70,7 +70,6 @@
 @endsection('styles_head')
 
 @section('content')
-    <br><br><br>
     <div id="headerFFLCH" style="text-align:center;">
 		<table>
             <tr>

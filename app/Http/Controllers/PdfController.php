@@ -20,6 +20,7 @@ class PdfController extends Controller
         $this->authorize('logado');
         $configs = Config::orderbyDesc('created_at')->first();
         $agendamento->setDataHorario($agendamento);
+        $agendamento->setNomeArea($agendamento);
         if($tipo == 'placa'){
             $pdf = PDF::loadView('pdfs.documentos_gerais.placa', compact('agendamento'))->setPaper('a4', 'landscape');
             return $pdf->download('placa.pdf');
@@ -49,6 +50,7 @@ class PdfController extends Controller
     public function documentosIndividuais(Agendamento $agendamento, Banca $banca, $tipo){
         $this->authorize('logado');
         $agendamento->setDataHorario($agendamento);
+        $agendamento->setNomeArea($agendamento);
         if($tipo == 'titular' or $tipo == 'declaracao'){
             $professores = Banca::where('agendamento_id',$agendamento->id)->where('tipo', 'Titular')->get();
             $professor = $banca;
@@ -69,32 +71,40 @@ class PdfController extends Controller
         }
     }
 
+    //Função destinada à geração de PDF PROEX
     public function proex(Agendamento $agendamento, Banca $banca, Request $request){
         $this->authorize('logado');
         $dados = $request;
         $agendamento->setDataHorario($agendamento);
+        $agendamento->setNomeArea($agendamento);
         $configs = Config::orderbyDesc('created_at')->first();
         $pdf = PDF::loadView("pdfs.recibos.proex", compact(['agendamento','banca','dados','configs']));
-        return $pdf->download("proex.pdf");    }
+        return $pdf->download("proex.pdf");    
+    }
 
+    //Função destinada à geração de PDF PROAP
     public function proap(Agendamento $agendamento, Banca $banca, Request $request){
         $this->authorize('logado');
         $dados = $request;
         $agendamento->data = Carbon::parse($agendamento->data_horario)->format('m');
+        $agendamento->setNomeArea($agendamento);
         $configs = Config::orderbyDesc('created_at')->first();
         $pdf = PDF::loadView("pdfs.recibos.proap", compact(['agendamento','banca','dados','configs']));
         return $pdf->download("proap.pdf");
     }
 
+    //Função destinada à geração de PDF da passagem
     public function passagem(Agendamento $agendamento, Banca $banca, Request $request){
         $this->authorize('logado');
         $dados = $request;
         $agendamento->setDataHorario($agendamento);
+        $agendamento->setNomeArea($agendamento);
         $configs = Config::orderbyDesc('created_at')->first();
         $pdf = PDF::loadView("pdfs.recibos.passagem", compact(['agendamento','banca','dados','configs']));
         return $pdf->download("passagem.pdf");
     }
 
+    //Função destinada à geração de PDF da passagem via auxílio
     public function passagemAuxilio(Agendamento $agendamento, Banca $banca, Request $request){
         $this->authorize('logado');
         $dados = $request;
