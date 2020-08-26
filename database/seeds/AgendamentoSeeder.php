@@ -13,16 +13,18 @@ class AgendamentoSeeder extends Seeder
     public function run()
     {
         $agendamento = [
-            'codpes' => 10270025, 
+            'codpes' => 5166999,
+            'nome' => 'Breno Aparecido Servidone Moreno', 
             'regimento' => 'Antigo',
             'orientador_votante' => 'Sim',
             'sexo' => 'Masculino',
             'nivel' => 'Doutorado',
             'titulo' => 'Manuel Bandeira',
-            'area_programa' => 'Teoria Literária e Literatura Comparada',
-            'data_horario' => '1980-06-20 12:00:00',
+            'area_programa' => '8142',
+            'data_horario' => '2020-11-30 12:00:00',
             'sala' => 'Sala da Direção',
             'orientador' => '2202281',
+            'nome_orientador' => 'Erwin Torralbo Gimenez',
         ];
         Agendamento::create($agendamento);
         //factory(Agendamento::class, 100)->create();

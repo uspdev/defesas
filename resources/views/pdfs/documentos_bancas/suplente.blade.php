@@ -50,7 +50,7 @@
         border: 1px #000 solid; padding: 1
     }
     body{
-        margin-top: -2.1cm; margin-bottom: -2.1cm; font-family: DejaVu Sans, sans-serif; font-size: 12px;
+        margin-top: 0.2em; margin-left: 1.8em; font-family: DejaVu Sans, sans-serif; font-size: 12px;
     }
     #footer {
         position: fixed;
@@ -70,9 +70,8 @@
 @endsection('styles_head')
 
 @section('content')
-    <br><br><br>
     <div id="headerFFLCH" style="text-align:center;">
-        <table>
+		<table>
             <tr>
                 <br>
                 <td width="2cm"> <img src="images/fflch.gif" width="95%"/> </td> 
@@ -83,60 +82,45 @@
                     </p>
                 </td>
             </tr>
-        </table>
-    </div>
+ 	    </table>
+	</div>
 
     <div align="right">
         @php(setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese'))
-        São Paulo, {{ strftime('%d de %B de %Y', strtotime('today')) }}
-    </div><br><br>
-
-    <div class="moremargin">Assunto: Banca Examinadora de <b>{{$agendamento->nivel}}</b></div> 
-    <div class="moremargin">Candidato(a): <b>{{$pessoa::dump($agendamento->codpes)['nompes']}}</b> </div>
-    <div class="moremargin">Área: <b>{{$agendamento->area_programa}}</b> </div>
-    <div class="moremargin">Orientador(a) Prof(a). Dr(a). {{$pessoa::dump($agendamento->orientador)['nompes']}}</div>
-    <div class="moremargin">Título do Trabalho: <i>{{$agendamento->titulo}} </i></div><br>
-    <div class="importante">
-        {!! $configs->importante_oficio !!}
+        São Paulo, {{ strftime('%d de %B de %Y', strtotime('today')) }}    
     </div><br>
-    <p>
-        <i>Data e hora da defesa:  </i> <b> {{$agendamento->data}} {{$agendamento->hora}} </b> <br> 
-        <i>Local:</i> <b> {{$agendamento->sala}} </b> - Administração da FFLCH 
-    </p>  
-    <i>Composição da banca examinadora:</i> 
 
+    Ilmo(a). Sr(a). {{$professor->nome}}<br>
+    {{$pessoa::obterEndereco($professor->codpes)['nomtiplgr']}} {{$pessoa::obterEndereco($professor->codpes)['epflgr']}} {{$pessoa::obterEndereco($professor->codpes)['numlgr']}} {{$pessoa::obterEndereco($professor->codpes)['cpllgr']}} {{$pessoa::obterEndereco($professor->codpes)['nombro']}} 
+    CEP: {{$pessoa::obterEndereco($professor->codpes)['codendptl']}}
+    <br>  {{$pessoa::obterEndereco($professor->codpes)['cidloc']}}
+    - {{$pessoa::obterEndereco($professor->codpes)['sglest']}}
+    <br> telefone: {{$pessoa::telefones($professor->codpes)['0']}}
+    <br>e-mail: {{$pessoa::emailusp($professor->codpes)}}
+    <br><br>
 
-    <table width="16cm" style="border='0'; margin-left:4cm; align-items: center; justify-content: center;">
-        @foreach($professores as $componente)    
-        <tr style="border='0'">
-            <td> {{$pessoa::dump($componente->codpes)['nompes']}} </td> 
-            <td> {{$pessoa::cracha($componente->codpes)['nomorg']}}	</td>
-        </tr>
-        @endforeach
-    </table>
-
-	<br>
-	<div class="importante" align="center"> 
-        {!! $configs->regimento !!}
+    <div class="boxSuplente">
+        <div class="moremargin">Assunto: Banca Examinadora de <b>{{$agendamento->nivel}}</b></div> 
+        <div class="moremargin">Candidato(a): <b>{{$agendamento->nome}}</b> </div>
+        <div class="moremargin">Área: <b>{{$agendamento->nome_area}}</b> </div>
+        <div class="moremargin">Orientador(a) Prof(a). Dr(a). {{$agendamento->nome_orientador}}</div>
+        <div class="moremargin">Título do Trabalho: <i>{{$agendamento->titulo}} </i></div>
     </div>
-    <p align="center">
-        Atenciosamente, 
-		<br>
-        <b> 
+
+    <br><br>
+	<div class="oficioSuplente">Sr(a). Prof(a). {{$professor->nome}} </div>
+
+    <div style="text-align:justify;">            
+        {!! $configs->oficio_suplente !!}
+    </div>
+	<div style="margin-top:2cm;" align="center"> 
+        Atenciosamente,<br>  
+		<b>
 			{{Auth::user()->name}} - Defesas de Mestrado e Doutorado da FFLCH /USP 
 		</b>
-    </p>
-    <br><br> 
-	Ilmo(a). Sr(a). {{$pessoa::dump($professor->codpes)['nompes']}}<br>
-    {{$pessoa::obterEndereco($professor->codpes)['nomtiplgr']}} {{$pessoa::obterEndereco($professor->codpes)['epflgr']}} {{$pessoa::obterEndereco($professor->codpes)['numlgr']}} {{$pessoa::obterEndereco($professor->codpes)['cpllgr']}} {{$pessoa::obterEndereco($professor->codpes)['nombro']}} 
-	CEP: {{$pessoa::obterEndereco($professor->codpes)['codendptl']}}
-	<br>  {{$pessoa::obterEndereco($professor->codpes)['cidloc']}}
-	- {{$pessoa::obterEndereco($professor->codpes)['sglest']}}
-	<br> telefone: 
-	<br>e-mail: {{$pessoa::emailusp($professor->codpes)}}
-
+    </div> 
     <div id="footer">
         {!! $configs->rodape_oficios !!}
     </div>
-
 @endsection('content')
+

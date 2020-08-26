@@ -32,9 +32,16 @@ Route::delete('/agendamentos/{agendamento}/bancas/{banca}','BancaController@dest
 // rotas para pdfs
 Route::get('/agendamentos/{agendamento}/{tipo}','PdfController@documentosGerais');
 Route::get('/agendamentos/{agendamento}/bancas/{banca}/{tipo}','PdfController@documentosIndividuais');
+Route::post('/agendamentos/{agendamento}/bancas/{banca}/recibos/proex','PdfController@proex');
+Route::post('/agendamentos/{agendamento}/bancas/{banca}/recibos/proap','PdfController@proap');
+Route::post('/agendamentos/{agendamento}/bancas/{banca}/recibos/passagem','PdfController@passagem');
+Route::post('/agendamentos/{agendamento}/bancas/{banca}/recibos/passagemAuxilio','PdfController@passagemAuxilio');
 
 // rotas para configs
 Route::get('/configs','ConfigController@edit');
 Route::post('/configs','ConfigController@store');
 
+// rotas para recibos
+Route::post('/agendamentos/{agendamento}/bancas/{banca}/recibos/reciboExterno','EmailController@reciboExterno');
+Route::post('/agendamentos/{agendamento}/bancas/{banca}/recibos/emailDocente','EmailController@emailDocente');
 

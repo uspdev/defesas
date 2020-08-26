@@ -49,7 +49,7 @@
 					CEP: {{$pessoa::obterEndereco($professor->codpes)['codendptl']}}
 					<br>  {{$pessoa::obterEndereco($professor->codpes)['cidloc']}} - {{$pessoa::obterEndereco($professor->codpes)['sglest']}}
 					<div style="text-indent:1.5cm;">
-						A/C: Prof(a). Dr(a). {{$pessoa::dump($professor->codpes)['nompes']}}
+						A/C: Prof(a). Dr(a). {{$professor->nome}}
 					</div> 
 				</td> 
 			</tr> 
@@ -89,7 +89,7 @@
 					<u>DO:</u> SERVIÇO DE PÓS-GRADUAÇÃO DA FFLCH <br>
 					<u>PARA:</u>  {{$pessoa::obterEndereco($professor->codpes)['nomtiplgr']}} {{$pessoa::obterEndereco($professor->codpes)['epflgr']}} {{$pessoa::obterEndereco($professor->codpes)['numlgr']}} {{$pessoa::obterEndereco($professor->codpes)['cpllgr']}} {{$pessoa::obterEndereco($professor->codpes)['nombro']}} 
 					CEP: {{$pessoa::obterEndereco($professor->codpes)['codendptl']}} - {{$pessoa::obterEndereco($professor->codpes)['cidloc']}}/{{$pessoa::obterEndereco($professor->codpes)['sglest']}}
-					<div style="text-indent:1.5cm;"> A/C: Prof(a). Dr(a). {{$pessoa::dump($professor->codpes)['nompes']}} </div> 
+					<div style="text-indent:1.5cm;"> A/C: Prof(a). Dr(a). {{$professor->nome}} </div> 
 				</td> 
 			</tr>
 		</table>

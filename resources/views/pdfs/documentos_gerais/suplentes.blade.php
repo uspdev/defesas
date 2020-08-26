@@ -1,6 +1,6 @@
+@extends('pdfs.fflch')
 @inject('pessoa','Uspdev\Replicado\Pessoa')
 
-@extends('pdfs.fflch')
 @section('styles_head')
 <style type="text/css">
     #headerFFLCH {
@@ -50,7 +50,7 @@
         border: 1px #000 solid; padding: 1
     }
     body{
-        margin-top: -2.1cm; margin-bottom: -2.1cm; font-family: DejaVu Sans, sans-serif; font-size: 12px;
+        margin-top: 0.2em; margin-left: 1.8em; font-family: DejaVu Sans, sans-serif; font-size: 12px;
     }
     #footer {
         position: fixed;
@@ -64,16 +64,13 @@
     }
     .page-break {
         page-break-after: always;
-        margin-top:160px;
+        margin-top:100px;
     }
 </style>
 @endsection('styles_head')
 
 @section('content')
-    <br><br><br>
     @foreach($professores as $professor)
-
-        <br><br><br>
         <div id="headerFFLCH" style="text-align:center;">
             <table>
                 <tr>
@@ -88,27 +85,34 @@
                 </tr>
             </table>
         </div>
-
         <div align="right">
             @php(setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese'))
-            São Paulo, {{ strftime('%d de %B de %Y', strtotime('today')) }}        
-        </div><br>
+            São Paulo, {{ strftime('%d de %B de %Y', strtotime('today')) }}
+        </div><br><br>
 
-        <h1 align="center"> DECLARAÇÃO </h1>
-        <br><br><br>
+        Ilmo(a). Sr(a). {{$professor->nome}}<br>
+        {{$pessoa::obterEndereco($professor->codpes)['nomtiplgr']}} {{$pessoa::obterEndereco($professor->codpes)['epflgr']}} {{$pessoa::obterEndereco($professor->codpes)['numlgr']}} {{$pessoa::obterEndereco($professor->codpes)['cpllgr']}} {{$pessoa::obterEndereco($professor->codpes)['nombro']}} 
+        CEP: {{$pessoa::obterEndereco($professor->codpes)['codendptl']}}
+        <br>  {{$pessoa::obterEndereco($professor->codpes)['cidloc']}}
+        - {{$pessoa::obterEndereco($professor->codpes)['sglest']}}
+        <br> telefone: {{$pessoa::telefones($professor->codpes)['0']}}
+        <br>e-mail: {{$pessoa::emailusp($professor->codpes)}}
+        <br><br>
 
-        <p class="recuo justificar" style="line-height: 190%;">
-            {!! App\Config::setConfigDeclaracao($agendamento,$bancas,$professor)->declaracao !!}
-        </p><br><br>
+        <div class="boxSuplente">
+            <div class="moremargin">Assunto: Banca Examinadora de <b>{{$agendamento->nivel}}</b></div> 
+            <div class="moremargin">Candidato(a): <b>{{$agendamento->nome}}</b> </div>
+            <div class="moremargin">Área: <b>{{$agendamento->nome_area}}</b> </div>
+            <div class="moremargin">Orientador(a) Prof(a). Dr(a). {{$agendamento->nome_orientador}}</div>
+            <div class="moremargin">Título do Trabalho: <i>{{$agendamento->titulo}} </i></div>
+        </div>
 
-        <table width="16cm" style="border='0'; margin-left:4cm; align-items: center; justify-content: center;">
-            @foreach($bancas as $banca)    
-            <tr style="border='0'">
-                <td><b>{{$pessoa::dump($banca->codpes)['nompes']}}</b> </td> 
-                <td><b>{{$pessoa::cracha($banca->codpes)['nomorg']}}</b></td>
-            </tr>
-            @endforeach
-        </table>
+        <br><br>
+        <div class="oficioSuplente">Sr(a). Prof(a). {{$professor->nome}} </div>
+
+        <div style="text-align:justify;">
+            {!! $configs->oficio_suplente !!}
+        </div>
         <div style="margin-top:2cm;" align="center"> 
             Atenciosamente,<br>  
             <b>
@@ -121,3 +125,4 @@
         <p style="page-break-before: always">&nbsp;</p>
     @endforeach
 @endsection('content')
+

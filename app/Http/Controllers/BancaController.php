@@ -6,6 +6,7 @@ use App\Agendamento;
 use App\Banca;
 use Illuminate\Http\Request;
 use App\Http\Requests\BancaRequest;
+use Uspdev\Replicado\Pessoa;
 
 class BancaController extends Controller
 {
@@ -47,6 +48,12 @@ class BancaController extends Controller
         $banca = new Banca;
         $validated = $request->validated();
         $banca->codpes = $validated['codpes'];
+        if($validated['nome'] == null){
+            $banca->nome = Pessoa::dump($validated['codpes'])['nompes'];
+        }
+        else{
+            $banca->nome = $validated['nome'];
+        }
         $banca->presidente = $validated['presidente'];
         $banca->tipo = $validated['tipo'];
         $banca->agendamento_id = $agendamento->id;
@@ -88,7 +95,9 @@ class BancaController extends Controller
     {
         $this->authorize('logado');
         $validated = $request->validated();
-        $banca->agendamento_id = $agendamento->id;
+        if($validated['nome'] == null){
+            $validated['nome'] = Pessoa::dump($validated['codpes'])['nompes'];
+        }
         $banca->update($validated);
         return redirect("/agendamentos/$agendamento->id");
     }

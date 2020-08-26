@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Uspdev\Replicado\Posgraduacao;
+use App\Utils\ReplicadoUtils;
 
 class Agendamento extends Model
 {
@@ -14,14 +16,25 @@ class Agendamento extends Model
         return $this->hasMany('App\Banca');
     }
 
+    //Função para formatar horário do agendamento
     public function setDataHorario($agendamento){
         $data = Carbon::parse($agendamento->data_horario)->format('d/m/Y');
         $horario = Carbon::parse($agendamento->data_horario)->format('H:i');
         $agendamento->data = $data;
         $agendamento->horario = $horario;
-        return $agendamento;
+    }
+
+    //Função para setar nome por extenso da área/programa através de seu código
+    public function setNomeArea($agendamento){
+        $programas = $agendamento->programaOptions();
+        foreach($programas as $p){
+            if($agendamento->area_programa == $p['codare']){
+                $agendamento->nome_area = $p['nomare'];
+            }
+        }
     }
     
+    //Função para devolver valores de select
     public static function sexoOptions(){
         return [
             'Masculino',
@@ -29,6 +42,7 @@ class Agendamento extends Model
         ];
     }
 
+    //Função para devolver valores de select
     public static function regimentoOptions(){
         return [
             'Antigo',
@@ -36,47 +50,21 @@ class Agendamento extends Model
         ];
     }
 
+    //Função para devolver valores de select
     public static function nivelOptions(){
         return [
             'Mestrado',
             'Doutorado'
         ];
     }
-    
+
+    //Função para devolver valores de select
     public static function programaOptions(){
-        return [
-            "Filosofia",
-            "Teoria Literária e Literatura Comparada",
-            "Língua Espanhola e Literaturas Espanhola e Hispano-Americana",
-            "Estudos Linguísticos, Literários e Tradutológicos em Francês",
-            "Estudos Linguísticos e Literários em Inglês",
-            "Literatura e Cultura Russa",
-            "Língua, Literatura e Cultura Japonesa",
-            "Língua, Literatura e Cultura Italianas",
-            "Semiótica e Linguística Geral",
-            "Filologia e Língua Portuguesa",
-            "Literatura Brasileira",
-            "Língua e Literatura Alemã",
-            "Estudos Comparados de Literaturas de Língua Portuguesa",
-            "Letras Clássicas",
-            "Literatura Portuguesa",
-            "Estudos Judaicos e Árabes",
-            "Sociologia",
-            "Antropologia Social",
-            "Geografia Humana",
-            "Geografia Física",
-            "História Social",
-            "História Econômica",
-            "Ciência Política",
-            "Estudos da Tradução",
-            "Humanidades, Direitos e Outras Legitimidades",
-            "Profissional em Letras em Rede Nacional",
-            "Estudos Judaicos",
-            "Estudos Árabes",
-            "Letras Estrangeiras e Tradução (LETRA)",
-        ];
+        //Em vez de usar a função do Uspdev, para facilitação foi criada uma personalizada no Utils que varre o array e disponibiliza apenas os códigos da área e seus nomes
+        return ReplicadoUtils::areasProgramas(8);
     }
 
+    //Função para devolver valores de select
     public static function orientadorvotanteOptions(){
         return [
             'Sim',
@@ -84,7 +72,7 @@ class Agendamento extends Model
         ];
     }
 
-    
+    //Função para devolver valores de select
     public static function salaOptions(){
         return [
             "Sala de Defesas (120)",

@@ -1,10 +1,11 @@
 @extends('laravel-usp-theme::master')
 
 @section('content')
-
+@inject('pessoa','Uspdev\Replicado\Pessoa')
+@inject('replicado','App\Utils\ReplicadoUtils')
     <div class="row">
         <div class="col-sm">
-            <a href="/agendamentos/create" class="btn btn-primary">Agendar Nova Defesa</a></br>
+            <a href="/agendamentos/create" class="btn btn-success">Agendar Nova Defesa</a></br>
         </div>
         <div class="col-sm ">
             <div class="row float-right">
@@ -22,12 +23,11 @@
         </div>
     </div>
     <br>
-
-    @inject('pessoa','Uspdev\Replicado\Pessoa')
-
     @include('agendamentos.partials.defesa')
     <br>
     @include('agendamentos.partials.banca')
     <br>
     @include('agendamentos.partials.documentos')
+    <br>
+    @include('agendamentos.partials.recibos')
 @endsection('content')
