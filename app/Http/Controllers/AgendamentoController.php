@@ -28,6 +28,9 @@ class AgendamentoController extends Controller
             $agendamentos = Agendamento::where('codpes', '=', $request->busca_nusp)->paginate(20);
         } 
         elseif($request->filtro_busca == 'data'){
+            $validated = $request->validate([
+                'busca_data' => 'required|data',
+            ]);        
             $data = Carbon::CreatefromFormat('d/m/Y H:i', "$request->busca_data 00:00");
             $agendamentos = Agendamento::whereDate('data_horario','=', $data)->orderBy('data_horario', 'asc')->paginate(20);
         }
