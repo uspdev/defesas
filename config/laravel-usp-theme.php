@@ -22,12 +22,12 @@ return [
         [
             'text'    => 'Configurações',
             'url' => '/configs',
-            'can' => 'logado',
+            'can' => 'admin',
         ],
         [
             'text'    => 'Agendamentos',
             'submenu' => $submenu1,
-            'can' => 'logado',
+            'can' => 'admin',
         ],
          
     ],

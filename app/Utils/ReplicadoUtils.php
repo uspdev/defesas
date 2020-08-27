@@ -26,6 +26,9 @@ class ReplicadoUtils {
 
     // Função criada para verificar se o codpes informado corresponde a algum docente externo
     public static function verificaprofessorExterno($codpes){
+        # A definição de quem é externo é mais complexa... por enquanto, vamos deixar asism por ora
+        return true;
+        /*
         $query = "SELECT * FROM fflch.dbo.LOCALIZAPESSOA l WHERE l.codpes = convert(int, :codpes) and l.tipvin = 'EXTERNO' and l.sitatl = 'A'";
         $param = [
             'codpes' => $codpes,
@@ -35,6 +38,7 @@ class ReplicadoUtils {
             return true;
         }
         return false;
+        */
     }
 
     // Função para verificar a partir do código da Área qual é o coordenador - usado na geração dos PDFs PROAP e PROEX

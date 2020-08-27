@@ -31,7 +31,7 @@ class BancaController extends Controller
      */
     public function create($agendamento)
     {
-        $this->authorize('logado');
+        $this->authorize('admin');
         $banca = new Banca;
         return view('agendamentos.bancas.create',compact(['agendamento','banca']));
     }
@@ -44,7 +44,7 @@ class BancaController extends Controller
      */
     public function store(BancaRequest $request, Agendamento $agendamento)
     {
-        $this->authorize('logado');
+        $this->authorize('admin');
         $banca = new Banca;
         $validated = $request->validated();
         $banca->codpes = $validated['codpes'];
@@ -80,7 +80,7 @@ class BancaController extends Controller
      */
     public function edit(Agendamento $agendamento, Banca $banca)
     {
-        $this->authorize('logado');
+        $this->authorize('admin');
         return view('agendamentos.bancas.edit', compact(['agendamento','banca'], [$agendamento,$banca]));
     }
 
@@ -93,7 +93,7 @@ class BancaController extends Controller
      */
     public function update(Agendamento $agendamento, Banca $banca, BancaRequest $request)
     {
-        $this->authorize('logado');
+        $this->authorize('admin');
         $validated = $request->validated();
         if($validated['nome'] == null){
             $validated['nome'] = Pessoa::dump($validated['codpes'])['nompes'];
@@ -110,7 +110,7 @@ class BancaController extends Controller
      */
     public function destroy(Agendamento $agendamento, Banca $banca)
     {
-        $this->authorize('logado');
+        $this->authorize('admin');
         $banca->delete();
         return redirect("/agendamentos/{$agendamento->id}");
     }

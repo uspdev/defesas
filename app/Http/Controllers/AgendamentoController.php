@@ -23,7 +23,7 @@ class AgendamentoController extends Controller
      */
     public function index(Request $request)
     {
-        $this->authorize('logado');
+        $this->authorize('admin');
         if($request->filtro_busca == 'numero_usp') {
             $agendamentos = Agendamento::where('codpes', '=', $request->busca_nusp)->paginate(20);
         } 
@@ -51,7 +51,7 @@ class AgendamentoController extends Controller
      */
     public function create()
     {
-        $this->authorize('logado');
+        $this->authorize('admin');
         $agendamento = new Agendamento;
         return view('agendamentos.create')->with('agendamento', $agendamento);
     }
@@ -64,7 +64,7 @@ class AgendamentoController extends Controller
      */
     public function store(AgendamentoRequest $request)
     {
-        $this->authorize('logado');
+        $this->authorize('admin');
         $validated = $request->validated();
         if($validated['nome'] == ''){
             $validated['nome'] = Pessoa::dump($validated['codpes'])['nompes'];
@@ -93,7 +93,7 @@ class AgendamentoController extends Controller
      */
     public function show(Agendamento $agendamento)
     {
-        $this->authorize('logado');
+        $this->authorize('admin');
         $agendamento->setDataHorario($agendamento);
         $agendamento->setNomeArea($agendamento);
         return view('agendamentos.show')->with('agendamento', $agendamento);
@@ -107,7 +107,7 @@ class AgendamentoController extends Controller
      */
     public function edit(Agendamento $agendamento)
     {
-        $this->authorize('logado');
+        $this->authorize('admin');
         $agendamento->setDataHorario($agendamento);
         return view('agendamentos.edit')->with('agendamento', $agendamento);
     }
@@ -121,7 +121,7 @@ class AgendamentoController extends Controller
      */
     public function update(AgendamentoRequest $request, Agendamento $agendamento)
     {
-        $this->authorize('logado');
+        $this->authorize('admin');
         $validated = $request->validated();
         if($validated['nome'] == ''){
             $validated['nome'] = Pessoa::dump($validated['codpes'])['nompes'];
@@ -157,7 +157,7 @@ class AgendamentoController extends Controller
      */
     public function destroy(Agendamento $agendamento)
     {
-        $this->authorize('logado');
+        $this->authorize('admin');
         $agendamento->bancas()->delete();
         $agendamento->delete();
         return redirect('/agendamentos');
