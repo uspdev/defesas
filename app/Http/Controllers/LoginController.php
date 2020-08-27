@@ -25,14 +25,21 @@ class LoginController extends Controller
     public function handleProviderCallback()
     {
         $userSenhaUnica = Socialite::driver('senhaunica')->user();
-        $user = User::where('id', $userSenhaUnica->codpes)->first();
-        if ($user == null){
-            $user = new User;
-            $user->id = $userSenhaUnica->codpes;
-            $user->email = $userSenhaUnica->email;
-            $user->name = $userSenhaUnica->nompes;
-            $user->save();
-        };
+        $admins = explode(',', trim(config('defesas.admins')));
+        
+        if(!in_array($userSenhaUnica->codpes, $admins)){
+            request()->session()->flash('alert-danger', 'Você não tem permissão de login');
+            return redirect('/');
+        } 
+        
+        $user = User::where('codpes', $userSenhaUnica->codpes)->first();
+        if ($user == null) $user = new User;
+
+        $user->codpes = $userSenhaUnica->codpes;
+        $user->email = $userSenhaUnica->email;
+        $user->name = $userSenhaUnica->nompes;
+        $user->save();
+
         // bind do dados retornados
         Auth::login($user, true);
         return redirect('/');

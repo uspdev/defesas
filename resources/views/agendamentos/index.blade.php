@@ -21,7 +21,6 @@
                         </label>
                     </div>
                 </div>
-
                 
                 <div class="row form-group">
                     <div class="col-sm form-group" id="busca_nusp"  @if(Request()->filtro_busca == 'data') style="display:none;" @endif>

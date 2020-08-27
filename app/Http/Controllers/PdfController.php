@@ -17,7 +17,7 @@ class PdfController extends Controller
     }
     //Bloco destinado aos documentos gerais
     public function documentosGerais(Agendamento $agendamento, $tipo){
-        $this->authorize('logado');
+        $this->authorize('admin');
         $configs = Config::orderbyDesc('created_at')->first();
         $agendamento->setDataHorario($agendamento);
         $agendamento->setNomeArea($agendamento);
@@ -48,7 +48,7 @@ class PdfController extends Controller
 
     //Bloco destinado aos documentos individuais
     public function documentosIndividuais(Agendamento $agendamento, Banca $banca, $tipo){
-        $this->authorize('logado');
+        $this->authorize('admin');
         $agendamento->setDataHorario($agendamento);
         $agendamento->setNomeArea($agendamento);
         if($tipo == 'titular' or $tipo == 'declaracao'){
@@ -73,7 +73,7 @@ class PdfController extends Controller
 
     //Função destinada à geração de PDF PROEX
     public function proex(Agendamento $agendamento, Banca $banca, Request $request){
-        $this->authorize('logado');
+        $this->authorize('admin');
         $dados = $request;
         $agendamento->setDataHorario($agendamento);
         $agendamento->setNomeArea($agendamento);
@@ -84,7 +84,7 @@ class PdfController extends Controller
 
     //Função destinada à geração de PDF PROAP
     public function proap(Agendamento $agendamento, Banca $banca, Request $request){
-        $this->authorize('logado');
+        $this->authorize('admin');
         $dados = $request;
         $agendamento->data = Carbon::parse($agendamento->data_horario)->format('m');
         $agendamento->setNomeArea($agendamento);
@@ -95,7 +95,7 @@ class PdfController extends Controller
 
     //Função destinada à geração de PDF da passagem
     public function passagem(Agendamento $agendamento, Banca $banca, Request $request){
-        $this->authorize('logado');
+        $this->authorize('admin');
         $dados = $request;
         $agendamento->setDataHorario($agendamento);
         $agendamento->setNomeArea($agendamento);
@@ -106,7 +106,7 @@ class PdfController extends Controller
 
     //Função destinada à geração de PDF da passagem via auxílio
     public function passagemAuxilio(Agendamento $agendamento, Banca $banca, Request $request){
-        $this->authorize('logado');
+        $this->authorize('admin');
         $dados = $request;
         $agendamento->setDataHorario($agendamento);
         $configs = Config::orderbyDesc('created_at')->first();
