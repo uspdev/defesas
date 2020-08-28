@@ -26,11 +26,6 @@ As diretivas específicas do sistema `defesas` estão documentadas em `config/de
 ```bash
 php artisan key:generate
 php artisan migrate
-```
-
-- Publicando assets do AdminLTE
-
-```bash
 php artisan vendor:publish --provider="Uspdev\UspTheme\ServiceProvider" --tag=assets --force
 ```
 
