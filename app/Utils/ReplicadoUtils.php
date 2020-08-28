@@ -105,7 +105,7 @@ class ReplicadoUtils {
     }
 
     public static function nomeOrganizacao($codpes){
-        $query = "SELECT o.sglorg FROM fflch.dbo.HISTPES hp INNER JOIN fflch.dbo.ORGANIZACAO o ON hp.codorg = o.codorg WHERE hp.codpes = convert(int, :codpes)";
+        $query = "SELECT o.sglorg FROM fflch.dbo.VINCULOPESSOAUSP v INNER JOIN fflch.dbo.ORGANIZACAO o ON v.codund = o.codorg where v.codpes = convert(int, :codpes)";
         $param = [
             'codpes' => $codpes,
         ];
@@ -114,6 +114,18 @@ class ReplicadoUtils {
             $result = Uteis::utf8_converter($result);
             $result = Uteis::trim_recursivo($result);
             return $result;
+        }
+        else{
+            $query = "SELECT o.sglorg FROM fflch.dbo.HISTPES hp INNER JOIN fflch.dbo.ORGANIZACAO o ON hp.codorg = o.codorg WHERE hp.codpes = convert(int, :codpes)";
+            $param = [
+                'codpes' => $codpes,
+            ];
+            $result = DBreplicado::fetch($query, $param);
+            if(!empty($result)) {
+                $result = Uteis::utf8_converter($result);
+                $result = Uteis::trim_recursivo($result);
+                return $result;
+            }
         }
         return false;
     }
