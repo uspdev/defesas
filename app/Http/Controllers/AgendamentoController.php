@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\AgendamentoRequest;
 use Carbon\Carbon;
 use Uspdev\Replicado\Pessoa;
+use App\Utils\ReplicadoUtils;
 
 class AgendamentoController extends Controller
 {
@@ -95,7 +96,7 @@ class AgendamentoController extends Controller
     {
         $this->authorize('admin');
         $agendamento->setDataHorario($agendamento);
-        $agendamento->setNomeArea($agendamento);
+        $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         return view('agendamentos.show')->with('agendamento', $agendamento);
     }
 

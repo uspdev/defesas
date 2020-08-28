@@ -24,16 +24,6 @@ class Agendamento extends Model
         $agendamento->horario = $horario;
     }
 
-    //Função para setar nome por extenso da área/programa através de seu código
-    public function setNomeArea($agendamento){
-        $programas = $agendamento->programaOptions();
-        foreach($programas as $p){
-            if($agendamento->area_programa == $p['codare']){
-                $agendamento->nome_area = $p['nomare'];
-            }
-        }
-    }
-    
     //Função para devolver valores de select
     public static function sexoOptions(){
         return [

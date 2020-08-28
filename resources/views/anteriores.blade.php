@@ -2,31 +2,41 @@
 
 @section('content')
     @include('flash')
-    <h2>Defesas Anteriores</h2>
-
-    @inject('pessoa','Uspdev\Replicado\Pessoa')
-
-    <table class="table table-striped">
-        <theader>
-            <tr>
-                <th>Data defesa</th>
-                <th>Local</th>
-                <th>Programa/Área</th>
-                <th>Nome</th>
-                <th>Nível</th>
-                <th>Título</th>
-                <th>Orientador(a)</th>
-            </tr>
-        </theader>
-        <tbody>
-        @foreach ($agendamentos as $agendamento)
-            <tr>
-                <td>{{ $pessoa::dump($agendamento->codpes)['nompes'] }}</td>
-                <td>{{ $pessoa::dump($agendamento->orientador)['nompes'] }}</td>
-                <td>{{ Carbon\Carbon::parse($agendamento->data_horario)->format('d/m/Y') }}</td>
-                <td>{{ Carbon\Carbon::parse($agendamento->data_horario)->format('H:i')}}</td>
-            </tr>
-        @endforeach
-        </tbody>
-    </table>
+    <div class="row">
+        <div class="col-sm">
+            <a href="/" class="float-right"><h3>Próximas defesas</h3></a>
+        </div>
+    </div>
+    @inject('replicado','App\Utils\ReplicadoUtils')
+    <br>
+    <div class="card">
+        <div class="card-header"><h2>Defesas anteriores</h2></div>
+        <table class="table table-striped" style="text-align:center;">
+            <theader>
+                <tr>
+                    <th>Data defesa</th>
+                    <th>Local</th>
+                    <th>Programa/Área</th>
+                    <th>Nome</th>
+                    <th>Nível</th>
+                    <th>Título</th>
+                    <th>Orientador(a)</th>
+                </tr>
+            </theader>
+            <tbody>
+            @foreach ($agendamentos as $agendamento)
+                <tr>
+                    <td>{{ Carbon\Carbon::parse($agendamento->data_horario)->format('d/m/Y H:i') }}</td>
+                    <td>{{ $agendamento->sala }}</td>
+                    <td>{{ $replicado::nomeAreaPrograma($agendamento->area_programa) }}</td>
+                    <td>{{ $agendamento->nome }}</td>
+                    <td>{{ $agendamento->nivel }}</td>
+                    <td>{{ $agendamento->titulo }}</td>
+                    <td>{{ $agendamento->nome_orientador }}</td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+        {{ $agendamentos->appends(request()->query())->links() }}
+    </div>
 @endsection('content')

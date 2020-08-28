@@ -144,4 +144,20 @@ class ReplicadoUtils {
         }
         return $programasAreas;
     }
+
+    // Função personalizada, a do Uspdev/Replicado retorna um array com array dentro, aqui ele já devolve um array varrido com apenas o Código da Área e Nome da Área Correspondente
+    public static function nomeAreaPrograma($codare)
+    {
+        $query = "SELECT DISTINCT (na.nomare), na.codare from fflch.dbo.NOMEAREA na where na.codare = convert(int, :codare)";
+        $param = [
+            'codare' => $codare,
+        ];
+        $result = DBreplicado::fetch($query, $param);
+        if(!empty($result)) {
+            $result = Uteis::utf8_converter($result);
+            $result = Uteis::trim_recursivo($result);
+            return $result['nomare'];
+        }
+        return false;
+    }
 } 

@@ -5,6 +5,7 @@ use App\Agendamento;
 use App\Banca;
 use App\Config;
 use Illuminate\Http\Request;
+use App\Utils\ReplicadoUtils;
 
 class EmailController extends Controller
 {
@@ -18,7 +19,7 @@ class EmailController extends Controller
         $this->authorize('admin');
         $dados = $request;
         $agendamento->setDataHorario($agendamento);
-        $agendamento->setNomeArea($agendamento);
+        $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         $configs = Config::orderbyDesc('created_at')->first();
         return view('agendamentos.recibos.recibo_externo', compact(['agendamento','banca','dados','configs']));
     }
@@ -28,7 +29,7 @@ class EmailController extends Controller
         $this->authorize('admin');
         $dados = $request;
         $agendamento->setDataHorario($agendamento);
-        $agendamento->setNomeArea($agendamento);
+        $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         $configs = Config::setConfigEmail($agendamento,$banca);
         return view('agendamentos.recibos.email', compact(['agendamento','banca','dados','configs']));
     }
