@@ -8,7 +8,12 @@ use App\Agendamento;
 class indexController extends Controller
 {
     public function index(){
-        $agendamentos = Agendamento::whereDate('data_horario','>=',date('Y-m-d'))->get();
+        $agendamentos = Agendamento::where('data_horario','>=',date('Y-m-d H:i:s'))->paginate(20);
         return view('index')->with('agendamentos',$agendamentos);
+    }
+
+    public function anteriores(){
+        $agendamentos = Agendamento::where('data_horario','<',date('Y-m-d H:i:s'))->paginate(20);
+        return view('anteriores')->with('agendamentos',$agendamentos);
     }
 }

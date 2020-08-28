@@ -2,16 +2,15 @@
 
 @section('content')
     @include('flash')
-    
     <div class="row">
         <div class="col-sm">
-            <a href="/anteriores" class="float-right"><h3>Defesas anteriores</h3></a>
+            <a href="/" class="float-right"><h3>Próximas defesas</h3></a>
         </div>
     </div>
     @inject('replicado','App\Utils\ReplicadoUtils')
     <br>
     <div class="card">
-        <div class="card-header"><h2>Próximas Defesas</h2></div>
+        <div class="card-header"><h2>Defesas anteriores</h2></div>
         <table class="table table-striped" style="text-align:center;">
             <theader>
                 <tr>

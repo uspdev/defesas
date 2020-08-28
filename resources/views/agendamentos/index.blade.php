@@ -1,5 +1,9 @@
 @extends('laravel-usp-theme::master')
 
+@section('javascripts_head')
+  <script src="{{asset('/js/app.js')}}"></script>
+@endsection('javascript_head')
+
 @section('content')
     @include('flash')
 
@@ -14,7 +18,7 @@
                     </div>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         <label class="btn btn-light">
-                            <input type="radio" name="filtro_busca" id="numero_usp" value="numero_usp" autocomplete="off" @if(Request()->filtro_busca == 'numero_usp' or Request()->filtro_busca == null) checked @endif> Número USP
+                            <input type="radio" name="filtro_busca" id="numero_usp" value="numero_usp" autocomplete="off" @if(Request()->filtro_busca == 'numero_usp' or Request()->filtro_busca == '') checked @endif> Número USP
                         </label>
                         <label class="btn btn-light">
                             <input type="radio" name="filtro_busca" id="data" value="data" autocomplete="off" @if(Request()->filtro_busca == 'data') checked @endif> Data

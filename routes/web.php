@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 // rotas para login/logout
 Route::get('/','indexController@index')->name('index');
+Route::get('/anteriores','indexController@anteriores')->name('anteriores');
 Route::get('login','LoginController@redirectToProvider')->name('login');
 Route::get('callback', 'LoginController@handleProviderCallback');
 Route::get('logout','LoginController@logout')->name('logout');

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\AgendamentoRequest;
 use Carbon\Carbon;
 use Uspdev\Replicado\Pessoa;
+use App\Utils\ReplicadoUtils;
 
 class AgendamentoController extends Controller
 {
@@ -28,11 +29,14 @@ class AgendamentoController extends Controller
             $agendamentos = Agendamento::where('codpes', '=', $request->busca_nusp)->paginate(20);
         } 
         elseif($request->filtro_busca == 'data'){
-            $data = Carbon::CreatefromFormat('d/m/Y H:i', "$request->busca_data 00:00");
+            $validated = $request->validate([
+                'busca_data' => 'required|data',
+            ]);        
+            $data = Carbon::CreatefromFormat('d/m/Y H:i', "$validated->busca_data 00:00");
             $agendamentos = Agendamento::whereDate('data_horario','=', $data)->orderBy('data_horario', 'asc')->paginate(20);
         }
         else{
-            $agendamentos = Agendamento::whereDate('data_horario','>=',date('Y-m-d'))->paginate(20);
+            $agendamentos = Agendamento::where('data_horario','>=',date('Y-m-d H:i:s'))->paginate(20);
         }
         
         if ($agendamentos->count() == null) {
@@ -92,7 +96,7 @@ class AgendamentoController extends Controller
     {
         $this->authorize('admin');
         $agendamento->setDataHorario($agendamento);
-        $agendamento->setNomeArea($agendamento);
+        $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         return view('agendamentos.show')->with('agendamento', $agendamento);
     }
 
