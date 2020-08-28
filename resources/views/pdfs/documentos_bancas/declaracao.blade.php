@@ -1,4 +1,5 @@
 @inject('pessoa','Uspdev\Replicado\Pessoa')
+@inject('replicado','App\Utils\ReplicadoUtils')
 
 @extends('pdfs.fflch')
 @section('styles_head')
@@ -101,8 +102,12 @@
     <table width="16cm" style="border='0'; margin-left:4cm; align-items: center; justify-content: center;">
         @foreach($professores as $componente)    
         <tr style="border='0'">
-            <td><b>{{$componente->nome}}</b> </td> 
-            <td><b>{{$pessoa::cracha($componente->codpes)['nomorg']}}</b></td>
+            <td><b>{{$componente->nome}}</b> </td>
+            @if($pessoa::cracha($componente->codpes)['nomorg'] == null) 
+                <td><b>{{$replicado::nomeOrganizacao($componente->codpes)['sglorg']}}</b></td>
+            @else
+                <td><b>{{$pessoa::cracha($componente->codpes)['nomorg']}}</b></td>
+            @endif
         </tr>
         @endforeach
     </table>

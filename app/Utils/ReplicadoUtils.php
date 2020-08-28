@@ -60,7 +60,7 @@ class ReplicadoUtils {
     public static function areasProgramas(int $codundclgi)
     {
         //obtém programas
-        $query = "SELECT DISTINCT (n.nomare), a.codare FROM fflch.dbo.AREA a inner join fflch.dbo.CURSO c ON a.codcur = c.codcur INNER JOIN fflch.dbo.NOMEAREA n on n.codare = a.codare INNER JOIN fflch.dbo.CREDAREA ca ON a.codare = ca.codare where c.codclg = convert(int, :codundclgi) AND ca.dtadtvare IS NULL";
+        $query = "SELECT DISTINCT (n.nomare), a.codare FROM fflch.dbo.AREA a inner join fflch.dbo.CURSO c ON a.codcur = c.codcur INNER JOIN fflch.dbo.NOMEAREA n on n.codare = a.codare INNER JOIN fflch.dbo.CREDAREA ca ON a.codare = ca.codare where c.codclg = convert(int, :codundclgi)";
         $param = [
             'codundclgi' => $codundclgi,
         ];
@@ -77,7 +77,7 @@ class ReplicadoUtils {
     public static function codAreasProgramas(int $codundclgi)
     {
         //obtém programas
-        $query = "SELECT DISTINCT a.codare FROM fflch.dbo.AREA a inner join fflch.dbo.CURSO c ON a.codcur = c.codcur INNER JOIN fflch.dbo.NOMEAREA n on n.codare = a.codare INNER JOIN fflch.dbo.CREDAREA ca ON a.codare = ca.codare where c.codclg = convert(int, :codundclgi) AND ca.dtadtvare IS NULL";
+        $query = "SELECT DISTINCT a.codare FROM fflch.dbo.AREA a inner join fflch.dbo.CURSO c ON a.codcur = c.codcur INNER JOIN fflch.dbo.NOMEAREA n on n.codare = a.codare INNER JOIN fflch.dbo.CREDAREA ca ON a.codare = ca.codare where c.codclg = convert(int, :codundclgi)";
         $param = [
             'codundclgi' => $codundclgi,
         ];
@@ -104,6 +104,20 @@ class ReplicadoUtils {
             $result = Uteis::utf8_converter($result);
             $result = Uteis::trim_recursivo($result);
             return $result['nomare'];
+        }
+        return false;
+    }
+
+    public static function nomeOrganizacao($codpes){
+        $query = "SELECT o.sglorg FROM fflch.dbo.HISTPES hp INNER JOIN fflch.dbo.ORGANIZACAO o ON hp.codorg = o.codorg WHERE hp.codpes = convert(int, :codpes)";
+        $param = [
+            'codpes' => $codpes,
+        ];
+        $result = DBreplicado::fetch($query, $param);
+        if(!empty($result)) {
+            $result = Uteis::utf8_converter($result);
+            $result = Uteis::trim_recursivo($result);
+            return $result;
         }
         return false;
     }

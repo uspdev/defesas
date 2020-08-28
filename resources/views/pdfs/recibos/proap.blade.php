@@ -33,6 +33,8 @@
 
 @section('content')
 @inject('pessoa','Uspdev\Replicado\Pessoa')
+@inject('replicado','App\Utils\ReplicadoUtils')
+
 	<br>
     <div id="proap">	
         <center> <span style="font-size:16px;"> <b> RECIBO DE DIÁRIAS - BANCA EXAMINADORA </b> </span> </center>	
@@ -51,7 +53,11 @@
 	    <table width="16.5cm" style="border:0px;">
 			<tr>
 				<td style="border:0px;">Unidade: </td>
-				<td style="border:0px;"> {{$pessoa::cracha($banca->codpes)['nomorg']}} </td>
+				@if($pessoa::cracha($banca->codpes)['nomorg'] == null) 
+					<td style="border:0px;"> {{$replicado::nomeOrganizacao($banca->codpes)['sglorg']}} </td>
+                @else
+					<td style="border:0px;"> {{$pessoa::cracha($banca->codpes)['nomorg']}} </td>
+                @endif 
 				<td style="border:0px;">Cargo: </td>
 				<td style="border:0px;"> <b> Professor(a) Doutor(a) </b> </td>
 			</tr>
@@ -60,7 +66,7 @@
 				<td style="border:0px;"> {{$agendamento->nome_area}} </td>
 				<td style="border:0px;"> Mês: </td>
 				@php(setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese'))
-				<td style="border:0px;"> <b> {{strftime("%B", strtotime($agendamento->data_horario))}}</b> </td>
+				<td style="border:0px;"> <b> {{strftime("%B de %Y", strtotime($agendamento->data_horario))}}</b> </td>
 			</tr>
 		</table>			
 	    <center>

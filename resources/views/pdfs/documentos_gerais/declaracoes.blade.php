@@ -1,4 +1,5 @@
 @inject('pessoa','Uspdev\Replicado\Pessoa')
+@inject('replicado','App\Utils\ReplicadoUtils')
 
 @extends('pdfs.fflch')
 @section('styles_head')
@@ -102,7 +103,11 @@
             @foreach($bancas as $banca)    
             <tr style="border='0'">
                 <td><b>{{$banca->nome}}</b> </td> 
-                <td><b>{{$pessoa::cracha($banca->codpes)['nomorg']}}</b></td>
+                @if($pessoa::cracha($banca->codpes)['nomorg'] == null) 
+                    <td><b>{{$replicado::nomeOrganizacao($banca->codpes)['sglorg']}}</b></td>
+                @else
+                    <td><b>{{$pessoa::cracha($banca->codpes)['nomorg']}}</b></td>
+                @endif            
             </tr>
             @endforeach
         </table>
