@@ -57,95 +57,42 @@ class ReplicadoUtils {
     }
 
     // Função personalizada, a do Uspdev/Replicado retorna um array com array dentro, aqui ele já devolve um array varrido com apenas o Código da Área e Nome da Área Correspondente
-    public static function areasProgramas(int $codundclgi, int $codcur = null)
+    public static function areasProgramas(int $codundclgi)
     {
         //obtém programas
-        $programas = Posgraduacao::programas($codundclgi, $codcur);
-        // loop sobre programas obtendos suas áreas
-        $programasAreas = array();
-        foreach ($programas as $p) {
-            $codcur = $p['codcur'];
-            $query = "SELECT codare FROM AREA WHERE codcur = convert(int, :codcur)";
-            $param = [
-                'codcur' => $codcur,
-            ];
-            $codAreas = DBreplicado::fetchAll($query, $param);
-            $i = 0;
-            foreach ($codAreas as $a) {
-                $codare = $a['codare'];
-                $query = "SELECT TOP 1 N.codcur,N.codare,N.nomare ";
-                $query .= " FROM NOMEAREA as N";
-                $query .= " INNER JOIN CREDAREA as C ";
-                $query .= " ON N.codare = C.codare";
-                $query .= " WHERE N.codare = convert(int, :codare)";
-                $query .= " AND C.dtadtvare IS NULL";
-                $param = [
-                    'codare' => $codare,
-                ];
-                $areas = DBreplicado::fetchAll($query, $param);
-                if (empty($areas)) {
-                    continue;
-                }
-
-                $areas = Uteis::utf8_converter($areas);
-                $areas = Uteis::trim_recursivo($areas);
-
-                $nomare = $areas[0]['nomare'];
-
-                $programasAreas[] = [
-                    'codare' => $codare,
-                    'nomare' => $nomare,
-                ];
-                $i++;
-            }
-
+        $query = "SELECT DISTINCT (n.nomare), a.codare FROM fflch.dbo.AREA a inner join fflch.dbo.CURSO c ON a.codcur = c.codcur INNER JOIN fflch.dbo.NOMEAREA n on n.codare = a.codare INNER JOIN fflch.dbo.CREDAREA ca ON a.codare = ca.codare where c.codclg = convert(int, :codundclgi) AND ca.dtadtvare IS NULL";
+        $param = [
+            'codundclgi' => $codundclgi,
+        ];
+        $result = DBreplicado::fetchAll($query, $param);
+        if(!empty($result)) {
+            $result = Uteis::utf8_converter($result);
+            $result = Uteis::trim_recursivo($result);
+            return $result;
         }
-        return $programasAreas;
+        return false;
     }
 
     // Função criada para facilitação na validação do AgendamentoRequest, retorna apenas um array com o código das áreas
-    public static function codAreasProgramas(int $codundclgi, int $codcur = null)
+    public static function codAreasProgramas(int $codundclgi)
     {
         //obtém programas
-        $programas = Posgraduacao::programas($codundclgi, $codcur);
-        // loop sobre programas obtendos suas áreas
-        $programasAreas = array();
-        foreach ($programas as $p) {
-            $codcur = $p['codcur'];
-            $query = "SELECT codare FROM AREA WHERE codcur = convert(int, :codcur)";
-            $param = [
-                'codcur' => $codcur,
-            ];
-            $codAreas = DBreplicado::fetchAll($query, $param);
-            $i = 0;
-            foreach ($codAreas as $a) {
-                $codare = $a['codare'];
-                $query = "SELECT TOP 1 N.codcur,N.codare,N.nomare ";
-                $query .= " FROM NOMEAREA as N";
-                $query .= " INNER JOIN CREDAREA as C ";
-                $query .= " ON N.codare = C.codare";
-                $query .= " WHERE N.codare = convert(int, :codare)";
-                $query .= " AND C.dtadtvare IS NULL";
-                $param = [
-                    'codare' => $codare,
-                ];
-                $areas = DBreplicado::fetchAll($query, $param);
-                if (empty($areas)) {
-                    continue;
-                }
-
-                $areas = Uteis::utf8_converter($areas);
-                $areas = Uteis::trim_recursivo($areas);
-
-                $programasAreas[] = $codare;
-                $i++;
+        $query = "SELECT DISTINCT a.codare FROM fflch.dbo.AREA a inner join fflch.dbo.CURSO c ON a.codcur = c.codcur INNER JOIN fflch.dbo.NOMEAREA n on n.codare = a.codare INNER JOIN fflch.dbo.CREDAREA ca ON a.codare = ca.codare where c.codclg = convert(int, :codundclgi) AND ca.dtadtvare IS NULL";
+        $param = [
+            'codundclgi' => $codundclgi,
+        ];
+        $result = DBreplicado::fetchAll($query, $param);
+        if(!empty($result)) {
+            $result = Uteis::utf8_converter($result);
+            $result = Uteis::trim_recursivo($result);
+            foreach($result as $r){
+                $codareas[] = $r['codare'];
             }
-
+            return $codareas;
         }
-        return $programasAreas;
+        return false;
     }
 
-    // Função personalizada, a do Uspdev/Replicado retorna um array com array dentro, aqui ele já devolve um array varrido com apenas o Código da Área e Nome da Área Correspondente
     public static function nomeAreaPrograma($codare)
     {
         $query = "SELECT DISTINCT (na.nomare), na.codare from fflch.dbo.NOMEAREA na where na.codare = convert(int, :codare)";
