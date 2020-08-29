@@ -74,15 +74,14 @@ class AgendamentoController extends Controller
             $validated['nome_orientador'] = Pessoa::dump($validated['orientador'])['nompes'];
         }
         $agendamento = Agendamento::create($validated);
-        if($validated['orientador_votante'] == 'Sim'){
-            $banca = new Banca;
-            $banca->codpes = $validated['orientador'];
-            $banca->nome = $validated['nome_orientador'];
-            $banca->presidente = 'Não'; 
-            $banca->tipo = 'Suplente'; 
-            $banca->agendamento_id = $agendamento->id;
-            $agendamento->bancas()->save($banca);
-        }
+        //Salva o orientador na banca
+        $banca = new Banca;
+        $banca->codpes = $validated['orientador'];
+        $banca->nome = $validated['nome_orientador'];
+        $banca->presidente = 'Sim'; 
+        $banca->tipo = 'Titular'; 
+        $banca->agendamento_id = $agendamento->id;
+        $agendamento->bancas()->save($banca);
         return redirect("/agendamentos/$agendamento->id");
     }
 
@@ -129,22 +128,6 @@ class AgendamentoController extends Controller
         }
         if($validated['nome_orientador'] == ''){
             $validated['nome_orientador'] = Pessoa::dump($validated['orientador'])['nompes'];
-        }
-        if($validated['orientador_votante'] == 'Não'){
-            $banca = Banca::where('codpes',$validated['orientador'])->where('agendamento_id',$agendamento->id);
-            $banca->delete();
-        }
-        elseif($validated['orientador_votante'] == 'Sim'){
-            $busca = Banca::where('codpes', $validated['orientador'])->where('agendamento_id',$agendamento->id);
-            if($busca->count() == null){
-                $banca = new Banca;
-                $banca->codpes = $validated['orientador'];
-                $banca->nome = $validated['nome_orientador'];
-                $banca->presidente = 'Não'; 
-                $banca->tipo = 'Suplente'; 
-                $banca->agendamento_id = $agendamento->id;
-                $agendamento->bancas()->save($banca);
-            }
         }
         $agendamento->update($validated);
         return redirect("/agendamentos/$agendamento->id");

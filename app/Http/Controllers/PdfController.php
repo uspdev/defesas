@@ -62,13 +62,13 @@ class PdfController extends Controller
                 $configs = Config::orderbyDesc('created_at')->first();
             }
             $pdf = PDF::loadView("pdfs.documentos_bancas.$tipo", compact(['agendamento','professores','professor','configs']));
-            return $pdf->download("$tipo.pdf");
+            return $pdf->download("$banca->nome - $tipo.pdf");
         }
         elseif($tipo == 'suplente'){
             $configs = Config::setConfigOficioSuplente($agendamento);
             $professor = $banca;
             $pdf = PDF::loadView("pdfs.documentos_bancas.$tipo", compact(['agendamento','professor','configs']));
-            return $pdf->download("$tipo.pdf");
+            return $pdf->download("$banca->nome - $tipo.pdf");
         }
     }
 
@@ -80,7 +80,7 @@ class PdfController extends Controller
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         $configs = Config::orderbyDesc('created_at')->first();
         $pdf = PDF::loadView("pdfs.recibos.proex", compact(['agendamento','banca','dados','configs']));
-        return $pdf->download("proex.pdf");    
+        return $pdf->download("$banca->nome - proex.pdf");    
     }
 
     //Função destinada à geração de PDF PROAP
@@ -91,7 +91,7 @@ class PdfController extends Controller
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         $configs = Config::orderbyDesc('created_at')->first();
         $pdf = PDF::loadView("pdfs.recibos.proap", compact(['agendamento','banca','dados','configs']));
-        return $pdf->download("proap.pdf");
+        return $pdf->download("$banca->nome - proap.pdf");
     }
 
     //Função destinada à geração de PDF da passagem
@@ -102,7 +102,7 @@ class PdfController extends Controller
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         $configs = Config::orderbyDesc('created_at')->first();
         $pdf = PDF::loadView("pdfs.recibos.passagem", compact(['agendamento','banca','dados','configs']));
-        return $pdf->download("passagem.pdf");
+        return $pdf->download("$banca->nome - passagem.pdf");
     }
 
     //Função destinada à geração de PDF da passagem via auxílio
@@ -112,6 +112,6 @@ class PdfController extends Controller
         $agendamento->setDataHorario($agendamento);
         $configs = Config::orderbyDesc('created_at')->first();
         $pdf = PDF::loadView("pdfs.recibos.passagemAuxilio", compact(['agendamento','banca','dados','configs']));
-        return $pdf->download("passagemAuxilio.pdf");
+        return $pdf->download("$banca->nome - passagemAuxilio.pdf");
     }
 }
