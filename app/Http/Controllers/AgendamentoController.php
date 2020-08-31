@@ -26,17 +26,17 @@ class AgendamentoController extends Controller
     {
         $this->authorize('admin');
         if($request->filtro_busca == 'numero_usp') {
-            $agendamentos = Agendamento::where('codpes', '=', $request->busca_nusp)->paginate(20);
+            $agendamentos = Agendamento::where('codpes', '=', $request->busca_nusp)->orderBy('data_horario', 'asc')->paginate(20);
         } 
         elseif($request->filtro_busca == 'data'){
             $validated = $request->validate([
                 'busca_data' => 'required|data',
             ]);        
-            $data = Carbon::CreatefromFormat('d/m/Y H:i', "$validated->busca_data 00:00");
+            $data = Carbon::CreatefromFormat('d/m/Y H:i', $validated['busca_data']." 00:00");
             $agendamentos = Agendamento::whereDate('data_horario','=', $data)->orderBy('data_horario', 'asc')->paginate(20);
         }
         else{
-            $agendamentos = Agendamento::where('data_horario','>=',date('Y-m-d H:i:s'))->paginate(20);
+            $agendamentos = Agendamento::where('data_horario','>=',date('Y-m-d H:i:s'))->orderBy('data_horario', 'asc')->paginate(20);
         }
         
         if ($agendamentos->count() == null) {
