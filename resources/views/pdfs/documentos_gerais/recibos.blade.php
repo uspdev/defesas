@@ -57,7 +57,7 @@
 		<table width="18cm" class="negrito">
 			<tr>
 				<td> 
-					<u>ASSUNTO:</u> encaminho exemplar do trabalho do aluno(a) Sr(a). {{$pessoa::dump($agendamento->codpes)['nompes']}}
+					<u>ASSUNTO:</u> encaminho exemplar do trabalho do aluno(a) Sr(a). {{$agendamento->nome}}
 				</td> 
 			</tr>
 		</table>
@@ -97,7 +97,7 @@
 		<table width="18cm" class="negrito">
 			<tr>
 				<td> 
-					<u>ASSUNTO:</u> encaminho exemplar do trabalho do aluno(a) Sr(a). {{$pessoa::dump($agendamento->codpes)['nompes']}}
+					<u>ASSUNTO:</u> encaminho exemplar do trabalho do aluno(a) Sr(a). {{$agendamento->nome}}
 				</td> 
 			</tr>
 		</table>

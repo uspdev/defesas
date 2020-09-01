@@ -95,8 +95,9 @@ class AgendamentoController extends Controller
     {
         $this->authorize('admin');
         $agendamento->setDataHorario($agendamento);
+        $bancas = Banca::where('agendamento_id',$agendamento->id)->orderBy('tipo','desc')->orderBy('nome', 'asc')->get();
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
-        return view('agendamentos.show')->with('agendamento', $agendamento);
+        return view('agendamentos.show', compact(['agendamento','bancas']));
     }
 
     /**

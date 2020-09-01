@@ -27,20 +27,20 @@ class PdfController extends Controller
             return $pdf->download('placa.pdf');
         }
         elseif($tipo == 'titulares'){
-            $professores = Banca::where('agendamento_id',$agendamento->id)->where('tipo', 'Titular')->get();
+            $professores = Banca::where('agendamento_id',$agendamento->id)->where('tipo', 'Titular')->orderBy('nome','asc')->get();
             $bancas = $professores;
             $pdf = PDF::loadView("pdfs.documentos_gerais.$tipo", compact(['agendamento','professores','configs','bancas']));
             return $pdf->download("$tipo.pdf");
         }
         elseif($tipo == 'suplentes'){
             $configs = Config::setConfigOficioSuplente($agendamento);
-            $professores = Banca::where('agendamento_id',$agendamento->id)->where('tipo', 'Suplente')->get();
+            $professores = Banca::where('agendamento_id',$agendamento->id)->where('tipo', 'Suplente')->orderBy('nome','asc')->get();
             $bancas = $professores;
             $pdf = PDF::loadView("pdfs.documentos_gerais.$tipo", compact(['agendamento','professores','configs','bancas']));
             return $pdf->download("$tipo.pdf");
         }
         else{
-            $professores = Banca::where('agendamento_id',$agendamento->id)->get();
+            $professores = Banca::where('agendamento_id',$agendamento->id)->orderBy('nome','asc')->get();
             $bancas = $professores;
             $pdf = PDF::loadView("pdfs.documentos_gerais.$tipo", compact(['agendamento','professores','bancas','configs']));
             return $pdf->download("$tipo.pdf");
@@ -53,7 +53,7 @@ class PdfController extends Controller
         $agendamento->setDataHorario($agendamento);
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         if($tipo == 'titular' or $tipo == 'declaracao'){
-            $professores = Banca::where('agendamento_id',$agendamento->id)->where('tipo', 'Titular')->get();
+            $professores = Banca::where('agendamento_id',$agendamento->id)->where('tipo', 'Titular')->orderBy('nome','asc')->get();
             $professor = $banca;
             if($tipo == 'declaracao'){
                 $configs = Config::setConfigDeclaracao($agendamento,$professores,$professor);
