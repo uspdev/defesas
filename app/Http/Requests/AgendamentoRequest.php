@@ -29,17 +29,17 @@ class AgendamentoRequest extends FormRequest
     {
         $agendamento = new Agendamento;
         return [
-            'codpes' => 'required',
+            'codpes' => 'required|integer',
             'nome' => '',
             'regimento' => ['required',Rule::in($agendamento->regimentoOptions())],
             'orientador_votante' => ['required',Rule::in($agendamento->orientadorvotanteOptions())],
             'sexo' => ['required',Rule::in($agendamento->sexoOptions())],
             'nivel' => ['required',Rule::in($agendamento->nivelOptions())],
             'titulo' => 'required',
-            'area_programa' => ['required',Rule::in(ReplicadoUtils::codAreasProgramas(8))],
+            'area_programa' => ['required',Rule::in(ReplicadoUtils::codareasProgramas())],
             'sala' => ['required',Rule::in($agendamento->salaOptions())],
             'data_horario' => 'required',
-            'orientador' => 'required',
+            'orientador' => 'required|integer',
             'nome_orientador' => '',
         ];
     }
@@ -48,6 +48,9 @@ class AgendamentoRequest extends FormRequest
     {
         $dado = $this->all();
         if($dado['data'] != null && $dado['horario'] != null){
+            $data_validated = $this->validate([
+                'data' => 'required|data'
+            ]);
             $data = $dado['data'];
             $horario = $dado['horario'];
             $dado['data_horario'] = Carbon::CreatefromFormat('d/m/Y H:i', "$data $horario");

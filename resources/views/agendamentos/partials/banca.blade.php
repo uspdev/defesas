@@ -18,7 +18,7 @@
                     </tr>
                 </theader>
                 <tbody>
-                @foreach ($agendamento->bancas as $banca)
+                @foreach ($bancas as $banca)
                     <tr>
                         <td>{{ $banca->codpes }}</td>
                         <td>{{ $banca->nome }}</td>
