@@ -114,7 +114,7 @@
 	<div style="margin-top:2cm;" align="center"> 
         Atenciosamente,<br>  
         <b>
-            {{Auth::user()->name}} - Defesas de Mestrado e Doutorado da FFLCH /USP 
+            {{Auth::user()->name}} - Defesas de Mestrado e Doutorado da {{$pessoa::cracha(Auth::user()->codpes)['nomorg']}}/USP 
         </b>
     </div> 
     <div id="footer">

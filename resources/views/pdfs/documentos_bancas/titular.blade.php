@@ -126,7 +126,7 @@
         Atenciosamente, 
 		<br>
         <b> 
-			{{Auth::user()->name}} - Defesas de Mestrado e Doutorado da FFLCH /USP 
+			{{Auth::user()->name}} - Defesas de Mestrado e Doutorado da {{$pessoa::cracha(Auth::user()->codpes)['nomorg']}}/USP 
 		</b>
     </p>
     <br><br> 
@@ -135,9 +135,8 @@
 	CEP: {{$pessoa::obterEndereco($professor->codpes)['codendptl']}}
 	<br>  {{$pessoa::obterEndereco($professor->codpes)['cidloc']}}
 	- {{$pessoa::obterEndereco($professor->codpes)['sglest']}}
-	<br> telefone: {{$pessoa::telefones($professor->codpes)['0']}}
-	<br>e-mail: {{$pessoa::emailusp($professor->codpes)}}
-
+	<br> telefone: @foreach($pessoa::telefones($professor->codpes) as $p) {{$p}} @endforeach
+	<br>e-mail: @foreach($pessoa::emails($professor->codpes) as $p) {{$p}} / @endforeach
     <div id="footer">
         {!! $configs->rodape_oficios !!}
     </div>
