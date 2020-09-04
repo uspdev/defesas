@@ -109,7 +109,7 @@ class ReplicadoUtils {
     }
 
     public static function nomeOrganizacao($codpes){
-        $query = "SELECT o.sglorg FROM VINCULOPESSOAUSP v INNER JOIN ORGANIZACAO o ON v.codund = o.codorg where v.codpes = convert(int, :codpes)";
+        $query = "SELECT o.sglorg FROM HISTPES hp INNER JOIN ORGANIZACAO o ON hp.codorg = o.codorg WHERE hp.codpes = convert(int, :codpes)";
         $param = [
             'codpes' => $codpes,
         ];
@@ -120,7 +120,8 @@ class ReplicadoUtils {
             return $result;
         }
         else{
-            $query = "SELECT o.sglorg FROM HISTPES hp INNER JOIN ORGANIZACAO o ON hp.codorg = o.codorg WHERE hp.codpes = convert(int, :codpes)";
+            $query = "SELECT o.sglorg FROM VINCULOPESSOAUSP v INNER JOIN ORGANIZACAO o ON v.codund = o.codorg where v.codpes = convert(int, :codpes)";
+
             $param = [
                 'codpes' => $codpes,
             ];
