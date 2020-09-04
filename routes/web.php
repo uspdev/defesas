@@ -22,6 +22,7 @@ Route::get('logout','LoginController@logout')->name('logout');
 
 // rotas de Agendamento de Defesa
 Route::resource('agendamentos','AgendamentoController');
+Route::resource('docentes','DocenteController');
 
 // rotas de Banca das Defesas
 Route::get('/agendamentos/{agendamento}/bancas/create','BancaController@create');

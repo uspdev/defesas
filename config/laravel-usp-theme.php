@@ -12,6 +12,17 @@ $submenu1 =  [
     ],
 ];
 
+$submenu2 =  [
+    [
+        'text' => 'Cadastrar Docente',
+        'url'  => '/docentes/create',
+    ],
+    [
+        'text' => 'Listar Docentes',
+        'url'  => '/docentes',
+    ],
+];
+
 return [
     'title'=> 'DEFESAS',
     'dashboard_url' => '/',
@@ -29,6 +40,10 @@ return [
             'submenu' => $submenu1,
             'can' => 'admin',
         ],
-         
+        [
+            'text'    => 'Docentes',
+            'submenu' => $submenu2,
+            'can' => 'admin',
+        ],
     ],
 ];

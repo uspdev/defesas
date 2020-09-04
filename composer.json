@@ -22,7 +22,8 @@
         "uspdev/laravel-usp-theme": "^1.0",
         "uspdev/laravel-usp-validators": "^1.0",
         "uspdev/replicado": "^1.5",
-        "uspdev/senhaunica-socialite": "^2.0"
+        "uspdev/senhaunica-socialite": "^2.0",
+        "league/oauth1-client": "^1.7.0"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
