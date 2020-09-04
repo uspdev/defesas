@@ -115,7 +115,11 @@
 			</tr> 
 		</table>
 
-	    <center> <b> {{$pessoa::email($banca->codpes)}} </b> </center>
+	    <center> <b> 
+			@foreach($pessoa::emails($banca->codpes) as $p) 
+                {{$p}} /
+            @endforeach
+		</b> </center>
 	    <br> <center> <b>RELATÓRIO </center></b> <br> <div class="justificar">  {!! $configs->capes_proap !!} </div> 
 	    Banca de: {{$agendamento->nome}} <br><br><br><br><br><br><br>
         <table width="18cm"> 

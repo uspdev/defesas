@@ -12,7 +12,11 @@
             <p><b>Origem:</b> {{$dados->origem}} </p> 
             <p><b>Ida:</b> {{$dados->ida}} </p> 
             <p><b>Volta:</b> {{$dados->volta}} </p> 
-            <p><b>E-mail:</b> {{$pessoa::email($banca->codpes)}} </p><br>
+            <p><b>E-mail:</b> 
+                @foreach($pessoa::emails($banca->codpes) as $p) 
+                    {{$p}} /
+                @endforeach
+            </p><br>
             <p>Banca de <b> {{$agendamento->nome_area}} / {{$agendamento->nivel}} </b> </p>
             <p>Do(a) aluno(a) <b> {{$agendamento->nome}} </b> </p>
             @php(setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese'))

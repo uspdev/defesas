@@ -84,8 +84,13 @@
 	<div class="justificar" style="text-indent:1cm;" >{!! $configs->agencia_texto !!} </div>
 	<div class="importante">  
 		Interessado(a): Prof(a). Dr(a). <b> {{$banca->nome}}</b> <br>
-		E-mail: <b>{{$pessoa::email($banca->codpes)}}</b> <br>
-		Telefone:<b> {{$pessoa::telefones($banca->codpes)['0']}}</b> <br>
+		E-mail: 
+    <b>
+      @foreach($pessoa::emails($banca->codpes) as $p) 
+          {{$p}} /
+      @endforeach
+    </b> <br>
+		Telefone:<b> @foreach($pessoa::telefones($banca->codpes) as $p) {{$p}} @endforeach</b> <br>
 		Data da defesa:<b> {{$agendamento->data}}</b> <br>
 		Trajeto da passagem aérea <b> {{$dados->trajeto}}</b> <br>
 	</div> <br>
@@ -109,7 +114,7 @@
     <b> 
 		  {{Auth::user()->name}}
       <br> 
-      Serviço de Pós-Graduação - FFLCH/USP  
+      Serviço de Pós-Graduação - {{$pessoa::cracha(Auth::user()->codpes)['nomorg']}}/USP  
 		</b>
   </p>
 @endsection('content')

@@ -34,8 +34,9 @@
     <p> Itinerário: {{$dados->itinerario}} </p> 
     <p> Partida: {{$dados->partida}}</p> 
     <p> Retorno: {{$dados->retorno}} </p> 
-    <p> Telefone: {{$pessoa::telefones($banca->codpes)['0']}} </p> 
-    <p> E-mail:  {{$pessoa::email($banca->codpes)}} </p> 
+    <p> Telefone: @foreach($pessoa::telefones($banca->codpes) as $p) {{$p}} @endforeach </p> 
+    <p> E-mail: @foreach($pessoa::emails($banca->codpes) as $p) {{$p}} / @endforeach
+    </p> 
     <div class="justificar"> {!! $configs->obs_passagem !!} </div>
             
     <p> 
@@ -48,7 +49,7 @@
       <b> 
         {{Auth::user()->name}} <br>
         {{Auth::user()->codpes}}
-        <br> SPG-FFLCH-USP 
+        <br> SPG-{{$pessoa::cracha(Auth::user()->codpes)['nomorg']}}-USP 
       </b> 
       </p>
     </center>
