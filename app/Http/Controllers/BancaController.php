@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Agendamento;
 use App\Banca;
+use App\Docente;
 use Illuminate\Http\Request;
 use App\Http\Requests\BancaRequest;
 use Uspdev\Replicado\Pessoa;
@@ -49,7 +50,8 @@ class BancaController extends Controller
         $validated = $request->validated();
         $banca->codpes = $validated['codpes'];
         if($validated['nome'] == null){
-            $banca->nome = Pessoa::dump($validated['codpes'])['nompes'];
+            $nome = Docente::where('n_usp', $validated['codpes'])->first();
+            $banca->nome = $nome['nome'];
         }
         else{
             $banca->nome = $validated['nome'];
@@ -96,7 +98,8 @@ class BancaController extends Controller
         $this->authorize('admin');
         $validated = $request->validated();
         if($validated['nome'] == null){
-            $validated['nome'] = Pessoa::dump($validated['codpes'])['nompes'];
+            $nome = Docente::where('n_usp', $validated['codpes'])->first();
+            $validated['nome'] = $nome['nome'];
         }
         $banca->update($validated);
         return redirect("/agendamentos/$agendamento->id");

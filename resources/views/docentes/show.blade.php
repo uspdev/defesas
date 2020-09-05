@@ -2,6 +2,7 @@
 
 @section('content')
 @inject('pessoa','Uspdev\Replicado\Pessoa')
+@inject('replicado','App\Utils\ReplicadoUtils')
 
     <div class="row">
         <div class="col-sm">
@@ -62,5 +63,60 @@
                 @endif
             @endforeach
         </div>
+    </div>
+    <br>
+    <div class="card">
+        <div class="card-header"><b>Bancas que participou como Orientador(a)</b></div>
+        <table class="table table-striped" style="text-align:center;">
+            <thead class="thead-light">
+                <tr>
+                    <th>Candidato</th>
+                    <th>Título</th>
+                    <th>Data</th>
+                    <th>Programa/Área</th>
+                    <th>Nível</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($docente->getBancasProfessor($docente->n_usp,'Orientador') as $banca)
+                    <tr>
+                        <td><a href="/agendamentos/{{$banca->id}}">{{$banca->nome}}</a></td>
+                        <td>{{$banca->titulo}}</td>
+                        <td>{{Carbon\Carbon::parse($banca->data_horario)->format('d/m/Y')}}</td>
+                        <td>{{$replicado::nomeAreaPrograma($banca->area_programa)}}</td>
+                        <td>{{$banca->nivel}}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <div class="card">
+        <div class="card-header"><b>Bancas de defesa que participou como Examinador(a)</b></div>
+        <table class="table table-striped" style="text-align:center;">
+            <thead class="thead-light">
+                <tr>
+                    <th>Candidato</th>
+                    <th>Título</th>
+                    <th>Data</th>
+                    <th>Programa/Área</th>
+                    <th>Nível</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($docente->getBancasProfessor($docente->n_usp,'Examinador') as $bancas)
+                    @foreach($bancas as $banca)
+                    <tr>
+                        <td><a href="/agendamentos/{{$banca['id']}}">{{$banca['nome']}}</a></td>
+                        <td>{{$banca['titulo']}}</td>
+                        <td>{{Carbon\Carbon::parse($banca['data_horario'])->format('d/m/Y')}}</td>
+                        <td>{{$replicado::nomeAreaPrograma($banca['area_programa'])}}</td>
+                        <td>{{$banca['nivel']}}</td>
+                    </tr>
+                    @endforeach
+                @endforeach
+            </tbody>
+        </table>
+
     </div>
 @endsection('content')

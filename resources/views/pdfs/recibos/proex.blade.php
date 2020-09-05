@@ -63,16 +63,16 @@
 		</tr> 
 		<tr>
 			<td> Nome: {{$banca->nome}}	</td>
-			<td> CPF: {{$pessoa::dump($banca->codpes)['numcpf']}} </td>
+			<td> CPF: {{$banca->getDadosProfessor($banca->codpes)['cpf']}} </td>
 		</tr>
 		<tr>
 			<td> Profissão: <br> PROFESSOR DOUTOR	</td>
-			<td> RG/Passaporte(se estrangeiro):<br> {{$pessoa::dump($banca->codpes)['numdocidf']}} </td>
+			<td> RG/Passaporte(se estrangeiro):<br> {{$banca->getDadosProfessor($banca->codpes)['documento']}} </td>
 		</tr>
 		<tr>
 			<td colspan="2"> Endereço Completo: <br> 
-				{{$pessoa::obterEndereco($banca->codpes)['nomtiplgr']}} {{$pessoa::obterEndereco($banca->codpes)['epflgr']}} {{$pessoa::obterEndereco($banca->codpes) ['numlgr']}} {{$pessoa::obterEndereco($banca->codpes)['cpllgr']}} {{$pessoa::obterEndereco($banca->codpes)['nombro']}}
-                {{$pessoa::obterEndereco($banca->codpes)['cidloc']}}/{{$pessoa::obterEndereco($banca->codpes)['sglest']}} - {{$pessoa::obterEndereco($banca->codpes)['codendptl']}}
+					{{$banca->getDadosProfessor($banca->codpes)['endereco']}}, {{$banca->getDadosProfessor($banca->codpes)['bairro']}} <br>
+    				CEP:{{$banca->getDadosProfessor($banca->codpes)['cep']}} - {{$banca->getDadosProfessor($banca->codpes)['cidade']}}/{{$banca->getDadosProfessor($banca->codpes)['estado']}}
 			</td>
 		</tr>
 	</table> 

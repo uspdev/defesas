@@ -45,9 +45,8 @@
 			<tr>
 				<td> 
 					<u>DO:</u> SERVIÇO DE PÓS-GRADUAÇÃO DA FFLCH <br>
-					<u>PARA:</u> {{$pessoa::obterEndereco($professor->codpes)['nomtiplgr']}} {{$pessoa::obterEndereco($professor->codpes)['epflgr']}} {{$pessoa::obterEndereco($professor->codpes)['numlgr']}} {{$pessoa::obterEndereco($professor->codpes)['cpllgr']}} {{$pessoa::obterEndereco($professor->codpes)['nombro']}} 
-					CEP: {{$pessoa::obterEndereco($professor->codpes)['codendptl']}}
-					<br>  {{$pessoa::obterEndereco($professor->codpes)['cidloc']}} - {{$pessoa::obterEndereco($professor->codpes)['sglest']}}
+					<u>PARA:</u> {{$professor::getDadosProfessor($professor->codpes)['endereco']}}, {{$professor::getDadosProfessor($professor->codpes)['bairro']}} <br>
+        			CEP:{{$professor::getDadosProfessor($professor->codpes)['cep']}} - {{$professor::getDadosProfessor($professor->codpes)['cidade']}}/{{$professor::getDadosProfessor($professor->codpes)['estado']}}
 					<div style="text-indent:1.5cm;">
 						A/C: Prof(a). Dr(a). {{$professor->nome}}
 					</div> 
@@ -87,8 +86,8 @@
 			<tr>
 				<td>
 					<u>DO:</u> SERVIÇO DE PÓS-GRADUAÇÃO DA FFLCH <br>
-					<u>PARA:</u>  {{$pessoa::obterEndereco($professor->codpes)['nomtiplgr']}} {{$pessoa::obterEndereco($professor->codpes)['epflgr']}} {{$pessoa::obterEndereco($professor->codpes)['numlgr']}} {{$pessoa::obterEndereco($professor->codpes)['cpllgr']}} {{$pessoa::obterEndereco($professor->codpes)['nombro']}} 
-					CEP: {{$pessoa::obterEndereco($professor->codpes)['codendptl']}} - {{$pessoa::obterEndereco($professor->codpes)['cidloc']}}/{{$pessoa::obterEndereco($professor->codpes)['sglest']}}
+					<u>PARA:</u>  {{$professor::getDadosProfessor($professor->codpes)['endereco']}}, {{$professor::getDadosProfessor($professor->codpes)['bairro']}} <br>
+        			CEP:{{$professor::getDadosProfessor($professor->codpes)['cep']}} - {{$professor::getDadosProfessor($professor->codpes)['cidade']}}/{{$professor::getDadosProfessor($professor->codpes)['estado']}}
 					<div style="text-indent:1.5cm;"> A/C: Prof(a). Dr(a). {{$professor->nome}} </div> 
 				</td> 
 			</tr>

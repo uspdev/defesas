@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Agendamento;
 use App\Banca;
 use App\Config;
+use App\Docente;
 use Illuminate\Http\Request;
 use App\Utils\ReplicadoUtils;
 
@@ -19,9 +20,10 @@ class EmailController extends Controller
         $this->authorize('admin');
         $dados = $request;
         $agendamento->setDataHorario($agendamento);
+        $docente = Docente::where('n_usp', $banca->codpes)->first();
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         $configs = Config::orderbyDesc('created_at')->first();
-        return view('agendamentos.recibos.recibo_externo', compact(['agendamento','banca','dados','configs']));
+        return view('agendamentos.recibos.recibo_externo', compact(['agendamento','docente','dados','configs']));
     }
 
     //Função que exibe apenas uma view com os dados a serem copiados e enviados via e-mail para o docente. Automatização desse processo será realizada mais para frente.
@@ -29,8 +31,9 @@ class EmailController extends Controller
         $this->authorize('admin');
         $dados = $request;
         $agendamento->setDataHorario($agendamento);
+        $docente = Docente::where('n_usp', $banca->codpes)->first();
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         $configs = Config::setConfigEmail($agendamento,$banca);
-        return view('agendamentos.recibos.email', compact(['agendamento','banca','dados','configs']));
+        return view('agendamentos.recibos.email', compact(['agendamento','docente','dados','configs']));
     }
 }

@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Docente;
 class Banca extends Model
 {
     protected $guarded = ['id'];
@@ -27,5 +27,9 @@ class Banca extends Model
             'Titular',
             'Suplente'
         ];
+    }
+
+    public static function getDadosProfessor($codpes){
+        return Docente::where('n_usp',$codpes)->first();
     }
 }

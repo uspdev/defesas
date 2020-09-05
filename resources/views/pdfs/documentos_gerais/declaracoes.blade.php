@@ -5,7 +5,7 @@
 @section('styles_head')
 <style type="text/css">
     #headerFFLCH {
-        font-size: 14px; width: 17cm; text-align:center; font-weight:bold; font-style:italic;
+        font-size: 14px; width: 17cm; text-align:center; font-weight:bold;
     }
     .data_hoje{
         margin-left: 10cm; margin-bottom:0.8cm; 
@@ -72,20 +72,19 @@
 
 @section('content')
     @foreach($professores as $professor)
-        <div id="headerFFLCH" style="text-align:center;">
-            <table>
-                <tr>
-                    <br>
-                    <td width="2cm"> <img src="images/fflch.gif" width="95%"/> </td> 
-                    <td width="14cm"> 
-                        <p align="center" style="font-style:normal; font-size:17px"> 
-                            Universidade de São Paulo<br> 
-                            Faculdade de Filosofia, Letras e Ciências Humanas<br>
-                        </p>
-                    </td>
-                </tr>
-            </table>
-        </div>
+        <table id="headerFFLCH" style='width:100%'>
+            <tr>
+                <td style='width:20%' style='text-align:left;'>
+                    <img src='https://www.fflch.usp.br/themes/contrib/aegan-subtheme/images/logo.png' width='230px'/>
+                </td>
+                <td style='width:80%'; style='text-align:center;'>
+                    <p align='center'><b>FACULDADE DE FILOSOFIA, LETRAS E CIÊNCIAS HUMANAS</b>
+                    <br>Universidade de São Paulo<br>
+                    Serviço de Pós-Graduação</p>
+                </td>
+            </tr>
+        </table>
+        <br>
 
         <div align="right">
             @php(setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese'))
@@ -103,11 +102,7 @@
             @foreach($bancas as $banca)    
             <tr style="border='0'">
                 <td><b>{{$banca->nome}}</b> </td> 
-                @if($pessoa::cracha($banca->codpes)['nomorg'] == null) 
-                    <td><b>{{$replicado::nomeOrganizacao($banca->codpes)['sglorg']}}</b></td>
-                @else
-                    <td><b>{{$pessoa::cracha($banca->codpes)['nomorg']}}</b></td>
-                @endif            
+                <td><b>{{$banca->getDadosProfessor($banca->codpes)['lotado']}}</b></td>           
             </tr>
             @endforeach
         </table>

@@ -47,6 +47,7 @@
             <tr>
                 <th>Nº USP</th>
                 <th>Nome</th>
+                <th>Tipo</th>
                 <th colspan="2">Ações</th>
                 <th>Última alteração</th>
             </tr>
@@ -56,6 +57,13 @@
             <tr>
                 <td>{{ $docente->n_usp }}</td>
                 <td><a href="/docentes/{{$docente->id}}">{{ $docente->nome }}</a></td>
+                <td>
+                    @if($docente->docente_usp == 'Sim')
+                        Docente USP
+                    @else
+                        Docente Externo
+                    @endif
+                </td>
                 <td>
                     <a href="/docentes/{{$docente->id}}/edit" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                 </td>
