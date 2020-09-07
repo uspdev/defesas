@@ -28,16 +28,21 @@ php artisan key:generate
 php artisan migrate
 php artisan vendor:publish --provider="Uspdev\UspTheme\ServiceProvider" --tag=assets --force
 ```
+No ambiente de desenvolvimento, pode-se usar dados fakers:
+
+```bash
+php artisan migrate:fresh --seed
+```
 
 Caso falte alguma dependência, siga as instruções do `composer`.
 
 ## Projetos utilizados
 
-github: [uspdev/laravel-usp-theme](https://github.com/uspdev/laravel-usp-theme)
-
-github: [uspdev/replicado](https://github.com/uspdev/replicado)
-
-github: [uspdev/senhaunica-socialite](https://github.com/uspdev/senhaunica-socialite)
+- [uspdev/laravel-usp-theme](https://github.com/uspdev/laravel-usp-theme)
+- [uspdev/replicado](https://github.com/uspdev/replicado)
+- [uspdev/senhaunica-socialite](https://github.com/uspdev/senhaunica-socialite)
+- [uspdev/laravel-usp-faker](https://github.com/uspdev/laravel-usp-faker)
+- [uspdev/laravel-usp-validators](https://github.com/uspdev/laravel-usp-validators)
 
 
 ## Contribuindo com o projeto
