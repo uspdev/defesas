@@ -6,7 +6,7 @@
         margin-top: 0px; margin-left:3em; font-family: DejaVu Sans, sans-serif; font-size: 12px;
     }
     #headerFFLCH {
-        font-size: 14px; width: 17cm; text-align:center; font-weight:bold; font-style:italic;
+        font-size: 14px; width: 17cm; text-align:center; font-weight:bold;
     }
     .data_hoje{
         margin-left: 10cm; margin-bottom:0.8cm; 
@@ -51,23 +51,24 @@
 </style>
 @endsection('styles_head')
 
+@section('header')
+  <table style='width:100%'>
+    <tr>
+      <td style='width:20%' style='text-align:left;'>
+        <img src='https://www.fflch.usp.br/themes/contrib/aegan-subtheme/images/logo.png' width='230px'/>
+      </td>
+      <td style='width:80%'; style='text-align:center;'>
+        <p align='center'><b>FACULDADE DE FILOSOFIA, LETRAS E CIÊNCIAS HUMANAS</b>
+        <br>Universidade de São Paulo<br>
+        Serviço de Pós-Graduação</p>
+      </td>
+    </tr>
+  </table>
+  </br>
+@endsection('header')
+
 @section('content')
 @inject('pessoa','Uspdev\Replicado\Pessoa')
-  <br>
-  <div id="headerFFLCH" style="text-align:center;">
-    <table>
-      <tr>
-        <br>
-        <td width="2cm"> <img src="images/fflch.gif" width="95%"/> </td> 
-        <td width="14cm"> 
-          <p style="text-align:center; font-style:normal; font-size:17px"> 
-            Universidade de São Paulo<br> 
-            Faculdade de Filosofia, Letras e Ciências Humanas<br>
-          </p>
-        </td>
-      </tr>
-    </table>
-  </div>
   <div class="data_hoje">
     @php(setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese'))
     São Paulo, {{ strftime('%d de %B de %Y', strtotime('today')) }}
@@ -84,13 +85,8 @@
 	<div class="justificar" style="text-indent:1cm;" >{!! $configs->agencia_texto !!} </div>
 	<div class="importante">  
 		Interessado(a): Prof(a). Dr(a). <b> {{$banca->nome}}</b> <br>
-		E-mail: 
-    <b>
-      @foreach($pessoa::emails($banca->codpes) as $p) 
-          {{$p}} /
-      @endforeach
-    </b> <br>
-		Telefone:<b> @foreach($pessoa::telefones($banca->codpes) as $p) {{$p}} @endforeach</b> <br>
+		E-mail: <b>{{$banca->getDadosProfessor($banca->codpes)['email']}}</b> <br>
+		Telefone:<b> {{$banca->getDadosProfessor($banca->codpes)['telefone']}} </b> <br>
 		Data da defesa:<b> {{$agendamento->data}}</b> <br>
 		Trajeto da passagem aérea <b> {{$dados->trajeto}}</b> <br>
 	</div> <br>

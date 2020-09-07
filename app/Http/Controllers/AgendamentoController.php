@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Agendamento;
 use App\Banca;
+use App\Docente;
 use Illuminate\Http\Request;
 use App\Http\Requests\AgendamentoRequest;
 use Carbon\Carbon;
@@ -68,10 +69,12 @@ class AgendamentoController extends Controller
         $this->authorize('admin');
         $validated = $request->validated();
         if($validated['nome'] == ''){
-            $validated['nome'] = Pessoa::dump($validated['codpes'])['nompes'];
+            $nome = Docente::where('n_usp', $validated['codpes'])->first();
+            $validated['nome'] = $nome['nome'];
         }
         if($validated['nome_orientador'] == ''){
-            $validated['nome_orientador'] = Pessoa::dump($validated['orientador'])['nompes'];
+            $nome = Docente::where('n_usp', $validated['orientador'])->first();
+            $validated['nome_orientador'] = $nome['nome'];
         }
         $agendamento = Agendamento::create($validated);
         //Salva o orientador na banca
@@ -125,10 +128,12 @@ class AgendamentoController extends Controller
         $this->authorize('admin');
         $validated = $request->validated();
         if($validated['nome'] == ''){
-            $validated['nome'] = Pessoa::dump($validated['codpes'])['nompes'];
+            $nome = Docente::where('n_usp', $validated['codpes'])->first();
+            $validated['nome'] = $nome['nome'];
         }
         if($validated['nome_orientador'] == ''){
-            $validated['nome_orientador'] = Pessoa::dump($validated['orientador'])['nompes'];
+            $nome = Docente::where('n_usp', $validated['orientador'])->first();
+            $validated['nome_orientador'] = $nome['nome'];
         }
         $agendamento->update($validated);
         return redirect("/agendamentos/$agendamento->id");

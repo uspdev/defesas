@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <header>
+    <header id="headerFFLCH">
         @yield('header')
     </header>
 

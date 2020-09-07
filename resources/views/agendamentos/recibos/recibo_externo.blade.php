@@ -7,15 +7,12 @@
         <div class="card-header">Recibo de diária para docentes externos</div>
         <div class="card-body">
             <p><i>Copiar esse dados e colar em corpo de e-mail para: tesourariafflch@usp.br</p></i><br>
-            <p><b>Nome:</b> {{$banca->nome}} </p> 
-            <p><b>N° USP:</b> {{$banca->codpes}} </p> 
+            <p><b>Nome:</b> {{$docente->nome}} </p> 
+            <p><b>N° USP:</b> {{$docente->n_usp}} </p> 
             <p><b>Origem:</b> {{$dados->origem}} </p> 
             <p><b>Ida:</b> {{$dados->ida}} </p> 
             <p><b>Volta:</b> {{$dados->volta}} </p> 
-            <p><b>E-mail:</b> 
-                @foreach($pessoa::emails($banca->codpes) as $p) 
-                    {{$p}} /
-                @endforeach
+            <p><b>E-mail:</b> {{$docente->email}}
             </p><br>
             <p>Banca de <b> {{$agendamento->nome_area}} / {{$agendamento->nivel}} </b> </p>
             <p>Do(a) aluno(a) <b> {{$agendamento->nome}} </b> </p>

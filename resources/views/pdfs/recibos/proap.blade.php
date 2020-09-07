@@ -2,7 +2,9 @@
 
 @section('styles_head')
 <style>
-    #headerFFLCH { font-size: 15px; width: 17cm; text-align:center;}
+	#headerFFLCH {
+        width: 17cm; text-align:center; font-weight:bold; font-family: DejaVu Sans, sans-serif; font-size: 12px;
+    }
     .data_hoje{ margin-left: 10cm; margin-bottom:0.8cm; }
     .conteudo { margin: 1cm }
     p.recuo {text-indent: 0.5cm;}
@@ -17,25 +19,26 @@
 @endsection('styles_head')
 
 @section('header')
-	<div id="headerFFLCH">
-		<table border="0" width="16cm">
-			<tr>
-   				<td width="2cm"> <img src="images/fflch.gif" width="95%"/> </td> 
-				<td width="16cm"> <span style="font-size:20px; font-style:normal; "> <b> UNIVERSIDADE DE SÃO PAULO </b> </span> <br>   
-					<span style="font-size:15px;">Faculdade de Filosofia, Letras e Ciências Humanas</span> <br>
-					<span style="font-size:12x; font-style:normal; "> <b>CNPJ. 63.025.530/0016-90</b> </span> <br> 
-					<span style="font-size:10px; font-style:normal; ">Rua do Lago, 717 - Sl. 131 - Cid. Universitária - CEP: 05508-900 - Fone/Fax: 3091-4878 </span> 
-				</td>
-			</tr>
- 	 	</table>
-	</div>
+
+	<table id="headerFFLCH" style='width:100%; border:none;'>
+        <tr>
+            <td style='width:20%; border:none;' style='text-align:left;'>
+                <img src='https://www.fflch.usp.br/themes/contrib/aegan-subtheme/images/logo.png' width='230px' height='90px'/>
+            </td>
+            <td style='width:100%; border:none; text-align:center; padding-left:20px;'>
+                <span style="font-size:12px;">UNIVERSIDADE DE SÃO PAULO</span><br>
+				<span style="font-size:12px;">Faculdade de Filosofia, Letras e Ciências Humanas</span> <br>
+				<span style="font-size:10x; font-style:normal; "> <b>CNPJ. 63.025.530/0016-90</b> </span> <br> 
+				<span style="font-size:10px; font-style:normal; ">Rua do Lago, 717 - Sl. 131 - Cid. Universitária - CEP: 05508-900 - Fone/Fax: 3091-4878 </span>            
+			</td>
+        </tr>
+    </table>
+    <br><br>
 @endsection('header')
 
 @section('content')
 @inject('pessoa','Uspdev\Replicado\Pessoa')
 @inject('replicado','App\Utils\ReplicadoUtils')
-
-	<br>
     <div id="proap">	
         <center> <span style="font-size:16px;"> <b> RECIBO DE DIÁRIAS - BANCA EXAMINADORA </b> </span> </center>	
         <center> <span style="font-size:14px;"> <b> PROAP {{$dados->ano}} </b> </span> </center>
@@ -45,19 +48,15 @@
 				<td style="border:0px;" colspan="2">Nome do Convidado: {{$banca->nome}} </td>
 			</tr>
 			<tr>
-				<td style="border:0px;"> CPF: {{$pessoa::dump($banca->codpes)['numcpf']}}</td>
-				<td style="border:0px;">  RG: {{$pessoa::dump($banca->codpes)['numdocidf']}}  </td>
+				<td style="border:0px;"> CPF: {{$banca->getDadosProfessor($banca->codpes)['cpf']}}</td>
+				<td style="border:0px;">  RG: {{$banca->getDadosProfessor($banca->codpes)['documento']}}  </td>
 			</tr>
 		</table>				
 	    <hr>
 	    <table width="16.5cm" style="border:0px;">
 			<tr>
 				<td style="border:0px;">Unidade: </td>
-				@if($pessoa::cracha($banca->codpes)['nomorg'] == null) 
-					<td style="border:0px;"> {{$replicado::nomeOrganizacao($banca->codpes)['sglorg']}} </td>
-                @else
-					<td style="border:0px;"> {{$pessoa::cracha($banca->codpes)['nomorg']}} </td>
-                @endif 
+				<td style="border:0px;"> {{$banca->getDadosProfessor($banca->codpes)['lotado']}} </td>
 				<td style="border:0px;">Cargo: </td>
 				<td style="border:0px;"> <b> Professor(a) Doutor(a) </b> </td>
 			</tr>
@@ -109,17 +108,13 @@
 			<tr>
 				<td style="border:0;"> <hr style="width:10cm;"> 
 					{{$banca->nome}} <br> 
-					<b>{{$pessoa::obterEndereco($banca->codpes)['nomtiplgr']}} {{$pessoa::obterEndereco($banca->codpes)['epflgr']}} {{$pessoa::obterEndereco($banca->codpes) ['numlgr']}} {{$pessoa::obterEndereco($banca->codpes)['cpllgr']}} {{$pessoa::obterEndereco($banca->codpes)['nombro']}}
-                {{$pessoa::obterEndereco($banca->codpes)['cidloc']}}/{{$pessoa::obterEndereco($banca->codpes)['sglest']}} - {{$pessoa::obterEndereco($banca->codpes)['codendptl']}}</b>
+					<b>{{$banca->getDadosProfessor($banca->codpes)['endereco']}}, {{$banca->getDadosProfessor($banca->codpes)['bairro']}} <br>
+    				CEP:{{$banca->getDadosProfessor($banca->codpes)['cep']}} - {{$banca->getDadosProfessor($banca->codpes)['cidade']}}/{{$banca->getDadosProfessor($banca->codpes)['estado']}}</b>
 				</td>
 			</tr> 
 		</table>
 
-	    <center> <b> 
-			@foreach($pessoa::emails($banca->codpes) as $p) 
-                {{$p}} /
-            @endforeach
-		</b> </center>
+	    <center> <b> {{$banca->getDadosProfessor($banca->codpes)['email']}}</b> </center>
 	    <br> <center> <b>RELATÓRIO </center></b> <br> <div class="justificar">  {!! $configs->capes_proap !!} </div> 
 	    Banca de: {{$agendamento->nome}} <br><br><br><br><br><br><br>
         <table width="18cm"> 
