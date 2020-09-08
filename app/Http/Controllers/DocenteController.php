@@ -64,7 +64,7 @@ class DocenteController extends Controller
         //
         $this->authorize('admin');
         $validated = $request->validated();
-        $validated['codultalt'] = Auth::user()->codpes;
+        $validated['last_user'] = Auth::user()->codpes;
         $docente = Docente::create($validated);
         return redirect("/docentes/$docente->id");
     }
@@ -107,7 +107,7 @@ class DocenteController extends Controller
         //
         $this->authorize('admin');
         $validated = $request->validated();
-        $validated['codultalt'] = Auth::user()->codpes;
+        $validated['last_user'] = Auth::user()->codpes;
         $docente->update($validated);
         return redirect("/docentes/$docente->id");
     }
