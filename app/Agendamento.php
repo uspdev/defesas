@@ -75,8 +75,4 @@ class Agendamento extends Model
             "Sala de Treinamento (116)",
         ];
     }
-
-    public static function departamentoOptions(){
-        return ReplicadoUtils::areasProgramas();
-    }
 }
