@@ -31,11 +31,6 @@ return [
     'login_url' => '/login',
     'menu' => [
         [
-            'text'    => 'Configurações',
-            'url' => '/configs',
-            'can' => 'admin',
-        ],
-        [
             'text'    => 'Agendamentos',
             'submenu' => $submenu1,
             'can' => 'admin',
@@ -43,6 +38,15 @@ return [
         [
             'text'    => 'Docentes',
             'submenu' => $submenu2,
+            'can' => 'admin',
+        ],
+    ],
+    'right_menu' => [
+        [
+            'text' => '<i class="fas fa-cog"></i>',
+            'title' => 'Configurações',
+            'target' => '_blank',
+            'url' => config('app.url') . '/configs',
             'can' => 'admin',
         ],
     ],
