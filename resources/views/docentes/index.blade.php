@@ -81,4 +81,5 @@
         @endforeach
         </tbody>
     </table>
+    {{ $docentes->appends(request()->query())->links() }}
 @endsection('content')
