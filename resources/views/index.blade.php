@@ -11,6 +11,41 @@
     @inject('replicado','App\Utils\ReplicadoUtils')
     <br>
     <div class="card">
+        <div class="card-body">
+            <form method="GET" action="/">
+                <div class="row form-group">
+                    <div class="col-auto">
+                        <label style="margin-top:0.35em; margin-bottom:0em;"><h5><b>Busca por Departamento: </b></h5></label>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-sm form-group">
+                        <select class="form-control" name="busca">
+                            <option value="" selected="">- Todos -</option>
+                            @foreach (App\Agendamento::departamentoOptions() as $option)
+                                {{-- 1. Situação em que não houve tentativa de submissão e é uma edição --}}
+                                @if (old('busca') == '' and isset($agendamento->busca))
+                                <option value="{{$option['codare']}}" {{ ( $agendamento->busca == $option['codare']) ? 'selected' : ''}}>
+                                    {{$option['nomare']}}
+                                </option>
+                                {{-- 2. Situação em que houve tentativa de submissão, o valor de old prevalece --}}
+                                @else
+                                <option value="{{$option['codare']}}" {{ ( old('busca') == $option['codare']) ? 'selected' : ''}}>
+                                    {{$option['nomare']}}
+                                </option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class=" col-auto form-group">
+                        <button type="submit" class="btn btn-success">Buscar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br>
+    <div class="card">
         <div class="card-header"><h2>Próximas Defesas</h2></div>
         <table class="table table-striped" style="text-align:center;">
             <theader>
