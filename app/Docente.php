@@ -33,6 +33,7 @@ class Docente extends Model
     }
 
     public function getBancasProfessor($codpes, $tipo){
+        $agendamentos = [];
         if($tipo == 'Orientador'){
             $agendamentos = Agendamento::where('orientador',$codpes)->orderBy('data_horario','asc')->get();
         }
