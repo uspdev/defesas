@@ -75,7 +75,7 @@
                     </form>
                 </td>
                 <td>
-                    por: {{$pessoa::dump($docente->codultalt)['nompes']}} em: {{Carbon\Carbon::parse($docente->updated_at)->format('d/m/Y')}}
+                    por: {{$pessoa::dump($docente->last_user)['nompes']}} em: {{Carbon\Carbon::parse($docente->updated_at)->format('d/m/Y')}}
                 </td>
             </tr>
         @endforeach

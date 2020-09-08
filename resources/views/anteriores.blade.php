@@ -14,7 +14,7 @@
             <form method="GET" action="/anteriores">
                 <div class="row form-group">
                     <div class="col-auto">
-                        <label style="margin-top:0.35em; margin-bottom:0em;"><h5><b>Busca por Departamento: </b></h5></label>
+                        <label style="margin-top:0.35em; margin-bottom:0em;"><h5><b>Busca por Área/Programa: </b></h5></label>
                     </div>
                 </div>
                 <div class="row form-group">
