@@ -40,7 +40,6 @@ class AgendamentoRequest extends FormRequest
             'sala' => ['required',Rule::in($agendamento->salaOptions())],
             'data_horario' => 'required',
             'orientador' => 'required|integer',
-            'nome_orientador' => '',
         ];
     }
 

@@ -42,13 +42,13 @@
             @foreach ($docente->statusOptions() as $option)
                 {{-- 1. Situação em que não houve tentativa de submissão e é uma edição --}}
                 @if (old('status') == '' and isset($docente->status))
-                <option value="{{$option}}" {{ ( $docente->status == $option) ? 'selected' : ''}}>
-                    {{$option}}
+                <option value="{{$option['codstatus']}}" {{ ( $docente->status == $option['codstatus']) ? 'selected' : ''}}>
+                    {{$option['nomestatus']}}
                 </option>
                 {{-- 2. Situação em que houve tentativa de submissão, o valor de old prevalece --}}
                 @else
-                <option value="{{$option}}" {{ ( old('status') == $option) ? 'selected' : ''}}>
-                    {{$option}}
+                <option value="{{$option['codstatus']}}" {{ ( old('status') == $option['codstatus']) ? 'selected' : ''}}>
+                    {{$option['nomestatus']}}
                 </option>
                 @endif
             @endforeach
@@ -123,13 +123,13 @@
             @foreach ($docente->docenteUspOptions() as $option)
                 {{-- 1. Situação em que não houve tentativa de submissão e é uma edição --}}
                 @if (old('docente_usp') == '' and isset($docente->docente_usp))
-                <option value="{{$option}}" {{ ( $docente->docente_usp == $option) ? 'selected' : ''}}>
-                    {{$option}}
+                <option value="{{$option['codoption']}}" {{ ( $docente->docente_usp == $option['codoption']) ? 'selected' : ''}}>
+                    {{$option['nomeoption']}}
                 </option>
                 {{-- 2. Situação em que houve tentativa de submissão, o valor de old prevalece --}}
                 @else
-                <option value="{{$option}}" {{ ( old('docente_usp') == $option) ? 'selected' : ''}}>
-                    {{$option}}
+                <option value="{{$option['codoption']}}" {{ ( old('docente_usp') == $option['codoption']) ? 'selected' : ''}}>
+                    {{$option['nomeoption']}}
                 </option>
                 @endif
             @endforeach

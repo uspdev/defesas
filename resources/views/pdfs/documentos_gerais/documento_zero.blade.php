@@ -1,4 +1,5 @@
 @extends('pdfs.fflch')
+@inject('pessoa','Uspdev\Replicado\Pessoa')
 
 @section('styles_head')
 <style>
@@ -106,7 +107,7 @@
     <table style="border: 1px solid black; border-spacing: 5px; width: 18cm;">
       <tr> 
         <td>
-          Prof: <b> {{$professor->nome}}  </b>
+          Prof: <b> {{$pessoa::dump($professor->codpes)['nompes']}}  </b>
         </td>
       </tr>
       <tr> 

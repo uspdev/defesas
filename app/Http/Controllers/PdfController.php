@@ -9,6 +9,7 @@ use App\Banca;
 use App\Config;
 use Carbon\Carbon;
 use App\Utils\ReplicadoUtils;
+use Uspdev\Replicado\Pessoa;
 
 class PdfController extends Controller
 {
@@ -27,20 +28,20 @@ class PdfController extends Controller
             return $pdf->download('placa.pdf');
         }
         elseif($tipo == 'titulares'){
-            $professores = Banca::where('agendamento_id',$agendamento->id)->where('tipo', 'Titular')->orderBy('nome','asc')->get();
+            $professores = Banca::where('agendamento_id',$agendamento->id)->where('tipo', 'Titular')->get();
             $bancas = $professores;
             $pdf = PDF::loadView("pdfs.documentos_gerais.$tipo", compact(['agendamento','professores','configs','bancas']));
             return $pdf->download("$tipo.pdf");
         }
         elseif($tipo == 'suplentes'){
             $configs = Config::setConfigOficioSuplente($agendamento);
-            $professores = Banca::where('agendamento_id',$agendamento->id)->where('tipo', 'Suplente')->orderBy('nome','asc')->get();
+            $professores = Banca::where('agendamento_id',$agendamento->id)->where('tipo', 'Suplente')->get();
             $bancas = $professores;
             $pdf = PDF::loadView("pdfs.documentos_gerais.$tipo", compact(['agendamento','professores','configs','bancas']));
             return $pdf->download("$tipo.pdf");
         }
         else{
-            $professores = Banca::where('agendamento_id',$agendamento->id)->orderBy('nome','asc')->get();
+            $professores = Banca::where('agendamento_id',$agendamento->id)->get();
             $bancas = $professores;
             $pdf = PDF::loadView("pdfs.documentos_gerais.$tipo", compact(['agendamento','professores','bancas','configs']));
             return $pdf->download("$tipo.pdf");
@@ -53,7 +54,7 @@ class PdfController extends Controller
         $agendamento->setDataHorario($agendamento);
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         if($tipo == 'titular' or $tipo == 'declaracao'){
-            $professores = Banca::where('agendamento_id',$agendamento->id)->where('tipo', 'Titular')->orderBy('nome','asc')->get();
+            $professores = Banca::where('agendamento_id',$agendamento->id)->where('tipo', 'Titular')->get();
             $professor = $banca;
             if($tipo == 'declaracao'){
                 $configs = Config::setConfigDeclaracao($agendamento,$professores,$professor);
@@ -62,13 +63,15 @@ class PdfController extends Controller
                 $configs = Config::orderbyDesc('created_at')->first();
             }
             $pdf = PDF::loadView("pdfs.documentos_bancas.$tipo", compact(['agendamento','professores','professor','configs']));
-            return $pdf->download("$banca->nome - $tipo.pdf");
+            $nome = Pessoa::dump($banca->codpes)['nompes'];
+            return $pdf->download("$nome - $tipo.pdf");
         }
         elseif($tipo == 'suplente'){
             $configs = Config::setConfigOficioSuplente($agendamento);
             $professor = $banca;
             $pdf = PDF::loadView("pdfs.documentos_bancas.$tipo", compact(['agendamento','professor','configs']));
-            return $pdf->download("$banca->nome - $tipo.pdf");
+            $nome = Pessoa::dump($banca->codpes)['nompes'];
+            return $pdf->download("$nome - $tipo.pdf");
         }
     }
 
@@ -80,7 +83,8 @@ class PdfController extends Controller
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         $configs = Config::orderbyDesc('created_at')->first();
         $pdf = PDF::loadView("pdfs.recibos.proex", compact(['agendamento','banca','dados','configs']));
-        return $pdf->download("$banca->nome - proex.pdf");    
+        $nome = Pessoa::dump($banca->codpes)['nompes'];
+        return $pdf->download("$nome - proex.pdf");    
     }
 
     //Função destinada à geração de PDF PROAP
@@ -91,7 +95,8 @@ class PdfController extends Controller
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         $configs = Config::orderbyDesc('created_at')->first();
         $pdf = PDF::loadView("pdfs.recibos.proap", compact(['agendamento','banca','dados','configs']));
-        return $pdf->download("$banca->nome - proap.pdf");
+        $nome = Pessoa::dump($banca->codpes)['nompes'];
+        return $pdf->download("$nome - proap.pdf");
     }
 
     //Função destinada à geração de PDF da passagem
@@ -102,7 +107,8 @@ class PdfController extends Controller
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         $configs = Config::orderbyDesc('created_at')->first();
         $pdf = PDF::loadView("pdfs.recibos.passagem", compact(['agendamento','banca','dados','configs']));
-        return $pdf->download("$banca->nome - passagem.pdf");
+        $nome = Pessoa::dump($banca->codpes)['nompes'];
+        return $pdf->download("$nome - passagem.pdf");
     }
 
     //Função destinada à geração de PDF da passagem via auxílio
@@ -112,6 +118,7 @@ class PdfController extends Controller
         $agendamento->setDataHorario($agendamento);
         $configs = Config::orderbyDesc('created_at')->first();
         $pdf = PDF::loadView("pdfs.recibos.passagemAuxilio", compact(['agendamento','banca','dados','configs']));
-        return $pdf->download("$banca->nome - passagemAuxilio.pdf");
+        $nome = Pessoa::dump($banca->codpes)['nompes'];
+        return $pdf->download("$nome - passagemAuxilio.pdf");
     }
 }

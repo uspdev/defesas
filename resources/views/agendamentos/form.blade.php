@@ -113,11 +113,6 @@
         </select>
     </div>
     <div class="col-sm form-group">
-        <label for="orientador">Nome Orientador</label>
-        <input type="text" name="nome_orientador" class="form-control" value="{{ old('nome_orientador', $agendamento->nome_orientador) }}">
-        <span class="badge badge-warning">Se este campo ficar vazio, o nome utilizado será o cadastrado nos sistemas da USP</span> 
-    </div>
-    <div class="col-sm form-group">
         <label for="orientador" class="required">Nº USP Orientador</label>
         <input type="text" name="orientador" class="form-control" value="{{ old('orientador', $agendamento->orientador) }}"> 
     </div> 

@@ -58,7 +58,7 @@
                 <td>{{ $docente->n_usp }}</td>
                 <td><a href="/docentes/{{$docente->id}}">{{ $docente->nome }}</a></td>
                 <td>
-                    @if($docente->docente_usp == 'Sim')
+                    @if($docente->docente_usp == 'sim')
                         Docente USP
                     @else
                         Docente Externo

@@ -92,7 +92,7 @@
         São Paulo, {{ strftime('%d de %B de %Y', strtotime('today')) }}    
     </div><br>
 
-    Ilmo(a). Sr(a). {{$professor->nome}}<br>
+    Ilmo(a). Sr(a). {{$pessoa::dump($professor->codpes)['nompes']}}<br>
     {{$professor::getDadosProfessor($professor->codpes)['endereco']}}, {{$professor::getDadosProfessor($professor->codpes)['bairro']}} <br>
     CEP:{{$professor::getDadosProfessor($professor->codpes)['cep']}} - {{$professor::getDadosProfessor($professor->codpes)['cidade']}}/{{$professor::getDadosProfessor($professor->codpes)['estado']}}
     <br> telefone: {{$professor->getDadosProfessor($professor->codpes)['telefone']}}
@@ -103,12 +103,12 @@
         <div class="moremargin">Assunto: Banca Examinadora de <b>{{$agendamento->nivel}}</b></div> 
         <div class="moremargin">Candidato(a): <b>{{$agendamento->nome}}</b> </div>
         <div class="moremargin">Área: <b>{{$agendamento->nome_area}}</b> </div>
-        <div class="moremargin">Orientador(a) Prof(a). Dr(a). {{$agendamento->nome_orientador}}</div>
+        <div class="moremargin">Orientador(a) Prof(a). Dr(a). {{$pessoa::dump($agendamento->orientador)['nompes']}}</div>
         <div class="moremargin">Título do Trabalho: <i>{{$agendamento->titulo}} </i></div>
     </div>
 
     <br><br>
-	<div class="oficioSuplente">Sr(a). Prof(a). {{$professor->nome}} </div>
+	<div class="oficioSuplente">Sr(a). Prof(a). {{$pessoa::dump($professor->codpes)['nompes']}} </div>
 
     <div style="text-align:justify;">            
         {!! $configs->oficio_suplente !!}

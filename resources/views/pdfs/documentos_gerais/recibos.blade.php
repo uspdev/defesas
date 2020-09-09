@@ -48,7 +48,7 @@
 					<u>PARA:</u> {{$professor::getDadosProfessor($professor->codpes)['endereco']}}, {{$professor::getDadosProfessor($professor->codpes)['bairro']}} <br>
         			CEP:{{$professor::getDadosProfessor($professor->codpes)['cep']}} - {{$professor::getDadosProfessor($professor->codpes)['cidade']}}/{{$professor::getDadosProfessor($professor->codpes)['estado']}}
 					<div style="text-indent:1.5cm;">
-						A/C: Prof(a). Dr(a). {{$professor->nome}}
+						A/C: Prof(a). Dr(a). {{$pessoa::dump($professor->codpes)['nompes']}}
 					</div> 
 				</td> 
 			</tr> 
@@ -88,7 +88,7 @@
 					<u>DO:</u> SERVIÇO DE PÓS-GRADUAÇÃO DA FFLCH <br>
 					<u>PARA:</u>  {{$professor::getDadosProfessor($professor->codpes)['endereco']}}, {{$professor::getDadosProfessor($professor->codpes)['bairro']}} <br>
         			CEP:{{$professor::getDadosProfessor($professor->codpes)['cep']}} - {{$professor::getDadosProfessor($professor->codpes)['cidade']}}/{{$professor::getDadosProfessor($professor->codpes)['estado']}}
-					<div style="text-indent:1.5cm;"> A/C: Prof(a). Dr(a). {{$professor->nome}} </div> 
+					<div style="text-indent:1.5cm;"> A/C: Prof(a). Dr(a). {{$pessoa::dump($professor->codpes)['nompes']}} </div> 
 				</td> 
 			</tr>
 		</table>

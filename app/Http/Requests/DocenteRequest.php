@@ -43,8 +43,8 @@ class DocenteRequest extends FormRequest
             'telefone' => 'required',
             'lotado' => 'required',
             'email' => 'required',
-            'status' => ['required', Rule::in(Docente::statusOptions())],
-            'docente_usp' => ['required', Rule::in(Docente::docenteUspOptions())]
+            'status' => ['required', Rule::in(Docente::statusOptions(true))],
+            'docente_usp' => ['required', Rule::in(Docente::docenteUspOptions(true))]
         ];
         if ($this->method() == 'PATCH' || $this->method() == 'PUT'){
             array_push($rules['cpf'], 'unique:docentes,cpf,'.$this->docente->id);

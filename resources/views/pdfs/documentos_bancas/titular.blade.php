@@ -96,7 +96,7 @@
     <div class="moremargin">Assunto: Banca Examinadora de <b>{{$agendamento->nivel}}</b></div> 
     <div class="moremargin">Candidato(a): <b>{{$agendamento->nome}}</b> </div>
     <div class="moremargin">Área: <b>{{$agendamento->nome_area}}</b> </div>
-    <div class="moremargin">Orientador(a) Prof(a). Dr(a). {{$agendamento->nome_orientador}}</div>
+    <div class="moremargin">Orientador(a) Prof(a). Dr(a). {{$pessoa::dump($agendamento->orientador)['nompes']}}</div>
     <div class="moremargin">Título do Trabalho: <i>{{$agendamento->titulo}} </i></div><br>
     <div class="importante">
         {!! $configs->importante_oficio !!}
@@ -111,7 +111,7 @@
     <table width="16cm" style="border='0'; margin-left:4cm; align-items: center; justify-content: center;">
         @foreach($professores as $componente)    
         <tr style="border='0'">
-            <td> {{$componente->nome}} </td> 
+            <td> {{$pessoa::dump($componente->codpes)['nompes']}} </td> 
             <td><b>{{$componente->getDadosProfessor($componente->codpes)['lotado']}}</b></td>
         </tr>
         @endforeach
@@ -129,7 +129,7 @@
 		</b>
     </p>
     <br><br> 
-	Ilmo(a). Sr(a). {{$professor->nome}}<br>
+	Ilmo(a). Sr(a). {{$pessoa::dump($professor->codpes)['nompes']}}<br>
     {{$professor::getDadosProfessor($professor->codpes)['endereco']}}, {{$professor::getDadosProfessor($professor->codpes)['bairro']}} <br>
     CEP:{{$professor::getDadosProfessor($professor->codpes)['cep']}} - {{$professor::getDadosProfessor($professor->codpes)['cidade']}}/{{$professor::getDadosProfessor($professor->codpes)['estado']}}
 	<br> telefone: {{$professor->getDadosProfessor($professor->codpes)['telefone']}}

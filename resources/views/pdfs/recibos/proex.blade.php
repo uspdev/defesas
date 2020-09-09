@@ -62,7 +62,7 @@
 			</td>
 		</tr> 
 		<tr>
-			<td> Nome: {{$banca->nome}}	</td>
+			<td> Nome: {{$pessoa::dump($banca->codpes)['nompes']}}	</td>
 			<td> CPF: {{$banca->getDadosProfessor($banca->codpes)['cpf']}} </td>
 		</tr>
 		<tr>
@@ -122,7 +122,7 @@
 		</tr>
 		<tr>
 			<td>  <b> <center>{{$replicado::coordenadorArea($agendamento->area_programa)['nompes']}}</b> </center>	</td>
-			<td> <b> <center>{{$banca->nome}}</b> </center> </td>
+			<td> <b> <center>{{$pessoa::dump($banca->codpes)['nompes']}}</b> </center> </td>
 		</tr>
 	</table> 
     <p style="font-size: 9px;"> <b>ATENÇÃO:</b> Utilizar esse modelo quando ocorrer pagamento de diárias ou remuneração de serviço a pessoas físicas que não possuam talonários de Notas Fiscais de Serviços (<b> Outros Serviços de Terceiros - Pessoas Físicas </b>) </p>

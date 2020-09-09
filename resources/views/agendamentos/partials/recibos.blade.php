@@ -18,7 +18,7 @@
                     <tr>
                         <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$professor->id}}/recibos/reciboExterno" class="form-group" method="POST">
                             @csrf
-                            <td>{{$professor->nome}}</td>
+                            <td>{{$pessoa::dump($professor->codpes)['nompes']}}</td>
                             <td> <input type="text" class="datepicker form-control" size="7" autocomplete="off" name="ida"> </td>
                             <td> <input type="text" class="datepicker form-control" size="7" autocomplete="off" name="volta"> </td>
                             <td> <input type="text" class="form-control" size="7" name="origem"> </td>
@@ -58,7 +58,7 @@
                     <tr>
                         <form class="form-group" action="/agendamentos/{{$agendamento->id}}/bancas/{{$professor->id}}/recibos/proex" method="POST">
                             @csrf
-                            <td> {{$professor->nome}} </td>
+                            <td> {{$pessoa::dump($professor->codpes)['nompes']}} </td>
                             <td><input type="text" class="form-control" size="4" name="importancia"></td>
                             <td><input type="text" class="form-control" size="4" name="periodo"></td>
                             <td><input type="text" class="form-control" size="4" name="valor"></td>
@@ -97,7 +97,7 @@
                         <tr>
                             <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$professor->id}}/recibos/proap" class="form-group" method="POST">
                                 @csrf
-                                <td>{{$professor->nome}}</td>
+                                <td>{{$pessoa::dump($professor->codpes)['nompes']}}</td>
                                 <td><input type="text" class="form-control" size="1" name="ano"></td>
                                 <td><input type="text" class="form-control" size="1" name="diaria_proap"></td>
                                 <td><input type="text" class="form-control" size="6" name="origem"></td>
@@ -134,7 +134,7 @@
                         <tr>
                             <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$professor->id}}/recibos/passagem" class="form-group" method="POST">
                                 @csrf
-                                <td>{{$professor->nome}}</td>
+                                <td>{{$pessoa::dump($professor->codpes)['nompes']}}</td>
                                 <td><input  type="text" class="form-control" size="6" name="ida"></td>
                                 <td><input type="text" class="form-control" size="6" name="volta"></td>
                                 <td><input  type="text" class="form-control" size="6" name="trajeto"></td>
@@ -168,7 +168,7 @@
                         <tr>
                             <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$professor->id}}/recibos/passagemAuxilio" class="form-group" method="POST">
                                 @csrf
-                                <td>{{$professor->nome}}</td>
+                                <td>{{$pessoa::dump($professor->codpes)['nompes']}}</td>
                                 <td><input  type="text" size="6" class="form-control datepicker" name="partida"></td>
                                 <td><input  type="text" size="6" class="form-control datepicker" name="retorno"></td>
                                 <td><input  type="text" size="6" class="form-control" name="itinerario"></td>
@@ -198,7 +198,7 @@
                     <tr>
                         <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$professor->id}}/recibos/emailDocente" class="form-group" method="POST">
                             @csrf 
-                            <td>{{$professor->nome}}</td>
+                            <td>{{$pessoa::dump($professor->codpes)['nompes']}}</td>
                             <td><button type="submit" size="4" class="btn btn-outline-success"><b>Enviar E-mail</b></button></td>
                         </form> 
                     </tr>

@@ -3,15 +3,14 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Banca;
+use App\Docente;
 use Faker\Generator as Faker;
-use Uspdev\Replicado\Pessoa;
 
 $factory->define(Banca::class, function (Faker $faker) {
     $tipo = Banca::tipoOptions();
-    $docente = $faker->docente();
+    $docente = factory(Docente::class, 1)->create();
     return [
-        'codpes' => $docente,
-        'nome' => Pessoa::dump($docente)['nompes'],
+        'codpes' => $docente[0]['n_usp'],
         'presidente' => 'Não',
         'tipo' => $tipo[array_rand($tipo)],
     ];

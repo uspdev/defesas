@@ -23,8 +23,7 @@ class AgendamentoSeeder extends Seeder
             'area_programa' => '8142',
             'data_horario' => '2020-11-30 12:00:00',
             'sala' => 'Sala da Direção',
-            'orientador' => '2202281',
-            'nome_orientador' => 'Erwin Torralbo Gimenez',
+            'orientador' => factory(App\Docente::class, 1)->create()[0]['n_usp']
         ];
         Agendamento::create($agendamento);
         //factory(Agendamento::class, 100)->create();

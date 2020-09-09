@@ -69,18 +69,12 @@ class AgendamentoController extends Controller
         $this->authorize('admin');
         $validated = $request->validated();
         if($validated['nome'] == ''){
-            $nome = Docente::where('n_usp', $validated['codpes'])->first();
-            $validated['nome'] = $nome['nome'];
-        }
-        if($validated['nome_orientador'] == ''){
-            $nome = Docente::where('n_usp', $validated['orientador'])->first();
-            $validated['nome_orientador'] = $nome['nome'];
+            $validated['nome'] = Pessoa::dump($validated['codpes'])['nompes'];
         }
         $agendamento = Agendamento::create($validated);
         //Salva o orientador na banca
         $banca = new Banca;
         $banca->codpes = $validated['orientador'];
-        $banca->nome = $validated['nome_orientador'];
         $banca->presidente = 'Sim'; 
         $banca->tipo = 'Titular'; 
         $banca->agendamento_id = $agendamento->id;
@@ -98,7 +92,7 @@ class AgendamentoController extends Controller
     {
         $this->authorize('admin');
         $agendamento->setDataHorario($agendamento);
-        $bancas = Banca::where('agendamento_id',$agendamento->id)->orderBy('tipo','desc')->orderBy('nome', 'asc')->get();
+        $bancas = Banca::where('agendamento_id',$agendamento->id)->orderBy('tipo','desc')->get();
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         return view('agendamentos.show', compact(['agendamento','bancas']));
     }
@@ -128,12 +122,7 @@ class AgendamentoController extends Controller
         $this->authorize('admin');
         $validated = $request->validated();
         if($validated['nome'] == ''){
-            $nome = Docente::where('n_usp', $validated['codpes'])->first();
-            $validated['nome'] = $nome['nome'];
-        }
-        if($validated['nome_orientador'] == ''){
-            $nome = Docente::where('n_usp', $validated['orientador'])->first();
-            $validated['nome_orientador'] = $nome['nome'];
+            $validated['nome'] = Pessoa::dump($validated['codpes'])['nompes'];
         }
         $agendamento->update($validated);
         return redirect("/agendamentos/$agendamento->id");

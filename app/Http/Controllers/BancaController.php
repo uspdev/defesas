@@ -49,13 +49,6 @@ class BancaController extends Controller
         $banca = new Banca;
         $validated = $request->validated();
         $banca->codpes = $validated['codpes'];
-        if($validated['nome'] == null){
-            $nome = Docente::where('n_usp', $validated['codpes'])->first();
-            $banca->nome = $nome['nome'];
-        }
-        else{
-            $banca->nome = $validated['nome'];
-        }
         $banca->presidente = $validated['presidente'];
         $banca->tipo = $validated['tipo'];
         $banca->agendamento_id = $agendamento->id;
@@ -97,10 +90,6 @@ class BancaController extends Controller
     {
         $this->authorize('admin');
         $validated = $request->validated();
-        if($validated['nome'] == null){
-            $nome = Docente::where('n_usp', $validated['codpes'])->first();
-            $validated['nome'] = $nome['nome'];
-        }
         $banca->update($validated);
         return redirect("/agendamentos/$agendamento->id");
     }
