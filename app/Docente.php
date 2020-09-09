@@ -18,18 +18,36 @@ class Docente extends Model
         ];
     }
 
-    public static function statusOptions(){
-        return [
-            'Brasileiro',
-            'Estrangeiro'
+    public static function statusOptions($request = false){
+        $options = [
+            ['codstatus' => 'B', 'nomestatus' => 'Brasileiro'],
+            ['codstatus' => 'E', 'nomestatus' => 'Estrangeiro'],
         ];
+
+        $options2 = [
+            'B',
+            'E',
+        ];
+        if($request == false){
+            return $options;
+        }
+        return $options2;
     }
 
-    public static function docenteUspOptions(){
-        return [
-            'Sim',
-            'Não'
+    public static function docenteUspOptions($request = false){
+        $options = [
+            ['codoption' => 'sim', 'nomeoption' => 'Sim'],
+            ['codoption' => 'nao', 'nomeoption' => 'Não'],
         ];
+
+        $options2 = [
+            'sim',
+            'nao',
+        ];
+        if($request == false){
+            return $options;
+        }
+        return $options2;
     }
 
     public function getBancasProfessor($codpes, $tipo){

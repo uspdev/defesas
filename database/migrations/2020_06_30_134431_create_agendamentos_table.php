@@ -27,7 +27,6 @@ class CreateAgendamentosTable extends Migration
             $table->dateTime('data_horario');
             $table->string('sala');
             $table->string('orientador');
-            $table->string('nome_orientador')->nullable();
         });
     }
 

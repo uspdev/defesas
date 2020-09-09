@@ -87,7 +87,7 @@
         <div class="moremargin">Assunto: Banca Examinadora de <b>{{$agendamento->nivel}}</b></div> 
         <div class="moremargin">Candidato(a): <b>{{$agendamento->nome}}</b> </div>
         <div class="moremargin">Área: <b>{{$agendamento->nome_area}}</b> </div>
-        <div class="moremargin">Orientador(a) Prof(a). Dr(a). {{$agendamento->nome_orientador}}</div>
+        <div class="moremargin">Orientador(a) Prof(a). Dr(a). {{$pessoa::dump($agendamento->orientador)['nompes']}}</div>
         <div class="moremargin">Título do Trabalho: <i>{{$agendamento->titulo}} </i></div>
         <div class="importante" align="center">
             {!! $configs->importante_oficio !!}
@@ -102,7 +102,7 @@
         <table width="16cm" style="border='0'; margin-left:4cm; align-items: center; justify-content: center;">
             @foreach($bancas as $banca)    
             <tr style="border='0'">
-                <td> {{$banca->nome}} </td> 
+                <td> {{$pessoa::dump($banca->codpes)['nompes']}} </td> 
                 <td><b>{{$banca->getDadosProfessor($banca->codpes)['lotado']}}</b></td>
             </tr>
             @endforeach
@@ -118,7 +118,7 @@
 			{{Auth::user()->name}} - Defesas de Mestrado e Doutorado da {{$pessoa::cracha(Auth::user()->codpes)['nomorg']}}/USP 
 			</b>
         </p><br><br> 
-        Ilmo(a). Sr(a). {{$professor->nome}}<br>
+        Ilmo(a). Sr(a). {{$pessoa::dump($professor->codpes)['nompes']}}<br>
         {{$professor::getDadosProfessor($professor->codpes)['endereco']}}, {{$professor::getDadosProfessor($professor->codpes)['bairro']}} <br>
         CEP:{{$professor::getDadosProfessor($professor->codpes)['cep']}} - {{$professor::getDadosProfessor($professor->codpes)['cidade']}}/{{$professor::getDadosProfessor($professor->codpes)['estado']}}
         <br> telefone: {{$professor->getDadosProfessor($professor->codpes)['telefone']}}

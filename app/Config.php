@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Agendamento;
+use Uspdev\Replicado\Pessoa;
 
 class Config extends Model
 {
@@ -30,7 +31,7 @@ class Config extends Model
         //Faz as primeiras trocas
         $configs['declaracao'] = str_replace(
             ["%docente_nome","%nivel","%candidato_nome", "%titulo"], 
-            [$professor['nome'],$agendamento['nivel'], $agendamento['nome'], $agendamento['titulo']], 
+            [Pessoa::dump($professor->codpes)['nompes'],$agendamento['nivel'], $agendamento['nome'], $agendamento['titulo']], 
             $configs['declaracao']
         );
         //Busca as áreas/programas da unidade
@@ -44,7 +45,7 @@ class Config extends Model
         //Altera a informação de presidente de acordo com o tipo do professor informado
         foreach($professores as $presidente){
             if($presidente['presidente'] == 'Sim'){
-                $configs['declaracao'] = str_replace("%orientador", $presidente['nome'], $configs['declaracao']);
+                $configs['declaracao'] = str_replace("%orientador", Pessoa::dump($presidente->codpes)['nompes'], $configs['declaracao']);
             }
         }
         return $configs;
@@ -58,7 +59,7 @@ class Config extends Model
         //Realiza as alterações necessárias
         $configs['mail_docente'] = str_replace(
             ["%docente_nome","%candidato_nome", "%data_defesa", "%local_defesa"], 
-            [$professor['nome'],$agendamento['nome'], strftime("%d de %B de %Y", strtotime($agendamento->data_horario))." às ".$agendamento->horario, $agendamento['sala']], 
+            [Pessoa::dump($professor->codpes)['nompes'],$agendamento['nome'], strftime("%d de %B de %Y", strtotime($agendamento->data_horario))." às ".$agendamento->horario, $agendamento['sala']], 
             $configs['mail_docente']
         );
         return $configs;

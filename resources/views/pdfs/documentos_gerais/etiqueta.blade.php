@@ -1,4 +1,5 @@
 @extends('pdfs.fflch')
+@inject('pessoa','Uspdev\Replicado\Pessoa')
 
 @section('styles_head')
 <style type="text/css">
@@ -30,7 +31,7 @@
         <tr>
             <td width="9.85cm" height="3.33cm">
                 Ilmo(a) Sr(a).<br>
-                {{$professor->nome}}<br>
+                {{$pessoa::dump($professor->codpes)['nompes']}}<br>
                 {{$professor::getDadosProfessor($professor->codpes)['endereco']}}, {{$professor::getDadosProfessor($professor->codpes)['bairro']}} <br>
                 CEP:{{$professor::getDadosProfessor($professor->codpes)['cep']}} - {{$professor::getDadosProfessor($professor->codpes)['cidade']}}/{{$professor::getDadosProfessor($professor->codpes)['estado']}}
             </td>     

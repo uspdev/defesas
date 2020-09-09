@@ -45,7 +45,7 @@
         <hr>
         <table width="16.5cm" style="border:0px;">
 			<tr>
-				<td style="border:0px;" colspan="2">Nome do Convidado: {{$banca->nome}} </td>
+				<td style="border:0px;" colspan="2">Nome do Convidado: {{$pessoa::dump($banca->codpes)['nompes']}} </td>
 			</tr>
 			<tr>
 				<td style="border:0px;"> CPF: {{$banca->getDadosProfessor($banca->codpes)['cpf']}}</td>
@@ -106,8 +106,8 @@
 	    São Paulo, {{strftime("%d de %B de %Y", strtotime($agendamento->data_horario))}} <br><br><br><br>
 	    <table width="18cm"> 
 			<tr>
-				<td style="border:0;"> <hr style="width:10cm;"> 
-					{{$banca->nome}} <br> 
+				<td style="border:none;"> <hr style="width:10cm;"> 
+					{{$pessoa::dump($banca->codpes)['nompes']}} <br> 
 					<b>{{$banca->getDadosProfessor($banca->codpes)['endereco']}}, {{$banca->getDadosProfessor($banca->codpes)['bairro']}} <br>
     				CEP:{{$banca->getDadosProfessor($banca->codpes)['cep']}} - {{$banca->getDadosProfessor($banca->codpes)['cidade']}}/{{$banca->getDadosProfessor($banca->codpes)['estado']}}</b>
 				</td>
@@ -119,7 +119,7 @@
 	    Banca de: {{$agendamento->nome}} <br><br><br><br><br><br><br>
         <table width="18cm"> 
 			<tr>
-				<td style="border:0;"> <hr style="width:10cm;"> 
+				<td style="border:none;"> <hr style="width:10cm;"> 
 					<center>Assinatura do(a) Coordenador(a)</center>
 				</td>
 			</tr> 

@@ -9,6 +9,7 @@
         </div>
     </div>
     @inject('replicado','App\Utils\ReplicadoUtils')
+    @inject('pessoa','Uspdev\Replicado\Pessoa')
     <br>
     <div class="card">
         <div class="card-body">
@@ -68,7 +69,7 @@
                     <td>{{ $agendamento->nome }}</td>
                     <td>{{ $agendamento->nivel }}</td>
                     <td>{{ $agendamento->titulo }}</td>
-                    <td>{{ $agendamento->nome_orientador }}</td>
+                    <td>{{ $pessoa::dump($agendamento->orientador)['nompes'] }}</td>
                 </tr>
             @endforeach
             </tbody>

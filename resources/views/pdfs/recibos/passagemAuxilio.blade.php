@@ -39,7 +39,7 @@
     <left> <u><b>{{$dados->processo}}</b></u> </left> <br> 
 
     <p> Banca de defesa de <b> {{$agendamento->nome}} </p> 
-    <p> Passageiro(a) {{$banca->nome}} </p> 
+    <p> Passageiro(a) {{$pessoa::dump($banca->codpes)['nompes']}} </p> 
     <p> Itinerário: {{$dados->itinerario}} </p> 
     <p> Partida: {{$dados->partida}}</p> 
     <p> Retorno: {{$dados->retorno}} </p> 

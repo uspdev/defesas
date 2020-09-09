@@ -84,7 +84,7 @@
     </ul>
 	<div class="justificar" style="text-indent:1cm;" >{!! $configs->agencia_texto !!} </div>
 	<div class="importante">  
-		Interessado(a): Prof(a). Dr(a). <b> {{$banca->nome}}</b> <br>
+		Interessado(a): Prof(a). Dr(a). <b> {{$pessoa::dump($banca->codpes)['nompes']}}</b> <br>
 		E-mail: <b>{{$banca->getDadosProfessor($banca->codpes)['email']}}</b> <br>
 		Telefone:<b> {{$banca->getDadosProfessor($banca->codpes)['telefone']}} </b> <br>
 		Data da defesa:<b> {{$agendamento->data}}</b> <br>

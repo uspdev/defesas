@@ -6,12 +6,6 @@
         <input type="text" name="codpes" class="form-control" value="{{ old('codpes', $banca->codpes) }}"> 
     </div>
     <div class="col-sm form-group">
-        <label for="nome">Nome</label>
-        <input type="text" name="nome" class="form-control" value="{{ old('nome', $banca->nome) }}">
-        <span class="badge badge-warning">Se este campo ficar vazio, o nome utilizado será o cadastrado nos sistemas da USP</span> 
-    </div>
-    
-    <div class="col-sm form-group">
         <label for="presidente" class="required">Presidente</label>
         <select class="form-control" name="presidente">
             <option value="" selected="">- Selecione -</option>

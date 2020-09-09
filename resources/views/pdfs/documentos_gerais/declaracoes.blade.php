@@ -101,7 +101,7 @@
         <table width="16cm" style="border='0'; margin-left:4cm; align-items: center; justify-content: center;">
             @foreach($bancas as $banca)    
             <tr style="border='0'">
-                <td><b>{{$banca->nome}}</b> </td> 
+                <td><b>{{$pessoa::dump($banca->codpes)['nompes']}}</b> </td> 
                 <td><b>{{$banca->getDadosProfessor($banca->codpes)['lotado']}}</b></td>           
             </tr>
             @endforeach

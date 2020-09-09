@@ -3,7 +3,7 @@
 @section('styles_head')
 	<style type="text/css">
 		body {
-			background-image: url(/images/placa.jpg); 
+			background-image: url(images/placa.jpg); 
 			background-repeat:no-repeat; 
 			background-position:center;
 			font-family: DejaVu Sans, sans-serif;

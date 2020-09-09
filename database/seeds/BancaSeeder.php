@@ -13,24 +13,21 @@ class BancaSeeder extends Seeder
     public function run()
     {
         $professor1 = [
-            'codpes' => '63943',
-            'nome' => 'Augusto Massi',
+            'codpes' => factory(App\Docente::class, 1)->create()[0]['n_usp'],
             'presidente' => 'Sim',
             'tipo' => 'Titular',
             'agendamento_id' => 1,
         ];
 
         $professor2 = [
-            'codpes' => '92762',
-            'nome' => 'Leonardo Gomes Mello e Silva',
+            'codpes' => factory(App\Docente::class, 1)->create()[0]['n_usp'],
             'presidente' => 'Não',
             'tipo' => 'Titular',
             'agendamento_id' => 1,
         ];
 
         $professor3 = [
-            'codpes' => '5511103',
-            'nome' => 'Gabriel Antunes de Araujo',
+            'codpes' => factory(App\Docente::class, 1)->create()[0]['n_usp'],
             'presidente' => 'Não',
             'tipo' => 'Titular',
             'agendamento_id' => 1,

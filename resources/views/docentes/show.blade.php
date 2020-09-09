@@ -52,14 +52,14 @@
             <b>E-mail:</b> {{$docente->email}}</br>
             <b>Status:</b>
             @foreach ($docente->statusOptions() as $option)
-                @if ($option == $docente->status)
-                    {{$option}}</br>
+                @if ($option['codstatus'] == $docente->status)
+                    {{$option['nomestatus']}}</br>
                 @endif
             @endforeach
             <b>Docente USP?:</b>
             @foreach ($docente->docenteUspOptions() as $option)
-                @if ($option == $docente->docente_usp)
-                    {{$option}}</br>
+                @if ($option['codoption'] == $docente->docente_usp)
+                    {{$option['nomeoption']}}</br>
                 @endif
             @endforeach
         </div>
@@ -80,7 +80,7 @@
             <tbody>
                 @foreach($docente->getBancasProfessor($docente->n_usp,'Orientador') as $banca)
                     <tr>
-                        <td><a href="/agendamentos/{{$banca->id}}">{{$banca->nome}}</a></td>
+                        <td><a href="/agendamentos/{{$banca->id}}">{{$pessoa::dump($banca->codpes)['nompes']}}</a></td>
                         <td>{{$banca->titulo}}</td>
                         <td>{{Carbon\Carbon::parse($banca->data_horario)->format('d/m/Y')}}</td>
                         <td>{{$replicado::nomeAreaPrograma($banca->area_programa)}}</td>
