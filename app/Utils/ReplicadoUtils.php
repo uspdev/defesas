@@ -134,4 +134,20 @@ class ReplicadoUtils {
         }
         return false;
     }
+
+    public static function departamentoPrograma($codpes)
+    {
+        //Através dele localiza-se seu cadastro e assim conseguimos o departamento do qual ele pertence
+        $query = "SELECT TOP 1 l.nomset FROM fflch.dbo.LOCALIZAPESSOA l WHERE l.codpes = convert(int, :codpes)";
+        $param = [
+            'codpes' => $codpes,
+        ];
+        $result = DBreplicado::fetchAll($query, $param);
+        if(!empty($result)) {
+            $result = Uteis::utf8_converter($result);
+            $result = Uteis::trim_recursivo($result);
+            return $result[0];
+        }
+        return false;
+    }
 } 
