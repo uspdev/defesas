@@ -44,7 +44,7 @@ class ReplicadoUtils {
     // Função para verificar a partir do código da Área qual é o coordenador - usado na geração dos PDFs PROAP e PROEX
     public static function coordenadorArea($codare){
         $codundclgi = getenv('REPLICADO_CODUNDCLG');
-        $query = "SELECT DISTINCT * from R10DOCCOOCUR rd INNER JOIN LOCALIZAPESSOA l ON l.codpes = rd.codpes INNER JOIN AREA a ON rd.codcur = a.codcur where codundclg = convert(int, :codundclgi) and a.codare = convert(int, :codare) and fncpescur = 'COO' and sitatl = 'A' and nomfnc = 'Coord Prog Pg'";
+        $query = "SELECT DISTINCT (l.nompes), a.codare from R10DOCCOOCUR rd INNER JOIN LOCALIZAPESSOA l ON l.codpes = rd.codpes INNER JOIN AREA a ON rd.codcur = a.codcur where codundclg = convert(int, :codundclgi) and a.codare = convert(int, :codare) and fncpescur = 'COO' and sitatl = 'A' and nomfnc = 'Coord Prog Pg'";
         $param = [
             'codare' => $codare,
             'codundclgi' => $codundclgi,
