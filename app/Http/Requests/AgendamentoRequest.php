@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Carbon\Carbon;
-use App\Agendamento;
+use App\Models\Agendamento;
 use Illuminate\Validation\Rule;
 use App\Utils\ReplicadoUtils;
 

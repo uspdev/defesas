@@ -29,7 +29,7 @@
                                     <option value="duas_diarias"> 2 diárias </option>
                                 </select>
                             </td>
-                            <td> <button type="submit" class="btn btn-outline-success"><b>Gerar Recibo</b></button></td>
+                            <td> <button type="submit" class="btn btn-primary"><b>Gerar Recibo</b></button></td>
                         </form>
                     </tr>
                 @endif
@@ -65,7 +65,7 @@
                             <td><input type="text" class="form-control" size="4" name="outro_tipo" placeholder="Tipo"></td>
                             <td><input type="text" class="form-control" size="4" name="outro_valor" placeholder="Valor"></td>
                             <td><input type="text" class="form-control" size="4" name="liquido"></td>
-                            <td><button type="submit" class="btn btn-outline-success"><b>Gerar Documento</b></button></td>
+                            <td><button type="submit" class="btn btn-primary"><b>Gerar Documento</b></button></td>
                         </form>
                     </tr>
                     @endif
@@ -105,7 +105,7 @@
                                 <td><input type="text" class="form-control datepicker" size="6" name="saida"></td>
                                 <td><input type="text" class="form-control" size="2" name="valor_proap"></td>
                                 <td><input type="text" class="form-control" size="5" name="extenso"></td>
-                                <td><button type="submit" size="4" class="btn btn-outline-success"><b>Gerar Documento</b></button></td>
+                                <td><button type="submit" size="4" class="btn btn-primary"><b>Gerar Documento</b></button></td>
                             </form>
                         </tr>
                     @endif
@@ -139,7 +139,7 @@
                                 <td><input type="text" class="form-control" size="6" name="volta"></td>
                                 <td><input  type="text" class="form-control" size="6" name="trajeto"></td>
                                 <td><input type="text" class="form-control" size="6" name="requisicao"></td>
-                                <td><button type="submit" size="4" class="btn btn-outline-success"><b>Gerar documento</b></button></td>
+                                <td><button type="submit" size="4" class="btn btn-primary"><b>Gerar documento</b></button></td>
                             </form>
                         </tr>
                     @endif
@@ -173,7 +173,7 @@
                                 <td><input  type="text" size="6" class="form-control datepicker" name="retorno"></td>
                                 <td><input  type="text" size="6" class="form-control" name="itinerario"></td>
                                 <td><input type="text" size="6" class="form-control"name="processo"></td>
-                                <td><button type="submit" size="4" class="btn btn-outline-success"><b>Gerar Documento</b></button></td>
+                                <td><button type="submit" size="4" class="btn btn-primary"><b>Gerar Documento</b></button></td>
                             </form>
                         </tr>
                     @endif
@@ -199,7 +199,7 @@
                         <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$professor->id}}/recibos/emailDocente" class="form-group" method="POST">
                             @csrf 
                             <td>{{$pessoa::dump($professor->codpes)['nompes']}}</td>
-                            <td><button type="submit" size="4" class="btn btn-outline-success"><b>Enviar E-mail</b></button></td>
+                            <td><button type="submit" size="4" class="btn btn-primary"><b>Enviar E-mail</b></button></td>
                         </form> 
                     </tr>
                 @endif

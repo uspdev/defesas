@@ -65,13 +65,13 @@
                     @endif
                 </td>
                 <td>
-                    <a href="/docentes/{{$docente->id}}/edit" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a href="/docentes/{{$docente->id}}/edit" class="btn btn-warning"><i class="fas fa-pencil-alt"></i></a>
                 </td>
                 <td>
                     <form method="POST" action="/docentes/{{ $docente->id }}">
                         @csrf 
                         @method('delete')
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('Você tem certeza que deseja apagar?')"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Você tem certeza que deseja apagar?')"><i class="fas fa-trash-alt"></i></button>
                     </form>
                 </td>
                 <td>

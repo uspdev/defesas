@@ -1,13 +1,16 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Agendamento;
+use App\Models\Agendamento;
 use Uspdev\Replicado\Pessoa;
 
 class Config extends Model
 {
+    use HasFactory;
+
     protected $guarded = ['id'];
 
     //Função para modificar a mensagem padrão do Ofício de Suplente(s)

@@ -1,7 +1,7 @@
 <div class="card">
         <div class="card-header"><b>Banca</b></div>
         <div class="card-body form-group">
-            <a href="/agendamentos/{{ $agendamento->id }}/bancas/create" class="btn btn-outline-success"><b>Inserir Professor</b></a>
+            <a href="/agendamentos/{{ $agendamento->id }}/bancas/create" class="btn btn-success"><b>Inserir Professor</b></a>
             <br>
             <br>
             <table class="table table-striped" style="text-align: center;">
@@ -26,29 +26,29 @@
                         <td>{{ $banca->tipo }}</td>
                         <td>
                             @if($banca->tipo == 'Titular')
-                                <a href="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->id}}/titular" class="btn btn-outline-info"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+                                <a href="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->id}}/titular" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
                             @else
                                 #
                             @endif
                         </td>
                         <td>
                             @if($banca->tipo == 'Suplente')
-                                <a href="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->id}}/suplente" class="btn btn-outline-info"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+                                <a href="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->id}}/suplente" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
                             @else
                                 #
                             @endif                    
                         </td>
                         <td>
-                            <a href="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->id}}/declaracao" class="btn btn-outline-info"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+                            <a href="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->id}}/declaracao" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
                         </td>
                         <td>
-                            <a href="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->id}}/edit" class="btn btn-outline-warning"><b>Editar</b></a>
+                            <a href="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->id}}/edit" class="btn btn-warning"><i class="fas fa-pencil-alt"></i></a>
                         </td>
                         <td>
                             <form method="POST" class="form-group" action="/agendamentos/{{ $agendamento->id }}/bancas/{{$banca->id}}">
                                 @csrf 
                                 @method('delete')
-                                <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Você tem certeza que deseja apagar?')"><b>Apagar</b></button>
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Você tem certeza que deseja apagar?')"><i class="fas fa-trash-alt"></i></button>
                             </form>
                         </td>
                     </tr>

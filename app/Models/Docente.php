@@ -1,13 +1,15 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Banca;
-use App\Agendamento;
+use App\Models\Banca;
+use App\Models\Agendamento;
 class Docente extends Model
 {
-    //
+    use HasFactory;
+
     protected $guarded = ['id'];
 
     public static function documentoOptions(){

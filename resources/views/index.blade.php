@@ -23,7 +23,7 @@
                     <div class="col-sm form-group">
                         <select class="form-control" name="busca">
                             <option value="" selected="">- Todos -</option>
-                            @foreach (App\Agendamento::programaOptions() as $option)
+                            @foreach (App\Models\Agendamento::programaOptions() as $option)
                                 {{-- 1. Situação em que não houve tentativa de submissão e é uma edição --}}
                                 @if (old('busca') == '' and isset($agendamento->busca))
                                 <option value="{{$option['codare']}}" {{ ( $agendamento->busca == $option['codare']) ? 'selected' : ''}}>

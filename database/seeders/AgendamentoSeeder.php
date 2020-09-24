@@ -1,7 +1,11 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
-use App\Agendamento;
+use App\Models\Agendamento;
+use App\Models\Docente;
+use App\Models\Banca;
 
 class AgendamentoSeeder extends Seeder
 {
@@ -23,12 +27,12 @@ class AgendamentoSeeder extends Seeder
             'area_programa' => '8142',
             'data_horario' => '2020-11-30 12:00:00',
             'sala' => 'Sala da Direção',
-            'orientador' => factory(App\Docente::class, 1)->create()[0]['n_usp']
+            'orientador' => Docente::factory()->create()->n_usp,
         ];
         Agendamento::create($agendamento);
         //factory(Agendamento::class, 100)->create();
-        factory(Agendamento::class, 10)->create()->each(function ($agendamento) {           
-            $bancas = factory(App\Banca::class, 5)->make();
+        Agendamento::factory(10)->create()->each(function ($agendamento) {           
+            $bancas = Banca::factory(5)->make();
             $agendamento->bancas()->saveMany($bancas);
         });
     }

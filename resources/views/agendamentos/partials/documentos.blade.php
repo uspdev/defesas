@@ -7,7 +7,7 @@
                         Documento Zero
                     </td>
                     <td>
-                        <a href="/agendamentos/{{$agendamento->id}}/documento_zero" class="btn btn-outline-info"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+                        <a href="/agendamentos/{{$agendamento->id}}/documento_zero" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
                     </td>
                 </tr>
                 
@@ -16,7 +16,7 @@
                         Placa
                     </td>
                     <td>
-                        <a href="/agendamentos/{{$agendamento->id}}/placa" class="btn btn-outline-info"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+                        <a href="/agendamentos/{{$agendamento->id}}/placa" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
                     </td>
                 </tr>
                 <tr>
@@ -24,7 +24,7 @@
                         Etiquetas
                     </td>
                     <td>
-                        <a href="/agendamentos/{{$agendamento->id}}/etiqueta" class="btn btn-outline-info"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+                        <a href="/agendamentos/{{$agendamento->id}}/etiqueta" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
                     </td>
                 </tr>
                 <tr>
@@ -32,7 +32,7 @@
                         Ofício titulares
                     </td>
                     <td>
-                        <a href="/agendamentos/{{$agendamento->id}}/titulares" class="btn btn-outline-info"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+                        <a href="/agendamentos/{{$agendamento->id}}/titulares" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
                     </td>
                 </tr>
                 <tr>
@@ -40,7 +40,7 @@
                         Ofício suplentes
                     </td>
                     <td>
-                        <a href="/agendamentos/{{$agendamento->id}}/suplentes" class="btn btn-outline-info"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+                        <a href="/agendamentos/{{$agendamento->id}}/suplentes" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
                     </td>
                 </tr>
                 <tr>
@@ -48,7 +48,7 @@
                         Declaração de Participação
                     </td>
                     <td>
-                        <a href="/agendamentos/{{$agendamento->id}}/declaracoes" class="btn btn-outline-info"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+                        <a href="/agendamentos/{{$agendamento->id}}/declaracoes" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
                     </td>
                 </tr>
                 <tr>
@@ -56,7 +56,7 @@
                         Recibos de remessa de documentos para docentes USP                    
                     </td>
                     <td>
-                        <a href="/agendamentos/{{$agendamento->id}}/recibos" class="btn btn-outline-info"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+                        <a href="/agendamentos/{{$agendamento->id}}/recibos" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
                     </td>
                 </tr>
             </tbody>

@@ -1,19 +1,22 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use Uspdev\Replicado\Posgraduacao;
 use App\Utils\ReplicadoUtils;
-
+use App\Models\Banca;
 class Agendamento extends Model
 {
+    use HasFactory;
+
     protected $guarded = ['id'];
 
     public function bancas()
     {
-        return $this->hasMany('App\Banca');
+        return $this->hasMany(Banca::class);
     }
 
     //Função para formatar horário do agendamento

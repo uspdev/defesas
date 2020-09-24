@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Agendamento;
-use App\Banca;
-use App\Config;
-use App\Docente;
+use App\Models\Agendamento;
+use App\Models\Banca;
+use App\Models\Config;
+use App\Models\Docente;
 use Illuminate\Http\Request;
 use App\Utils\ReplicadoUtils;
 

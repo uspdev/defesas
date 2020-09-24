@@ -1,7 +1,10 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
-use App\Banca;
+use App\Models\Banca;
+use App\Models\Docente;
 
 class BancaSeeder extends Seeder
 {
@@ -13,21 +16,21 @@ class BancaSeeder extends Seeder
     public function run()
     {
         $professor1 = [
-            'codpes' => factory(App\Docente::class, 1)->create()[0]['n_usp'],
+            'codpes' => Docente::factory()->create()->n_usp,
             'presidente' => 'Sim',
             'tipo' => 'Titular',
             'agendamento_id' => 1,
         ];
 
         $professor2 = [
-            'codpes' => factory(App\Docente::class, 1)->create()[0]['n_usp'],
+            'codpes' => Docente::factory()->create()->n_usp,
             'presidente' => 'Não',
             'tipo' => 'Titular',
             'agendamento_id' => 1,
         ];
 
         $professor3 = [
-            'codpes' => factory(App\Docente::class, 1)->create()[0]['n_usp'],
+            'codpes' => Docente::factory()->create()->n_usp,
             'presidente' => 'Não',
             'tipo' => 'Titular',
             'agendamento_id' => 1,
