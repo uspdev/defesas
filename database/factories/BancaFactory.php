@@ -1,17 +1,33 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
-use App\Banca;
-use App\Docente;
-use Faker\Generator as Faker;
+use App\Models\Banca;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Docente;
 
-$factory->define(Banca::class, function (Faker $faker) {
-    $tipo = Banca::tipoOptions();
-    $docente = factory(Docente::class, 1)->create();
-    return [
-        'codpes' => $docente[0]['n_usp'],
-        'presidente' => 'Não',
-        'tipo' => $tipo[array_rand($tipo)],
-    ];
-});
+class BancaFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Banca::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        $tipo = Banca::tipoOptions();
+        $docente = Docente::factory()->create()->n_usp;
+        return [
+            'codpes' => $docente,
+            'presidente' => 'Não',
+            'tipo' => $tipo[array_rand($tipo)],
+        ];
+    }
+}

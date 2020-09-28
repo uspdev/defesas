@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Agendamento;
+use App\Models\Agendamento;
 
 class indexController extends Controller
 {

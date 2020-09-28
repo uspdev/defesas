@@ -58,13 +58,13 @@
                 <td>{{ Carbon\Carbon::parse($agendamento->data_horario)->format('d/m/Y') }}</td>
                 <td>{{ Carbon\Carbon::parse($agendamento->data_horario)->format('H:i')}}</td>
                 <td>
-                    <a href="/agendamentos/{{$agendamento->id}}/edit" class="btn btn-warning">Editar</a>
+                    <a href="/agendamentos/{{$agendamento->id}}/edit" class="btn btn-warning"><i class="fas fa-pencil-alt"></i></a>
                 </td>
                 <td>
                     <form method="POST" action="/agendamentos/{{ $agendamento->id }}">
                         @csrf 
                         @method('delete')
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('Você tem certeza que deseja apagar?')">Apagar</button>
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Você tem certeza que deseja apagar?')"><i class="fas fa-trash-alt"></i></button>
                     </form>
                 </td>
             </tr>

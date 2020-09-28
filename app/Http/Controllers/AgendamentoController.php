@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Agendamento;
-use App\Banca;
-use App\Docente;
+use App\Models\Agendamento;
+use App\Models\Banca;
+use App\Models\Docente;
 use Illuminate\Http\Request;
 use App\Http\Requests\AgendamentoRequest;
 use Carbon\Carbon;

@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Banca;
+use App\Models\Banca;
 use Illuminate\Validation\Rule;
 
 class BancaRequest extends FormRequest

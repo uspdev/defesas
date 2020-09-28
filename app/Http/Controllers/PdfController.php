@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use PDF;
-use App\Agendamento;
-use App\Banca;
-use App\Config;
+use App\Models\Agendamento;
+use App\Models\Banca;
+use App\Models\Config;
 use Carbon\Carbon;
 use App\Utils\ReplicadoUtils;
 use Uspdev\Replicado\Pessoa;
