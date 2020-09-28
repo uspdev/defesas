@@ -3,22 +3,22 @@
 
 $submenu1 =  [
     [
-        'text' => 'Agendar Defesa',
+        'text' => '<i class="fas fa-plus-square"></i> Agendar Defesa',
         'url'  => '/agendamentos/create',
     ],
     [
-        'text' => 'Listar Defesas',
+        'text' => '<i class="fas fa-list-alt"></i> Listar Defesas',
         'url'  => '/agendamentos',
     ],
 ];
 
 $submenu2 =  [
     [
-        'text' => 'Cadastrar Docente',
+        'text' => '<i class="fas fa-plus-square"></i> Cadastrar Docente',
         'url'  => '/docentes/create',
     ],
     [
-        'text' => 'Listar Docentes',
+        'text' => '<i class="fas fa-list-alt"></i> Listar Docentes',
         'url'  => '/docentes',
     ],
 ];
@@ -31,12 +31,12 @@ return [
     'login_url' => '/login',
     'menu' => [
         [
-            'text'    => 'Agendamentos',
+            'text'    => '<i class="fas fa-calendar-alt"></i> Agendamentos',
             'submenu' => $submenu1,
             'can' => 'admin',
         ],
         [
-            'text'    => 'Docentes',
+            'text'    => '<i class="fas fa-chalkboard-teacher"></i> Docentes',
             'submenu' => $submenu2,
             'can' => 'admin',
         ],

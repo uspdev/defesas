@@ -27,9 +27,9 @@ class DocenteRequest extends FormRequest
         $rules = [
             'nome' => 'required',
             'n_usp' => 'required',
-            'cpf' => ['required','cpf'],
-            'tipo' => ['required', Rule::in(Docente::documentoOptions())],
-            'documento' => 'required',
+            'cpf' => ['cpf'],
+            'tipo' => Rule::in(Docente::documentoOptions()),
+            'documento' => '',
             'endereco' => '',
             'bairro' => '',
             'cep' => '',
