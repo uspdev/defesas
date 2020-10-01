@@ -11,33 +11,39 @@
     @inject('pessoa','Uspdev\Replicado\Pessoa')
     <br>
     <div class="card">
+        <div class="card-header"><h5><b>Buscar</b></h5></div>
         <div class="card-body">
             <form method="GET" action="/anteriores">
-                <div class="row form-group">
-                    <div class="col-auto">
-                        <label style="margin-top:0.35em; margin-bottom:0em;"><h5><b>Busca por Área/Programa: </b></h5></label>
-                    </div>
-                </div>
+                
                 <div class="row form-group">
                     <div class="col-sm form-group">
-                        <select class="form-control" name="busca">
+                        <label style="margin-top:0.35em; margin-bottom:0em;" for="busca_programa"><b>Por Área/Programa: </b></label>
+                        <select class="form-control" name="busca_programa">
                             <option value="" selected="">- Todos -</option>
                             @foreach (App\Models\Agendamento::programaOptions() as $option)
                                 {{-- 1. Situação em que não houve tentativa de submissão e é uma edição --}}
-                                @if (old('busca') == '' and isset($agendamento->busca))
-                                <option value="{{$option['codare']}}" {{ ( $agendamento->busca == $option['codare']) ? 'selected' : ''}}>
+                                @if (old('busca_programa') == '' and isset(Request()->busca_programa))
+                                <option value="{{$option['codare']}}" {{ ( Request()->busca_programa == $option['codare']) ? 'selected' : ''}}>
                                     {{$option['nomare']}}
                                 </option>
                                 {{-- 2. Situação em que houve tentativa de submissão, o valor de old prevalece --}}
                                 @else
-                                <option value="{{$option['codare']}}" {{ ( old('busca') == $option['codare']) ? 'selected' : ''}}>
+                                <option value="{{$option['codare']}}" {{ ( old('busca_programa') == $option['codare']) ? 'selected' : ''}}>
                                     {{$option['nomare']}}
                                 </option>
                                 @endif
                             @endforeach
                         </select>
                     </div>
-                    <div class=" col-auto form-group">
+                </div>
+                <div class="row form-group">
+                    <div class="col-sm form-group">
+                        <label style="margin-top:0.35em; margin-bottom:0em;" for="busca"><b>Por Nome do Candidato: </b></label>
+                        <input type="text" class="form-control" name="busca" placeholder="Digite o nome do candidato" value="{{Request()->busca}}">
+                    </div>
+                </div>
+                <div class="row form-group float-right">
+                    <div class="col-sm">
                         <button type="submit" class="btn btn-success">Buscar</button>
                     </div>
                 </div>
