@@ -121,7 +121,7 @@
 <div class="row form-group">
     <div class="col-sm form-group">
         <label for="data" class="required">Data</label> 
-        <input type="text" name="data" class="form-control datepicker" autocomplete="off" value="{{ old('data', $agendamento->data) }}"> 
+        <input type="text" name="data" class="form-control datepicker data" autocomplete="off" value="{{ old('data', $agendamento->data) }}"> 
     </div>
     <div class="col-sm form-group">
         <label for="horario" class="required">Horário</label> 
