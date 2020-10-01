@@ -15,5 +15,23 @@ jQuery(function ($) {
             $("#busca_data").show();
         }
     });
+
+    $("#programa").click(function() {
+        if($("#programa").prop("checked")) {
+            $("#busca_programa").show();
+        }
+        else{
+            $("#busca_programa").hide();
+        }
+    });
+
+    $("#nivel").click(function() {
+        if($("#nivel").prop("checked")) {
+            $("#busca_nivel").show();
+        }
+        else{
+            $("#busca_nivel").hide();
+        }
+    });
 });
 

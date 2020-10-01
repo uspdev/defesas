@@ -5,6 +5,7 @@
 @endsection('javascript_head')
 
 @section('content')
+    @inject('pessoa','Uspdev\Replicado\Pessoa')
     @include('flash')
 
     <a href="/agendamentos/create" class="btn btn-primary">Agendar Defesa</a>
@@ -28,7 +29,7 @@
                 
                 <div class="row form-group">
                     <div class="col-sm form-group" id="busca"  @if(Request()->filtro_busca == 'data') style="display:none;" @endif>
-                        <input type="text" class="form-control busca" autocomplete="off" name="busca" value="{{ Request()->busca }}" placeholder="Digite o número USP ou nome do candidato">
+                        <input type="text" class="form-control busca" autocomplete="off" name="busca" value="{{ Request()->busca }}" placeholder="Digite o número USP ou nome do candidato, ou o nome do orientador">
                     </div>
                     <div class="col-sm form-group" id="busca_data" @if(Request()->filtro_busca == 'numero_nome' or Request()->filtro_busca == '') style="display:none;" @endif>
                         <input class="form-control data datepicker" autocomplete="off" name="busca_data" value="{{ Request()->busca_data }}" placeholder="Selecione a data">
@@ -47,6 +48,7 @@
                 <th>Nome</th>
                 <th>Data</th>
                 <th>Horário</th>
+                <th>Orientador</th>
                 <th colspan="2">Ações</th>
             </tr>
         </theader>
@@ -57,6 +59,7 @@
                 <td><a href="/agendamentos/{{$agendamento->id}}">{{ $agendamento->nome }}</a></td>
                 <td>{{ Carbon\Carbon::parse($agendamento->data_horario)->format('d/m/Y') }}</td>
                 <td>{{ Carbon\Carbon::parse($agendamento->data_horario)->format('H:i')}}</td>
+                <td>{{ $pessoa::dump($agendamento->orientador)['nompes']}}</td>
                 <td>
                     <a href="/agendamentos/{{$agendamento->id}}/edit" class="btn btn-warning"><i class="fas fa-pencil-alt"></i></a>
                 </td>
