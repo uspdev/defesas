@@ -27,10 +27,15 @@ class AgendamentoController extends Controller
     {
         $this->authorize('admin');
         $query = Agendamento::orderBy('data_horario', 'asc');
+        $query2 = Docente::orderBy('nome', 'asc');
         if($request->filtro_busca == 'numero_nome') {
             $query->where('codpes', '=', $request->busca)->orderBy('data_horario', 'asc');
             if($query->count() == null){
                 $query->orWhere('nome', 'LIKE', "%$request->busca%");
+            }
+            $query2->where('nome', 'LIKE', "%$request->busca%");
+            foreach($query2->get() as $orientador){
+                $query->orWhere('orientador', '=', $orientador->n_usp);
             }
         } 
         elseif($request->filtro_busca == 'data'){
