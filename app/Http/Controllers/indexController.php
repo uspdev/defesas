@@ -17,12 +17,12 @@ class indexController extends Controller
             $query->where('agendamentos.area_programa', '=', $request->busca_programa);
         } 
         if($request->busca != ''){
-            $query->where('docentes.nome', 'LIKE', "%$request->busca%");
-            $query->orWhere('agendamentos.nome', 'LIKE', "%$request->busca%");
-            $query->orWhere('agendamentos.titulo', 'LIKE', "%$request->busca%");
-            
+            $query->where(function($query) use($request){
+                $query->orWhere('agendamentos.nome', 'LIKE', "%$request->busca%");
+                $query->orWhere('agendamentos.titulo', 'LIKE', "%$request->busca%");
+                $query->orWhere('docentes.nome', 'LIKE', "%$request->busca%");
+            });
         }
-        
         $agendamentos = $query->paginate(20);
 
         if ($agendamentos->count() == null) {
@@ -40,11 +40,13 @@ class indexController extends Controller
             $query->where('agendamentos.area_programa', '=', $request->busca_programa);
         } 
         if($request->busca != '') {
-            $query->where('agendamentos.nome', 'LIKE', "%$request->busca%");
-            $query->orWhere('agendamentos.titulo', 'LIKE', "%$request->busca%");
-            $query->orWhere('docentes.nome', 'LIKE', "%$request->busca%");
+            $query->where(function($query) use($request){
+                $query->orWhere('agendamentos.nome', 'LIKE', "%$request->busca%");
+                $query->orWhere('agendamentos.titulo', 'LIKE', "%$request->busca%");
+                $query->orWhere('docentes.nome', 'LIKE', "%$request->busca%");
+            });
         }
-        
+
         $agendamentos = $query->paginate(20);
 
         if ($agendamentos->count() == null) {
@@ -53,4 +55,3 @@ class indexController extends Controller
         return view('anteriores')->with('agendamentos',$agendamentos);
     }
 }
-
