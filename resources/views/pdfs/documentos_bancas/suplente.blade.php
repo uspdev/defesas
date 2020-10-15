@@ -92,11 +92,11 @@
         São Paulo, {{ strftime('%d de %B de %Y', strtotime('today')) }}    
     </div><br>
 
-    Ilmo(a). Sr(a). {{$pessoa::dump($professor->codpes)['nompes']}}<br>
-    {{$professor::getDadosProfessor($professor->codpes)['endereco']}}, {{$professor::getDadosProfessor($professor->codpes)['bairro']}} <br>
-    CEP:{{$professor::getDadosProfessor($professor->codpes)['cep']}} - {{$professor::getDadosProfessor($professor->codpes)['cidade']}}/{{$professor::getDadosProfessor($professor->codpes)['estado']}}
-    <br> telefone: {{$professor->getDadosProfessor($professor->codpes)['telefone']}}
-    <br>e-mail: {{$professor->getDadosProfessor($professor->codpes)['email']}}
+    Ilmo(a). Sr(a). {{$agendamento->dadosProfessor($professor->codpes)->nome ?? 'Professor não cadastrado'}}<br>
+    {{$agendamento->dadosProfessor($professor->codpes)->endereco ?? ' '}}, {{$agendamento->dadosProfessor($professor->codpes)->bairro ?? ' '}} <br>
+    CEP:{{$agendamento->dadosProfessor($professor->codpes)->cep ?? ' '}} - {{$agendamento->dadosProfessor($professor->codpes)->cidade ?? ' '}}/{{$agendamento->dadosProfessor($professor->codpes)->estado ?? ' '}}
+    <br> telefone: {{$agendamento->dadosProfessor($professor->codpes)->telefone ?? ' '}}
+    <br>e-mail: {{$agendamento->dadosProfessor($professor->codpes)->email ?? ' '}}
     <br><br>
 
     <div class="boxSuplente">

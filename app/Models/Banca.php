@@ -33,8 +33,4 @@ class Banca extends Model
             'Suplente'
         ];
     }
-
-    public static function getDadosProfessor($codpes){
-        return Docente::where('n_usp',$codpes)->first();
-    }
 }

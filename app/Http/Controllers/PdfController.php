@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use PDF;
 use App\Models\Agendamento;
+use App\Models\Docente;
 use App\Models\Banca;
 use App\Models\Config;
 use Carbon\Carbon;
@@ -63,14 +64,26 @@ class PdfController extends Controller
                 $configs = Config::orderbyDesc('created_at')->first();
             }
             $pdf = PDF::loadView("pdfs.documentos_bancas.$tipo", compact(['agendamento','professores','professor','configs']));
-            $nome = Pessoa::dump($banca->codpes)['nompes'];
+            $docente = Docente::dump($banca->codpes);
+            if($docente == null){
+                $nome = 'Professor';
+            }
+            else{
+                $nome = $docente->nome;
+            }
             return $pdf->download("$nome - $tipo.pdf");
         }
         elseif($tipo == 'suplente'){
             $configs = Config::setConfigOficioSuplente($agendamento);
             $professor = $banca;
             $pdf = PDF::loadView("pdfs.documentos_bancas.$tipo", compact(['agendamento','professor','configs']));
-            $nome = Pessoa::dump($banca->codpes)['nompes'];
+            $docente = Docente::dump($banca->codpes);
+            if($docente == null){
+                $nome = 'Professor';
+            }
+            else{
+                $nome = $docente->nome;
+            }
             return $pdf->download("$nome - $tipo.pdf");
         }
     }
@@ -83,7 +96,13 @@ class PdfController extends Controller
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         $configs = Config::orderbyDesc('created_at')->first();
         $pdf = PDF::loadView("pdfs.recibos.proex", compact(['agendamento','banca','dados','configs']));
-        $nome = Pessoa::dump($banca->codpes)['nompes'];
+        $docente = Docente::dump($banca->codpes);
+        if($docente == null){
+            $nome = 'Professor';
+        }
+        else{
+            $nome = $docente->nome;
+        }
         return $pdf->download("$nome - proex.pdf");    
     }
 
@@ -95,7 +114,13 @@ class PdfController extends Controller
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         $configs = Config::orderbyDesc('created_at')->first();
         $pdf = PDF::loadView("pdfs.recibos.proap", compact(['agendamento','banca','dados','configs']));
-        $nome = Pessoa::dump($banca->codpes)['nompes'];
+        $docente = Docente::dump($banca->codpes);
+        if($docente == null){
+            $nome = 'Professor';
+        }
+        else{
+            $nome = $docente->nome;
+        }
         return $pdf->download("$nome - proap.pdf");
     }
 
@@ -107,7 +132,13 @@ class PdfController extends Controller
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         $configs = Config::orderbyDesc('created_at')->first();
         $pdf = PDF::loadView("pdfs.recibos.passagem", compact(['agendamento','banca','dados','configs']));
-        $nome = Pessoa::dump($banca->codpes)['nompes'];
+        $docente = Docente::dump($banca->codpes);
+        if($docente == null){
+            $nome = 'Professor';
+        }
+        else{
+            $nome = $docente->nome;
+        }
         return $pdf->download("$nome - passagem.pdf");
     }
 
@@ -118,7 +149,13 @@ class PdfController extends Controller
         $agendamento->setDataHorario($agendamento);
         $configs = Config::orderbyDesc('created_at')->first();
         $pdf = PDF::loadView("pdfs.recibos.passagemAuxilio", compact(['agendamento','banca','dados','configs']));
-        $nome = Pessoa::dump($banca->codpes)['nompes'];
+        $docente = Docente::dump($banca->codpes);
+        if($docente == null){
+            $nome = 'Professor';
+        }
+        else{
+            $nome = $docente->nome;
+        }
         return $pdf->download("$nome - passagemAuxilio.pdf");
     }
 }

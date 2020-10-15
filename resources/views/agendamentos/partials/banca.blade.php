@@ -21,7 +21,7 @@
                 @foreach ($bancas as $banca)
                     <tr>
                         <td>{{ $banca->codpes }}</td>
-                        <td>{{ $pessoa::dump($banca->codpes)['nompes'] }}</td>
+                        <td>{{ $agendamento->dadosProfessor($banca->codpes)->nome  ?? 'Professor não cadastrado'}}</td>
                         <td>{{ $banca->presidente }}</td>
                         <td>{{ $banca->tipo }}</td>
                         <td>

@@ -111,8 +111,8 @@
     <table width="16cm" style="border='0'; margin-left:4cm; align-items: center; justify-content: center;">
         @foreach($professores as $componente)    
         <tr style="border='0'">
-            <td> {{$pessoa::dump($componente->codpes)['nompes']}} </td> 
-            <td><b>{{$componente->getDadosProfessor($componente->codpes)['lotado']}}</b></td>
+            <td> {{$agendamento->dadosProfessor($componente->codpes)->nome ?? 'Professor não cadastrado'}} </td> 
+            <td><b>{{$agendamento->dadosProfessor($componente->codpes)->lotado ?? ' '}}</b></td>
         </tr>
         @endforeach
     </table>
@@ -129,11 +129,11 @@
 		</b>
     </p>
     <br><br> 
-	Ilmo(a). Sr(a). {{$pessoa::dump($professor->codpes)['nompes']}}<br>
-    {{$professor::getDadosProfessor($professor->codpes)['endereco']}}, {{$professor::getDadosProfessor($professor->codpes)['bairro']}} <br>
-    CEP:{{$professor::getDadosProfessor($professor->codpes)['cep']}} - {{$professor::getDadosProfessor($professor->codpes)['cidade']}}/{{$professor::getDadosProfessor($professor->codpes)['estado']}}
-	<br> telefone: {{$professor->getDadosProfessor($professor->codpes)['telefone']}}
-    <br>e-mail: {{$professor->getDadosProfessor($professor->codpes)['email']}}
+    Ilmo(a). Sr(a). {{$agendamento->dadosProfessor($professor->codpes)['nome'] ?? 'Professor não cadastrado'}}<br>
+    {{$agendamento->dadosProfessor($professor->codpes)->endereco ?? ' '}}, {{$agendamento->dadosProfessor($professor->codpes)->bairro ?? ' '}} <br>
+    CEP:{{$agendamento->dadosProfessor($professor->codpes)->cep ?? ' '}} - {{$agendamento->dadosProfessor($professor->codpes)->cidade ?? ' '}}/{{$agendamento->dadosProfessor($professor->codpes)->estado ?? ' '}}
+    <br> telefone: {{$agendamento->dadosProfessor($professor->codpes)->telefone ?? ' '}}
+    <br>e-mail: {{$agendamento->dadosProfessor($professor->codpes)->email ?? ' '}}
     <div id="footer">
         {!! $configs->rodape_oficios !!}
     </div>
