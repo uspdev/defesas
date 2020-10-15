@@ -29,7 +29,7 @@
                                     <option value="duas_diarias"> 2 diárias </option>
                                 </select>
                             </td>
-                            <td> <button type="submit" class="btn btn-primary"><b>Gerar Recibo</b></button></td>
+                            <td> <button type="submit" class="btn btn-primary"><b>Visualizar E-mail</b></button></td>
                         </form>
                     </tr>
                 @endif
@@ -199,7 +199,7 @@
                         <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$professor->id}}/recibos/emailDocente" class="form-group" method="POST">
                             @csrf 
                             <td>{{$pessoa::dump($professor->codpes)['nompes']}}</td>
-                            <td><button type="submit" size="4" class="btn btn-primary"><b>Enviar E-mail</b></button></td>
+                            <td><button type="submit" size="4" class="btn btn-primary"><b>Visualizar E-mail</b></button></td>
                         </form> 
                     </tr>
                 @endif
