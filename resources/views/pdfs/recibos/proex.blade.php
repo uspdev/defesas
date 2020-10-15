@@ -62,17 +62,17 @@
 			</td>
 		</tr> 
 		<tr>
-			<td> Nome: {{$pessoa::dump($banca->codpes)['nompes']}}	</td>
-			<td> CPF: {{$banca->getDadosProfessor($banca->codpes)['cpf']}} </td>
+			<td> Nome: {{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}	</td>
+			<td> CPF: {{$agendamento->dadosProfessor($banca->codpes)->cpf ?? ' '}} </td>
 		</tr>
 		<tr>
 			<td> Profissão: <br> PROFESSOR DOUTOR	</td>
-			<td> RG/Passaporte(se estrangeiro):<br> {{$banca->getDadosProfessor($banca->codpes)['documento']}} </td>
+			<td> RG/Passaporte(se estrangeiro):<br> {{$agendamento->dadosProfessor($banca->codpes)->documento ?? ' '}} </td>
 		</tr>
 		<tr>
 			<td colspan="2"> Endereço Completo: <br> 
-					{{$banca->getDadosProfessor($banca->codpes)['endereco']}}, {{$banca->getDadosProfessor($banca->codpes)['bairro']}} <br>
-    				CEP:{{$banca->getDadosProfessor($banca->codpes)['cep']}} - {{$banca->getDadosProfessor($banca->codpes)['cidade']}}/{{$banca->getDadosProfessor($banca->codpes)['estado']}}
+			{{$agendamento->dadosProfessor($banca->codpes)->endereco ?? ' '}}, {{$agendamento->dadosProfessor($banca->codpes)->bairro ?? ' '}} <br>
+        	CEP:{{$agendamento->dadosProfessor($banca->codpes)->cep ?? ' '}} - {{$agendamento->dadosProfessor($banca->codpes)->cidade ?? ' '}}/{{$agendamento->dadosProfessor($banca->codpes)->estado ?? ' '}}
 			</td>
 		</tr>
 	</table> 
@@ -122,7 +122,7 @@
 		</tr>
 		<tr>
 			<td>  <b> <center>{{$replicado::coordenadorArea($agendamento->area_programa)['nompes']}}</b> </center>	</td>
-			<td> <b> <center>{{$pessoa::dump($banca->codpes)['nompes']}}</b> </center> </td>
+			<td> <b> <center>{{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}</b> </center> </td>
 		</tr>
 	</table> 
     <p style="font-size: 9px;"> <b>ATENÇÃO:</b> Utilizar esse modelo quando ocorrer pagamento de diárias ou remuneração de serviço a pessoas físicas que não possuam talonários de Notas Fiscais de Serviços (<b> Outros Serviços de Terceiros - Pessoas Físicas </b>) </p>

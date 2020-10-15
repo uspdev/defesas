@@ -32,9 +32,15 @@ class Config extends Model
         //Busca a última configuração
         $configs = Config::orderbyDesc('created_at')->first();
         //Faz as primeiras trocas
+        if(Agendamento::dadosProfessor($professor->codpes) == null){
+            $docenteNome = 'Professor não cadastrado';
+        }
+        else{
+            $docenteNome = Agendamento::dadosProfessor($professor->codpes)->nome;
+        }
         $configs['declaracao'] = str_replace(
             ["%docente_nome","%nivel","%candidato_nome", "%titulo"], 
-            [Pessoa::dump($professor->codpes)['nompes'],$agendamento['nivel'], $agendamento['nome'], $agendamento['titulo']], 
+            [$docenteNome,$agendamento['nivel'], $agendamento['nome'], $agendamento['titulo']], 
             $configs['declaracao']
         );
         //Busca as áreas/programas da unidade
@@ -48,7 +54,13 @@ class Config extends Model
         //Altera a informação de presidente de acordo com o tipo do professor informado
         foreach($professores as $presidente){
             if($presidente['presidente'] == 'Sim'){
-                $configs['declaracao'] = str_replace("%orientador", Pessoa::dump($presidente->codpes)['nompes'], $configs['declaracao']);
+                if(Agendamento::dadosProfessor($presidente->codpes) == null){
+                    $docenteNome = 'Professor não cadastrado';
+                }
+                else{
+                    $docenteNome = Agendamento::dadosProfessor($presidente->codpes)->nome;
+                }
+                $configs['declaracao'] = str_replace("%orientador", $docenteNome, $configs['declaracao']);
             }
         }
         return $configs;
@@ -60,9 +72,15 @@ class Config extends Model
         $configs = Config::orderbyDesc('created_at')->first();
         setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese');
         //Realiza as alterações necessárias
+        if(Agendamento::dadosProfessor($professor->codpes) == null){
+            $docenteNome = 'Professor não cadastrado';
+        }
+        else{
+            $docenteNome = Agendamento::dadosProfessor($professor->codpes)->nome;
+        }
         $configs['mail_docente'] = str_replace(
             ["%docente_nome","%candidato_nome", "%data_defesa", "%local_defesa"], 
-            [Pessoa::dump($professor->codpes)['nompes'],$agendamento['nome'], strftime("%d de %B de %Y", strtotime($agendamento->data_horario))." às ".$agendamento->horario, $agendamento['sala']], 
+            [$docenteNome,$agendamento['nome'], strftime("%d de %B de %Y", strtotime($agendamento->data_horario))." às ".$agendamento->horario, $agendamento['sala']], 
             $configs['mail_docente']
         );
         return $configs;

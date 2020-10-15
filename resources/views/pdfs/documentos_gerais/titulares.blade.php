@@ -102,8 +102,8 @@
         <table width="16cm" style="border='0'; margin-left:4cm; align-items: center; justify-content: center;">
             @foreach($bancas as $banca)    
             <tr style="border='0'">
-                <td> {{$pessoa::dump($banca->codpes)['nompes']}} </td> 
-                <td><b>{{$banca->getDadosProfessor($banca->codpes)['lotado']}}</b></td>
+                <td> {{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}} </td> 
+                <td><b>{{$agendamento->dadosProfessor($banca->codpes)->lotado ?? ' '}}</b></td>
             </tr>
             @endforeach
         </table>
@@ -118,11 +118,11 @@
 			{{Auth::user()->name}} - Defesas de Mestrado e Doutorado da {{$pessoa::cracha(Auth::user()->codpes)['nomorg']}}/USP 
 			</b>
         </p><br><br> 
-        Ilmo(a). Sr(a). {{$pessoa::dump($professor->codpes)['nompes']}}<br>
-        {{$professor::getDadosProfessor($professor->codpes)['endereco']}}, {{$professor::getDadosProfessor($professor->codpes)['bairro']}} <br>
-        CEP:{{$professor::getDadosProfessor($professor->codpes)['cep']}} - {{$professor::getDadosProfessor($professor->codpes)['cidade']}}/{{$professor::getDadosProfessor($professor->codpes)['estado']}}
-        <br> telefone: {{$professor->getDadosProfessor($professor->codpes)['telefone']}}
-        <br>e-mail: {{$professor->getDadosProfessor($professor->codpes)['email']}}
+        Ilmo(a). Sr(a). {{$agendamento->dadosProfessor($professor->codpes)['nome'] ?? 'Professor não cadastrado'}}<br>
+        {{$agendamento->dadosProfessor($professor->codpes)->endereco ?? ' '}}, {{$agendamento->dadosProfessor($professor->codpes)->bairro ?? ' '}} <br>
+        CEP:{{$agendamento->dadosProfessor($professor->codpes)->cep ?? ' '}} - {{$agendamento->dadosProfessor($professor->codpes)->cidade ?? ' '}}/{{$agendamento->dadosProfessor($professor->codpes)->estado ?? ' '}}
+        <br> telefone: {{$agendamento->dadosProfessor($professor->codpes)->telefone ?? ' '}}
+        <br>e-mail: {{$agendamento->dadosProfessor($professor->codpes)->email ?? ' '}}
         <div id="footer">
             {!! $configs->rodape_oficios !!}
         </div>

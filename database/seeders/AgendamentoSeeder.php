@@ -30,7 +30,7 @@ class AgendamentoSeeder extends Seeder
             'orientador' => Docente::factory()->create()->n_usp,
         ];
         Agendamento::create($agendamento);
-        //factory(Agendamento::class, 100)->create();
+        
         Agendamento::factory(10)->create()->each(function ($agendamento) {           
             $bancas = Banca::factory(5)->make();
             $agendamento->bancas()->saveMany($bancas);

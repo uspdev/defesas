@@ -107,7 +107,7 @@
     <table style="border: 1px solid black; border-spacing: 5px; width: 18cm;">
       <tr> 
         <td>
-          Prof: <b> {{$pessoa::dump($professor->codpes)['nompes']}}  </b>
+          Prof: <b> {{$agendamento->dadosProfessor($professor->codpes)->nome ?? 'Professor não cadastrado'}}  </b>
         </td>
       </tr>
       <tr> 

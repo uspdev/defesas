@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Uspdev\Replicado\Posgraduacao;
 use App\Utils\ReplicadoUtils;
 use App\Models\Banca;
+use App\Models\Docente;
 class Agendamento extends Model
 {
     use HasFactory;
@@ -77,5 +78,13 @@ class Agendamento extends Model
             "Sala da Direção",
             "Sala de Treinamento (116)",
         ];
+    }
+
+    public static function dadosProfessor($codpes){
+        $dados = Docente::dump($codpes);
+        if($dados != null){
+            return $dados;
+        }
+        return false;
     }
 }
