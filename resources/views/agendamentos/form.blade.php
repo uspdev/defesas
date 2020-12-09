@@ -131,22 +131,38 @@
 
 <div class="form-group">
     <label for="sala" class="required">Local</label>
-    <select class="form-control" name="sala">
+    <select class="form-control sala" name="sala" id="sala">
         <option value="" selected="">- Selecione -</option>
+        @php($selecionado = 0)
         @foreach ($agendamento->salaOptions() as $option)
             {{-- 1. Situação em que não houve tentativa de submissão e é uma edição --}}
             @if (old('sala') == '' and isset($agendamento->sala))
-            <option value="{{$option}}" {{ ( $agendamento->sala == $option) ? 'selected' : ''}}>
-                {{$option}}
-            </option>
+                @if($option == 'Sala Virtual' and $selecionado == 0)
+                    <option value="{{$option}}" selected>
+                        {{$option}}
+                        @php($selecionado = 2)
+                    </option>    
+                @else
+                <option value="{{$option}}" {{ ( $agendamento->sala == $option) ? 'selected' : ''}}>
+                    @if($agendamento->sala == $option) @php($selecionado = 1) @else @php($selecionado = 0) @endif
+                    {{$option}}
+                </option>
+                @endif
             {{-- 2. Situação em que houve tentativa de submissão, o valor de old prevalece --}}
             @else
-            <option value="{{$option}}" {{ ( old('sala') == $option) ? 'selected' : ''}}>
+            <option value="{{$option}}" {{ ( old('sala') == $option) ? 'selected' : '' }}>
+                @if(old('sala') == $option)) @php($selecionado = 1) @else @php($selecionado = 0) @endif
                 {{$option}}
             </option>
             @endif
         @endforeach
     </select> 
+</div>
+<div class="row form-group link_sala_virtual" @if($selecionado == 2) style="display:block;" @endif>
+    <div class="col-sm form-group">
+        <label for="sala_virtual" class="required">Link da Sala Virtual</label> 
+        <input type="text" name="sala_virtual" class="form-control" autocomplete="off" value="{{ old('sala_virtual', $agendamento->sala) }}"> 
+    </div>
 </div> 
 <div class="form-group">
     <button type="submit" class="btn btn-success float-right">Enviar</button> 

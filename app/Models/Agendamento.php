@@ -77,6 +77,7 @@ class Agendamento extends Model
             "Sala dos Professores (114)",
             "Sala da Direção",
             "Sala de Treinamento (116)",
+            "Sala Virtual",
         ];
     }
 
