@@ -33,5 +33,14 @@ jQuery(function ($) {
             $("#busca_nivel").hide();
         }
     });
+
+    $("#nivel").click(function() {
+        if($("#nivel").prop("checked")) {
+            $("#busca_nivel").show();
+        }
+        else{
+            $("#busca_nivel").hide();
+        }
+    });
 });
 

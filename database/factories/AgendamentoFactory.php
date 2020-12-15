@@ -28,7 +28,7 @@ class AgendamentoFactory extends Factory
         $regimento = Agendamento::regimentoOptions(); 
         $nivel = Agendamento::nivelOptions(); 
         $area_programa = Agendamento::programaOptions();
-        $sala = Agendamento::salaOptions();
+        //$sala = Agendamento::salaOptions();
         $aluno = $this->faker->unique()->posgraduacao();
         $orientador = Docente::factory()->create()->n_usp;
         return [
@@ -41,7 +41,7 @@ class AgendamentoFactory extends Factory
             'titulo' => $this->faker->sentence($nbWords = 6, $variableNbWords = true),
             'area_programa' => $area_programa[array_rand($area_programa)]['codare'],
             'data_horario' => $this->faker->dateTimeBetween($startDate = '-2 years', $endDate = '+2 years'),
-            'sala' => $sala[array_rand($sala)],
+            'sala' => $this->faker->sentence($nbWords = 2, $variableNbWords = true),
             'orientador' => $orientador,
         ];
     }

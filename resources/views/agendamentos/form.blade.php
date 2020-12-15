@@ -131,22 +131,7 @@
 
 <div class="form-group">
     <label for="sala" class="required">Local</label>
-    <select class="form-control" name="sala">
-        <option value="" selected="">- Selecione -</option>
-        @foreach ($agendamento->salaOptions() as $option)
-            {{-- 1. Situação em que não houve tentativa de submissão e é uma edição --}}
-            @if (old('sala') == '' and isset($agendamento->sala))
-            <option value="{{$option}}" {{ ( $agendamento->sala == $option) ? 'selected' : ''}}>
-                {{$option}}
-            </option>
-            {{-- 2. Situação em que houve tentativa de submissão, o valor de old prevalece --}}
-            @else
-            <option value="{{$option}}" {{ ( old('sala') == $option) ? 'selected' : ''}}>
-                {{$option}}
-            </option>
-            @endif
-        @endforeach
-    </select> 
+    <input type="text" name="sala" class="form-control" value="{{ old('sala', $agendamento->sala) }}"> 
 </div> 
 <div class="form-group">
     <button type="submit" class="btn btn-success float-right">Enviar</button> 

@@ -12,10 +12,6 @@
             <b>Orientador:</b> {{$agendamento->dadosProfessor($agendamento->orientador)->nome ?? 'Professor não cadastrado'}}</br>
             <b>Data:</b> {{$agendamento->data}}</br>
             <b>Horário:</b> {{$agendamento->horario}}</br>
-            @foreach ($agendamento->salaOptions() as $option)
-                @if ($option == $agendamento->sala)
-                    <b>Local:</b> {{$option}}</br>
-                @endif
-            @endforeach
+            <b>Local:</b> {{$agendamento->sala}}</br>
         </div>
     </div>
