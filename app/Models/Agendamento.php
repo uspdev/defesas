@@ -67,7 +67,8 @@ class Agendamento extends Model
     }
 
     //Função para devolver valores de select
-    public static function salaOptions(){
+    //Função desabilitada, foi deixado o campo livre por conta da necessidade de agora divulgar as salas virtuais onde as defesas ocorrem
+    /*public static function salaOptions(){
         return [
             "Sala de Defesas (120)",
             "Sala de Concursos (122)",
@@ -79,7 +80,7 @@ class Agendamento extends Model
             "Sala de Treinamento (116)",
             "Sala Virtual",
         ];
-    }
+    }*/
 
     public static function dadosProfessor($codpes){
         $dados = Docente::dump($codpes);

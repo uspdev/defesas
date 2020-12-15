@@ -37,7 +37,7 @@ class AgendamentoRequest extends FormRequest
             'nivel' => ['required',Rule::in($agendamento->nivelOptions())],
             'titulo' => 'required',
             'area_programa' => ['required',Rule::in(ReplicadoUtils::codareasProgramas())],
-            'sala' => ['required',Rule::in($agendamento->salaOptions())],
+            'sala' => 'required',
             'sala_virtual' => 'required_if:sala,Sala Virtual',
             'data_horario' => 'required',
             'orientador' => 'required|integer',

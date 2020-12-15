@@ -42,15 +42,5 @@ jQuery(function ($) {
             $("#busca_nivel").hide();
         }
     });
-    
-    document.getElementById("sala").onchange = function(){
-        var value = document.getElementById("sala").value;
-        var divSalaVirtual = document.getElementsByClassName('link_sala_virtual');
-        if(value == "Sala Virtual"){
-            divSalaVirtual[0].style.display = 'block';
-        }else{
-            divSalaVirtual[0].style.display = 'none';
-        }
-    };
 });
 
