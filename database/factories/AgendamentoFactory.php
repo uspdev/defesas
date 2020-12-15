@@ -28,7 +28,6 @@ class AgendamentoFactory extends Factory
         $regimento = Agendamento::regimentoOptions(); 
         $nivel = Agendamento::nivelOptions(); 
         $area_programa = Agendamento::programaOptions();
-        //$sala = Agendamento::salaOptions();
         $aluno = $this->faker->unique()->posgraduacao();
         $orientador = Docente::factory()->create()->n_usp;
         return [
