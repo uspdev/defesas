@@ -38,7 +38,6 @@ class AgendamentoRequest extends FormRequest
             'titulo' => 'required',
             'area_programa' => ['required',Rule::in(ReplicadoUtils::codareasProgramas())],
             'sala' => 'required',
-            'sala_virtual' => 'required_if:sala,Sala Virtual',
             'data_horario' => 'required',
             'orientador' => 'required|integer',
         ];
