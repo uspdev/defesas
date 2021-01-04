@@ -88,7 +88,7 @@
 
         <div align="right">
             @php(setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese'))
-            São Paulo, {{ strftime('%d de %B de %Y', strtotime('today')) }}        
+            São Paulo, {{ strftime('%d de %B de %Y', strtotime($agendamento->data_horario)) }}        
         </div><br>
 
         <h1 align="center"> DECLARAÇÃO </h1>
