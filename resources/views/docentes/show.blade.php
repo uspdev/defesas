@@ -80,7 +80,7 @@
             <tbody>
                 @foreach($docente->getBancasProfessor($docente->n_usp,'Orientador') as $banca)
                     <tr>
-                        <td><a href="/agendamentos/{{$banca->id}}">{{$pessoa::dump($banca->codpes)['nompes']}}</a></td>
+                        <td><a href="/agendamentos/{{$banca->id}}">{{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}</a></td>
                         <td>{{$banca->titulo}}</td>
                         <td>{{Carbon\Carbon::parse($banca->data_horario)->format('d/m/Y')}}</td>
                         <td>{{$replicado::nomeAreaPrograma($banca->area_programa)}}</td>

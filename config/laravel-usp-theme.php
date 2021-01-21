@@ -25,7 +25,7 @@ $submenu2 =  [
 
 return [
     'title'=> 'DEFESAS',
-    'dashboard_url' => '/',
+    'dashboard_url' => config('app.url'),
     'logout_method' => 'GET',
     'logout_url' => '/logout',
     'login_url' => '/login',

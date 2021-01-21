@@ -21,7 +21,7 @@
   <table id="headerFFLCH" style='width:100%'>
     <tr>
       <td style='width:20%' style='text-align:left;'>
-        <img src='https://www.fflch.usp.br/themes/contrib/aegan-subtheme/images/logo.png' width='230px'/>
+        <img src='images/logo-fflch.png' width='100px'/>
       </td>
       <td style='width:80%'; style='text-align:center;'>
         <p align='center'><b>FACULDADE DE FILOSOFIA, LETRAS E CIÊNCIAS HUMANAS</b>
@@ -39,12 +39,12 @@
     <left> <u><b>{{$dados->processo}}</b></u> </left> <br> 
 
     <p> Banca de defesa de <b> {{$agendamento->nome}} </p> 
-    <p> Passageiro(a) {{$pessoa::dump($banca->codpes)['nompes']}} </p> 
+    <p> Passageiro(a) {{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}} </p> 
     <p> Itinerário: {{$dados->itinerario}} </p> 
     <p> Partida: {{$dados->partida}}</p> 
     <p> Retorno: {{$dados->retorno}} </p> 
-    <p> Telefone: {{$banca->getDadosProfessor($banca->codpes)['telefone']}} </p> 
-    <p> E-mail: {{$banca->getDadosProfessor($banca->codpes)['email']}}
+    <p> Telefone: {{$agendamento->dadosProfessor($banca->codpes)->telefone ?? ' '}} </p> 
+    <p> E-mail: {{$agendamento->dadosProfessor($banca->codpes)->email ?? ' '}}
     </p> 
     <div class="justificar"> {!! $configs->obs_passagem !!} </div>
             

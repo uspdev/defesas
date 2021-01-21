@@ -75,7 +75,7 @@
         <table id="headerFFLCH" style='width:100%'>
             <tr>
                 <td style='width:20%' style='text-align:left;'>
-                    <img src='https://www.fflch.usp.br/themes/contrib/aegan-subtheme/images/logo.png' width='230px'/>
+                    <img src='images/logo-fflch.png' width='100px'/>
                 </td>
                 <td style='width:80%'; style='text-align:center;'>
                     <p align='center'><b>FACULDADE DE FILOSOFIA, LETRAS E CIÊNCIAS HUMANAS</b>
@@ -88,7 +88,7 @@
 
         <div align="right">
             @php(setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese'))
-            São Paulo, {{ strftime('%d de %B de %Y', strtotime('today')) }}        
+            São Paulo, {{ strftime('%d de %B de %Y', strtotime($agendamento->data_horario)) }}        
         </div><br>
 
         <h1 align="center"> DECLARAÇÃO </h1>
@@ -101,8 +101,8 @@
         <table width="16cm" style="border='0'; margin-left:4cm; align-items: center; justify-content: center;">
             @foreach($bancas as $banca)    
             <tr style="border='0'">
-                <td><b>{{$pessoa::dump($banca->codpes)['nompes']}}</b> </td> 
-                <td><b>{{$banca->getDadosProfessor($banca->codpes)['lotado']}}</b></td>           
+                <td><b>{{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}</b> </td> 
+                <td><b>{{$agendamento->dadosProfessor($banca->codpes)->lotado ?? ' '}}</b></td>           
             </tr>
             @endforeach
         </table>

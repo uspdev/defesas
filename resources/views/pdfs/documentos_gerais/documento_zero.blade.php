@@ -43,7 +43,7 @@
   <table style='width:100%'>
     <tr>
       <td style='width:20%' style='text-align:left;'>
-        <img src='https://www.fflch.usp.br/themes/contrib/aegan-subtheme/images/logo.png' width='230px'/>
+        <img src='images/logo-fflch.png' width='100px'/>
       </td>
       <td style='width:80%'; style='text-align:center;'>
         <p align='center'><b>FACULDADE DE FILOSOFIA, LETRAS E CIÊNCIAS HUMANAS</b>
@@ -107,7 +107,7 @@
     <table style="border: 1px solid black; border-spacing: 5px; width: 18cm;">
       <tr> 
         <td>
-          Prof: <b> {{$pessoa::dump($professor->codpes)['nompes']}}  </b>
+          Prof: <b> {{$agendamento->dadosProfessor($professor->codpes)->nome ?? 'Professor não cadastrado'}}  </b>
         </td>
       </tr>
       <tr> 

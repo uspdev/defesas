@@ -9,13 +9,9 @@
             <b>Nível:</b> {{$agendamento->nivel}}</br>
             <b>Programa:</b> {{$agendamento->nome_area}}</br>
             <b>Orientador Votante:</b> {{$agendamento->orientador_votante}}</br>
-            <b>Orientador:</b> {{$pessoa::dump($agendamento->orientador)['nompes']}}</br>
+            <b>Orientador:</b> {{$agendamento->dadosProfessor($agendamento->orientador)->nome ?? 'Professor não cadastrado'}}</br>
             <b>Data:</b> {{$agendamento->data}}</br>
             <b>Horário:</b> {{$agendamento->horario}}</br>
-            @foreach ($agendamento->salaOptions() as $option)
-                @if ($option == $agendamento->sala)
-                    <b>Local:</b> {{$option}}</br>
-                @endif
-            @endforeach
+            <b>Local:</b> {{$agendamento->sala}}</br>
         </div>
     </div>

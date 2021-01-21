@@ -45,10 +45,10 @@
 			<tr>
 				<td> 
 					<u>DO:</u> SERVIÇO DE PÓS-GRADUAÇÃO DA FFLCH <br>
-					<u>PARA:</u> {{$professor::getDadosProfessor($professor->codpes)['endereco']}}, {{$professor::getDadosProfessor($professor->codpes)['bairro']}} <br>
-        			CEP:{{$professor::getDadosProfessor($professor->codpes)['cep']}} - {{$professor::getDadosProfessor($professor->codpes)['cidade']}}/{{$professor::getDadosProfessor($professor->codpes)['estado']}}
+					<u>PARA:</u> {{$agendamento->dadosProfessor($professor->codpes)->endereco ?? ' '}}, {{$agendamento->dadosProfessor($professor->codpes)->bairro ?? ' '}} <br>
+    				CEP:{{$agendamento->dadosProfessor($professor->codpes)->cep ?? ' '}} - {{$agendamento->dadosProfessor($professor->codpes)->cidade ?? ' '}}/{{$agendamento->dadosProfessor($professor->codpes)->estado ?? ' '}}
 					<div style="text-indent:1.5cm;">
-						A/C: Prof(a). Dr(a). {{$pessoa::dump($professor->codpes)['nompes']}}
+						A/C: Prof(a). Dr(a). {{$agendamento->dadosProfessor($professor->codpes)->nome ?? 'Professor não cadastrado'}}
 					</div> 
 				</td> 
 			</tr> 
@@ -86,9 +86,9 @@
 			<tr>
 				<td>
 					<u>DO:</u> SERVIÇO DE PÓS-GRADUAÇÃO DA FFLCH <br>
-					<u>PARA:</u>  {{$professor::getDadosProfessor($professor->codpes)['endereco']}}, {{$professor::getDadosProfessor($professor->codpes)['bairro']}} <br>
-        			CEP:{{$professor::getDadosProfessor($professor->codpes)['cep']}} - {{$professor::getDadosProfessor($professor->codpes)['cidade']}}/{{$professor::getDadosProfessor($professor->codpes)['estado']}}
-					<div style="text-indent:1.5cm;"> A/C: Prof(a). Dr(a). {{$pessoa::dump($professor->codpes)['nompes']}} </div> 
+					<u>PARA:</u>  {{$agendamento->dadosProfessor($professor->codpes)->endereco ?? ' '}}, {{$agendamento->dadosProfessor($professor->codpes)->bairro ?? ' '}} <br>
+    				CEP:{{$agendamento->dadosProfessor($professor->codpes)->cep ?? ' '}} - {{$agendamento->dadosProfessor($professor->codpes)->cidade ?? ' '}}/{{$agendamento->dadosProfessor($professor->codpes)->estado ?? ' '}}
+					<div style="text-indent:1.5cm;"> A/C: Prof(a). Dr(a). {{$agendamento->dadosProfessor($professor->codpes)->nome ?? 'Professor não cadastrado'}} </div> 
 				</td> 
 			</tr>
 		</table>

@@ -55,7 +55,7 @@
   <table style='width:100%'>
     <tr>
       <td style='width:20%' style='text-align:left;'>
-        <img src='https://www.fflch.usp.br/themes/contrib/aegan-subtheme/images/logo.png' width='230px'/>
+        <img src='images/logo-fflch.png' width='100px'/>
       </td>
       <td style='width:80%'; style='text-align:center;'>
         <p align='center'><b>FACULDADE DE FILOSOFIA, LETRAS E CIÊNCIAS HUMANAS</b>
@@ -84,9 +84,9 @@
     </ul>
 	<div class="justificar" style="text-indent:1cm;" >{!! $configs->agencia_texto !!} </div>
 	<div class="importante">  
-		Interessado(a): Prof(a). Dr(a). <b> {{$pessoa::dump($banca->codpes)['nompes']}}</b> <br>
-		E-mail: <b>{{$banca->getDadosProfessor($banca->codpes)['email']}}</b> <br>
-		Telefone:<b> {{$banca->getDadosProfessor($banca->codpes)['telefone']}} </b> <br>
+		Interessado(a): Prof(a). Dr(a). <b> {{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}</b> <br>
+		E-mail: <b>{{$agendamento->dadosProfessor($banca->codpes)->email ?? ' '}}</b> <br>
+		Telefone:<b> {{$agendamento->dadosProfessor($banca->codpes)->telefone ?? ' '}} </b> <br>
 		Data da defesa:<b> {{$agendamento->data}}</b> <br>
 		Trajeto da passagem aérea <b> {{$dados->trajeto}}</b> <br>
 	</div> <br>
