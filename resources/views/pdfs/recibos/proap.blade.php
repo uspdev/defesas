@@ -23,7 +23,7 @@
 	<table id="headerFFLCH" style='width:100%; border:none;'>
         <tr>
             <td style='width:20%; border:none;' style='text-align:left;'>
-                <img src='https://www.fflch.usp.br/themes/contrib/aegan-subtheme/images/logo.png' width='230px' height='90px'/>
+				<img src='images/logo-fflch.png' width='100px'/>
             </td>
             <td style='width:100%; border:none; text-align:center; padding-left:20px;'>
                 <span style="font-size:12px;">UNIVERSIDADE DE SÃO PAULO</span><br>
