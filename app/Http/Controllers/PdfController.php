@@ -22,7 +22,7 @@ class PdfController extends Controller
     public function documentosGerais(Agendamento $agendamento, $tipo){
         $this->authorize('admin');
         $configs = Config::orderbyDesc('created_at')->first();
-        $agendamento->setDataHorario($agendamento);
+        $agendamento->formatDataHorario($agendamento);
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         if($tipo == 'placa'){
             $pdf = PDF::loadView('pdfs.documentos_gerais.placa', compact('agendamento'))->setPaper('a4', 'landscape');
@@ -52,7 +52,7 @@ class PdfController extends Controller
     //Bloco destinado aos documentos individuais
     public function documentosIndividuais(Agendamento $agendamento, Banca $banca, $tipo){
         $this->authorize('admin');
-        $agendamento->setDataHorario($agendamento);
+        $agendamento->formatDataHorario($agendamento);
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         if($tipo == 'titular' or $tipo == 'declaracao'){
             $professores = Banca::where('agendamento_id',$agendamento->id)->where('tipo', 'Titular')->get();
@@ -92,7 +92,7 @@ class PdfController extends Controller
     public function proex(Agendamento $agendamento, Banca $banca, Request $request){
         $this->authorize('admin');
         $dados = $request;
-        $agendamento->setDataHorario($agendamento);
+        $agendamento->formatDataHorario($agendamento);
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         $configs = Config::orderbyDesc('created_at')->first();
         $pdf = PDF::loadView("pdfs.recibos.proex", compact(['agendamento','banca','dados','configs']));
@@ -128,7 +128,7 @@ class PdfController extends Controller
     public function passagem(Agendamento $agendamento, Banca $banca, Request $request){
         $this->authorize('admin');
         $dados = $request;
-        $agendamento->setDataHorario($agendamento);
+        //$agendamento->formatDataHorario($agendamento);
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         $configs = Config::orderbyDesc('created_at')->first();
         $pdf = PDF::loadView("pdfs.recibos.passagem", compact(['agendamento','banca','dados','configs']));
@@ -146,7 +146,7 @@ class PdfController extends Controller
     public function passagemAuxilio(Agendamento $agendamento, Banca $banca, Request $request){
         $this->authorize('admin');
         $dados = $request;
-        $agendamento->setDataHorario($agendamento);
+        $agendamento->formatDataHorario($agendamento);
         $configs = Config::orderbyDesc('created_at')->first();
         $pdf = PDF::loadView("pdfs.recibos.passagemAuxilio", compact(['agendamento','banca','dados','configs']));
         $docente = Docente::dump($banca->codpes);

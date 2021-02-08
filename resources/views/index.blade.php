@@ -100,7 +100,7 @@
                     <td>{{ Carbon\Carbon::parse($agendamento->data_horario)->format('d/m/Y H:i') }}</td>
                     <td>{{ $agendamento->sala }}</td>
                     <td>{{ $replicado::nomeAreaPrograma($agendamento->area_programa) }}</td>
-                    <td>{{ $agendamento->nome }}</td>
+                    <td><a href="/agendamentos/{{$agendamento->id}}">{{ $agendamento->nome }}</a></td>
                     <td>{{ $agendamento->nivel }}</td>
                     <td>{{ $agendamento->titulo }}</td>
                     <td>{{ $pessoa::dump($agendamento->orientador)['nompes'] }}</td>

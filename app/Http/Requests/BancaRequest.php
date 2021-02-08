@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\Banca;
+use App\Models\Agendamento;
 use Illuminate\Validation\Rule;
 
 class BancaRequest extends FormRequest
@@ -25,11 +25,12 @@ class BancaRequest extends FormRequest
      */
     public function rules()
     {
-        $banca = new Banca;
+        $agendamento = new Agendamento;
         return [
             'codpes' => 'required|integer',
-            'presidente' => ['required',Rule::in($banca->presidenteOptions())],
-            'tipo' => ['required',Rule::in($banca->tipoOptions())],
+            'presidente' => ['required',Rule::in($agendamento->presidenteOptions())],
+            'tipo' => ['required',Rule::in($agendamento->tipoOptions())],
+            'agendamento_id' => 'required',
         ];
     }
 }

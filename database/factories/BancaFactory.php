@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Banca;
+use App\Models\Agendamento;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Docente;
 
@@ -22,7 +23,7 @@ class BancaFactory extends Factory
      */
     public function definition()
     {
-        $tipo = Banca::tipoOptions();
+        $tipo = Agendamento::tipoOptions();
         $docente = Docente::factory()->create()->n_usp;
         return [
             'codpes' => $docente,

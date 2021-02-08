@@ -13,7 +13,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($bancas as $professor)
+            @foreach($agendamento->bancas as $professor)
                 @if($replicado::verificaprofessorExterno($professor->codpes) == true)
                     <tr>
                         <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$professor->id}}/recibos/reciboExterno" class="form-group" method="POST">
@@ -53,7 +53,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($bancas as $professor)
+                @foreach($agendamento->bancas as $professor)
                     @if($replicado::verificaprofessorExterno($professor->codpes) == true)    
                     <tr>
                         <form class="form-group" action="/agendamentos/{{$agendamento->id}}/bancas/{{$professor->id}}/recibos/proex" method="POST">
@@ -92,7 +92,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($bancas as $professor)
+                @foreach($agendamento->bancas as $professor)
                     @if($replicado::verificaprofessorExterno($professor->codpes) == true)    
                         <tr>
                             <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$professor->id}}/recibos/proap" class="form-group" method="POST">
@@ -129,7 +129,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($bancas as $professor)
+                @foreach($agendamento->bancas as $professor)
                     @if($replicado::verificaprofessorExterno($professor->codpes) == true)
                         <tr>
                             <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$professor->id}}/recibos/passagem" class="form-group" method="POST">
@@ -163,7 +163,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($bancas as $professor)
+                @foreach($agendamento->bancas as $professor)
                     @if($replicado::verificaprofessorExterno($professor->codpes) == true)
                         <tr>
                             <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$professor->id}}/recibos/passagemAuxilio" class="form-group" method="POST">
@@ -193,7 +193,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($bancas as $professor)
+            @foreach($agendamento->bancas as $professor)
                 @if($replicado::verificaprofessorExterno($professor->codpes) == true)
                     <tr>
                         <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$professor->id}}/recibos/emailDocente" class="form-group" method="POST">

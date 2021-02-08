@@ -16,6 +16,13 @@ class AgendamentoSeeder extends Seeder
      */
     public function run()
     {
+        $orientador = Docente::factory()->create()->n_usp;
+        $professor = [
+            'codpes' => $orientador,
+            'presidente' => 'Sim',
+            'tipo' => 'Titular',
+            'agendamento_id' => 1,
+        ];
         $agendamento = [
             'codpes' => 5166999,
             'nome' => 'Breno Aparecido Servidone Moreno', 
@@ -27,11 +34,12 @@ class AgendamentoSeeder extends Seeder
             'area_programa' => '8142',
             'data_horario' => '2020-11-30 12:00:00',
             'sala' => 'Sala da Direção',
-            'orientador' => Docente::factory()->create()->n_usp,
+            'orientador' => $orientador,
         ];
         Agendamento::create($agendamento);
-        
-        Agendamento::factory(10)->create()->each(function ($agendamento) {           
+        Banca::create($professor);
+
+        Agendamento::factory(5)->create()->each(function ($agendamento) {           
             $bancas = Banca::factory(5)->make();
             $agendamento->bancas()->saveMany($bancas);
         });
