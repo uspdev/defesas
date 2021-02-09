@@ -80,34 +80,34 @@
         </div>
     </div>
     <br>
-    <div class="card">
-        <div class="card-header"><h2>Próximas Defesas</h2></div>
-        <table class="table table-striped" style="text-align:center;">
-            <theader>
-                <tr>
-                    <th>Data defesa</th>
-                    <th>Local</th>
-                    <th>Programa/Área</th>
-                    <th>Nome</th>
-                    <th>Nível</th>
-                    <th>Título</th>
-                    <th>Orientador(a)</th>
-                </tr>
-            </theader>
-            <tbody>
-            @foreach ($agendamentos as $agendamento)
-                <tr>
-                    <td>{{ Carbon\Carbon::parse($agendamento->data_horario)->format('d/m/Y H:i') }}</td>
-                    <td>{{ $agendamento->sala }}</td>
-                    <td>{{ $replicado::nomeAreaPrograma($agendamento->area_programa) }}</td>
-                    <td><a href="/agendamentos/{{$agendamento->id}}">{{ $agendamento->nome }}</a></td>
-                    <td>{{ $agendamento->nivel }}</td>
-                    <td>{{ $agendamento->titulo }}</td>
-                    <td>{{ $pessoa::dump($agendamento->orientador)['nompes'] }}</td>
-                </tr>
-            @endforeach
-            </tbody>
-        </table>
-        {{ $agendamentos->appends(request()->query())->links() }}
-    </div>
+    <h2>Próximas Defesas</h2><br>
+        @foreach ($agendamentos as $agendamento)
+            <div class="card">
+                <div class="card-header"><h5><b>Candidato(a):</b> {{$agendamento->nome}}</h5></div>
+                <div class="card-body">
+                    <b>Título da Tese:</b> {{$agendamento->titulo}}</br>
+                    <b>Candidato(a):</b> {{$agendamento->nome }} </br>
+                    @can('logado')
+                        <b>Nº USP:</b> {{ $agendamento->codpes }}</br>
+                        <b>Sexo:</b> {{$agendamento->sexo}}</br>
+                        <b>Regimento:</b> {{$agendamento->regimento}}</br>
+                    @endcan
+                    <b>Nível:</b> {{$agendamento->nivel}}</br>
+                    <b>Programa:</b> {{$replicado::nomeAreaPrograma($agendamento->area_programa)}}</br>
+                    <b>Orientador:</b> {{$agendamento->dadosProfessor($agendamento->orientador)->nome ?? 'Professor não cadastrado'}}</br>
+                    @can('logado')<b>Orientador Votante:</b> {{$agendamento->orientador_votante}}</br>@endcan
+                    <b>Data:</b> {{$agendamento->formatDataHorario($agendamento)->data}}</br>
+                    <b>Horário:</b> {{$agendamento->formatDataHorario($agendamento)->horario}}</br>
+                    <b>Local:</b> {{$agendamento->sala}}</br>
+                    <hr>
+                    <h5><b>Banca</b></h5>
+                    <ul class="list-group">
+                        @foreach ($agendamento->bancas as $banca)
+                            <li class="list-group-item">{{ $agendamento->dadosProfessor($banca->codpes)->nome  ?? 'Professor não cadastrado'}}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div><br>
+        @endforeach
+    {{ $agendamentos->appends(request()->query())->links() }}
 @endsection('content')
