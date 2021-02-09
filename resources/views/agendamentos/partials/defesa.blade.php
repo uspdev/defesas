@@ -7,8 +7,8 @@
                 <b>Nº USP:</b> {{ $agendamento->codpes }}</br>
                 <b>Sexo:</b> {{$agendamento->sexo}}</br>
                 <b>Regimento:</b> {{$agendamento->regimento}}</br>
-                <b>Nível:</b> {{$agendamento->nivel}}</br>
             @endcan
+            <b>Nível:</b> {{$agendamento->nivel}}</br>
             <b>Programa:</b> {{$agendamento->nome_area}}</br>
             @can('logado')<b>Orientador Votante:</b> {{$agendamento->orientador_votante}}</br>@endcan
             <b>Orientador:</b> {{$agendamento->dadosProfessor($agendamento->orientador)->nome ?? 'Professor não cadastrado'}}</br>
