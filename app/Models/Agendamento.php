@@ -24,6 +24,7 @@ class Agendamento extends Model
     public function formatDataHorario($agendamento){
         $agendamento->data = Carbon::parse($agendamento->data_horario)->format('d/m/Y');
         $agendamento->horario = Carbon::parse($agendamento->data_horario)->format('H:i');
+        return $agendamento;
     }
 
     //Função para devolver valores de select
