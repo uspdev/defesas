@@ -98,6 +98,12 @@ class ConfigSeeder extends Seeder
             <br>
             <p>Desde já agradeço seu retorno.</p>
             <br>
+            <div class="col-auto float-right">
+                <form method="POST" action="/agendamentos/passagem/%agendamento/%docente">
+                %token 
+                <button type="submit" class="btn btn-success" onclick="return confirm("Tem certeza que deseja enviar para E-mail?")"> Enviar E-mail </button>
+                </form>
+            </div><br><br>
             <hr>
             <p><b>e-mail para seguir com a reserva de hotel: </b></p>
             <br>
@@ -124,6 +130,12 @@ class ConfigSeeder extends Seeder
             <p>Telefones (residencial e celular): </p>
             <br>
             <p>Desde já lhe agradeço e aguardo o retorno.</p>
+            <div class="col-auto float-right">
+                <form method="POST" action="/agendamentos/dados_prof_externo/%agendamento/%docente">
+                    %token 
+                    <button type="submit" class="btn btn-success" onclick="return confirm("Tem certeza que deseja enviar para E-mail?")"> Enviar E-mail </button>
+                </form>
+            </div><br><br> 
             <hr>
             <p> <b> e-mail para enviar convite e dissertação/tese em PDF </b> </p> <br>
             <p>Prezados Professores, </p>
@@ -138,7 +150,6 @@ class ConfigSeeder extends Seeder
             <br>
             <br>
             <hr>
-            <hr>
             <p> <b> e-mail para enviar Instruções do USE Táxi </b> </p> <br>
             <p>Prezado(a) Prof.(a) Dr.(a): %docente_nome, </p>
             <br>
@@ -147,7 +158,6 @@ class ConfigSeeder extends Seeder
             <p>Número de Celular cadastrado no sistema de táxi: %docente_nome</p>
             <br>
             <br>
-            <hr>
             <hr>
             <p> <b> e-mail para enviar dissertação/tese em PDF para suplente</b> </p> <br>
             <br>
