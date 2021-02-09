@@ -21,7 +21,7 @@ class DocenteFactory extends Factory
      */
     public function definition()
     {
-        $docente = $this->faker->docente();
+        $docente = $this->faker->unique()->docente();
         $telefones = '';
         $emails = '';
         foreach(Pessoa::telefones($docente) as $t){

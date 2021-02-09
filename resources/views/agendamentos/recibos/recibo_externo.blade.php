@@ -26,6 +26,16 @@
             <p><b>2 Diárias:</b> {{$configs->duas_diarias}}</p>
             @endif            
             <a href="/agendamentos/{{$agendamento->id}}" class="btn btn-primary">Voltar</a>
+            <div class="col-auto float-right">
+                <form method="POST" action="/agendamentos/recibo_externo/{{ $agendamento->id }}/{{ $configs->id }}/{{ $docente->id }}">
+                    @csrf 
+                    <button type="submit" class="btn btn-success" onclick="return confirm('Tem certeza que deseja enviar E-mail?')"> Enviar E-mail </button>
+                    <input type="hidden" name="origem" value="{{$dados->origem}}">
+                    <input type="hidden" name="ida" value="{{$dados->ida}}">
+                    <input type="hidden" name="volta" value="{{$dados->volta}}">
+                    <input type="hidden" name="diaria" value="{{$dados->diaria}}">
+                </form>
+            </div>
         </div>
     </div>
 @endsection('content')

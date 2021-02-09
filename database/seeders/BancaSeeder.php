@@ -17,7 +17,7 @@ class BancaSeeder extends Seeder
     {
         $professor1 = [
             'codpes' => Docente::factory()->create()->n_usp,
-            'presidente' => 'Sim',
+            'presidente' => 'Não',
             'tipo' => 'Titular',
             'agendamento_id' => 1,
         ];

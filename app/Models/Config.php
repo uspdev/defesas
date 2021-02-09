@@ -79,8 +79,8 @@ class Config extends Model
             $docenteNome = Agendamento::dadosProfessor($professor->codpes)->nome;
         }
         $configs['mail_docente'] = str_replace(
-            ["%docente_nome","%candidato_nome", "%data_defesa", "%local_defesa"], 
-            [$docenteNome,$agendamento['nome'], strftime("%d de %B de %Y", strtotime($agendamento->data_horario))." às ".$agendamento->horario, $agendamento['sala']], 
+            ["%docente_nome","%candidato_nome", "%data_defesa", "%local_defesa", "%agendamento", "%docente", "%token"], 
+            [$docenteNome,$agendamento->nome, strftime("%d de %B de %Y", strtotime($agendamento->data_horario))." às ".$agendamento->horario, $agendamento->sala, $agendamento->id, $professor->id, "<input type='hidden' name='_token' value=".csrf_token().">"], 
             $configs['mail_docente']
         );
         return $configs;

@@ -5,24 +5,21 @@ namespace App\Http\Controllers;
 use App\Models\Agendamento;
 use App\Models\Banca;
 use App\Models\Docente;
+use App\Models\Config;
 use Illuminate\Http\Request;
 use App\Http\Requests\AgendamentoRequest;
 use Carbon\Carbon;
 use Uspdev\Replicado\Pessoa;
 use App\Utils\ReplicadoUtils;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ReciboExternoMail;
+use App\Mail\ProLaboreMail;
+use App\Mail\PassagemMail;
+use App\Mail\DadosProfExternoMail;
 
 class AgendamentoController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index(Request $request)
     {
         $this->authorize('admin');
@@ -56,11 +53,6 @@ class AgendamentoController extends Controller
         return view('agendamentos.index')->with('agendamentos',$agendamentos);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $this->authorize('admin');
@@ -68,12 +60,6 @@ class AgendamentoController extends Controller
         return view('agendamentos.create')->with('agendamento', $agendamento);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(AgendamentoRequest $request)
     {
         $this->authorize('admin');
@@ -92,41 +78,21 @@ class AgendamentoController extends Controller
         return redirect("/agendamentos/$agendamento->id");
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Agendamento  $agendamento
-     * @return \Illuminate\Http\Response
-     */
     public function show(Agendamento $agendamento)
     {
-        $this->authorize('admin');
-        $agendamento->setDataHorario($agendamento);
-        $bancas = Banca::where('agendamento_id',$agendamento->id)->orderBy('tipo','desc')->get();
+        //$this->authorize('admin');
+        $agendamento->formatDataHorario($agendamento);
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
-        return view('agendamentos.show', compact(['agendamento','bancas']));
+        return view('agendamentos.show', compact('agendamento'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Agendamento  $agendamento
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Agendamento $agendamento)
     {
         $this->authorize('admin');
-        $agendamento->setDataHorario($agendamento);
+        $agendamento->formatDataHorario($agendamento);
         return view('agendamentos.edit')->with('agendamento', $agendamento);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Agendamento  $agendamento
-     * @return \Illuminate\Http\Response
-     */
     public function update(AgendamentoRequest $request, Agendamento $agendamento)
     {
         $this->authorize('admin');
@@ -138,12 +104,6 @@ class AgendamentoController extends Controller
         return redirect("/agendamentos/$agendamento->id");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Agendamento  $agendamento
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Agendamento $agendamento)
     {
         $this->authorize('admin');
@@ -152,5 +112,39 @@ class AgendamentoController extends Controller
         return redirect('/agendamentos');
     }
 
+    public function recibo_externo(Agendamento $agendamento, Config $configs, Docente $docente, Request $request){
+        $this->authorize('admin');
+        Mail::send(new ReciboExternoMail($agendamento, $configs, $docente, $request));
+        return redirect('/agendamentos/'.$agendamento->id);
+    }
+
+    public function pro_labore(Agendamento $agendamento, Docente $docente){
+        $this->authorize('admin');
+        $agendamento->formatDataHorario($agendamento);
+        Mail::send(new ProLaboreMail($agendamento, $docente));
+        return redirect('/agendamentos/'.$agendamento->id);
+    }
+
+    public function passagem(Agendamento $agendamento, Banca $banca){
+        $this->authorize('admin');
+        $agendamento->formatDataHorario($agendamento);
+        $docente = Docente::where('n_usp',$banca->codpes)->first();
+        $emails = explode(" /", $docente->email);
+        foreach($emails as $email){
+            if($email != '') Mail::send(new PassagemMail($agendamento, $docente, $email));
+        }
+        return redirect('/agendamentos/'.$agendamento->id);
+    }
+
+    public function dados_prof_externo(Agendamento $agendamento, Banca $banca){
+        $this->authorize('admin');
+        $agendamento->formatDataHorario($agendamento);
+        $docente = Docente::where('n_usp',$banca->codpes)->first();
+        $emails = explode(" /", $docente->email);
+        foreach($emails as $email){
+            if($email != '') Mail::send(new DadosProfExternoMail($agendamento, $docente, $email));;
+        }
+        return redirect('/agendamentos/'.$agendamento->id);
+    }
     
 }

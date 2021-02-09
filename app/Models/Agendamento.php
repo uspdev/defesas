@@ -17,15 +17,13 @@ class Agendamento extends Model
 
     public function bancas()
     {
-        return $this->hasMany(Banca::class);
+        return $this->hasMany(Banca::class)->orderBy('presidente','desc')->orderBy('tipo', 'desc');
     }
 
     //Função para formatar horário do agendamento
-    public function setDataHorario($agendamento){
-        $data = Carbon::parse($agendamento->data_horario)->format('d/m/Y');
-        $horario = Carbon::parse($agendamento->data_horario)->format('H:i');
-        $agendamento->data = $data;
-        $agendamento->horario = $horario;
+    public function formatDataHorario($agendamento){
+        $agendamento->data = Carbon::parse($agendamento->data_horario)->format('d/m/Y');
+        $agendamento->horario = Carbon::parse($agendamento->data_horario)->format('H:i');
     }
 
     //Função para devolver valores de select
@@ -49,6 +47,22 @@ class Agendamento extends Model
         return [
             'Mestrado',
             'Doutorado'
+        ];
+    }
+
+    //Função para devolver valores de select
+    public static function presidenteOptions(){
+        return [
+            'Sim',
+            'Não'
+        ];
+    }
+
+    //Função para devolver valores de select
+    public static function tipoOptions(){
+        return [
+            'Titular',
+            'Suplente'
         ];
     }
 

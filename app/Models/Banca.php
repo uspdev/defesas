@@ -18,19 +18,4 @@ class Banca extends Model
         return $this->belongsTo(Agendamento::class);
     }
 
-    //Função para devolver valores de select
-    public static function presidenteOptions(){
-        return [
-            'Sim',
-            'Não'
-        ];
-    }
-
-    //Função para devolver valores de select
-    public static function tipoOptions(){
-        return [
-            'Titular',
-            'Suplente'
-        ];
-    }
 }
