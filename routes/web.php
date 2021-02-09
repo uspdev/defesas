@@ -33,8 +33,13 @@ Route::post('/agendamentos/{agendamento}/bancas/{banca}/recibos/passagemAuxilio'
 Route::get('/configs',[ConfigController::class, 'edit']);
 Route::post('/configs',[ConfigController::class, 'store']);
 
-// rotas para recibos
+// rotas para visualização de e-mails
 Route::post('/agendamentos/{agendamento}/bancas/{banca}/recibos/reciboExterno',[EmailController::class, 'reciboExterno']);
 Route::post('/agendamentos/{agendamento}/bancas/{banca}/recibos/emailDocente',[EmailController::class, 'emailDocente']);
 
+//Rota para envio de e-mails
 Route::post('agendamentos/recibo_externo/{agendamento}/{configs}/{docente}', [AgendamentoController::class,'recibo_externo']);
+Route::post('agendamentos/pro_labore/{agendamento}/{docente}', [AgendamentoController::class,'pro_labore']);
+Route::post('agendamentos/passagem/{agendamento}/{banca}', [AgendamentoController::class,'passagem']);
+Route::post('agendamentos/dados_prof_externo/{agendamento}/{banca}', [AgendamentoController::class,'dados_prof_externo']);
+

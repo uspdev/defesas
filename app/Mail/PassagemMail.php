@@ -7,10 +7,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use App\Models\Agendamento;
-use App\Models\Config;
 use App\Models\Docente;
+use App\Models\Banca;
 
-class ReciboExternoMail extends Mailable
+class PassagemMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -19,12 +19,11 @@ class ReciboExternoMail extends Mailable
      *
      * @return void
      */
-    public function __construct(Agendamento $agendamento, Config $configs, Docente $docente, $dados)
+    public function __construct(Agendamento $agendamento, Docente $docente, $email)
     {
         $this->agendamento = $agendamento;
-        $this->configs = $configs;
         $this->docente = $docente;
-        $this->dados = $dados;
+        $this->email = $email;    
     }
 
     /**
@@ -34,16 +33,13 @@ class ReciboExternoMail extends Mailable
      */
     public function build()
     {
-        $subject = "Recibo de diária para docentes externos - {$this->docente->nome}";
-
-        return $this->view('emails.recibo_externo')
-        ->to('tesouraria@fflch.usp.br')
+        $subject = "Dados de passagem - Participação em Banca  - {$this->docente->nome}";
+        return $this->view('emails.passagem')
+        ->to($this->email)
         ->subject($subject)
         ->with([
             'agendamento' => $this->agendamento,
-            'configs' => $this->configs,
             'docente' => $this->docente,
-            'dados' => $this->dados,
-        ]);     
+        ]);    
     }
 }

@@ -29,7 +29,7 @@
             <div class="col-auto float-right">
                 <form method="POST" action="/agendamentos/recibo_externo/{{ $agendamento->id }}/{{ $configs->id }}/{{ $docente->id }}">
                     @csrf 
-                    <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja enviar para Avaliação?')"> Enviar E-mail </button>
+                    <button type="submit" class="btn btn-success" onclick="return confirm('Tem certeza que deseja enviar E-mail?')"> Enviar E-mail </button>
                     <input type="hidden" name="origem" value="{{$dados->origem}}">
                     <input type="hidden" name="ida" value="{{$dados->ida}}">
                     <input type="hidden" name="volta" value="{{$dados->volta}}">

@@ -13,6 +13,13 @@ use Uspdev\Replicado\Pessoa;
 use App\Utils\ReplicadoUtils;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ReciboExternoMail;
+use App\Mail\ProLaboreMail;
+use App\Mail\PassagemMail;
+use App\Mail\ReservaHotelMail;
+use App\Mail\DadosProfExternoMail;
+use App\Mail\TesePdfMail;
+use App\Mail\UseTaxiMail;
+use App\Mail\TesePdfSuplenteMail;
 
 class AgendamentoController extends Controller
 {
@@ -112,6 +119,35 @@ class AgendamentoController extends Controller
     public function recibo_externo(Agendamento $agendamento, Config $configs, Docente $docente, Request $request){
         $this->authorize('admin');
         Mail::send(new ReciboExternoMail($agendamento, $configs, $docente, $request));
+        return redirect('/agendamentos/'.$agendamento->id);
+    }
+
+    public function pro_labore(Agendamento $agendamento, Docente $docente){
+        $this->authorize('admin');
+        $agendamento->formatDataHorario($agendamento);
+        Mail::send(new ProLaboreMail($agendamento, $docente));
+        return redirect('/agendamentos/'.$agendamento->id);
+    }
+
+    public function passagem(Agendamento $agendamento, Banca $banca){
+        $this->authorize('admin');
+        $agendamento->formatDataHorario($agendamento);
+        $docente = Docente::where('n_usp',$banca->codpes)->first();
+        $emails = explode(" /", $docente->email);
+        foreach($emails as $email){
+            if($email != '') Mail::send(new PassagemMail($agendamento, $docente, $email));
+        }
+        return redirect('/agendamentos/'.$agendamento->id);
+    }
+
+    public function dados_prof_externo(Agendamento $agendamento, Banca $banca){
+        $this->authorize('admin');
+        $agendamento->formatDataHorario($agendamento);
+        $docente = Docente::where('n_usp',$banca->codpes)->first();
+        $emails = explode(" /", $docente->email);
+        foreach($emails as $email){
+            if($email != '') Mail::send(new DadosProfExternoMail($agendamento, $docente, $email));;
+        }
         return redirect('/agendamentos/'.$agendamento->id);
     }
     

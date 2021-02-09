@@ -20,10 +20,17 @@
             <p>Número USP: {{$docente->n_usp}} </p>
             <p>PIS/PASEP: {{$docente->pis_pasep}} </p> 
             <br>
-
+            <div class="col-auto float-right">
+                <form method="POST" action="/agendamentos/pro_labore/{{ $agendamento->id }}/{{ $docente->id }}">
+                    @csrf 
+                    <button type="submit" class="btn btn-success" onclick="return confirm('Tem certeza que deseja enviar para E-mail?')"> Enviar E-mail </button>
+                </form>
+            </div>
+            <br><br>
             {!! $configs->mail_docente !!}
             
             <a href="/agendamentos/{{$agendamento->id}}" class="btn btn-primary">Voltar</a>
+            
         </div>
     </div>
 @endsection('content')
