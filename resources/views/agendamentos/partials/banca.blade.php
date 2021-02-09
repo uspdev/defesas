@@ -8,7 +8,7 @@
             <table class="table table-striped" style="text-align: center;">
                 <theader>
                     <tr>
-                        <th>Nº USP</th>
+                        @can('logado')<th>Nº USP</th>@endcan
                         <th>Nome</th>
                         <th>Presidente</th>
                         <th>Tipo</th>
@@ -23,7 +23,7 @@
                 <tbody>
                 @foreach ($agendamento->bancas as $banca)
                     <tr>
-                        <td>{{ $banca->codpes }}</td>
+                        @can('logado')<td>{{ $banca->codpes }}</td>@endcan
                         <td>{{ $agendamento->dadosProfessor($banca->codpes)->nome  ?? 'Professor não cadastrado'}}</td>
                         <td>{{ $banca->presidente }}</td>
                         <td>{{ $banca->tipo }}</td>
