@@ -15,11 +15,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\ReciboExternoMail;
 use App\Mail\ProLaboreMail;
 use App\Mail\PassagemMail;
-use App\Mail\ReservaHotelMail;
 use App\Mail\DadosProfExternoMail;
-use App\Mail\TesePdfMail;
-use App\Mail\UseTaxiMail;
-use App\Mail\TesePdfSuplenteMail;
 
 class AgendamentoController extends Controller
 {
