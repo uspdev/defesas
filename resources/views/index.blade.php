@@ -103,7 +103,7 @@
                     <h5><b>Banca</b></h5>
                     <ul class="list-group">
                         @foreach ($agendamento->bancas as $banca)
-                            <li class="list-group-item">{{ $agendamento->dadosProfessor($banca->codpes)->nome  ?? 'Professor não cadastrado'}}</li>
+                            @if($banca->tipo == 'Titular') <li class="list-group-item">{{ $agendamento->dadosProfessor($banca->codpes)->nome  ?? 'Professor não cadastrado'}}</li>@endif
                         @endforeach
                     </ul>
                 </div>
