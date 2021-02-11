@@ -1,8 +1,8 @@
 @extends('laravel-usp-theme::master')
 
-@section('javascripts_head')
+@section('javascripts_bottom')
   <script src="{{asset('/js/app.js')}}"></script>
-@endsection('javascript_head')
+@endsection('javascripts_bottom')
 
 @section('content')
     @include('flash')
@@ -84,25 +84,31 @@
         <table class="table table-striped" style="text-align:center;">
             <theader>
                 <tr>
-                    <th>Data defesa</th>
-                    <th>Local</th>
-                    <th>Programa/Área</th>
-                    <th>Nome</th>
-                    <th>Nível</th>
+                    <th>Data e Horário</th>
                     <th>Título</th>
-                    <th>Orientador(a)</th>
+                    <th>Candidato(a)</th>
+                    <th>Nível</th>
+                    <th>Programa/Área</th>
+                    <th>Orientador</th>
+                    <th>Local</th>
+                    <th>Banca</th>
                 </tr>
             </theader>
             <tbody>
             @foreach ($agendamentos as $agendamento)
                 <tr>
                     <td>{{ Carbon\Carbon::parse($agendamento->data_horario)->format('d/m/Y H:i') }}</td>
-                    <td>{{ $agendamento->sala }}</td>
-                    <td>{{ $replicado::nomeAreaPrograma($agendamento->area_programa) }}</td>
+                    <td>{{ $agendamento->titulo }}</td>
                     <td>{{ $agendamento->nome }}</td>
                     <td>{{ $agendamento->nivel }}</td>
-                    <td>{{ $agendamento->titulo }}</td>
+                    <td>{{ $replicado::nomeAreaPrograma($agendamento->area_programa) }}</td>
                     <td>{{ $pessoa::dump($agendamento->orientador)['nompes'] }}</td>
+                    <td>{{ $agendamento->sala }}</td>
+                    <td> 
+                        @foreach ($agendamento->bancas()->where('tipo', 'Titular')->get() as $banca)
+                            {{ $agendamento->dadosProfessor($banca->codpes)->nome }}({{ $agendamento->dadosProfessor($banca->codpes)->lotado  ?? ''}})@if($loop->count != $loop->iteration), @endif
+                        @endforeach
+                    </td>
                 </tr>
             @endforeach
             </tbody>
