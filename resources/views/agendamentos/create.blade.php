@@ -4,9 +4,9 @@
   <link rel="stylesheet" href="{{asset('/css/app.css')}}">
 @endsection('styles')
 
-@section('javascripts_head')
+@section('javascripts_bottom')
   <script src="{{asset('/js/app.js')}}"></script>
-@endsection('javascript_head')
+@endsection('javascripts_bottom')
 
 @section('content')
     @include('flash')

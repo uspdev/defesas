@@ -1,8 +1,8 @@
 @extends('laravel-usp-theme::master')
 
-@section('javascripts_head')
+@section('javascripts_bottom')
   <script src="{{asset('/js/app.js')}}"></script>
-@endsection('javascript_head')
+@endsection('javascripts_bottom')
 
 @section('content')
     @include('flash')
@@ -80,34 +80,40 @@
         </div>
     </div>
     <br>
-    <h2>Próximas Defesas</h2><br>
-        @foreach ($agendamentos as $agendamento)
-            <div class="card">
-                <div class="card-header"><h5><b>Candidato(a):</b> {{$agendamento->nome}}</h5></div>
-                <div class="card-body">
-                    <b>Título da Tese:</b> {{$agendamento->titulo}}</br>
-                    <b>Candidato(a):</b> {{$agendamento->nome }} </br>
-                    @can('logado')
-                        <b>Nº USP:</b> {{ $agendamento->codpes }}</br>
-                        <b>Sexo:</b> {{$agendamento->sexo}}</br>
-                        <b>Regimento:</b> {{$agendamento->regimento}}</br>
-                    @endcan
-                    <b>Nível:</b> {{$agendamento->nivel}}</br>
-                    <b>Programa:</b> {{$replicado::nomeAreaPrograma($agendamento->area_programa)}}</br>
-                    <b>Orientador:</b> {{$agendamento->dadosProfessor($agendamento->orientador)->nome ?? 'Professor não cadastrado'}}</br>
-                    @can('logado')<b>Orientador Votante:</b> {{$agendamento->orientador_votante}}</br>@endcan
-                    <b>Data:</b> {{$agendamento->formatDataHorario($agendamento)->data}}</br>
-                    <b>Horário:</b> {{$agendamento->formatDataHorario($agendamento)->horario}}</br>
-                    <b>Local:</b> {{$agendamento->sala}}</br>
-                    <hr>
-                    <h5><b>Banca</b></h5>
-                    <ul class="list-group">
-                        @foreach ($agendamento->bancas as $banca)
-                            @if($banca->tipo == 'Titular') <li class="list-group-item">{{ $agendamento->dadosProfessor($banca->codpes)->nome  ?? 'Professor não cadastrado'}}</li>@endif
+    <div class="card">
+        <div class="card-header"><h2>Próximas defesas</h2></div>
+        <table class="table table-striped" style="text-align:center;">
+            <theader>
+                <tr>
+                    <th>Data e Horário</th>
+                    <th>Título</th>
+                    <th>Candidato(a)</th>
+                    <th>Nível</th>
+                    <th>Programa/Área</th>
+                    <th>Orientador</th>
+                    <th>Local</th>
+                    <th>Banca</th>
+                </tr>
+            </theader>
+            <tbody>
+            @foreach ($agendamentos as $agendamento)
+                <tr>
+                    <td>{{ Carbon\Carbon::parse($agendamento->data_horario)->format('d/m/Y H:i') }}</td>
+                    <td>{{ $agendamento->titulo }}</td>
+                    <td>{{ $agendamento->nome }}</td>
+                    <td>{{ $agendamento->nivel }}</td>
+                    <td>{{ $replicado::nomeAreaPrograma($agendamento->area_programa) }}</td>
+                    <td>{{ $pessoa::dump($agendamento->orientador)['nompes'] }}</td>
+                    <td>{{ $agendamento->sala }}</td>
+                    <td> 
+                        @foreach ($agendamento->bancas()->where('tipo', 'Titular')->get() as $banca)
+                            {{ $agendamento->dadosProfessor($banca->codpes)->nome }}({{ $agendamento->dadosProfessor($banca->codpes)->lotado  ?? ''}})@if($loop->count != $loop->iteration), @endif
                         @endforeach
-                    </ul>
-                </div>
-            </div><br>
-        @endforeach
+                    </td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+    </div>
     {{ $agendamentos->appends(request()->query())->links() }}
 @endsection('content')

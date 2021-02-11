@@ -1,8 +1,8 @@
 @extends('laravel-usp-theme::master')
 
-@section('javascripts_head')
+@section('javascripts_bottom')
   <script src="{{asset('/js/app.js')}}"></script>
-@endsection('javascript_head')
+@endsection('javascripts_bottom')
 
 @section('content')
     @inject('pessoa','Uspdev\Replicado\Pessoa')

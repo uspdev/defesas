@@ -1,6 +1,6 @@
 @extends('laravel-usp-theme::master')
 
-@section('javascripts_head')
+@section('javascripts_bottom')
   <script src="{{asset('/js/app.js')}}"></script>
 @endsection('javascript_head')
 
