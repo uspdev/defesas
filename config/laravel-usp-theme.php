@@ -23,12 +23,23 @@ $submenu2 =  [
     ],
 ];
 
+$right_menu = [
+    [
+        'text' => '<i class="fas fa-cog"></i>',
+        'title' => 'Configurações',
+        'target' => '_blank',
+        'url' => config('app.url') . '/configs',
+        'align' => 'right',
+    ],
+];
+
 return [
-    'title'=> 'DEFESAS',
-    'dashboard_url' => config('app.url'),
-    'logout_method' => 'GET',
-    'logout_url' => '/logout',
-    'login_url' => '/login',
+    'title' => config('app.name'),
+    'skin' => env('USP_THEME_SKIN', 'uspdev'),
+    'app_url' => config('app.url'),
+    'logout_method' => 'POST',
+    'logout_url' => config('app.url') . '/logout',
+    'login_url' => config('app.url') . '/login',
     'menu' => [
         [
             'text'    => '<i class="fas fa-calendar-alt"></i> Agendamentos',
@@ -41,12 +52,5 @@ return [
             'can' => 'admin',
         ],
     ],
-    'right_menu' => [
-        [
-            'text' => '<i class="fas fa-cog"></i>',
-            'title' => 'Configurações',
-            'url' => config('app.url') . '/configs',
-            'can' => 'admin',
-        ],
-    ],
+    'right_menu' => $right_menu,
 ];

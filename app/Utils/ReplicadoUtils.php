@@ -102,10 +102,10 @@ class ReplicadoUtils {
         $areasProgramas = ReplicadoUtils::areasProgramas();
         foreach($areasProgramas as $area){
             if($area['codare'] == $codare){
-                $nome_area = $area['nomare'];
+                return $area['nomare'];
             }
         }
-        return $nome_area;
+        return '';
     }
 
     public static function nomeOrganizacao($codpes){
