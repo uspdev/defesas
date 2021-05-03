@@ -31,7 +31,7 @@
         margin-bottom: 0.15cm;
     }
     .importante {
-        border:1px solid; margin-top:0.3cm; margin-bottom:0.3cm; width: 15cm; font-size:12px; margin-left:0.5cm;
+        border:1px solid; margin-top:0.3cm; margin-bottom:0.3cm; width: 15cm; font-size:12px; margin-left:1.5cm;
     }
     .negrito {
         font-weight: bolder;
