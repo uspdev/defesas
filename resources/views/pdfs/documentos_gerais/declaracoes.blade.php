@@ -25,9 +25,6 @@
     .rodapeFFLCH{
         padding-top:3cm; text-align: center;
     }
-    p.recuo {
-        text-indent: 0.5cm;
-    }
     .moremargin {
         margin-bottom: 0.15cm;
     }
@@ -94,7 +91,7 @@
         <h1 align="center"> DECLARAÇÃO </h1>
         <br><br><br>
 
-        <p class="recuo justificar" style="line-height: 190%;">
+        <p class="justificar" style="line-height: 190%;">
             {!! App\Models\Config::setConfigDeclaracao($agendamento,$bancas,$professor)->declaracao !!}
         </p><br><br>
 

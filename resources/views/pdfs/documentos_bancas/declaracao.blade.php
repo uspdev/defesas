@@ -25,14 +25,11 @@
     .rodapeFFLCH{
         padding-top:3cm; text-align: center;
     }
-    p.recuo {
-        text-indent: 0.5cm;
-    }
     .moremargin {
         margin-bottom: 0.15cm;
     }
     .importante {
-        border:1px solid; margin-top:0.3cm; margin-bottom:0.3cm; width: 15cm; font-size:12px; margin-left:0.5cm;
+        border:1px solid; margin-top:0.3cm; margin-bottom:0.3cm; width: 15cm; font-size:12px; margin-left:1.5cm;
     }
     .negrito {
         font-weight: bolder;
@@ -96,7 +93,7 @@
     <h1 align="center"> DECLARAÇÃO </h1>
     <br><br><br>
 
-    <p class="recuo justificar" style="line-height: 190%;">  
+    <p class="justificar" style="line-height: 190%;">  
         
         {!!$configs->declaracao!!}
     </p> <br><br>
