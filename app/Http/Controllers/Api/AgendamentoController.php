@@ -11,7 +11,7 @@ class AgendamentoController extends Controller
 {
     public function index(){
         $agendamentos = Agendamento::join('docentes', 'docentes.n_usp', '=', 'agendamentos.orientador')
-                ->select('docentes.nome AS orientador','titulo','data_horario', 'agendamentos.nome','nivel','area_programa')
+                ->select('agendamentos.id','docentes.nome AS orientador','titulo','data_horario', 'agendamentos.nome','nivel','area_programa')
                 ->where('agendamentos.data_horario','>=',date('Y-m-d H:i:s'))
                 ->get();
         
