@@ -8,6 +8,7 @@ use App\Http\Controllers\DocenteController;
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\DevController;
 
 // rotas para login/logout
 Route::get('/', [indexController::class, 'index'])->name('index');
@@ -43,3 +44,5 @@ Route::post('agendamentos/pro_labore/{agendamento}/{docente}', [AgendamentoContr
 Route::post('agendamentos/passagem/{agendamento}/{banca}', [AgendamentoController::class,'passagem']);
 Route::post('agendamentos/dados_prof_externo/{agendamento}/{banca}', [AgendamentoController::class,'dados_prof_externo']);
 
+# Features em Desenvolvimento
+Route::get('/dev/bancas_aprovadas', [DevController::class,'bancas_aprovadas']);
