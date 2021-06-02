@@ -23,6 +23,13 @@ $submenu2 =  [
     ],
 ];
 
+$dev =  [
+    [
+        'text' => '<i class="fas fa-plus-square"></i> Bancas Aprovadas',
+        'url'  => '/dev/bancas_aprovadas',
+    ],
+];
+
 $right_menu = [
     [
         'text' => '<i class="fas fa-cog"></i>',
@@ -49,6 +56,11 @@ return [
         [
             'text'    => '<i class="fas fa-chalkboard-teacher"></i> Docentes',
             'submenu' => $submenu2,
+            'can' => 'admin',
+        ],
+        [
+            'text'    => '<i class="fas fa-chalkboard-teacher"></i> Em desenvolvimento',
+            'submenu' => $dev,
             'can' => 'admin',
         ],
     ],
