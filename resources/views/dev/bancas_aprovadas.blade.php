@@ -8,7 +8,18 @@
     @if(\App\Models\Agendamento::where('codpes', $aluno['codpes'])->first() )
         {{ \App\Models\Agendamento::where('codpes', $aluno['codpes'])->first()->data_horario }}
     @endif
-    <br>
+
+    <form action="{{ '/dev/codpes/'.$aluno['codpes'] }}" method="POST" class="form-horizontal">
+
+        {{ csrf_field() }}
+
+        <button class="btn btn-success">Importar do Janos</button>
+        <br>
+      
+    </form>
+
+    <br><br>
 @endforeach
 
 @endsection('content')
+
