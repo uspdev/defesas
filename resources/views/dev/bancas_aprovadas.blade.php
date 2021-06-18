@@ -4,21 +4,18 @@
 
 <b>Número USP</b> - <b>Nome</b> - <b>Agendamento</b><br>
 @foreach($bancas_aprovadas as $aluno)
-    {{ $aluno['codpes'] }} - {{ $aluno['nompes'] }}
-    @if(\App\Models\Agendamento::where('codpes', $aluno['codpes'])->first() )
-        {{ \App\Models\Agendamento::where('codpes', $aluno['codpes'])->first()->data_horario }}
-    @endif
-
     <form action="{{ '/dev/codpes/'.$aluno['codpes'] }}" method="POST" class="form-horizontal">
-
         {{ csrf_field() }}
+        {{ $aluno['codpes'] }} - {{ $aluno['nompes'] }}
+        @if(\App\Models\Agendamento::where('codpes', $aluno['codpes'])->first() )
+            {{ \App\Models\Agendamento::where('codpes', $aluno['codpes'])->first()->data_horario }}
+        @endif
 
-        <button class="btn btn-success">Importar do Janos</button>
-        <br>
+        <button class="btn btn-success">Importar do Janus</button>
       
     </form>
 
-    <br><br>
+    <br>
 @endforeach
 
 @endsection('content')

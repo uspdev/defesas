@@ -104,7 +104,7 @@ class DevController extends Controller
     // Os dados são salvos na tabela 'agendamentos' e 'bancas'
     // Como aqui, a defesa ainda não foi agendada, alguns campos estão vazios ou inconsistentes,
     // e isso deve ser mudado futuramente, após o agendamento real dessas defesas
-    // Estou supondo que como os dados vieram do Janos, eles são válidos.
+    // Estou supondo que como os dados vieram do Janus, eles são válidos.
     public function dados_defesa_aluno($codpes){
         $this->authorize('admin');
         $dadosGerais = $this->get_dados_aluno($codpes);
@@ -112,7 +112,7 @@ class DevController extends Controller
         $trabalho = $this->get_dados_trabalho($codpes);
         $orientador = $this->get_dados_orientador($codpes);
 
-
+        $date = getdate();
         $agendamento = array(
             'codpes' => $dadosGerais[0]['codpes'],
             'nome' => $dadosGerais[0]['nompes'], 
@@ -122,7 +122,7 @@ class DevController extends Controller
             'nivel' => $dadosGerais[0]['nivpgm'], 
             'titulo' => " ", 
             'area_programa' => $dadosGerais[0]['codare'], 
-            'data_horario' => Carbon::CreatefromFormat('d/m/Y H:i', "17/06/2021"." 00:00"), 
+            'data_horario' => Carbon::CreatefromFormat('d/m/Y H:i', "17/06/2021 ".strval($date['hours']).":".strval($date['minutes'])), 
             'sala' => " ", 
             'orientador' => $orientador[0]['codpes'], 
             'nome_orientador' => $orientador[0]['nompes']
@@ -151,7 +151,7 @@ class DevController extends Controller
             $newBanca['agendamento_id'] = $defesa_dadosGerais->id;
             Banca::create($newBanca);
         }
-        request()->session->flash('alert-info', 'Dados importados com sucesso');
+        request()->session()->flash('alert-info', 'Dados importados com sucesso');
         return back();
     }
 }
