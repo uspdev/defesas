@@ -2,21 +2,52 @@
 
 @section('content')
 
-<b>Número USP</b> - <b>Nome</b> - <b>Agendamento</b><br>
-@foreach($bancas_aprovadas as $aluno)
-    <form action="{{ '/dev/codpes/'.$aluno['codpes'] }}" method="POST" class="form-horizontal">
+
+<div class="container-fluid">
+
+<div class="panel panel-primary">
+<div class="panel-body">
+
+
+
+<table class="table table-bordered table-striped table-hover datatable">
+<thead>
+    <tr>
+        <th>NÚMERO USP</th>
+
+        <th>NOME</th>
+        
+        <th>AGENDAMENTO</th>
+
+        <th></th>
+    
+    </tr>
+    @foreach($bancas_aprovadas as $aluno)
+        
         {{ csrf_field() }}
-        {{ $aluno['codpes'] }} - {{ $aluno['nompes'] }}
-        @if(\App\Models\Agendamento::where('codpes', $aluno['codpes'])->first() )
-            {{ \App\Models\Agendamento::where('codpes', $aluno['codpes'])->first()->data_horario }}
-        @endif
 
-        <button class="btn btn-success">Importar do Janus</button>
-      
-    </form>
+            <tr>
+            <form action="{{ '/dev/codpes/'.$aluno['codpes'] }}" method="POST" class="form-horizontal">
+                <td>{{ $aluno['codpes'] }}</td>
 
-    <br>
-@endforeach
+                <td>{{ $aluno['nompes'] }}</td>
+                
+                @if(\App\Models\Agendamento::where('codpes', $aluno['codpes'])->first() )
+                    <td>{{ (new Datetime(\App\Models\Agendamento::where('codpes', $aluno['codpes'])->first()->data_horario))->format('d/m/Y') }}</td>
+                @else
+                    <td></td>
+                @endif
+
+                <td><button class="btn btn-outline-dark">Importar do Janus</button></td>
+            </form>
+            </tr>
+    @endforeach
+</thead>
+<tbody><tr></tr></tbody>
+</table>
+
+</div>
+
 
 @endsection('content')
 
@@ -41,4 +72,6 @@
     @endforeach
     </div>
 @endsection
+
+
 
