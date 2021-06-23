@@ -16,7 +16,7 @@ class DevController extends Controller
     public function bancas_aprovadas(){
         $this->authorize('admin');
         $query = "
-        SELECT V.codpes, V.nompes, A.dtaaprbantrb, A.dtadfapgm FROM VINCULOPESSOAUSP V
+        SELECT V.codpes, V.nompes, A.dtaaprbantrb, A.dtadfapgm FROM DDTDEPOSITOTRABALHO D, VINCULOPESSOAUSP V
         INNER JOIN AGPROGRAMA A ON V.codpes = A.codpes
         WHERE
         V.tipvin = 'ALUNOPOS'
@@ -24,6 +24,10 @@ class DevController extends Controller
         AND A.dtaaprbantrb IS NOT NULL
         AND A.dtadfapgm IS NULL
         AND V.sitatl = 'A'
+        AND D.codpes = A.codpes
+        AND D.codare = A.codare
+        AND D.numseqpgm = A.numseqpgm
+        AND D.dtahomdpotrb IS NOT NULL
         ";
 
         $bancas_aprovadas =  DB::fetchAll($query);
