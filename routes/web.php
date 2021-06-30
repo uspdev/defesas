@@ -46,3 +46,4 @@ Route::post('agendamentos/dados_prof_externo/{agendamento}/{banca}', [Agendament
 
 # Features em Desenvolvimento
 Route::get('/dev/bancas_aprovadas', [DevController::class,'bancas_aprovadas']);
+Route::post('/dev/codpes/{codpes}', [DevController::class,'dados_defesa_aluno']);
