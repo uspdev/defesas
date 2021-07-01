@@ -126,7 +126,7 @@ class DevController extends Controller
             'nivel' => $dadosGerais[0]['nivpgm'], 
             'titulo' => " ", 
             'area_programa' => $dadosGerais[0]['codare'], 
-            'data_horario' => Carbon::CreatefromFormat('d/m/Y H:i', "17/06/2021 ".strval($date['hours']).":".strval($date['minutes'])), 
+            'data_horario' => null, 
             'sala' => " ", 
             'orientador' => $orientador[0]['codpes'], 
             'nome_orientador' => $orientador[0]['nompes']
