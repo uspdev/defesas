@@ -16,8 +16,6 @@
         <th>NÚMERO USP</th>
 
         <th>NOME</th>
-        
-        <th>AGENDAMENTO</th>
 
         <th></th>
     
@@ -32,12 +30,6 @@
                 <td>{{ $aluno['codpes'] }}</td>
 
                 <td>{{ $aluno['nompes'] }}</td>
-                
-                @if(\App\Models\Agendamento::where('codpes', $aluno['codpes'])->first() )
-                    <td>{{ (new Datetime(\App\Models\Agendamento::where('codpes', $aluno['codpes'])->first()->data_horario))->format('d/m/Y') }}</td>
-                @else
-                    <td></td>
-                @endif
 
                 <td><button class="btn btn-outline-dark">Importar do Janus</button></td>
             </form>
