@@ -28,6 +28,7 @@
 
             <tr>
             <form action="{{ '/dev/codpes/'.$aluno['codpes'] }}" method="POST" class="form-horizontal">
+                @csrf
                 <td>{{ $aluno['codpes'] }}</td>
 
                 <td>{{ $aluno['nompes'] }}</td>
