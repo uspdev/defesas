@@ -2,21 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AgendamentoRequest;
 use App\Models\Agendamento;
-use DateTime;
-use Illuminate\Http\Request;
 use Uspdev\Replicado\DB;
-use Carbon\Carbon;
 use App\Models\Banca;
-use PhpParser\Node\Expr\Cast\Array_;
 
 class DevController extends Controller
 {
     public function bancas_aprovadas(){
         $this->authorize('admin');
         $query = "
-        SELECT V.codpes, V.nompes, A.dtaaprbantrb, A.dtadfapgm FROM DDTDEPOSITOTRABALHO D, VINCULOPESSOAUSP V
+        SELECT V.codpes, V.nompes, A.dtaaprbantrb, A.dtadfapgm, D.dtahomdpotrb FROM DDTDEPOSITOTRABALHO D, VINCULOPESSOAUSP V
         INNER JOIN AGPROGRAMA A ON V.codpes = A.codpes
         WHERE
         V.tipvin = 'ALUNOPOS'
@@ -30,8 +25,21 @@ class DevController extends Controller
         AND D.dtahomdpotrb IS NOT NULL
         ";
 
-        $bancas_aprovadas =  DB::fetchAll($query);
-
+        $resultado_query =  DB::fetchAll($query);
+        $count = 1;
+        $bancas_aprovadas = [];
+        
+        // VERIFICA SE OS ALUNOS RECUPERADOS NA CONSULTA JÁ ESTÃO IMPORTADOS
+        // SE SIM, ESSES ALUNOS JÁ IMPORTADOS NÃO SÃO MOSTRADOS
+        foreach($resultado_query as $aluno){
+            if(Agendamento::where('codpes', $aluno['codpes'])->first() == null
+            || Agendamento::where('data_homologacao_trabalho', $aluno['dtahomdpotrb'])->first() == null
+            || Agendamento::where('data_aprovacao_banca', $aluno['dtaaprbantrb'])->first() == null){
+                $bancas_aprovadas[$count] = $aluno;
+                $count++;
+            }
+        }
+        
         return view('dev.bancas_aprovadas',[
             'bancas_aprovadas' => $bancas_aprovadas
         ]);
@@ -40,7 +48,7 @@ class DevController extends Controller
     // Retorna os dados gerais do aluno com NUSP = $codpes
     private function get_dados_aluno($codpes){
         $query_dadosGerais = "
-        SELECT DISTINCT P.codpes, P.nompes, P.sexpes, A.codare, A.nivpgm, N.nomare
+        SELECT DISTINCT P.codpes, P.nompes, P.sexpes, A.codare, A.nivpgm, N.nomare, A.dtaaprbantrb
         FROM AGPROGRAMA AS A, PESSOA AS P, NOMEAREA AS N
         WHERE A.codpes = $codpes
         AND A.codpes = P.codpes
@@ -73,7 +81,7 @@ class DevController extends Controller
     // Retorna os dados do trabalho escrito do aluno com NUSP = $codpes
     private function get_dados_trabalho($codpes){
         $query_trabalho = "
-        SELECT A.codpes, R.tittrb, R.rsutrb, R.palcha
+        SELECT A.codpes, R.tittrb, R.rsutrb, R.palcha, D.dtahomdpotrb
         FROM AGPROGRAMA AS A, DDTENTREGATRABALHO AS R, DDTDEPOSITOTRABALHO AS D
         WHERE A.codpes = $codpes
         AND D.codpes = A.codpes
@@ -124,12 +132,16 @@ class DevController extends Controller
             'orientador_votante' => "Sim", 
             'sexo' => $dadosGerais[0]['sexpes'], 
             'nivel' => $dadosGerais[0]['nivpgm'], 
-            'titulo' => " ", 
+            'titulo' => $trabalho[0]['tittrb'], 
             'area_programa' => $dadosGerais[0]['codare'], 
             'data_horario' => null, 
             'sala' => " ", 
             'orientador' => $orientador[0]['codpes'], 
-            'nome_orientador' => $orientador[0]['nompes']
+            'nome_orientador' => $orientador[0]['nompes'],
+            'resumo' => $trabalho[0]['rsutrb'],
+            'palavras_chave' => $trabalho[0]['palcha'],
+            'data_homologacao_trabalho' => $trabalho[0]['dtahomdpotrb'],
+            'data_aprovacao_banca' => $dadosGerais[0]['dtaaprbantrb']
         );
 
        
