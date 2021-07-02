@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Agendamento;
 use Uspdev\Replicado\DB;
 use App\Models\Banca;
+use Carbon\Carbon;
 
 class DevController extends Controller
 {
@@ -140,8 +141,8 @@ class DevController extends Controller
             'nome_orientador' => $orientador[0]['nompes'],
             'resumo' => $trabalho[0]['rsutrb'],
             'palavras_chave' => $trabalho[0]['palcha'],
-            'data_homologacao_trabalho' => $trabalho[0]['dtahomdpotrb'],
-            'data_aprovacao_banca' => $dadosGerais[0]['dtaaprbantrb']
+            'data_homologacao_trabalho' => Carbon::parse($trabalho[0]['dtahomdpotrb'])->format('d/m/Y H:i'),
+            'data_aprovacao_banca' => Carbon::parse($trabalho[0]['dtaaprbantrb'])->format('d/m/Y H:i')
         );
 
        
