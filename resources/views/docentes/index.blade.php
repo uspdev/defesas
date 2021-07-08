@@ -75,7 +75,7 @@
                     </form>
                 </td>
                 <td>
-                    por: {{$pessoa::dump($docente->last_user)['nompes']}} em: {{Carbon\Carbon::parse($docente->updated_at)->format('d/m/Y')}}
+                    @if($pessoa::dump($docente->last_user))por: {{$pessoa::dump($docente->last_user)['nompes']}} em: {{Carbon\Carbon::parse($docente->updated_at)->format('d/m/Y')}}@endif
                 </td>
             </tr>
         @endforeach

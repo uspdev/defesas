@@ -109,7 +109,7 @@
 	<div style="margin-top:2cm;" align="center"> 
         Atenciosamente,<br>  
         <b>
-            {{Auth::user()->name}} - Defesas de Mestrado e Doutorado da {{$pessoa::cracha(Auth::user()->codpes)['nomorg']}}/USP 
+            {{Auth::user()->name}} @if($pessoa::cracha(Auth::user()->codpes)) - Defesas de Mestrado e Doutorado da {{$pessoa::cracha(Auth::user()->codpes)['nomorg']}}/USP @endif 
         </b>
     </div> 
     <div id="footer">
