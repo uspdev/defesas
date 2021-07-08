@@ -37,6 +37,15 @@ $right_menu = [
         'target' => '_blank',
         'url' => config('app.url') . '/configs',
         'align' => 'right',
+        'can'   => 'admin'
+    ],
+    [
+        'text' => '<i class="fas fa-hard-hat"></i>',
+        'title' => 'logs',
+        'target' => '_blank',
+        'url' => config('app.url') . '/logs',
+        'align' => 'right',
+        'can'   => 'admin'
     ],
 ];
 
