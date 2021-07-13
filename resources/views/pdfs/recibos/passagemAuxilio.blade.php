@@ -58,7 +58,7 @@
       <b> 
         {{Auth::user()->name}} <br>
         {{Auth::user()->codpes}}
-        <br> SPG-{{$pessoa::cracha(Auth::user()->codpes)['nomorg']}}-USP 
+        <br> @if($pessoa::cracha(Auth::user()->codpes)) SPG-{{$pessoa::cracha(Auth::user()->codpes)['nomorg']}}-USP @endif 
       </b> 
       </p>
     </center>

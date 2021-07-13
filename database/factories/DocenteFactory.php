@@ -47,11 +47,11 @@ class DocenteFactory extends Factory
             'agencia' => '',
             'c_corrente' => '',
             'telefone' => $telefones,
-            'lotado' => Pessoa::cracha($docente)['nomorg'],
+            'lotado' => 'FFLCH',
             'email' => $emails,
             'status' => 'B',
             'docente_usp' => 'sim',
-            'last_user' => 1,
+            'last_user' => 5385361,
         ];
     }
 }

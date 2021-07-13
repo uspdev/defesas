@@ -110,7 +110,7 @@
     <b> 
 		  {{Auth::user()->name}}
       <br> 
-      Serviço de Pós-Graduação - {{$pessoa::cracha(Auth::user()->codpes)['nomorg']}}/USP  
+      Serviço de Pós-Graduação - @if($pessoa::cracha(Auth::user()->codpes)) {{$pessoa::cracha(Auth::user()->codpes)['nomorg']}}/USP @endif 
 		</b>
   </p>
 @endsection('content')

@@ -108,7 +108,7 @@
     </div>
 
     <br><br>
-	<div class="oficioSuplente">Sr(a). Prof(a). {{$pessoa::dump($professor->codpes)['nompes']}} </div>
+	<div class="oficioSuplente">Sr(a). Prof(a). @if($pessoa::dump($professor->codpes)) {{$pessoa::dump($professor->codpes)['nompes']}} @else Professor não cadastrado no sistema Pessoas @endif </div>
 
     <div style="text-align:justify;">            
         {!! $configs->oficio_suplente !!}
@@ -116,7 +116,7 @@
 	<div style="margin-top:2cm;" align="center"> 
         Atenciosamente,<br>  
 		<b>
-			{{Auth::user()->name}} - Defesas de Mestrado e Doutorado da {{$pessoa::cracha(Auth::user()->codpes)['nomorg']}}/USP 
+        {{Auth::user()->name}} @if($pessoa::cracha(Auth::user()->codpes)) - Defesas de Mestrado e Doutorado da {{$pessoa::cracha(Auth::user()->codpes)['nomorg']}}/USP @endif 
 		</b>
     </div> 
     <div id="footer">
