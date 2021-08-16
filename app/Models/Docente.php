@@ -66,11 +66,4 @@ class Docente extends Model
         return $agendamentos;
     }
 
-    public static function dump($codpes){
-        $result = Docente::where('n_usp', '=', $codpes)->first();
-        if($result != null){
-            return $result;
-        }
-        return false;
-    }
 }

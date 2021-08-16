@@ -18,6 +18,13 @@
 
 <div class="form-group row">
 	<div class="form-group col-sm">
+		<label class="config" for="footer">Footer (Invite and Statement)</label>  
+		<textarea rows="10" class="form-control" cols="70" name="footer">{{$config->footer}}</textarea>
+	</div>
+</div>
+
+<div class="form-group row">
+	<div class="form-group col-sm">
 		<label class="config" for="importante_oficio">Mensagem Importante no Ofício dos titulares</label>  
 		<textarea rows="10" class="form-control" cols="70" name="importante_oficio">{{$config->importante_oficio}}</textarea>
 	</div>
@@ -43,6 +50,14 @@
 		<label class="config" for="declaracao">Declaração de participação</label>  
 		<textarea rows="10" class="form-control" cols="70" name="declaracao">{{$config->declaracao}}</textarea>
 		<span class="badge badge-warning">Token de substituição: %docente_nome, %nivel, %candidato_nome, %titulo, %area, %orientador </span> 
+	</div>
+</div>
+
+<div class="form-group row">
+	<div class="form-group col-sm">
+		<label class="config" for="statement">Statement of Participation</label>  
+		<textarea rows="10" class="form-control" cols="70" name="statement">{{$config->statement}}</textarea>
+		<span class="badge badge-warning">Token de substituição: %docente_nome, %nivel, %candidato_nome, %titulo, %area, %orientador, %data </span> 
 	</div>
 </div>
 

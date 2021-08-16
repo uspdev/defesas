@@ -14,8 +14,10 @@
                         <th>Tipo</th>
                         @can('admin')
                             <th>Ofícios titulares</th>
+                            <th>Invite</th>
                             <th>Ofícios suplentes</th>
                             <th>Declaração de participação</th>
+                            <th>Statement of Participation</th>
                             <th colspan="2">Ações</th>
                         @endcan
                     </tr>
@@ -36,6 +38,13 @@
                                 @endif
                             </td>
                             <td>
+                                @if($banca->tipo == 'Titular')
+                                    <a href="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->id}}/invite" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
+                                @else
+                                    #
+                                @endif
+                            </td>
+                            <td>
                                 @if($banca->tipo == 'Suplente')
                                     <a href="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->id}}/suplente" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
                                 @else
@@ -44,6 +53,9 @@
                             </td>
                             <td>
                                 <a href="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->id}}/declaracao" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
+                            </td>
+                            <td>
+                                <a href="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->id}}/statement" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
                             </td>
                             <td>
                                 <form method="POST" class="form-group" action="/bancas/{{$banca->id}}">

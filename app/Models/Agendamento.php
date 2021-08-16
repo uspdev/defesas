@@ -82,8 +82,8 @@ class Agendamento extends Model
     }
 
     public static function dadosProfessor($codpes){
-        $dados = Docente::dump($codpes);
-        if($dados){
+        $dados = Docente::where('n_usp', '=', $codpes)->first();
+        if($dados != null){
             return $dados;
         }
         return new Docente;

@@ -37,6 +37,14 @@
                 </tr>
                 <tr>
                     <td>
+                        Invites
+                    </td>
+                    <td>
+                        <a href="/agendamentos/{{$agendamento->id}}/invites" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         Ofício suplentes
                     </td>
                     <td>
@@ -49,6 +57,14 @@
                     </td>
                     <td>
                         <a href="/agendamentos/{{$agendamento->id}}/declaracoes" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Statements of Participations
+                    </td>
+                    <td>
+                        <a href="/agendamentos/{{$agendamento->id}}/statements" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
                     </td>
                 </tr>
                 <tr>

@@ -28,7 +28,7 @@ class PdfController extends Controller
             $pdf = PDF::loadView('pdfs.documentos_gerais.placa', compact('agendamento'))->setPaper('a4', 'landscape');
             return $pdf->download('placa.pdf');
         }
-        elseif($tipo == 'titulares'){
+        elseif($tipo == 'titulares' or $tipo == 'invites'){
             $professores = Banca::where('agendamento_id',$agendamento->id)->where('tipo', 'Titular')->get();
             $bancas = $professores;
             $pdf = PDF::loadView("pdfs.documentos_gerais.$tipo", compact(['agendamento','professores','configs','bancas']));
@@ -54,17 +54,20 @@ class PdfController extends Controller
         $this->authorize('admin');
         $agendamento->formatDataHorario($agendamento);
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
-        if($tipo == 'titular' or $tipo == 'declaracao'){
+        if($tipo == 'titular' or $tipo == 'declaracao' or $tipo == 'invite' or $tipo == 'statement'){
             $professores = Banca::where('agendamento_id',$agendamento->id)->where('tipo', 'Titular')->get();
             $professor = $banca;
             if($tipo == 'declaracao'){
                 $configs = Config::setConfigDeclaracao($agendamento,$professores,$professor);
             }
+            elseif($tipo == 'statement'){
+                $configs = Config::setConfigStatement($agendamento,$professores,$professor);
+            }
             else{
                 $configs = Config::orderbyDesc('created_at')->first();
             }
             $pdf = PDF::loadView("pdfs.documentos_bancas.$tipo", compact(['agendamento','professores','professor','configs']));
-            $docente = Docente::dump($banca->codpes);
+            $docente = Docente::where('n_usp', '=', $banca->codpes)->first();
             if($docente == null){
                 $nome = 'Professor';
             }
@@ -77,7 +80,7 @@ class PdfController extends Controller
             $configs = Config::setConfigOficioSuplente($agendamento);
             $professor = $banca;
             $pdf = PDF::loadView("pdfs.documentos_bancas.$tipo", compact(['agendamento','professor','configs']));
-            $docente = Docente::dump($banca->codpes);
+            $docente = Docente::where('n_usp', '=', $banca->codpes)->first();
             if($docente == null){
                 $nome = 'Professor';
             }
@@ -96,7 +99,7 @@ class PdfController extends Controller
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         $configs = Config::orderbyDesc('created_at')->first();
         $pdf = PDF::loadView("pdfs.recibos.proex", compact(['agendamento','banca','dados','configs']));
-        $docente = Docente::dump($banca->codpes);
+        $docente = Docente::where('n_usp', '=', $banca->codpes)->first();
         if($docente == null){
             $nome = 'Professor';
         }
@@ -114,7 +117,7 @@ class PdfController extends Controller
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         $configs = Config::orderbyDesc('created_at')->first();
         $pdf = PDF::loadView("pdfs.recibos.proap", compact(['agendamento','banca','dados','configs']));
-        $docente = Docente::dump($banca->codpes);
+        $docente = Docente::where('n_usp', '=', $banca->codpes)->first();
         if($docente == null){
             $nome = 'Professor';
         }
@@ -132,7 +135,7 @@ class PdfController extends Controller
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         $configs = Config::orderbyDesc('created_at')->first();
         $pdf = PDF::loadView("pdfs.recibos.passagem", compact(['agendamento','banca','dados','configs']));
-        $docente = Docente::dump($banca->codpes);
+        $docente = Docente::where('n_usp', '=', $banca->codpes)->first();
         if($docente == null){
             $nome = 'Professor';
         }
@@ -149,7 +152,7 @@ class PdfController extends Controller
         $agendamento->formatDataHorario($agendamento);
         $configs = Config::orderbyDesc('created_at')->first();
         $pdf = PDF::loadView("pdfs.recibos.passagemAuxilio", compact(['agendamento','banca','dados','configs']));
-        $docente = Docente::dump($banca->codpes);
+        $docente = Docente::where('n_usp', '=', $banca->codpes)->first();
         if($docente == null){
             $nome = 'Professor';
         }
