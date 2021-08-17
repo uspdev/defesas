@@ -88,7 +88,7 @@
                     <th>Título</th>
                     <th>Candidato(a)</th>
                     <th>Nível</th>
-                    <th>Programa/Área</th>
+                    <th>Programa</th>
                     <th>Orientador</th>
                     <th>Local</th>
                     <th>Banca</th>

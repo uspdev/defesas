@@ -103,7 +103,7 @@
             Graduate Studies Services of University of São Paulo, {{Carbon\Carbon::parse($agendamento->data_horario)->format('F jS\, Y')}}    
         </div><br>
         <div id="footer">
-            {!! $configs->rodape_oficios !!}
+            {!! $configs->footer !!}
         </div>
         <p style="page-break-before: always">&nbsp;</p>
     @endforeach

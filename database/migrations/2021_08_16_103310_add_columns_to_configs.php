@@ -16,6 +16,10 @@ class AddColumnsToConfigs extends Migration
         Schema::table('configs', function (Blueprint $table) {
             $table->text('statement')->nullable();
             $table->text('footer')->nullable();
+            $table->text('mail_dados_prof_externo')->nullable();
+            $table->text('mail_passagem')->nullable();
+            $table->text('mail_pro_labore')->nullable();
+            $table->text('mail_recibo_externo')->nullable();
         });
     }
 

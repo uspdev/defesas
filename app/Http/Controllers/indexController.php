@@ -31,7 +31,7 @@ class indexController extends Controller
         return view('index')->with('agendamentos',$agendamentos);
     }
 
-    public function anteriores(Request $request){
+    public function exibirDefesasAnteriores(Request $request){
         $query = Agendamento::join('docentes', 'docentes.n_usp', '=', 'agendamentos.orientador')->where('data_horario','<',date('Y-m-d H:i:s'))->orderBy('data_horario', 'desc')->select('agendamentos.*');
         if($request->nivel != '' and $request->busca_nivel != '') {
             $query->where('agendamentos.nivel', '=', $request->busca_nivel);

@@ -121,4 +121,27 @@ class Config extends Model
         );
         return $configs;
     }
+
+    public static function configMailDadosProfExterno($docente){
+        $configs = Config::orderbyDesc('created_at')->first();
+        $endereco = $docente['endereco']." ".$docente['bairro']." CEP:".$docente['cep']." ".$docente['cidade']."/".$docente['estado'];
+        $configs['mail_dados_prof_externo'] = str_replace(
+            ["%docente","%endereco", "%telefones"], 
+            [$docente['nome'], $endereco, $docente['telefone']], 
+            $configs['mail_dados_prof_externo']
+        );
+        return $configs['mail_dados_prof_externo'];
+    }
+
+    public static function configMailPassagem(){
+
+    }
+
+    public static function configMailProLabore(){
+
+    }
+
+    public static function configMailReciboExterno(){
+        
+    }
 }

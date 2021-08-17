@@ -69,8 +69,26 @@ class Agendamento extends Model
 
     //Função para devolver valores de select
     public static function programaOptions(){
-        //Em vez de usar a função do Uspdev, para facilitação foi criada uma personalizada no Utils que varre o array e disponibiliza apenas os códigos da área e seus nomes
-        return ReplicadoUtils::areasProgramas();
+        $programas = Posgraduacao::areasProgramas();
+        foreach($programas as $programa){
+            foreach($programa as $p){
+                $programas_pos[] = [
+                    "codare" => $p['codare'],
+                    "nomare" => $p['nomare'],
+                ];
+            }
+        }
+        return $programas_pos;
+    }
+
+    public static function devolverCodProgramas(){
+        $programas = Posgraduacao::areasProgramas();
+        foreach($programas as $programa){
+            foreach($programa as $p){
+                $cod_programas_pos[] = $p['codare'];
+            }
+        }
+        return $cod_programas_pos;
     }
 
     //Função para devolver valores de select

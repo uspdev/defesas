@@ -46,6 +46,10 @@ class ConfigRequest extends FormRequest
             'obs_passagem' => 'required',
             'header_auxilio' => 'required',
             'capes_proap' => 'required',
+            'mail_dados_prof_externo' => 'required',
+            'mail_passagem' => 'required',
+            'mail_pro_labore' => 'required',
+            'mail_recibo_externo' => 'required',
         ];
     }
 }

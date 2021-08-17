@@ -136,6 +136,34 @@
 	</div>
 </div>
 
+<div class="form-group row">
+	<div class="form-group col-sm">
+		<label class="config" for="mail_dados_prof_externo"> Mensagem de Email para Confirmação de Dados de Professor Externo </label>  
+		<textarea rows="10" class="form-control" cols="70" name="mail_dados_prof_externo">{{$config->mail_dados_prof_externo}}</textarea>
+	</div>
+</div>
+
+<div class="form-group row">
+	<div class="form-group col-sm">
+		<label class="config" for="mail_passagem"> Mensagem de Email para Passagem </label>  
+		<textarea rows="10" class="form-control" cols="70" name="mail_passagem">{{$config->mail_passagem}}</textarea>
+	</div>
+</div>
+
+<div class="form-group row">
+	<div class="form-group col-sm">
+		<label class="config" for="mail_pro_labore"> Mensagem de Email para Pró-Labore </label>  
+		<textarea rows="10" class="form-control" cols="70" name="mail_pro_labore">{{$config->mail_pro_labore}}</textarea>
+	</div>
+</div>
+
+<div class="form-group row">
+	<div class="form-group col-sm">
+		<label class="config" for="mail_recibo_externo"> Mensagem de Email para Recibo Externo </label>  
+		<textarea rows="10" class="form-control" cols="70" name="mail_recibo_externo">{{$config->mail_recibo_externo}}</textarea>
+	</div>
+</div>
+
 <div class="form-group">
     <button type="submit" class="btn btn-success float-right">Salvar</button> 
 </div> 

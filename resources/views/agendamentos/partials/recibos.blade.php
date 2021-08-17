@@ -14,25 +14,23 @@
         </thead>
         <tbody>
             @foreach($agendamento->bancas as $banca)
-                @if($replicado::verificaprofessorExterno($banca->codpes) == true)
-                    <tr>
-                        <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->id}}/recibos/reciboExterno" class="form-group" method="POST">
-                            @csrf
-                            <td>{{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}</td>
-                            <td> <input type="text" class="datepicker form-control" size="7" autocomplete="off" name="ida"> </td>
-                            <td> <input type="text" class="datepicker form-control" size="7" autocomplete="off" name="volta"> </td>
-                            <td> <input type="text" class="form-control" size="7" name="origem"> </td>
-                            <td> 	
-                                <select name="diaria" class="form-control"> 
-                                    <option value="diaria_simples" selected="selected"> Simples </option>
-                                    <option value="diaria_completa"> Completa </option>
-                                    <option value="duas_diarias"> 2 diárias </option>
-                                </select>
-                            </td>
-                            <td> <button type="submit" class="btn btn-primary" @if($agendamento->dadosProfessor($banca->codpes) == null) disabled @endif><b>Visualizar E-mail</b></button></td>
-                        </form>
-                    </tr>
-                @endif
+                <tr>
+                    <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->id}}/recibos/exibir_recibo_externo" class="form-group" method="POST">
+                        @csrf
+                        <td>{{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}</td>
+                        <td> <input type="text" class="datepicker form-control" size="7" autocomplete="off" name="ida"> </td>
+                        <td> <input type="text" class="datepicker form-control" size="7" autocomplete="off" name="volta"> </td>
+                        <td> <input type="text" class="form-control" size="7" name="origem"> </td>
+                        <td> 	
+                            <select name="diaria" class="form-control"> 
+                                <option value="diaria_simples" selected="selected"> Simples </option>
+                                <option value="diaria_completa"> Completa </option>
+                                <option value="duas_diarias"> 2 diárias </option>
+                            </select>
+                        </td>
+                        <td> <button type="submit" class="btn btn-primary" @if($agendamento->dadosProfessor($banca->codpes) == null) disabled @endif><b>Visualizar E-mail</b></button></td>
+                    </form>
+                </tr>
             @endforeach
         </tbody>
     </table>
@@ -54,9 +52,8 @@
             </thead>
             <tbody>
                 @foreach($agendamento->bancas as $banca)
-                    @if($replicado::verificaprofessorExterno($banca->codpes) == true)    
                     <tr>
-                        <form class="form-group" action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->id}}/recibos/proex" method="POST">
+                        <form class="form-group" action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->id}}/proex" method="POST">
                             @csrf
                             <td> {{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}} </td>
                             <td><input type="text" class="form-control" size="4" name="importancia"></td>
@@ -68,7 +65,6 @@
                             <td><button type="submit" class="btn btn-primary" @if($agendamento->dadosProfessor($banca->codpes) == null) disabled @endif><b>Gerar Documento</b></button></td>
                         </form>
                     </tr>
-                    @endif
                 @endforeach
             </tbody>	
         </table>
@@ -93,22 +89,20 @@
             </thead>
             <tbody>
                 @foreach($agendamento->bancas as $banca)
-                    @if($replicado::verificaprofessorExterno($banca->codpes) == true)    
-                        <tr>
-                            <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->id}}/recibos/proap" class="form-group" method="POST">
-                                @csrf
-                                <td>{{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}</td>
-                                <td><input type="text" class="form-control" size="1" name="ano"></td>
-                                <td><input type="text" class="form-control" size="1" name="diaria_proap"></td>
-                                <td><input type="text" class="form-control" size="6" name="origem"></td>
-                                <td><input type="text" class="form-control datepicker" size="6" name="chegada"></td>
-                                <td><input type="text" class="form-control datepicker" size="6" name="saida"></td>
-                                <td><input type="text" class="form-control" size="2" name="valor_proap"></td>
-                                <td><input type="text" class="form-control" size="5" name="extenso"></td>
-                                <td><button type="submit" size="4" class="btn btn-primary" @if($agendamento->dadosProfessor($banca->codpes) == null) disabled @endif><b>Gerar Documento</b></button></td>
-                            </form>
-                        </tr>
-                    @endif
+                    <tr>
+                        <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->id}}/proap" class="form-group" method="POST">
+                            @csrf
+                            <td>{{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}</td>
+                            <td><input type="text" class="form-control" size="1" name="ano"></td>
+                            <td><input type="text" class="form-control" size="1" name="diaria_proap"></td>
+                            <td><input type="text" class="form-control" size="6" name="origem"></td>
+                            <td><input type="text" class="form-control datepicker" size="6" name="chegada"></td>
+                            <td><input type="text" class="form-control datepicker" size="6" name="saida"></td>
+                            <td><input type="text" class="form-control" size="2" name="valor_proap"></td>
+                            <td><input type="text" class="form-control" size="5" name="extenso"></td>
+                            <td><button type="submit" size="4" class="btn btn-primary" @if($agendamento->dadosProfessor($banca->codpes) == null) disabled @endif><b>Gerar Documento</b></button></td>
+                        </form>
+                    </tr>
                 @endforeach
             </tbody>	
         </table>
@@ -130,19 +124,17 @@
             </thead>
             <tbody>
                 @foreach($agendamento->bancas as $banca)
-                    @if($replicado::verificaprofessorExterno($banca->codpes) == true)
-                        <tr>
-                            <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->id}}/recibos/passagem" class="form-group" method="POST">
-                                @csrf
-                                <td>{{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}</td>
-                                <td><input  type="text" class="form-control" size="6" name="ida"></td>
-                                <td><input type="text" class="form-control" size="6" name="volta"></td>
-                                <td><input  type="text" class="form-control" size="6" name="trajeto"></td>
-                                <td><input type="text" class="form-control" size="6" name="requisicao"></td>
-                                <td><button type="submit" size="4" class="btn btn-primary" @if($agendamento->dadosProfessor($banca->codpes) == null) disabled @endif><b>Gerar documento</b></button></td>
-                            </form>
-                        </tr>
-                    @endif
+                    <tr>
+                        <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->id}}/passagem" class="form-group" method="POST">
+                            @csrf
+                            <td>{{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}</td>
+                            <td><input  type="text" class="form-control" size="6" name="ida"></td>
+                            <td><input type="text" class="form-control" size="6" name="volta"></td>
+                            <td><input  type="text" class="form-control" size="6" name="trajeto"></td>
+                            <td><input type="text" class="form-control" size="6" name="requisicao"></td>
+                            <td><button type="submit" size="4" class="btn btn-primary" @if($agendamento->dadosProfessor($banca->codpes) == null) disabled @endif><b>Gerar documento</b></button></td>
+                        </form>
+                    </tr>
                 @endforeach
             </tbody>	
         </table>
@@ -164,19 +156,17 @@
             </thead>
             <tbody>
                 @foreach($agendamento->bancas as $banca)
-                    @if($replicado::verificaprofessorExterno($banca->codpes) == true)
-                        <tr>
-                            <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->id}}/recibos/passagemAuxilio" class="form-group" method="POST">
-                                @csrf
-                                <td>{{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}</td>
-                                <td><input  type="text" size="6" class="form-control datepicker" name="partida"></td>
-                                <td><input  type="text" size="6" class="form-control datepicker" name="retorno"></td>
-                                <td><input  type="text" size="6" class="form-control" name="itinerario"></td>
-                                <td><input type="text" size="6" class="form-control"name="processo"></td>
-                                <td><button type="submit" size="4" class="btn btn-primary" @if($agendamento->dadosProfessor($banca->codpes) == null) disabled @endif><b>Gerar Documento</b></button></td>
-                            </form>
-                        </tr>
-                    @endif
+                    <tr>
+                        <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->id}}/auxilio_passagem" class="form-group" method="POST">
+                            @csrf
+                            <td>{{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}</td>
+                            <td><input  type="text" size="6" class="form-control datepicker" name="partida"></td>
+                            <td><input  type="text" size="6" class="form-control datepicker" name="retorno"></td>
+                            <td><input  type="text" size="6" class="form-control" name="itinerario"></td>
+                            <td><input type="text" size="6" class="form-control"name="processo"></td>
+                            <td><button type="submit" size="4" class="btn btn-primary" @if($agendamento->dadosProfessor($banca->codpes) == null) disabled @endif><b>Gerar Documento</b></button></td>
+                        </form>
+                    </tr>
                 @endforeach
             </tbody>
         </table>
@@ -194,15 +184,13 @@
         </thead>
         <tbody>
             @foreach($agendamento->bancas as $banca)
-                @if($replicado::verificaprofessorExterno($banca->codpes) == true)
-                    <tr>
-                        <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->id}}/recibos/emailDocente" class="form-group" method="POST">
-                            @csrf 
-                            <td>{{ $agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}</td>
-                            <td><button type="submit" size="4" class="btn btn-primary" @if($agendamento->dadosProfessor($banca->codpes) == null) disabled @endif><b>Visualizar E-mail</b></button></td>
-                        </form> 
-                    </tr>
-                @endif
+                <tr>
+                    <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->id}}/recibos/exibir_email_docente" class="form-group" method="POST">
+                        @csrf 
+                        <td>{{ $agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}</td>
+                        <td><button type="submit" size="4" class="btn btn-primary" @if($agendamento->dadosProfessor($banca->codpes) == null) disabled @endif><b>Visualizar E-mail</b></button></td>
+                    </form> 
+                </tr>
             @endforeach
         </tbody>
     </table>	
