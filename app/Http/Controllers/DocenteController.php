@@ -22,17 +22,19 @@ class DocenteController extends Controller
         $this->authorize('admin');
         $query = Docente::orderBy('nome','asc');
         if($request->filtro_busca == 'docente_usp') {
-            $query = $query->where('docente_usp', '=', 'Sim');
+            $query->where('docente_usp', '=', 'Sim');
         }
         elseif($request->filtro_busca == 'docente_ext'){
-            $query = $query->where('docente_usp', '=', 'Não');
+            $query->where('docente_usp', '=', 'Não');
         }
-
         if($request->busca != null){
-            $query = $query->where('nome', 'LIKE', "%$request->busca%");
+            $query->where(function($query) use($request){
+                $query->orWhere('nome', 'LIKE', "%$request->busca%");
+                $query->orWhere('n_usp', '=', "$request->busca");
+                $query->orWhere('cpf', '=', "$request->busca");
+                $query->orWhere('documento', '=', "$request->busca");
+            });
         }
-        //dd($query->toSql());
-        //$docentes = $query->orderBy('nome','asc')->paginate(30);
         $docentes = $query->paginate(50);
         if ($docentes->count() == null) {
             $request->session()->flash('alert-danger', 'Não há registros!');
