@@ -12,7 +12,7 @@
     @include('flash')
 
     <div class="card">
-        <div class="card-header">Registrar Agendamento de Defesa</div>
+        <div class="card-header"><b>Registrar Agendamento de Defesa</b></div>
         <div class="card-body">
             <form action="/agendamentos" method="POST">
                 @csrf

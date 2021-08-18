@@ -7,7 +7,7 @@ $submenu1 =  [
         'url'  => '/agendamentos/create',
     ],
     [
-        'text' => '<i class="fas fa-list-alt"></i> Listar Defesas',
+        'text' => '<i class="fas fa-list-alt"></i> Listar Agendamentos',
         'url'  => '/agendamentos',
     ],
 ];
@@ -20,6 +20,17 @@ $submenu2 =  [
     [
         'text' => '<i class="fas fa-list-alt"></i> Listar Docentes',
         'url'  => '/docentes',
+    ],
+];
+
+$submenu3 =  [
+    [
+        'text' => '<i class="fas fa-forward"></i> Listar Próximas Defesas',
+        'url'  => '/',
+    ],
+    [
+        'text' => '<i class="fas fa-certificate"></i> Listar Defesas Anteriores',
+        'url'  => '/anteriores',
     ],
 ];
 
@@ -57,6 +68,10 @@ return [
     'logout_url' => config('app.url') . '/logout',
     'login_url' => config('app.url') . '/login',
     'menu' => [
+        [
+            'text'    => '<i class="fas fa-graduation-cap"></i> Defesas',
+            'submenu' => $submenu3,
+        ],
         [
             'text'    => '<i class="fas fa-calendar-alt"></i> Agendamentos',
             'submenu' => $submenu1,

@@ -197,8 +197,8 @@ class ConfigSeeder extends Seeder
             <br>
             <p>Tendo em vista sua indicação como membro titular de banca de desta faculdade, peço-lhe, por favor, que confirme os dados abaixo para envio da dissertação / tese: </p>
             <br>
-            <p>Endereço: </p>
-            <p>Telefones (residencial e celular): </p>
+            <p>Endereço: %endereco </p>
+            <p>Telefones (residencial e celular): %telefones </p>
             <br>
             <p>Desde já lhe agradeço e aguardo o retorno.</p>',
             'mail_passagem' => '<p>Prezado(a) Prof.(a) Dr.(a): %docente </p><br>
@@ -264,20 +264,19 @@ class ConfigSeeder extends Seeder
             <br>',
             'mail_pro_labore' => "<p>Candidato(a): <b> %candidato </b> </p>
             <p>Programa: <b> %programa </b> / <b>Departamento de %departamento </b> </p>
-            @php(setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese'))
             <p> Data da defesa:<b> %datahora </b> </p>
             <br>
             Item(s):
             <p>Prof. Dr. %docente </p>
-            <p>Número USP: %docentenusp </p>
-            <p>PIS/PASEP: %docentepispasep} </p> 
+            <p>Número USP: %nusp </p>
+            <p>PIS/PASEP: %pispasep </p> 
             <br>",
             'mail_recibo_externo' => '<p><b>Nome:</b> %docente </p> 
-            <p><b>N° USP:</b> %docentenusp </p> 
-            <p><b>Origem:</b> %dadosorigem </p> 
-            <p><b>Ida:</b> %dadosida </p> 
-            <p><b>Volta:</b> %dadosvolta </p> 
-            <p><b>E-mail:</b> %docenteemail
+            <p><b>N° USP:</b> %nusp </p> 
+            <p><b>Origem:</b> %origem </p> 
+            <p><b>Ida:</b> %ida </p> 
+            <p><b>Volta:</b> %volta </p> 
+            <p><b>E-mail:</b> %email
             </p><br>
             <p>Banca de <b> %programa / %nivel </b> </p>
             <p>Do(a) aluno(a) <b> %candidato </b> </p>

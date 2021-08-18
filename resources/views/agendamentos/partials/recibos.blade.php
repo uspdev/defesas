@@ -1,5 +1,5 @@
 
-<div class="card">
+<div class="card" style="margin-bottom: 0.5em;">
     <div class="card-header"><b>Recibo de diária para docentes externos</b></div>
     <table class="table table-striped" style="text-align:center;">
         <thead class="thead-light">
@@ -35,8 +35,7 @@
         </tbody>
     </table>
 </div>
-<br>
-<div class="card">
+<div class="card" style="margin-bottom: 0.5em;">
     <div class="card-header"><b>PROEX</b></div>
         <table class="table table-striped" style="text-align:center;">
             <thead class="thead-light">
@@ -70,8 +69,7 @@
         </table>
     </form>
 </div>
-<br>
-<div class="card">
+<div class="card" style="margin-bottom: 0.5em;">
     <div class="card-header"><b>Recibo de diárias - PROAP</b></div>
         <table class="table table-striped" style="text-align:center;">
             <thead class="thead-light">
@@ -108,8 +106,7 @@
         </table>
     </form>
 </div>
-<br>
-<div class="card">
+<div class="card" style="margin-bottom: 0.5em;">
     <div class="card-header"><b>Requisição de passagem aérea</b></div>
         <table class="table table-striped" style="text-align:center;">
             <thead class="thead-light">
@@ -140,8 +137,7 @@
         </table>
     </form>
 </div>
-<br>
-<div class="card">
+<div class="card" style="margin-bottom: 0.5em;">
 <div class="card-header"><b>Passagem aérea - Compra via auxílio</b></div>
         <table class="table table-striped" style="text-align:center;">
             <thead class="thead-light">
@@ -172,7 +168,6 @@
         </table>
     </form>
 </div>
-<br>
 <div class="card">
 <div class="card-header"><b>E-mails para docente</b></div>
     <table class="table table-striped" style="text-align:center;">

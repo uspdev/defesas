@@ -6,26 +6,15 @@
 
 @section('content')
     @include('flash')
-    
-    <div class="row">
-        <div class="col-sm">
-            <a href="/anteriores" class="float-right"><h3>Defesas anteriores</h3></a>
-        </div>
-    </div>
     @inject('replicado','App\Utils\ReplicadoUtils')
     @inject('pessoa','Uspdev\Replicado\Pessoa')
-    <br>
     <div class="card">
-        <div class="card-header"><h5><b>Pesquisa</b></h5></div>
+        <div class="card-header"><h5><b>Próximas Defesas</b></h5></div>
         <div class="card-body">
             <form method="GET" action="/">
                 <label><b>Filtros:</b></label><br>
-                <div class="row form-group" style="margin-top:0em; margin-bottom:0em;">
-                    <div class="col-1 form-check" style="margin-left:1em; margin-bottom:0em; margin-top:0.35em;">
-                        <input type="checkbox" class="form-check-input" name="programa" id="programa" autocomplete="off" @if(Request()->programa == 'on') checked @endif> 
-                        <label class="form-check-label" for="programa">Programa/Área</label>
-                    </div>
-                    <div class="col-4 form-group" id="busca_programa"  @if(Request()->programa == '') style="display:none; margin-bottom:0em; margin-top:0em;" @else style="margin-bottom:0em; margin-top:0em;" @endif> 
+                <div class="row">
+                    <div class="col-3" id="busca_programa" > 
                         <select class="form-control" name="busca_programa">
                             <option value="" selected="">- Todos os programas -</option>
                             @foreach (App\Models\Agendamento::programaOptions() as $option)
@@ -43,13 +32,7 @@
                             @endforeach
                         </select>
                     </div>
-                </div>
-                <div class="row form-group" style="margin-top:0em;">
-                    <div class="col-1 form-check" style="margin-left:1em; margin-bottom:0em; margin-top:0.35em;">
-                        <input type="checkbox" class="form-check-input" name="nivel" id="nivel" autocomplete="off" @if(Request()->nivel == 'on') checked @endif> 
-                        <label class="form-check-label" for="nivel">Nível</label>
-                    </div>
-                    <div class="col-4 form-group" id="busca_nivel"  @if(Request()->nivel == '') style="display:none; margin-bottom:0em; margin-top:0em;" @else style="margin-bottom:0em; margin-top:0em;" @endif> 
+                    <div class="col-auto" id="busca_nivel"> 
                         <select class="form-control" name="busca_nivel">
                             <option value="" selected="">- Escolha o nível -</option>
                             @foreach (App\Models\Agendamento::nivelOptions() as $option)
@@ -67,9 +50,7 @@
                             @endforeach
                         </select>
                     </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col-sm form-group">
+                    <div class="col-sm">
                         <input type="text" class="form-control" name="busca" placeholder="Digite o nome do candidato, nome do orientador ou o título da tese" value="{{Request()->busca}}">
                     </div>
                     <div class="col-auto">
@@ -79,9 +60,7 @@
             </form>
         </div>
     </div>
-    <br>
     <div class="card">
-        <div class="card-header"><h2>Próximas defesas</h2></div>
         <table class="table table-striped" style="text-align:center;">
             <theader>
                 <tr>

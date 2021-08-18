@@ -112,9 +112,9 @@ class AgendamentoController extends Controller
         return redirect('/agendamentos');
     }
 
-    public function enviarEmailReciboExterno(Agendamento $agendamento, Config $configs, Docente $docente, Request $request){
+    public function enviarEmailReciboExterno(Agendamento $agendamento, Docente $docente, Request $request){
         $this->authorize('admin');
-        Mail::send(new ReciboExternoMail($agendamento, $configs, $docente, $request));
+        Mail::send(new ReciboExternoMail($agendamento, $docente, $request));
         return redirect('/agendamentos/'.$agendamento->id);
     }
 

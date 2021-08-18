@@ -36,7 +36,7 @@ Route::post('/agendamentos/{agendamento}/bancas/{banca}/recibos/exibir_recibo_ex
 Route::post('/agendamentos/{agendamento}/bancas/{banca}/recibos/exibir_email_docente',[EmailController::class, 'exibirEmailDocente']);
 
 //Rota para envio de e-mails
-Route::post('agendamentos/recibo_externo/{agendamento}/{configs}/{docente}', [AgendamentoController::class,'enviarEmailReciboExterno']);
+Route::post('agendamentos/recibo_externo/{agendamento}/{docente}', [AgendamentoController::class,'enviarEmailReciboExterno']);
 Route::post('agendamentos/pro_labore/{agendamento}/{docente}', [AgendamentoController::class,'enviarEmailProLabore']);
 Route::post('agendamentos/passagem/{agendamento}/{banca}', [AgendamentoController::class,'enviarEmailPassagem']);
 Route::post('agendamentos/dados_prof_externo/{agendamento}/{banca}', [AgendamentoController::class,'enviarEmailDeConfirmacaoDadosProfExterno']);

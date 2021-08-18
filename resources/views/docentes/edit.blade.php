@@ -6,10 +6,9 @@
 
 @section('content')
     @include('flash')
-
-    <div class="row">
+    <div class="row" style="margin-bottom: 0.5em;">
         <div class="col-sm">
-            <a href="/docentes/create" class="btn btn-primary">Cadastrar Docente</a></br>
+            <a href="/docentes/create" class="btn btn-primary">Cadastrar Novo Docente</a></br>
         </div>
         <div class="col-auto float-right">
             <form method="POST" action="/docentes/{{ $docente->id }}">
@@ -19,10 +18,8 @@
             </form>
         </div>
     </div>
-    <br>
-
     <div class="card">
-        <div class="card-header"><h4>Editar - Docente</h4></div>
+        <div class="card-header"><b>Editar - Docente</b></div>
         <div class="card-body">
             <form action="/docentes/{{$docente->id}}" method="POST">
                 @csrf

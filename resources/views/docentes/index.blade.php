@@ -7,17 +7,19 @@
 @section('content')
     @inject('pessoa','Uspdev\Replicado\Pessoa')
     @include('flash')
-
-    <a href="/docentes/create" class="btn btn-primary">Cadastrar Docente</a>
-    </br></br>
+    <div class="row" style="margin-bottom:0.5em">
+        <div class="col-sm">
+            <a href="/docentes/create" class="btn btn-primary">Cadastrar Docente</a>
+        </div>
+    </div>
     <div class="card">
         <div class="card-body">
             <form method="GET" action="/docentes">
-                <div class="row form-group">
+                <div class="row">
                     <div class="col-auto">
-                        <label style="margin-top:0.35em; margin-bottom:0em;"><h5><b>Buscar: </b></h5></label>
-                    </div>
-                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label style="margin-top:0.35em; margin-bottom:0em;"><b>Filtros:</b></label>
+                    </div>                
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons" style="padding-bottom: 1em;">
                         <label class="btn btn-light">
                             <input type="radio" name="filtro_busca" id="todos" value="todos" autocomplete="off" @if(Request()->filtro_busca == 'todos' or Request()->filtro_busca == '') checked @endif> Todos
                         </label>
@@ -27,15 +29,11 @@
                         <label class="btn btn-light">
                             <input type="radio" name="filtro_busca" id="docente_ext" value="docente_ext" autocomplete="off" @if(Request()->filtro_busca == 'docente_ext') checked @endif> Docente Externo
                         </label>
-                        
                     </div>
-                </div>
-                
-                <div class="row form-group">
-                    <div class="col-sm form-group" id="busca">
-                        <input type="text" class="form-control" name="busca" value="{{ Request()->busca }}" placeholder="Digite o nome completo ou parte dele para buscar">
+                    <div class="col-sm" id="busca">
+                        <input type="text" class="form-control" name="busca" value="{{ Request()->busca }}" placeholder="Digite o nome completo ou parte dele, número USP, RG ou CPF para buscar professor(a)">
                     </div>
-                    <div class=" col-auto form-group">
+                    <div class="col-auto">
                         <button type="submit" class="btn btn-success">Buscar</button>
                     </div>
                 </div>
