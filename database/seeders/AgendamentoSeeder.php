@@ -16,7 +16,8 @@ class AgendamentoSeeder extends Seeder
      */
     public function run()
     {
-        $orientador = Docente::factory()->create()->n_usp;
+        //Seeder comentado para verificação se a lógica, com exceção do registro de controle primário, está funcionando
+        /*$orientador = Docente::factory()->create()->n_usp;
         $professor = [
             'codpes' => $orientador,
             'presidente' => 'Sim',
@@ -37,7 +38,7 @@ class AgendamentoSeeder extends Seeder
             'orientador' => $orientador,
         ];
         Agendamento::create($agendamento);
-        Banca::create($professor);
+        Banca::create($professor);*/
 
         Agendamento::factory(5)->create()->each(function ($agendamento) {           
             $bancas = Banca::factory(5)->make();

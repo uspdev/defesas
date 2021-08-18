@@ -7,7 +7,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use App\Models\Agendamento;
-use App\Models\Config;
 use App\Models\Docente;
 
 class ReciboExternoMail extends Mailable
@@ -19,10 +18,9 @@ class ReciboExternoMail extends Mailable
      *
      * @return void
      */
-    public function __construct(Agendamento $agendamento, Config $configs, Docente $docente, $dados)
+    public function __construct(Agendamento $agendamento, Docente $docente, $dados)
     {
         $this->agendamento = $agendamento;
-        $this->configs = $configs;
         $this->docente = $docente;
         $this->dados = $dados;
     }
@@ -41,7 +39,6 @@ class ReciboExternoMail extends Mailable
         ->subject($subject)
         ->with([
             'agendamento' => $this->agendamento,
-            'configs' => $this->configs,
             'docente' => $this->docente,
             'dados' => $this->dados,
         ]);     

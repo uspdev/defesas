@@ -27,10 +27,12 @@ class ConfigRequest extends FormRequest
             'sitename' => 'required',
             'rodape_site' => 'required',
             'rodape_oficios' => 'required',
+            'footer' => 'required',
             'importante_oficio' => 'required',
             'regimento' => 'required',
             'oficio_suplente' => 'required',
             'declaracao' => 'required',
+            'statement' => 'required',
             'diaria_simples' => 'required',
             'diaria_completa' => 'required',
             'duas_diarias' => 'required',
@@ -44,6 +46,10 @@ class ConfigRequest extends FormRequest
             'obs_passagem' => 'required',
             'header_auxilio' => 'required',
             'capes_proap' => 'required',
+            'mail_dados_prof_externo' => 'required',
+            'mail_passagem' => 'required',
+            'mail_pro_labore' => 'required',
+            'mail_recibo_externo' => 'required',
         ];
     }
 }

@@ -4,7 +4,7 @@
     @inject('pessoa','Uspdev\Replicado\Pessoa')
     @inject('replicado','App\Utils\ReplicadoUtils')
     @can('admin')
-    <div class="row">
+    <div class="row" style="margin-bottom: 0.5em;">
         <div class="col-sm">
             <a href="/agendamentos/create" class="btn btn-success">Agendar Nova Defesa</a></br>
         </div>
@@ -24,12 +24,8 @@
         </div>
     </div>
     @endcan
-    <br>
     @include('agendamentos.partials.defesa')
-    <br>
     @include('agendamentos.partials.banca')
-    <br>
     @can('admin') @include('agendamentos.partials.documentos') @endcan
-    <br> 
     @can('admin') @include('agendamentos.partials.recibos') @endcan
 @endsection('content')

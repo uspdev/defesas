@@ -6,7 +6,6 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\Agendamento;
 use App\Models\Docente;
 
 class DadosProfExternoMail extends Mailable
@@ -18,9 +17,8 @@ class DadosProfExternoMail extends Mailable
      *
      * @return void
      */
-    public function __construct(Agendamento $agendamento, Docente $docente, $email)
+    public function __construct(Docente $docente, $email)
     {
-        $this->agendamento = $agendamento;
         $this->docente = $docente;
         $this->email = $email;    
     }
@@ -37,7 +35,6 @@ class DadosProfExternoMail extends Mailable
         ->to($this->email)
         ->subject($subject)
         ->with([
-            'agendamento' => $this->agendamento,
             'docente' => $this->docente,
         ]);    
     }

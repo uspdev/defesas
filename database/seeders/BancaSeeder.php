@@ -15,7 +15,8 @@ class BancaSeeder extends Seeder
      */
     public function run()
     {
-        $professor1 = [
+        //Seeder comentado para verificação se a lógica, com exceção do registro de controle primário, está funcionando
+        /*$professor1 = [
             'codpes' => Docente::factory()->create()->n_usp,
             'presidente' => 'Não',
             'tipo' => 'Titular',
@@ -37,6 +38,6 @@ class BancaSeeder extends Seeder
         ];
         Banca::create($professor1);
         Banca::create($professor2);
-        Banca::create($professor3);
+        Banca::create($professor3);*/
     }
 }

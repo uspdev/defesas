@@ -16,7 +16,7 @@ class EmailController extends Controller
     }
     
     //Função que exibe apenas uma view com os dados a serem copiados e enviados via e-mail para a tesouraria. Automatização desse processo será realizada mais para frente.
-    public function reciboExterno(Agendamento $agendamento, Banca $banca, Request $request){
+    public function exibirReciboExterno(Agendamento $agendamento, Banca $banca, Request $request){
         $this->authorize('admin');
         $dados = $request;
         $agendamento->formatDataHorario($agendamento);
@@ -27,7 +27,7 @@ class EmailController extends Controller
     }
 
     //Função que exibe apenas uma view com os dados a serem copiados e enviados via e-mail para o docente. Automatização desse processo será realizada mais para frente.
-    public function emailDocente(Agendamento $agendamento, Banca $banca, Request $request){
+    public function exibirEmailDocente(Agendamento $agendamento, Banca $banca, Request $request){
         $this->authorize('admin');
         $dados = $request;
         $agendamento->formatDataHorario($agendamento);

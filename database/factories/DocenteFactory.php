@@ -47,7 +47,7 @@ class DocenteFactory extends Factory
             'agencia' => '',
             'c_corrente' => '',
             'telefone' => $telefones,
-            'lotado' => 'FFLCH',
+            'lotado' => '',
             'email' => $emails,
             'status' => 'B',
             'docente_usp' => 'sim',

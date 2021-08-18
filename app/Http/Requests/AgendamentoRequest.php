@@ -6,7 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 use Carbon\Carbon;
 use App\Models\Agendamento;
 use Illuminate\Validation\Rule;
-use App\Utils\ReplicadoUtils;
 
 class AgendamentoRequest extends FormRequest
 {
@@ -36,7 +35,7 @@ class AgendamentoRequest extends FormRequest
             'sexo' => ['required',Rule::in($agendamento->sexoOptions())],
             'nivel' => ['required',Rule::in($agendamento->nivelOptions())],
             'titulo' => 'required',
-            'area_programa' => ['required',Rule::in(ReplicadoUtils::codareasProgramas())],
+            'area_programa' => ['required',Rule::in(Agendamento::devolverCodProgramas())],
             'sala' => 'required',
             'data_horario' => 'required',
             'orientador' => 'required|integer',

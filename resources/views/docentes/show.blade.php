@@ -3,8 +3,7 @@
 @section('content')
 @inject('pessoa','Uspdev\Replicado\Pessoa')
 @inject('replicado','App\Utils\ReplicadoUtils')
-
-    <div class="row">
+    <div class="row" style="margin-bottom:0.5em;">
         <div class="col-sm">
             <a href="/docentes/create" class="btn btn-success">Cadastrar Docente</a></br>
         </div>
@@ -23,8 +22,7 @@
             </div>
         </div>
     </div>
-    <br>
-    <div class="card">
+    <div class="card" style="margin-bottom:0.5em;">
         <div class="card-header"><b>Docente</b></div>
         <div class="card-body">
             <b>Nome Completo:</b> {{$docente->nome}}</br>
@@ -64,8 +62,7 @@
             @endforeach
         </div>
     </div>
-    <br>
-    <div class="card">
+    <div class="card" style="margin-bottom:0.5em;">
         <div class="card-header"><b>Bancas que participou como Orientador(a)</b></div>
         <table class="table table-striped" style="text-align:center;">
             <thead class="thead-light">
@@ -80,7 +77,7 @@
             <tbody>
                 @foreach($docente->getBancasProfessor($docente->n_usp,'Orientador') as $banca)
                     <tr>
-                        <td><a href="/agendamentos/{{$banca->id}}">{{$banca->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}</a></td>
+                        <td><a href="/agendamentos/{{$banca->id}}">{{$banca->nome}}</a></td>
                         <td>{{$banca->titulo}}</td>
                         <td>{{Carbon\Carbon::parse($banca->data_horario)->format('d/m/Y')}}</td>
                         <td>{{$replicado::nomeAreaPrograma($banca->area_programa)}}</td>
@@ -90,7 +87,6 @@
             </tbody>
         </table>
     </div>
-    <br>
     <div class="card">
         <div class="card-header"><b>Bancas de defesa que participou como Examinador(a)</b></div>
         <table class="table table-striped" style="text-align:center;">

@@ -2,12 +2,6 @@
 
 @section('content')
     @include('flash')
-
-    <div class="row">
-        
-    </div>
-    <br>
-
     <div class="card">
         <div class="card-header"><h4>Configurações de sistema</h4></div>
         <div class="card-body">

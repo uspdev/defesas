@@ -1,12 +1,12 @@
 <form action="/bancas" method="POST">
     @csrf
     <input type="hidden" name="agendamento_id" value="{{$agendamento->id}}">
-    <div class="form-group row">
-        <div class="col-sm form-group">
+    <div class="row">
+        <div class="col-4">
             <label for="codpes" class="required">Número USP </label> 
             <input type="text" name="codpes" class="form-control" value="{{ old('codpes') }}"> 
         </div>
-        <div class="col-sm form-group">
+        <div class="col-3">
             <label for="presidente" class="required">Presidente</label>
             <select class="form-control" name="presidente">
                 <option value="" selected="">- Selecione -</option>
@@ -17,8 +17,7 @@
                 @endforeach
             </select>
         </div>
-
-        <div class="col-sm form-group">
+        <div class="col-3">
             <label for="tipo" class="required">Tipo</label>
             <select class="form-control" name="tipo">
                 <option value="" selected="">- Selecione -</option>
@@ -29,9 +28,8 @@
                 @endforeach
             </select>
         </div>
-    </div>
-
-    <div class="form-group">
-        <button type="submit" class="btn btn-success float-right">Inserir Professor(a)</button> 
-    </div> 
+        <div class="col-auto">
+            <button type="submit" style="margin-top:1.98em" class="btn btn-success">Inserir Professor(a)</button> 
+        </div> 
+    </div>    
 </form>

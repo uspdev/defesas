@@ -1,4 +1,4 @@
-    <div class="card">
+    <div class="card" style="margin-bottom: 0.5em;">
         <div class="card-header"><b>Defesa</b></div>
         <div class="card-body">
             <b>Título da Tese:</b> {{$agendamento->titulo}}</br>

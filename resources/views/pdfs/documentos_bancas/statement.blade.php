@@ -1,4 +1,5 @@
 @inject('pessoa','Uspdev\Replicado\Pessoa')
+@inject('replicado','App\Utils\ReplicadoUtils')
 
 @extends('pdfs.fflch')
 @section('styles_head')
@@ -74,8 +75,8 @@
       </td>
       <td style='width:80%'; style='text-align:center;'>
         <p align='center'><b>FACULDADE DE FILOSOFIA, LETRAS E CIÊNCIAS HUMANAS</b>
-        <br>Universidade de São Paulo<br>
-        Serviço de Pós-Graduação</p>
+        <br>University of São Paulo<br>
+        Graduate Service</p>
       </td>
     </tr>
   </table>
@@ -84,17 +85,12 @@
 
 @section('content')
 
-    <div align="right">
-        @php(setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese'))
-        São Paulo, {{ strftime('%d de %B de %Y', strtotime($agendamento->data_horario)) }}    
-    </div><br>
-
-    <h1 align="center"> DECLARAÇÃO </h1>
+    <h1 align="center"> STATEMENT OF PARTICIPATION </h1>
     <br><br><br>
 
     <p class="justificar" style="line-height: 190%;">  
         
-        {!!$configs->declaracao!!}
+        {!!$configs->statement!!}
     </p> <br><br>
 
     <table width="16cm" style="border='0'; margin-left:4cm; align-items: center; justify-content: center;">
@@ -105,13 +101,12 @@
         </tr>
         @endforeach
     </table>
-	<div style="margin-top:2cm;" align="center"> 
-        Atenciosamente,<br>  
-        <b>
-            {{Auth::user()->name}} @if($pessoa::cracha(Auth::user()->codpes)) - Defesas de Mestrado e Doutorado da {{$pessoa::cracha(Auth::user()->codpes)['nomorg']}}/USP @endif 
-        </b>
-    </div> 
+    <br><br>
+    <div align="right">
+        @php(setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese'))
+        Graduate Studies Services of University of São Paulo, {{Carbon\Carbon::parse($agendamento->data_horario)->format('F jS\, Y')}}    
+    </div><br>
     <div id="footer">
-        {!! $configs->rodape_oficios !!}
+        {!! $configs->footer !!}
     </div>
 @endsection('content')

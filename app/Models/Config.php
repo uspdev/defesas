@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Agendamento;
 use Uspdev\Replicado\Pessoa;
+use App\Utils\ReplicadoUtils;
+use Carbon\Carbon;
 
 class Config extends Model
 {
@@ -43,14 +45,9 @@ class Config extends Model
             [$docenteNome,$agendamento['nivel'], $agendamento['nome'], $agendamento['titulo']], 
             $configs['declaracao']
         );
-        //Busca as áreas/programas da unidade
-        $programas = $agendamento->programaOptions();
-        //Altera de acordo com o código cadastrado no agendamento o nome da área na declaração
-        foreach($programas as $p){
-            if($agendamento['area_programa'] == $p['codare']){
-                $configs['declaracao'] = str_replace("%area", $p['nomare'], $configs['declaracao']);
-            }
-        }
+
+        $configs['declaracao'] = str_replace("%area", ReplicadoUtils::nomeAreaPrograma($agendamento['area_programa']), $configs['declaracao']);
+        
         //Altera a informação de presidente de acordo com o tipo do professor informado
         foreach($professores as $presidente){
             if($presidente['presidente'] == 'Sim'){
@@ -61,6 +58,45 @@ class Config extends Model
                     $docenteNome = Agendamento::dadosProfessor($presidente->codpes)->nome;
                 }
                 $configs['declaracao'] = str_replace("%orientador", $docenteNome, $configs['declaracao']);
+            }
+        }
+        return $configs;
+    }
+
+    //Função para modificar a mensagem padrão da Stament of Participation
+    public static function setConfigStatement($agendamento, $professores, $professor){
+        //Busca a última configuração
+        $configs = Config::orderbyDesc('created_at')->first();
+        //Faz as primeiras trocas
+        if(Agendamento::dadosProfessor($professor->codpes) == null){
+            $docenteNome = 'Professor não cadastrado';
+        }
+        else{
+            $docenteNome = Agendamento::dadosProfessor($professor->codpes)->nome;
+        }
+        if($agendamento['nivel'] == 'Mestrado'){
+            $nivel = "Master's";
+        }else{
+            $nivel = "Doctorate's";
+        }
+        $configs['statement'] = str_replace(
+            ["%docente_nome","%nivel","%candidato_nome", "%titulo", "%data"], 
+            [$docenteNome,$nivel, $agendamento['nome'], $agendamento['titulo'], Carbon::parse($agendamento['data_horario'])->format('F jS\, Y')], 
+            $configs['statement']
+        );
+    
+        $configs['statement'] = str_replace("%area", ReplicadoUtils::nomeAreaProgramaEmIngles($agendamento['area_programa']), $configs['statement']);
+    
+        //Altera a informação de presidente de acordo com o tipo do professor informado
+        foreach($professores as $presidente){
+            if($presidente['presidente'] == 'Sim'){
+                if(Agendamento::dadosProfessor($presidente->codpes) == null){
+                    $docenteNome = 'Professor não cadastrado';
+                }
+                else{
+                    $docenteNome = Agendamento::dadosProfessor($presidente->codpes)->nome;
+                }
+                $configs['statement'] = str_replace("%orientador", $docenteNome, $configs['statement']);
             }
         }
         return $configs;
@@ -84,5 +120,63 @@ class Config extends Model
             $configs['mail_docente']
         );
         return $configs;
+    }
+
+    public static function configMailDadosProfExterno($docente){
+        $configs = Config::orderbyDesc('created_at')->first();
+        $endereco = $docente['endereco']." ".$docente['bairro']." CEP:".$docente['cep']." ".$docente['cidade']."/".$docente['estado'];
+        $configs['mail_dados_prof_externo'] = str_replace(
+            ["%docente","%endereco", "%telefones"], 
+            [$docente['nome'], $endereco, $docente['telefone']], 
+            $configs['mail_dados_prof_externo']
+        );
+        return $configs['mail_dados_prof_externo'];
+    }
+
+    public static function configMailPassagem($agendamento, $docente){
+        $configs = Config::orderbyDesc('created_at')->first();
+        $configs['mail_passagem'] = str_replace(
+            ["%docente","%candidato", "%data", "%sala"], 
+            [$docente['nome'], $agendamento['nome'], $agendamento['data'], $agendamento['sala']], 
+            $configs['mail_passagem']
+        );
+        return $configs['mail_passagem'];
+    }
+
+    public static function configMailProLabore($agendamento, $docente){
+        $configs = Config::orderbyDesc('created_at')->first();
+        $departamento = ReplicadoUtils::departamentoPrograma($agendamento['orientador'])['nomset'];
+        $nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento['area_programa']);
+        setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese');
+        $datahora = strftime("%d de %B de %Y", strtotime($agendamento['data_horario']))." às ".$agendamento['horario'];
+        $configs['mail_pro_labore'] = str_replace(
+            ["%candidato", "%programa", "%departamento", "%datahora", "%docente", "%nusp", "%pispasep"], 
+            [$agendamento['nome'], $nome_area, $departamento, $datahora, $docente['nome'], $docente['n_usp'], $docente['pis_pasep']], 
+            $configs['mail_pro_labore']
+        );
+        return $configs['mail_pro_labore'];
+    }
+
+    public static function configMailReciboExterno($agendamento, $docente, $dados){
+        $configs = Config::orderbyDesc('created_at')->first();
+        $agendamento->formatDataHorario($agendamento);
+        $nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento['area_programa']);
+        setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese');
+        $datahora = strftime("%d de %B de %Y", strtotime($agendamento['data_horario']))." às ".$agendamento['horario'];
+        if($dados->diaria == "diaria_simples"){
+            $diaria = "<p><b>Diária Simples:</b> {$configs->diaria_simples}</p>";
+        }
+        elseif($dados->diaria == "diaria_completa"){
+            $diaria = "<p><b>Diária Completa:</b> {$configs->diaria_completa}</p>";
+        }
+        else{
+            $diaria = "<p><b>2 Diárias:</b> {$configs->duas_diarias}</p>";
+        }
+        $configs['mail_recibo_externo'] = str_replace(
+            ["%docente", "%nusp", "%origem", "%ida", "%volta", "%email", "%programa", "%nivel", "%candidato", "%datahora", "%diaria"], 
+            [$docente['nome'], $docente['n_usp'], $dados['origem'], $dados['ida'], $dados['volta'], $docente['email'], $nome_area, $agendamento['nivel'], $agendamento['nome'], $datahora, $diaria], 
+            $configs['mail_recibo_externo']
+        );
+        return $configs['mail_recibo_externo'];
     }
 }

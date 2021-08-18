@@ -8,7 +8,7 @@
     @include('flash')
 
     <div class="card">
-        <div class="card-header">Cadastrar Docente</div>
+        <div class="card-header"><b>Cadastrar Docente</b></div>
         <div class="card-body">
             <form action="/docentes" method="POST">
                 @csrf

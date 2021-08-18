@@ -27,7 +27,7 @@
             @endif            
             <a href="/agendamentos/{{$agendamento->id}}" class="btn btn-primary">Voltar</a>
             <div class="col-auto float-right">
-                <form method="POST" action="/agendamentos/recibo_externo/{{ $agendamento->id }}/{{ $configs->id }}/{{ $docente->id }}">
+                <form method="POST" action="/agendamentos/recibo_externo/{{ $agendamento->id }}/{{ $docente->id }}">
                     @csrf 
                     <button type="submit" class="btn btn-success" onclick="return confirm('Tem certeza que deseja enviar E-mail?')"> Enviar E-mail </button>
                     <input type="hidden" name="origem" value="{{$dados->origem}}">

@@ -4,16 +4,16 @@
 </div> 
 
 <div class="form-group row">
-    <div class="col-sm form-group">
+    <div class="col-sm ">
         <label for="nome">Nome Completo</label>
         <input type="text" name="nome" class="form-control" value="{{ old('nome', $agendamento->nome) }}">
         <span class="badge badge-warning">Se este campo ficar vazio, o nome utilizado será o cadastrado nos sistemas da USP</span>
     </div>
-    <div class="col-sm form-group">
+    <div class="col-sm">
         <label for="codpes" class="required">Número USP </label> 
         <input type="text" name="codpes" class="form-control" value="{{ old('codpes', $agendamento->codpes) }}"> 
     </div>
-    <div class="col-sm form-group">
+    <div class="col-sm">
         <label for="sexo" class="required">Sexo</label>
         <select class="form-control" name="sexo">
             <option value="" selected="">- Selecione -</option>
@@ -34,7 +34,7 @@
     </div>
 </div>
 <div class="row form-group">
-    <div class="col-sm form-group">
+    <div class="col-sm">
         <label for="regimento" class="required">Regimento</label>
         <select class="form-control" name="regimento">
             <option value="" selected="">- Selecione -</option>
@@ -53,7 +53,7 @@
             @endforeach
         </select> 
     </div>
-    <div class="col-sm form-group">
+    <div class="col-sm">
         <label for="nivel" class="required">Nível</label>
         <select class="form-control" name="nivel">
             <option value="" selected="">- Selecione -</option>
@@ -72,7 +72,7 @@
             @endforeach
         </select> 
     </div>
-    <div class="col-sm form-group">
+    <div class="col-sm">
         <label for="area_programa" class="required">Programa</label>
         <select class="form-control" name="area_programa">
             <option value="" selected="">- Selecione -</option>
@@ -93,7 +93,7 @@
     </div>   
 </div>
 <div class="row form-group">
-    <div class="col-sm form-group">
+    <div class="col-sm">
         <label for="orientador_votante" class="required">Orientador Votante</label>
         <select class="form-control" name="orientador_votante">
             <option value="" selected="">- Selecione -</option>
@@ -112,27 +112,30 @@
             @endforeach
         </select>
     </div>
-    <div class="col-sm form-group">
+    <div class="col-sm">
         <label for="orientador" class="required">Nº USP Orientador</label>
         <input type="text" name="orientador" class="form-control" value="{{ old('orientador', $agendamento->orientador) }}"> 
     </div> 
 </div>
 
 <div class="row form-group">
-    <div class="col-sm form-group">
+    <div class="col-sm">
         <label for="data" class="required">Data</label> 
         <input type="text" name="data" class="form-control datepicker data" autocomplete="off" value="{{ old('data', $agendamento->data) }}"> 
     </div>
-    <div class="col-sm form-group">
+    <div class="col-sm">
         <label for="horario" class="required">Horário</label> 
         <input type="text" name="horario" class="form-control horario" value="{{ old('horario', $agendamento->horario) }}">
     </div> 
 </div>
-
-<div class="form-group">
-    <label for="sala" class="required">Local</label>
-    <input type="text" name="sala" class="form-control" value="{{ old('sala', $agendamento->sala) }}"> 
+<div class="row form-group">
+    <div class="col-sm">
+        <label for="sala" class="required">Local</label>
+        <input type="text" name="sala" class="form-control" value="{{ old('sala', $agendamento->sala) }}">
+    </div>  
 </div> 
-<div class="form-group">
-    <button type="submit" class="btn btn-success float-right">Enviar</button> 
+<div class="row form-group">
+    <div class="col-sm">
+        <button type="submit" class="btn btn-success float-right">Enviar</button>
+    </div> 
 </div> 
