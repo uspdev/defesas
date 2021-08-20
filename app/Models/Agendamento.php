@@ -69,24 +69,20 @@ class Agendamento extends Model
 
     //Função para devolver valores de select
     public static function programaOptions(){
-        $programas = Posgraduacao::areasProgramas();
+        $programas = ReplicadoUtils::programasPosUnidade();
         foreach($programas as $programa){
-            foreach($programa as $p){
-                $programas_pos[] = [
-                    "codare" => $p['codare'],
-                    "nomare" => $p['nomare'],
-                ];
-            }
+            $programas_pos[] = [
+                "codare" => $programa['codare'],
+                "nomare" => $programa['nomare'],
+            ];
         }
         return $programas_pos;
     }
 
     public static function devolverCodProgramas(){
-        $programas = Posgraduacao::areasProgramas();
+        $programas = ReplicadoUtils::programasPosUnidade();
         foreach($programas as $programa){
-            foreach($programa as $p){
-                $cod_programas_pos[] = $p['codare'];
-            }
+            $cod_programas_pos[] = $programa['codare'];
         }
         return $cod_programas_pos;
     }
