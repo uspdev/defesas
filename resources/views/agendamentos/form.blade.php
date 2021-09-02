@@ -6,31 +6,17 @@
 <div class="form-group row">
     <div class="col-sm ">
         <label for="nome">Nome Completo</label>
-        <input type="text" name="nome" class="form-control" value="{{ old('nome', $agendamento->nome) }}">
+        <input type="text" name="nome" id="nome" class="form-control" value="{{ old('nome', $agendamento->nome) }}">
         <span class="badge badge-warning">Se este campo ficar vazio, o nome utilizado será o cadastrado nos sistemas da USP</span>
     </div>
     <div class="col-sm">
         <label for="codpes" class="required">Número USP </label> 
-        <input type="text" name="codpes" class="form-control" value="{{ old('codpes', $agendamento->codpes) }}"> 
+        <input type="text" name="codpes" id="codpes" class="form-control" value="{{ old('codpes', $agendamento->codpes) }}"> 
     </div>
     <div class="col-sm">
         <label for="sexo" class="required">Sexo</label>
-        <select class="form-control" name="sexo">
-            <option value="" selected="">- Selecione -</option>
-            @foreach ($agendamento->sexoOptions() as $option)
-                {{-- 1. Situação em que não houve tentativa de submissão e é uma edição --}}
-                @if (old('sexo') == '' and isset($agendamento->sexo))
-                <option value="{{$option}}" {{ ( $agendamento->sexo == $option) ? 'selected' : ''}}>
-                    {{$option}}
-                </option>
-                {{-- 2. Situação em que houve tentativa de submissão, o valor de old prevalece --}}
-                @else
-                <option value="{{$option}}" {{ ( old('sexo') == $option) ? 'selected' : ''}}>
-                    {{$option}}
-                </option>
-                @endif
-            @endforeach
-        </select>
+        <input type="text" name="sexo" id="sexo" class="form-control" value="{{ old('sexo', $agendamento->sexo) }}"> 
+        <div id="info"></div>
     </div>
 </div>
 <div class="row form-group">

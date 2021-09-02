@@ -146,5 +146,53 @@ class AgendamentoController extends Controller
         }
         return redirect('/agendamentos/'.$agendamento->id);
     }
+
+    /*Api para entregar nome do(a) aluno(a) no blade */
+    public function infoNomeCompleto(Request $request){
+        if(empty($request->codpes)){
+            return response('Pessoa não encontrada');
+        }
+        
+        if(!is_int((int)$request->codpes)){
+            return response('Pessoa não encontrada');
+        }
+
+        if(strlen($request->codpes) < 6){
+            return response('Pessoa não encontrada');
+        }
+
+        $info = Pessoa::nomeCompleto($request->codpes);
+        if($info){
+            return response($info);
+        }
+        else{
+            return response('Pessoa não encontrada');
+        }
+    }
+
+    /*Api para entregar sexo do(a) aluno(a) no blade */
+    public function infoSexo(Request $request){
+        if(empty($request->codpes)){
+            return response('Pessoa não encontrada');
+        }
+        
+        if(!is_int((int)$request->codpes)){
+            return response('Pessoa não encontrada');
+        }
+
+        if(strlen($request->codpes) < 6){
+            return response('Pessoa não encontrada');
+        }
+
+        $info = Pessoa::dump($request->codpes);
+        if($info){
+            $info = $info['sexpes'];
+            return response($info);
+        }
+        else{
+            return response('Pessoa não encontrada');
+        }
+    }
+
     
 }
