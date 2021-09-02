@@ -150,8 +150,8 @@ class Config extends Model
         setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese');
         $datahora = strftime("%d de %B de %Y", strtotime($agendamento['data_horario']))." às ".$agendamento['horario'];
         $configs['mail_pro_labore'] = str_replace(
-            ["%candidato", "%programa", "%departamento", "%datahora", "%docente", "%nusp", "%pispasep"], 
-            [$agendamento['nome'], $nome_area, $departamento, $datahora, $docente['nome'], $docente['n_usp'], $docente['pis_pasep']], 
+            ["%candidato", "%programa", "%departamento", "%datahora", "%docente", "%nusp", "%pispasep", "%cpf", "%banco", "%agencia", "%conta"], 
+            [$agendamento['nome'], $nome_area, $departamento, $datahora, $docente['nome'], $docente['n_usp'], $docente['pis_pasep'], $docente['cpf'], $docente['banco'], $docente['agencia'], $docente['conta']], 
             $configs['mail_pro_labore']
         );
         return $configs['mail_pro_labore'];

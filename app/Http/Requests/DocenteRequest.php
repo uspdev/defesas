@@ -26,7 +26,7 @@ class DocenteRequest extends FormRequest
     {
         $rules = [
             'nome' => 'required',
-            'n_usp' => 'required',
+            'n_usp' => 'required|codpes',
             'cpf' => ['cpf'],
             'tipo' => Rule::in(Docente::documentoOptions()),
             'documento' => '',
@@ -55,10 +55,20 @@ class DocenteRequest extends FormRequest
         return $rules;
     }
     
-        public function validationData()
-        {
-            $data = $this->all();
-            $data['cpf'] = preg_replace('/[^0-9]/', '', $data['cpf']);
-            return $data;
-        }
+    public function validationData()
+    {
+        $data = $this->all();
+        $data['cpf'] = preg_replace('/[^0-9]/', '', $data['cpf']);
+        return $data;
+    }
+
+    public function messages(){
+        return [
+            'nome.required' => 'É obrigatório o preenchimento do Nome.',
+            'n_usp.required' => 'É obrigatório o preenchimento do Número USP.',
+            'lotado.required' => 'É obrigatório o preenchimento do  Nome e sigla da Universidade na qual tem vínculo profissional.',
+            'status.required' => 'É obrigatório a seleção do Status do docente.',
+            'docente_usp.required' => 'É obrigatório a indicação se o docente é da USP ou não.',
+        ];
+    }
 }
