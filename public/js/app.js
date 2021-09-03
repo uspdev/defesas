@@ -3,7 +3,9 @@ jQuery(function ($) {
         var data = { codpes: $( "#codpes" ).val() };
 
         function success(response) {
-            $( "#nome" ).val(response['nome']);
+            if(!$( "#nome" ).val()){
+                $( "#nome" ).val(response['nome']);
+            }
             if(response['sexo'] == 'M'){
                 $( "#sexo" ).val('Masculino');
             }
