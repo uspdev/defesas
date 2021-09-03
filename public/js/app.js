@@ -2,20 +2,17 @@ jQuery(function ($) {
     $('#codpes').change(function(){
         var data = { codpes: $( "#codpes" ).val() };
 
-        function nome(response) {
-            $( "#nome" ).val(response);
-        }
-        $.get('infoNomeCompleto', data, nome);
-        
-        function sexo(response) {
-            if(response.info[0] == 'M'){
+        function success(response) {
+            $( "#nome" ).val(response['nome']);
+            if(response['sexo'] == 'M'){
                 $( "#sexo" ).val('Masculino');
             }
             else{
                 $( "#sexo" ).val('Feminino');
             }
         }
-        $.get('infoSexo', data, sexo);
+        $.get('info', data, success);
+        
     });
     
     $(".horario").mask('00:00');

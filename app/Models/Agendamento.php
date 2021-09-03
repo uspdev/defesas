@@ -28,14 +28,6 @@ class Agendamento extends Model
     }
 
     //Função para devolver valores de select
-    public static function sexoOptions(){
-        return [
-            'Masculino',
-            'Feminino'
-        ];
-    }
-
-    //Função para devolver valores de select
     public static function regimentoOptions(){
         return [
             'Antigo',
