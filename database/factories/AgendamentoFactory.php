@@ -24,7 +24,7 @@ class AgendamentoFactory extends Factory
      */
     public function definition()
     {
-        $sexo = Agendamento::sexoOptions(); 
+        $sexo = ['Masculino','Feminino']; 
         $regimento = Agendamento::regimentoOptions(); 
         $nivel = Agendamento::nivelOptions(); 
         $area_programa = Agendamento::programaOptions();

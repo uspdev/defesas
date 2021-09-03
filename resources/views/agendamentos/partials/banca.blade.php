@@ -1,6 +1,7 @@
     <div class="card" style="margin-bottom: 0.5em;">
         <div class="card-header"><b>Banca</b></div>
         <div class="card-body">
+            @include('flash')
             @can('admin')
                 @include('agendamentos.bancas.partials.form')
             @endcan

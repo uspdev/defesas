@@ -27,10 +27,18 @@ class BancaRequest extends FormRequest
     {
         $agendamento = new Agendamento;
         return [
-            'codpes' => 'required|integer',
+            'codpes' => 'required|integer|codpes',
             'presidente' => ['required',Rule::in($agendamento->presidenteOptions())],
             'tipo' => ['required',Rule::in($agendamento->tipoOptions())],
             'agendamento_id' => 'required',
+        ];
+    }
+
+    public function messages(){
+        return [
+            'codpes.required' => 'É obrigatório preencher o número USP do docente a ser inserido na banca.',
+            'presidente.required' => 'É necessário indicar se o docente é Presidente da banca ou não.',
+            'tipo.required' => 'É necessário indicar o tipo de presença do docente na banca.',
         ];
     }
 }

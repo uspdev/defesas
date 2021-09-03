@@ -16,9 +16,8 @@
             <p> Data da defesa:<b> {{strftime("%d de %B de %Y", strtotime($agendamento->data_horario))}} às {{$agendamento->horario}} </b> </p>
             <br>
             Item(s):
-            <p>Prof. Dr. {{$docente->nome}} </p>
-            <p>Número USP: {{$docente->n_usp}} </p>
-            <p>PIS/PASEP: {{$docente->pis_pasep}} </p> 
+            <p>Prof. Dr. {{$docente->nome}} - Número USP: {{$docente->n_usp}} - PIS/PASEP: {{$docente->pis_pasep}} - CPF: {{$docente->cpf}}</p>
+            <p>Banco: {{$docente->banco}} - Agência: {{$docente->agencia}} - Conta: {{$docente->conta}} </p>
             <br>
             <div class="col-auto float-right">
                 <form method="POST" action="/agendamentos/pro_labore/{{ $agendamento->id }}/{{ $docente->id }}">

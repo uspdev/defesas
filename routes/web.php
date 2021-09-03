@@ -46,3 +46,6 @@ Route::get('/dev/bancas_aprovadas', [DevController::class,'bancas_aprovadas']);
 Route::post('/dev/codpes/{codpes}', [DevController::class,'dados_defesa_aluno']);
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->middleware('can:admin');
+
+#Api para devolução de dados do aluno
+Route::get('info', [AgendamentoController::class, 'info'])->name('pedidos.info');
