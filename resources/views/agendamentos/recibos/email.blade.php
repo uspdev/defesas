@@ -17,7 +17,7 @@
             <br>
             Item(s):
             <p>Prof. Dr. {{$docente->nome}} - Número USP: {{$docente->n_usp}} - PIS/PASEP: {{$docente->pis_pasep}} - CPF: {{$docente->cpf}}</p>
-            <p>Banco: {{$docente->banco}} - Agência: {{$docente->agencia}} - Conta: {{$docente->conta}} </p>
+            <p>Banco: {{$docente->banco}} - Agência: {{$docente->agencia}} - Conta: {{$docente->c_corrente}} </p>
             <br>
             <div class="col-auto float-right">
                 <form method="POST" action="/agendamentos/pro_labore/{{ $agendamento->id }}/{{ $docente->id }}">
