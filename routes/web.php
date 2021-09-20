@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\indexController;
-use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AgendamentoController;
 use App\Http\Controllers\BancaController;
 use App\Http\Controllers\DocenteController;
@@ -13,9 +12,6 @@ use App\Http\Controllers\DevController;
 // rotas para login/logout
 Route::get('/', [indexController::class, 'index'])->name('index');
 Route::get('/anteriores',[indexController::class, 'exibirDefesasAnteriores'])->name('exibirDefesasAnteriores');
-Route::get('login',[LoginController::class, 'redirectToProvider'])->name('login');
-Route::get('callback', [LoginController::class, 'handleProviderCallback']);
-Route::post('logout',[LoginController::class, 'logout'])->name('logout');
 
 // rotas de Agendamento de Defesa
 Route::resource('agendamentos', AgendamentoController::class);
