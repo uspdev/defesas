@@ -97,7 +97,9 @@
     <div class="moremargin">Area: <b>{{$replicado->nomeAreaProgramaEmIngles($agendamento->area_programa)}}</b> </div>
     <div class="moremargin">Supervisor: {{$pessoa::dump($agendamento->orientador)['nompes']}}</div>
     <div class="moremargin">Title of the thesis: <i>{{$agendamento->titulo}} </i></div><br>
-    <br><br><br><br><br><br>
+    <div class="importante">
+        {!! $configs->important !!}
+    </div><br>
     <p>
         <i>Defense's date and time:  </i> <b> {{Carbon\Carbon::parse($agendamento->data_horario)->format('F jS\, Y \a\t g a')}} (Brasília's Time)</b> <br> 
         <i>Place:</i> <b> {{$agendamento->sala}} </b> - FFLCH Administration 
@@ -114,7 +116,11 @@
         @endforeach
     </table>
 
-    <br><br><br><br><br><br>
+    <br>
+	<div class="importante" align="center"> 
+        {!! $configs->regiment !!}
+    </div>
+
     <p align="center">
         Sincerely, 
 		<br>
@@ -122,7 +128,7 @@
             {{Auth::user()->name}} @if($pessoa::cracha(Auth::user()->codpes)) - Defenses of Master and Doctorate {{$pessoa::cracha(Auth::user()->codpes)['nomorg']}}/USP @endif 
 		</b>
     </p>
-    <br><br><br><br><br><br>
+    <br><br>
     {{$agendamento->dadosProfessor($professor->codpes)['nome'] ?? 'Professor não cadastrado'}}<br>
     {{$agendamento->dadosProfessor($professor->codpes)->endereco ?? ' '}}, {{$agendamento->dadosProfessor($professor->codpes)->bairro ?? ' '}} <br>
     Post Code:{{$agendamento->dadosProfessor($professor->codpes)->cep ?? ' '}} - {{$agendamento->dadosProfessor($professor->codpes)->cidade ?? ' '}}/{{$agendamento->dadosProfessor($professor->codpes)->estado ?? ' '}}
