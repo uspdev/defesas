@@ -39,6 +39,20 @@
 
 <div class="form-group row">
 	<div class="col-sm">
+		<label class="config" for="important">Important Message for Invite</label>  
+		<textarea rows="10" class="form-control" cols="70" name="important">{{$config->important}}</textarea>
+	</div>
+</div>
+
+<div class="form-group row">
+	<div class="col-sm">
+		<label class="config" for="regiment">Article 97 of the USP Graduate's Regiment</label>  
+		<textarea rows="10" class="form-control" cols="70" name="regiment">{{$config->regiment}}</textarea>
+	</div>
+</div>
+
+<div class="form-group row">
+	<div class="col-sm">
 		<label class="config" for="oficio_suplente">Ofício Suplente </label>  
 		<textarea rows="10" class="form-control" cols="70" name="oficio_suplente">{{$config->oficio_suplente}}</textarea> 
 		<span class="badge badge-warning">Token de substituição: %data_oficio_suplente, %nome_sala, %predio </span> 

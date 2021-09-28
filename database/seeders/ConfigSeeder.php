@@ -25,6 +25,12 @@ class ConfigSeeder extends Seeder
             Rua do Lago 717, sala 118 - Post Code: 05508-080",
             'importante_oficio' => '<center> <b>IMPORTANTE!</b> <br> Junto com este ofício, V. Sa está recebendo o EXEMPLAR ORIGINAL do trabalho depositado pelo(a) aluno(a) dentro do prazo regimental e que deverá servir de instrumento para as arguições feitas a(o) candidato(a) no ato da defesa.</center>. ',
             'regimento' => '<center>  <b> Artigo 97 do Regimento de Pós-Graduação da USP </b> <br>	O julgamento da dissertação de mestrado e da tese de doutorado será realizado de acordo com critérios previamente estabelecidos pela respectiva CPG. <br> § 1º - A arguição, após exposição de no máximo 30 minutos realizada pelo candidato, ocorrerá em sessão pública, e não deverá exceder o prazo de três horas para o mestrado, cinco horas para o doutorado (antigo regimento) e quatro horas para alunos do novo regimento (banca com 3 examinadores). </center></b>',
+            'important' => "<center> <b>IMPORTANT</b> <br> With this letter, you are receiving the ORIGINAL EXEMPLARY of the thesis deposited by the student withing the regimental deadline and it must be used as instrument to the inquiries made to the candidate in the defense.</center>.",
+            'regiment' => "<center>  <b> Article 97 of the USP Graduate’s Regiment </b> <br>The judgment of the master's thesis and doctoral thesis will be carried out according to with criteria previously established by the respective CPG.<br><br>
+            § 1 - The argument, after exposure of a maximum of 30 minutes made by the candidate,
+            will take place in a public session, and should not exceed the three-hour period for the
+            master's, five hours for the doctorate (previous regiment) and four hours for students of
+            the new regiment (bank with 3 examiners). </center></b>",
             'oficio_suplente' => '<p> Venho, pelo presente, informar que seu nome foi aprovado pela Comissão de Pós-Graduação para, na qualidade de </b>membro suplente</b>, integrar a banca examinadora do(a) aluno(a) supracitado(a).</p> 
             <p> A defesa está prevista para o dia <b>%data_oficio_suplente</b>, no(a) %nome_sala do Prédio da %predio.</p> 
             <p>Na impossibilidade do comparecimento de um dos membros titulares, V. Sa. será convidado(a) a integrar a referida banca, motivo pelo qual, segue anexo a versão PDF do trabalho.',
