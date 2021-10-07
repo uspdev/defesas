@@ -1,59 +1,16 @@
-@extends('pdfs.fflch')
 @inject('pessoa','Uspdev\Replicado\Pessoa')
 
-@section('styles_head')
-<style>
-  /**
-  @page { margin: 100px 100px 25px 25px; }
-  header { position: fixed; top: -60px; left: 0px; right: 0px; height: 100px; }
-  footer { position: fixed; bottom: -60px; left: 0px; right: 0px; height: 50px; }
-  .page-break {
-      page-break-after: always;
-      margin-top:160px;
-  }
-  p:last-child { page-break-after: never; }
-  .content {
-      margin-top:160px;
-  }
-  **/
-  #footer {
-    position: fixed;
-    bottom: -1cm;
-    left: 0px;
-    right: 0px;
-    text-align: center;
-    border-top: 1px solid gray;
-    width: 18.5cm;
-    height: 100px;
-  }
-  .page-break {
-    page-break-after: always;
-    margin-top:160px;
-  }
-  p:last-child {
-    page-break-after: never; 
-  }
-  .content {
-    margin-top:0px;
-  }
+@extends('laravel-fflch-pdf::main')
+@section('other_styles')
+<style type="text/css">
+    body{
+        margin-top: 0.2em; font-family: DejaVu Sans, sans-serif; font-size: 12px;
+    }
+    #footer{
+        text-align:center;
+    }
 </style>
-@endsection('styles_head')
-
-@section('header')
-  <table style='width:100%'>
-    <tr>
-      <td style='width:20%' style='text-align:left;'>
-        <img src='images/logo-fflch.png' width='100px'/>
-      </td>
-      <td style='width:80%'; style='text-align:center;'>
-        <p align='center'><b>FACULDADE DE FILOSOFIA, LETRAS E CIÊNCIAS HUMANAS</b>
-        <br>Universidade de São Paulo<br>
-        Serviço de Pós-Graduação</p>
-      </td>
-    </tr>
-  </table>
-  <hr>
-@endsection('header')
+@endsection('other_styles')
 
 @section('content')
   <b>
@@ -73,7 +30,7 @@
     </table>
   </b> 
 
-  <hr>
+  <hr style="width: 18.6cm;">
     <b>
       <table>
         <tr> 
@@ -97,14 +54,14 @@
           <td>  (&nbsp;&nbsp; ) </td> 
         </tr>
       </table>
-      <hr>
+      <hr style="width: 18.6cm;">
       <p> 
         <u> PASSAGENS, HOTEL E DIÁRIAS: <u>
       </p> 
     </b> 
   
   @foreach($professores as $professor)
-    <table style="border: 1px solid black; border-spacing: 5px; width: 18cm;">
+    <table style="border: 1px solid black; border-spacing: 5px; width: 18.6cm;">
       <tr> 
         <td>
           Prof: <b> {{$agendamento->dadosProfessor($professor->codpes)->nome ?? 'Professor não cadastrado'}}  </b>
@@ -148,8 +105,9 @@
     </table> 
     <br/>
   @endforeach
-  <div id="footer">
-    {!! $configs->rodape_oficios !!}
-  </div>
-  <p style="page-break-before: always">&nbsp;</p>
+  <p class="page-break"></p> 
 @endsection('content')
+
+@section('footer')
+    {!! $configs->rodape_oficios !!}
+@endsection('footer')

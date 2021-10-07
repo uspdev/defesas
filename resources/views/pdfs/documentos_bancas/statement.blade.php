@@ -1,12 +1,9 @@
 @inject('pessoa','Uspdev\Replicado\Pessoa')
 @inject('replicado','App\Utils\ReplicadoUtils')
 
-@extends('pdfs.fflch')
-@section('styles_head')
+@extends('laravel-fflch-pdf::main')
+@section('other_styles')
 <style type="text/css">
-    #headerFFLCH {
-        font-size: 14px; width: 17cm; text-align:center; font-weight:bold;
-    }
     .data_hoje{
         margin-left: 10cm; margin-bottom:0.8cm; 
     }
@@ -25,11 +22,15 @@
     .rodapeFFLCH{
         padding-top:3cm; text-align: center;
     }
+    p.recuo {
+        text-indent: 0.5em;
+        direction: rtl;
+    }
     .moremargin {
         margin-bottom: 0.15cm;
     }
     .importante {
-        border:1px solid; margin-top:0.3cm; margin-bottom:0.3cm; width: 15cm; font-size:12px; margin-left:1.5cm;
+        border:1px solid; margin-top:0.3cm; margin-bottom:0.3cm; width: 15cm; font-size:12px; margin-left:0.5cm;
     }
     .negrito {
         font-weight: bolder;
@@ -50,45 +51,18 @@
     body{
         margin-top: 0.2em; margin-left: 1.8em; font-family: DejaVu Sans, sans-serif; font-size: 12px;
     }
-    #footer {
-        position: fixed;
-        bottom: -1cm;
-        left: 0px;
-        right: 0px;
-        text-align: center;
-        border-top: 1px solid gray;
-        width: 18.5cm;
-        height: 100px;
-    }
-    .page-break {
-        page-break-after: always;
-        margin-top:160px;
+    #footer{
+        text-align:center;
     }
 </style>
-@endsection('styles_head')
-
-@section('header')
-  <table style='width:100%'>
-    <tr>
-      <td style='width:20%' style='text-align:left;'>
-        <img src='images/logo-fflch.png' width='100px'/>
-      </td>
-      <td style='width:80%'; style='text-align:center;'>
-        <p align='center'><b>FACULDADE DE FILOSOFIA, LETRAS E CIÊNCIAS HUMANAS</b>
-        <br>University of São Paulo<br>
-        Graduate Service</p>
-      </td>
-    </tr>
-  </table>
-  <br>
-@endsection('header')
+@endsection('other_styles')
 
 @section('content')
 
     <h1 align="center"> STATEMENT OF PARTICIPATION </h1>
     <br><br><br>
 
-    <p class="justificar" style="line-height: 190%;">  
+    <p class="recuo justificar" style="line-height: 190%;">  
         
         {!!$configs->statement!!}
     </p> <br><br>
@@ -106,7 +80,8 @@
         @php(setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese'))
         Graduate Studies Services of University of São Paulo, {{Carbon\Carbon::parse($agendamento->data_horario)->format('F jS\, Y')}}    
     </div><br>
-    <div id="footer">
-        {!! $configs->footer !!}
-    </div>
 @endsection('content')
+
+@section('footer')
+    {!! $configs->footer !!}
+@endsection('footer')
