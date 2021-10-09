@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5cdb28081e4f9f05087c511409ab2a98",
+    "content-hash": "6954e9b46068b0fe1008b627d8f5548e",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1121,6 +1121,53 @@
                 "source": "https://github.com/FakerPHP/Faker/tree/v1.16.0"
             },
             "time": "2021-09-06T14:53:37+00:00"
+        },
+        {
+            "name": "fflch/laravel-fflch-pdf",
+            "version": "1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fflch/laravel-fflch-pdf.git",
+                "reference": "c4281e02b2ee1c374ad1b7530cf41e80dbc86009"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fflch/laravel-fflch-pdf/zipball/c4281e02b2ee1c374ad1b7530cf41e80dbc86009",
+                "reference": "c4281e02b2ee1c374ad1b7530cf41e80dbc86009",
+                "shasum": ""
+            },
+            "require": {
+                "barryvdh/laravel-dompdf": "^0.8.6"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Fflch\\LaravelFflchPdf\\LaravelFflchPdfServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Fflch\\LaravelFflchPdf\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Thiago Gomes Verissimo",
+                    "email": "thiago.verissimo@usp.br"
+                }
+            ],
+            "description": "fflch pdf for laravel",
+            "support": {
+                "issues": "https://github.com/fflch/laravel-fflch-pdf/issues",
+                "source": "https://github.com/fflch/laravel-fflch-pdf/tree/1.0.5"
+            },
+            "time": "2021-10-06T20:18:00+00:00"
         },
         {
             "name": "fideloper/proxy",

@@ -1,42 +1,10 @@
-@extends('pdfs.fflch')
+@inject('pessoa','Uspdev\Replicado\Pessoa')
 
-@section('styles_head')
+@extends('laravel-fflch-pdf::main')
+@section('other_styles')
 <style type="text/css">
     body{
         margin-top: 0px; margin-left:3em; font-family: DejaVu Sans, sans-serif; font-size: 12px;
-    }
-    #headerFFLCH {
-        font-size: 14px; width: 17cm; text-align:center; font-weight:bold;
-    }
-    .data_hoje{
-        margin-left: 10cm; margin-bottom:0.8cm; 
-    }
-    .conteudo{ 
-        margin: 1cm; 
-    }
-    .boxSuplente {
-        border: 1px solid; padding: 4px;
-    }
-    .boxPassagem {
-        border: 1px solid; padding: 4px; text-align: justify; width:15cm;
-    }
-    .oficioSuplente{
-        text-align: justify; 
-    }
-    p.recuo {
-        text-indent: 0.5cm;
-    }
-    .moremargin {
-        margin-bottom: 0.15cm;
-    }
-    .importante {
-        border:1px solid; margin-top:0.3cm; margin-bottom:0.3cm; width: 15cm; font-size:12px; margin-left:0.5cm;
-    }
-    .negrito {
-        font-weight: bolder;
-    }
-    .justificar{
-        text-align: justify; width: 15cm; margin-left:0.5cm;
     }
     table{
         border-collapse: collapse;
@@ -48,27 +16,22 @@
     tr, td {
         border: 1px #000 solid; padding: 1
     }
+    .data_hoje{
+        margin-left: 11cm; margin-bottom:0.8cm; 
+    }
+    .justificar{
+        text-align: justify; width: 15cm; margin-left:0.5cm;
+    }
+    .importante {
+        border:1px solid; margin-top:0.3cm; margin-bottom:0.3cm; width: 15cm; font-size:12px; margin-left:0.5cm;
+    }
+    #footer{
+      text-align:center;
+    }
 </style>
-@endsection('styles_head')
-
-@section('header')
-  <table style='width:100%'>
-    <tr>
-      <td style='width:20%' style='text-align:left;'>
-        <img src='images/logo-fflch.png' width='100px'/>
-      </td>
-      <td style='width:80%'; style='text-align:center;'>
-        <p align='center'><b>FACULDADE DE FILOSOFIA, LETRAS E CIÊNCIAS HUMANAS</b>
-        <br>Universidade de São Paulo<br>
-        Serviço de Pós-Graduação</p>
-      </td>
-    </tr>
-  </table>
-  </br>
-@endsection('header')
+@endsection('other_styles')
 
 @section('content')
-@inject('pessoa','Uspdev\Replicado\Pessoa')
   <div class="data_hoje">
     @php(setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese'))
     São Paulo, {{ strftime('%d de %B de %Y', strtotime('today')) }}
@@ -114,3 +77,7 @@
 		</b>
   </p>
 @endsection('content')
+
+@section('footer')
+    {!! $configs->rodape_oficios !!}
+@endsection('footer')
