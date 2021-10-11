@@ -64,7 +64,7 @@
 
         <p class="recuo justificar" style="line-height: 190%;">
             {!! App\Models\Config::setConfigStatement($agendamento,$bancas,$professor)->statement !!}
-        </p><br><br>
+        </p><br>
 
         <table width="16cm" style="border='0'; margin-left:4cm; align-items: center; justify-content: center;">
             @foreach($bancas as $banca)    
@@ -74,10 +74,10 @@
             </tr>
             @endforeach
         </table>
-        <br><br>
+        <br>
         <div align="right">
             Graduate Studies Services of University of São Paulo, {{Carbon\Carbon::parse($agendamento->data_horario)->format('F jS\, Y')}}    
-        </div><br>
+        </div>
         <p class="page-break"></p> 
     @endforeach
 @endsection('content')

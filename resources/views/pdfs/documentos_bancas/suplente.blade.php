@@ -78,7 +78,7 @@
         <div class="moremargin">Título do Trabalho: <i>{{$agendamento->titulo}} </i></div>
     </div>
 
-    <br><br>
+    <br>
 	<div class="oficioSuplente">Sr(a). Prof(a). @if($pessoa::dump($professor->codpes)) {{$pessoa::dump($professor->codpes)['nompes']}} @else Professor não cadastrado no sistema Pessoas @endif </div>
 
     <div style="text-align:justify;">            

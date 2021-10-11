@@ -65,11 +65,11 @@
         </div><br>
 
         <h1 align="center"> DECLARAÇÃO </h1>
-        <br><br><br>
+        <br><br>
 
         <p class="recuo justificar" style="line-height: 190%;">
             {!! App\Models\Config::setConfigDeclaracao($agendamento,$bancas,$professor)->declaracao !!}
-        </p><br><br>
+        </p><br>
 
         <table width="16cm" style="border='0'; margin-left:4cm; align-items: center; justify-content: center;">
             @foreach($bancas as $banca)    

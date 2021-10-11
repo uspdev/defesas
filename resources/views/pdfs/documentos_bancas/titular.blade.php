@@ -67,10 +67,10 @@
     <div class="moremargin">Candidato(a): <b>{{$agendamento->nome}}</b> </div>
     <div class="moremargin">Área: <b>{{$agendamento->nome_area}}</b> </div>
     <div class="moremargin">Orientador(a) Prof(a). Dr(a). {{$pessoa::dump($agendamento->orientador)['nompes']}}</div>
-    <div class="moremargin">Título do Trabalho: <i>{{$agendamento->titulo}} </i></div><br>
+    <div class="moremargin">Título do Trabalho: <i>{{$agendamento->titulo}} </i></div>
     <div class="importante">
         {!! $configs->importante_oficio !!}
-    </div><br>
+    </div>
     <p>
         <i>Data e hora da defesa:  </i> <b> {{$agendamento->data}}, às {{$agendamento->horario}} </b> <br> 
         <i>Local:</i> <b> {{$agendamento->sala}} </b> - Administração da FFLCH 
@@ -87,7 +87,6 @@
         @endforeach
     </table>
 
-	<br>
 	<div class="importante" align="center"> 
         {!! $configs->regimento !!}
     </div>

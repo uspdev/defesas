@@ -68,7 +68,7 @@
         CEP:{{$agendamento->dadosProfessor($professor->codpes)->cep ?? ' '}} - {{$agendamento->dadosProfessor($professor->codpes)->cidade ?? ' '}}/{{$agendamento->dadosProfessor($professor->codpes)->estado ?? ' '}}
         <br> telefone: {{$agendamento->dadosProfessor($professor->codpes)->telefone ?? ' '}}
         <br>e-mail: {{$agendamento->dadosProfessor($professor->codpes)->email ?? ' '}}
-        <br><br>
+        <br>
 
         <div class="boxSuplente">
             <div class="moremargin">Assunto: Banca Examinadora de <b>{{$agendamento->nivel}}</b></div> 
@@ -78,7 +78,7 @@
             <div class="moremargin">Título do Trabalho: <i>{{$agendamento->titulo}} </i></div>
         </div>
 
-        <br><br>
+        <br>
         <div class="oficioSuplente">Sr(a). Prof(a). {{$agendamento->dadosProfessor($professor->codpes)->nome ?? 'Professor não cadastrado'}} </div>
 
         <div style="text-align:justify;">
