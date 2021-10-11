@@ -31,6 +31,9 @@ class PdfController extends Controller
         if($tipo == 'statements' or $tipo == 'invites'){
             config(['laravel-fflch-pdf.setor' => "Graduate Service"]);
         }
+        else{
+            config(['laravel-fflch-pdf.setor' => "Serviço de Pós-Graduação"]);
+        }
         if($tipo == 'titulares' or $tipo == 'invites'){
             $professores = Banca::where('agendamento_id',$agendamento->id)->where('tipo', 'Titular')->get();
             $bancas = $professores;
@@ -55,6 +58,9 @@ class PdfController extends Controller
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         if($tipo == 'statement' or $tipo == 'invite'){
             config(['laravel-fflch-pdf.setor' => "Graduate Service"]);
+        }
+        else{
+            config(['laravel-fflch-pdf.setor' => "Serviço de Pós-Graduação"]);
         }
         if($tipo == 'titular' or $tipo == 'declaracao' or $tipo == 'invite' or $tipo == 'statement'){
             $professores = Banca::where('agendamento_id',$agendamento->id)->where('tipo', 'Titular')->get();
@@ -103,6 +109,9 @@ class PdfController extends Controller
         $docente = Docente::where('n_usp', '=', $banca->codpes)->first();
         if($tipo == 'auxilio_passagem'){
             config(['laravel-fflch-pdf.setor' => "Serviço de Compras"]);
+        }
+        else{
+            config(['laravel-fflch-pdf.setor' => "Serviço de Pós-Graduação"]);
         }
         if($docente == null){
             $nome = 'Professor';

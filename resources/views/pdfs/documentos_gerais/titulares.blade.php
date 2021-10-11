@@ -88,8 +88,6 @@
                 </tr>
                 @endforeach
             </table>
-
-            <br>
             <div class="importante" align="center">
                 {!! $configs->regimento !!}
             </div>
@@ -98,7 +96,7 @@
                 <br> <b> 
                     {{Auth::user()->name}} @if($pessoa::cracha(Auth::user()->codpes)) - Defesas de Mestrado e Doutorado da {{$pessoa::cracha(Auth::user()->codpes)['nomorg']}}/USP @endif 
                 </b>
-            </div><br><br> 
+            </div><br>
             Ilmo(a). Sr(a). {{$agendamento->dadosProfessor($professor->codpes)['nome'] ?? 'Professor não cadastrado'}}<br>
             {{$agendamento->dadosProfessor($professor->codpes)->endereco ?? ' '}}, {{$agendamento->dadosProfessor($professor->codpes)->bairro ?? ' '}} <br>
             CEP:{{$agendamento->dadosProfessor($professor->codpes)->cep ?? ' '}} - {{$agendamento->dadosProfessor($professor->codpes)->cidade ?? ' '}}/{{$agendamento->dadosProfessor($professor->codpes)->estado ?? ' '}}
