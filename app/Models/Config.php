@@ -74,6 +74,7 @@ class Config extends Model
         else{
             $docenteNome = Agendamento::dadosProfessor($professor->codpes)->nome;
         }
+
         if($agendamento['nivel'] == 'Mestrado'){
             $nivel = "Master's";
         }else{
@@ -81,7 +82,7 @@ class Config extends Model
         }
         $configs['statement'] = str_replace(
             ["%docente_nome","%nivel","%candidato_nome", "%titulo", "%data"], 
-            [$docenteNome,$nivel, $agendamento['nome'], $agendamento['titulo'], Carbon::parse($agendamento['data_horario'])->format('F jS\, Y')], 
+            [$docenteNome,$nivel, $agendamento['nome'], $agendamento->title ?? $agendamento->titulo, Carbon::parse($agendamento['data_horario'])->format('F jS\, Y')], 
             $configs['statement']
         );
     

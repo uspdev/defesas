@@ -55,7 +55,7 @@ class Docente extends Model
     public function getBancasProfessor($codpes, $tipo){
         $agendamentos = [];
         if($tipo == 'Orientador'){
-            $agendamentos = Agendamento::where('orientador',$codpes)->orderBy('data_horario','asc')->get();
+            $agendamentos = Agendamento::where('orientador',$codpes)->orWhere('co_orientador',$codpes)->orderBy('data_horario','asc')->get();
         }
         else{
             $bancas = Banca::where('codpes', $codpes)->where('presidente','Não')->get();

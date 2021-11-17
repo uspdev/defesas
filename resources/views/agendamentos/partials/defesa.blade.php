@@ -11,7 +11,7 @@
             <b>Nível:</b> {{$agendamento->nivel}}</br>
             <b>Programa:</b> {{$agendamento->nome_area}}</br>
             @can('logado')<b>Orientador Votante:</b> {{$agendamento->orientador_votante}}</br>@endcan
-            <b>Orientador:</b> {{$agendamento->dadosProfessor($agendamento->orientador)->nome ?? 'Professor não cadastrado'}}</br>
+            <b>Orientador:</b> {{$agendamento->nome_orientador ?? $agendamento->dadosProfessor($agendamento->orientador)->nome}} @if($agendamento->co_orientador) e {{$agendamento->nome_co_orientador ?? $agendamento->dadosProfessor($agendamento->co_orientador)->nome}} @endif</br>
             <b>Data:</b> {{$agendamento->data}}</br>
             <b>Horário:</b> {{$agendamento->horario}}</br>
             <b>Local:</b> {{$agendamento->sala}}</br>
