@@ -35,10 +35,14 @@ class AgendamentoRequest extends FormRequest
             'sexo' => ['required',Rule::in(['Masculino','Feminino'])],
             'nivel' => ['required',Rule::in($agendamento->nivelOptions())],
             'titulo' => 'required',
+            'title' => 'nullable',
             'area_programa' => ['required',Rule::in(Agendamento::devolverCodProgramas())],
             'sala' => 'required',
             'data_horario' => 'required',
             'orientador' => 'required|integer|codpes',
+            'nome_orientador' => 'nullable',
+            'co_orientador' => 'nullable|integer|codpes',
+            'nome_co_orientador' => 'nullable',
         ];
     }
 

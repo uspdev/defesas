@@ -2,7 +2,10 @@
     <label for="titulo" class="required">Título da Tese</label> 
     <input type="text" name="titulo" class="form-control" value="{{ old('titulo', $agendamento->titulo) }}">
 </div> 
-
+<div class="form-group">
+    <label for="title">Título da Tese em Inglês</label> 
+    <input type="text" name="title" class="form-control" value="{{ old('title', $agendamento->title) }}">
+</div> 
 <div class="form-group row">
     <div class="col-sm ">
         <label for="nome">Nome Completo</label>
@@ -101,7 +104,11 @@
     <div class="col-sm">
         <label for="orientador" class="required">Nº USP Orientador</label>
         <input type="text" name="orientador" class="form-control" value="{{ old('orientador', $agendamento->orientador) }}"> 
-    </div> 
+    </div>
+    <div class="col-sm">
+        <label for="co_orientador">Nº USP do Co-Orientador</label>
+        <input type="text" name="co_orientador" class="form-control" value="{{ old('co_orientador', $agendamento->co_orientador) }}"> 
+    </div>  
 </div>
 
 <div class="row form-group">

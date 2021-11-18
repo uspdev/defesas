@@ -66,8 +66,8 @@
     <div class="moremargin">Subject: @if($agendamento->nivel == 'Mestrado') <b>Master's</b> @else <b>Doctorate's</b> @endif Examination Committee</div> 
     <div class="moremargin">Candidate: <b>{{$agendamento->nome}}</b> </div>
     <div class="moremargin">Area: <b>{{$replicado->nomeAreaProgramaEmIngles($agendamento->area_programa)}}</b> </div>
-    <div class="moremargin">Supervisor: {{$pessoa::dump($agendamento->orientador)['nompes']}}</div>
-    <div class="moremargin">Title of the thesis: <i>{{$agendamento->titulo}} </i></div>
+    <div class="moremargin">Supervisor: {{ $agendamento->nome_orientador ?? $pessoa::dump($agendamento->orientador)['nompes']}} @if($agendamento->co_orientador) and {{$agendamento->nome_co_orientador ?? $agendamento->dadosProfessor($agendamento->co_orientador)->nome}} @endif</div>
+    <div class="moremargin">Title of the thesis: <i>{{$agendamento->title ?? $agendamento->titulo}} </i></div>
     <div class="importante">
         {!! $configs->important !!}
     </div>

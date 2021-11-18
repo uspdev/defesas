@@ -67,6 +67,7 @@ class AgendamentoController extends Controller
         if($validated['nome'] == ''){
             $validated['nome'] = Pessoa::dump($validated['codpes'])['nompes'];
         }
+        $validated['nome_orientador'] = Pessoa::dump($validated['orientador'])['nompes'];
         $agendamento = Agendamento::create($validated);
         //Salva o orientador na banca
         $banca = new Banca;
@@ -75,6 +76,17 @@ class AgendamentoController extends Controller
         $banca->tipo = 'Titular'; 
         $banca->agendamento_id = $agendamento->id;
         $agendamento->bancas()->save($banca);
+        //Salva o co-orientador na banca
+        if($validated['co_orientador']){
+            $validated['nome_co_orientador'] = Pessoa::dump($validated['co_orientador'])['nompes'];
+            $banca = new Banca;
+            $banca->codpes = $validated['co_orientador'];
+            $banca->presidente = 'Não'; 
+            $banca->tipo = 'Titular'; 
+            $banca->agendamento_id = $agendamento->id;
+            $agendamento->bancas()->save($banca);
+        }
+        
         return redirect("/agendamentos/$agendamento->id");
     }
 

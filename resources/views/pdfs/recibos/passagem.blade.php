@@ -43,7 +43,7 @@
 		<li>Programa: <b>{{$agendamento->nome_area}} </b> </li>  
     <li><b>{{$agendamento->nivel}} </b> </li>  
 		<li>Defesa do Sr.(a): <b> {{$agendamento->nome}} </b> </li>  
-		<li>Orientador(a): Prof(a) Dr(a)<b> {{$agendamento->orientador}} </b> </li>
+		<li>Orientador(a): Prof(a) Dr(a)<b> {{$agendamento->nome_orientador ?? $pessoa::dump($agendamento->orientador)['nompes']}} @if($agendamento->co_orientador) e {{$agendamento->nome_co_orientador ?? $agendamento->dadosProfessor($agendamento->co_orientador)->nome}} @endif </b> </li>
     </ul>
 	<div class="justificar" style="text-indent:1cm;" >{!! $configs->agencia_texto !!} </div>
 	<div class="importante">  

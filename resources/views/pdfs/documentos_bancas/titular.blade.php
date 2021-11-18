@@ -66,7 +66,7 @@
     <div class="moremargin">Assunto: Banca Examinadora de <b>{{$agendamento->nivel}}</b></div> 
     <div class="moremargin">Candidato(a): <b>{{$agendamento->nome}}</b> </div>
     <div class="moremargin">Área: <b>{{$agendamento->nome_area}}</b> </div>
-    <div class="moremargin">Orientador(a) Prof(a). Dr(a). {{$pessoa::dump($agendamento->orientador)['nompes']}}</div>
+    <div class="moremargin">Orientador(a) Prof(a). Dr(a). {{ $agendamento->nome_orientador ?? $pessoa::dump($agendamento->orientador)['nompes']}} @if($agendamento->co_orientador) e {{$agendamento->nome_co_orientador ?? $agendamento->dadosProfessor($agendamento->co_orientador)->nome}} @endif</div>
     <div class="moremargin">Título do Trabalho: <i>{{$agendamento->titulo}} </i></div>
     <div class="importante">
         {!! $configs->importante_oficio !!}
