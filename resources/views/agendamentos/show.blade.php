@@ -24,8 +24,9 @@
         </div>
     </div>
     @endcan
+    @can('admins') @include('agendamentos.partials.files') @endcan
     @include('agendamentos.partials.defesa')
     @include('agendamentos.partials.banca')
-    @can('admin') @include('agendamentos.partials.documentos') @endcan
-    @can('admin') @include('agendamentos.partials.recibos') @endcan
+    @can('admins') @include('agendamentos.partials.documentos') @endcan
+    @can('admins') @include('agendamentos.partials.recibos') @endcan
 @endsection('content')

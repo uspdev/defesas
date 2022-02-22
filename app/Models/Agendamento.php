@@ -20,6 +20,11 @@ class Agendamento extends Model
         return $this->hasMany(Banca::class)->orderBy('presidente','desc')->orderBy('tipo', 'desc');
     }
 
+    public function files()
+    {
+        return $this->hasMany(File::class);
+    }
+
     //Função para formatar horário do agendamento
     public function formatDataHorario($agendamento){
         $agendamento->data = Carbon::parse($agendamento->data_horario)->format('d/m/Y');
