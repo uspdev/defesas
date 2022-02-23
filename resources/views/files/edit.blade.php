@@ -10,7 +10,7 @@
         <div class="card-header"><b>Publicação</b></div>
         <div class="card-body">
             <div>
-                <p><b>Nome do Arquivo: </b>{{$file->original_name}}</p>
+                <p><b>Arquivo: </b><a href="/files/{{$file->id}}">{{$file->original_name}}</a></p>
                 <p><b>Tipo: </b>{{$file->tipo}}</p>
             </div>
             <b>Publicar?</b>

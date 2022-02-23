@@ -63,7 +63,7 @@ class FileController extends Controller
     }
 
     public function show(File $file){
-        $this->authorize('admin');
+        $this->authorize('biblioteca');
         return Storage::download($file->path, $file->original_name);
     }
 
