@@ -29,5 +29,11 @@ class AuthServiceProvider extends ServiceProvider
             return true;
         });
 
+        Gate::define('biblioteca', function ($user) {
+            if(Gate::allows('admin')) return true;
+            $biblioteca = explode(',', trim(env('CODPES_BIBLIOTECA')));
+            return in_array($user->codpes,$biblioteca);
+        });
+
     }
 }
