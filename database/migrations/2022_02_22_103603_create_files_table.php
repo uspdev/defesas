@@ -19,10 +19,10 @@ class CreateFilesTable extends Migration
             $table->string('original_name');
             $table->string('path');
             $table->string('tipo');
-            $table->string('url');
+            $table->string('url')->nullable();
             $table->integer('status');
             $table->foreignId('user_id_admin')->constrained('users');
-            $table->foreignId('user_id_biblioteca')->constrained('users');
+            $table->foreignId('user_id_biblioteca')->nullable()->constrained('users');
             $table->integer('agendamento_id')->unsigned();
             $table->foreign('agendamento_id')->references('id')->on('agendamentos');        
         });

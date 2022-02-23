@@ -41,6 +41,13 @@ $dev =  [
     ],
 ];
 
+$biblioteca =  [
+    [
+        'text' => '<i class="fas fa-plus-square"></i> Defesas a serem Publicadas',
+        'url'  => '/files',
+    ],
+];
+
 $right_menu = [
     [
         'text' => '<i class="fas fa-cog"></i>',
@@ -86,6 +93,11 @@ return [
             'text'    => '<i class="fas fa-chalkboard-teacher"></i> Em desenvolvimento',
             'submenu' => $dev,
             'can' => 'admin',
+        ],
+        [
+            'text'    => '<i class="fas fa-file-export"></i> Publicação',
+            'submenu' => $biblioteca,
+            'can' => 'biblioteca',
         ],
     ],
     'right_menu' => $right_menu,
