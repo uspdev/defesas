@@ -69,7 +69,9 @@
       </tr>
       <tr> 
         <td>
-          PASSAGEM: __cidade__/__estado__ (_____)/_______ Ida: ___/___ Hora: ____ Volta: ____/____ Hora: _____
+          PASSAGEM: {{$agendamento->dadosProfessor($professor->codpes)->cidade ?? ''}}/
+          {{$agendamento->dadosProfessor($professor->codpes)->estado ?? ''}}
+          (_____)/_______ Ida: ___/___ Hora: ____ Volta: ____/____ Hora: _____
         </td>
       </tr>
       <tr>

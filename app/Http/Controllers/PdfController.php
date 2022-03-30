@@ -34,7 +34,8 @@ class PdfController extends Controller
         else{
             config(['laravel-fflch-pdf.setor' => "Serviço de Pós-Graduação"]);
         }
-        if($tipo == 'titulares' or $tipo == 'invites'){
+
+        if(in_array($tipo, ['titulares', 'invites', 'documento_zero', 'statements', 'declaracoes', 'recibos'])){
             $professores = Banca::where('agendamento_id',$agendamento->id)->where('tipo', 'Titular')->get();
             $bancas = $professores;
         }
