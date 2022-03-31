@@ -85,7 +85,3 @@
         </b>
     </div> 
 @endsection('content')
-
-@section('footer')
-    {!! $configs->rodape_oficios !!}
-@endsection('footer')

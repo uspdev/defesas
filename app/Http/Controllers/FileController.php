@@ -14,7 +14,7 @@ class FileController extends Controller
     public function store(Request $request){
         $this->authorize('admin');
         $request->validate([
-            'file' => 'required|mimetypes:application/pdf|max:61440',
+            'file' => 'required|mimetypes:application/pdf|max:122880',
             'tipo' => 'required',
             'agendamento_id' => 'required|integer|exists:agendamentos,id', 
         ]);
