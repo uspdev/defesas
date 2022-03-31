@@ -44,7 +44,7 @@ $dev =  [
 $biblioteca =  [
     [
         'text' => '<i class="fas fa-plus-square"></i> Defesas a serem Publicadas',
-        'url'  => '/files',
+        'url'  => '/teses',
     ],
 ];
 

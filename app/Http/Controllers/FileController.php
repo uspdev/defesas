@@ -7,43 +7,10 @@ use Illuminate\Http\Request;
 use Storage;
 use Auth;
 use App\Utils\ReplicadoUtils;
+use App\Models\Agendamento;
 
 class FileController extends Controller
 {
-
-    public function index(Request $request)
-    {
-        $this->authorize('biblioteca');
-        $query = File::where('status',0);
-        $files = $query->paginate(20);
-        
-        if ($files->count() == null) {
-            $request->session()->flash('alert-danger', 'Não há registros!');
-        }
-        
-        return view('files.index')->with('files',$files);
-    }
-
-    public function edit(File $file){
-        $this->authorize('biblioteca');
-        $agendamento = $file->agendamento;
-        $agendamento->formatDataHorario($agendamento);
-        $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
-        return view('files.edit', compact('file', 'agendamento'));
-    }
-
-    public function update(File $file, Request $request){
-        $this->authorize('biblioteca');
-        $validated = $request->validate([
-            'status' => 'required',
-            'url' => 'required',
-        ]);
-        $validated['user_id_biblioteca'] = Auth::user()->id;
-        if($validated['status'] == "1") $validated['status'] = 1;
-        $file->update($validated);
-        return redirect("/agendamentos/".$file->agendamento->id);
-    }
-
     public function store(Request $request){
         $this->authorize('admin');
         $request->validate([
@@ -56,9 +23,9 @@ class FileController extends Controller
         $file->original_name = $request->file('file')->getClientOriginalName();
         $file->path = $request->file('file')->store('.');
         $file->tipo = $request->tipo;
-        $file->status = 0;
         $file->user_id_admin = Auth::user()->id;
         $file->save();
+        Agendamento::where('id', $request->agendamento_id)->update(['status' => 0]);
         return back();
     }
 

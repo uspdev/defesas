@@ -99,4 +99,8 @@ class Agendamento extends Model
         }
         return new Docente;
     }
+
+    public function nomeUsuario($id){
+        return User::where('id',$id)->first()->name;
+    }
 }
