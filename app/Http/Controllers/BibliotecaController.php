@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agendamento;
-use App\Models\Docente;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Auth;
