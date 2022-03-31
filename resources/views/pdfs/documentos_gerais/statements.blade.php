@@ -81,7 +81,3 @@
         <p class="page-break"></p> 
     @endforeach
 @endsection('content')
-
-@section('footer')
-    {!! $configs->footer !!}
-@endsection('footer')

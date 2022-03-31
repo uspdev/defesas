@@ -9,6 +9,7 @@ use App\Http\Controllers\PdfController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\DevController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\BibliotecaController;
 
 // rotas para login/logout
 Route::get('/', [indexController::class, 'index'])->name('index');
@@ -18,7 +19,11 @@ Route::get('/anteriores',[indexController::class, 'exibirDefesasAnteriores'])->n
 Route::resource('agendamentos', AgendamentoController::class);
 Route::resource('docentes',DocenteController::class);
 Route::resource('bancas', BancaController::class);
-Route::resource('files', FileController::class);
+Route::resource('files', FileController::class)->only(['store', 'show', 'destroy']);
+
+// rotas para biblioteca
+Route::get('/teses',[BibliotecaController::class, 'index']);
+Route::patch('/teses/{agendamento}/publish',[BibliotecaController::class, 'publish']);
 
 // rotas para pdfs
 Route::get('/agendamentos/{agendamento}/{tipo}',[PdfController::class, 'gerarDocumentosGerais']);

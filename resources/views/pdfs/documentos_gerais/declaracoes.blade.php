@@ -88,7 +88,3 @@
         <p class="page-break"></p> 
     @endforeach
 @endsection('content')
-
-@section('footer')
-    {!! $configs->rodape_oficios !!}
-@endsection('footer')

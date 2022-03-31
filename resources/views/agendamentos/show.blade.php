@@ -3,6 +3,7 @@
 @section('content')
     @inject('pessoa','Uspdev\Replicado\Pessoa')
     @inject('replicado','App\Utils\ReplicadoUtils')
+    @include('flash')
     @can('admin')
     <div class="row" style="margin-bottom: 0.5em;">
         <div class="col-sm">
@@ -26,7 +27,12 @@
     @endcan
     @include('agendamentos.partials.defesa')
     @include('agendamentos.partials.banca')
-    @can('admin') @include('agendamentos.partials.files') @endcan
+    @can('biblioteca') @include('agendamentos.partials.files') @endcan
+    @can('biblioteca')
+        @if($agendamento->files->count() > 0) 
+            @include('agendamentos.partials.biblioteca')
+        @endif
+    @endcan
     @can('admin') @include('agendamentos.partials.documentos') @endcan
     @can('admin') @include('agendamentos.partials.recibos') @endcan
 @endsection('content')
