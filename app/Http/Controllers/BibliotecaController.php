@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agendamento;
-use App\Models\Docente;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Auth;
@@ -17,27 +16,7 @@ class BibliotecaController extends Controller
     {
         $this->authorize('biblioteca');
         $query = Agendamento::where('status', 0)->orderBy('data_horario', 'asc');
-        $query2 = Docente::orderBy('nome', 'asc');
-        if($request->filtro_busca == 'numero_nome') {
-            $query->where('codpes', '=', $request->busca)->orderBy('data_horario', 'asc');
-            if($query->count() == null){
-                $query->orWhere('nome', 'LIKE', "%$request->busca%");
-            }
-            $query2->where('nome', 'LIKE', "%$request->busca%");
-            foreach($query2->get() as $orientador){
-                $query->orWhere('orientador', '=', $orientador->n_usp);
-            }
-        } 
-        elseif($request->filtro_busca == 'data'){
-            $validated = $request->validate([
-                'busca_data' => 'required|data',
-            ]);        
-            $data = Carbon::CreatefromFormat('d/m/Y H:i', $validated['busca_data']." 00:00");
-            $query->whereDate('data_horario','=', $data);
-        }
-        else{
-            $query->where('data_horario','>=',date('Y-m-d H:i:s'));
-        }
+        
         $agendamentos = $query->paginate(20);
         
         if ($agendamentos->count() == null) {
