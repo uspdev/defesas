@@ -95,7 +95,8 @@ class AgendamentoController extends Controller
         //$this->authorize('admin');
         $agendamento->formatDataHorario($agendamento);
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
-        return view('agendamentos.show', compact('agendamento'));
+        $dadosJanus = ReplicadoUtils::retornarDadosJanus($agendamento->codpes);
+        return view('agendamentos.show', compact(['agendamento','dadosJanus']));
     }
 
     public function edit(Agendamento $agendamento)

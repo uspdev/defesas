@@ -137,5 +137,29 @@ class ReplicadoUtils {
         }
         return false;
     }
+
+    public static function retornarDadosJanus($codpes){
+        $query = "SELECT A.codpes, T.tittrb, T.rsutrb, T.palcha, 
+                  T.tittrbigl, T.rsutrbigl, T.palchaigl 
+                  FROM AGPROGRAMA AS A INNER JOIN DDTDEPOSITOTRABALHO AS D
+                  ON A.codpes = D.codpes
+                  INNER JOIN DDTENTREGATRABALHO AS T                  
+                  ON D.coddpodgttrb = T.coddpodgttrb
+                  WHERE A.codpes = convert(int, :codpes)
+                  AND A.codare = D.codare
+                  AND A.numseqpgm = D.numseqpgm";
+        $param = [
+            'codpes' => $codpes,
+        ];
+
+        $result = DBreplicado::fetchAll($query, $param);
+
+        if(!empty($result)) {
+            $result = Uteis::utf8_converter($result);
+            $result = Uteis::trim_recursivo($result);
+            return $result;
+        }
+        return false;
+    }
 } 
 
