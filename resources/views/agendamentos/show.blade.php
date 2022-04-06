@@ -26,6 +26,7 @@
     </div>
     @endcan
     @include('agendamentos.partials.defesa')
+    @include('agendamentos.partials.janus')
     @include('agendamentos.partials.banca')
     @can('biblioteca') @include('agendamentos.partials.files') @endcan
     @can('biblioteca')

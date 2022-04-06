@@ -45,6 +45,6 @@ class BibliotecaController extends Controller
         $agendamento->save();
         
         $agendamento->formatDataHorario($agendamento);
-        return view('agendamentos.show', compact('agendamento'));
+        return redirect("/agendamentos/$agendamento->id");
     }
 }
