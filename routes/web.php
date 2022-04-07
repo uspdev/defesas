@@ -24,6 +24,7 @@ Route::resource('files', FileController::class)->only(['store', 'show', 'destroy
 // rotas para biblioteca
 Route::get('/teses',[BibliotecaController::class, 'index']);
 Route::patch('/teses/{agendamento}/publish',[BibliotecaController::class, 'publish']);
+Route::get('/teses/publicadas',[BibliotecaController::class, 'published']);
 
 // rotas para pdfs
 Route::get('/agendamentos/{agendamento}/{tipo}',[PdfController::class, 'gerarDocumentosGerais']);

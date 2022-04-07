@@ -25,6 +25,19 @@ class BibliotecaController extends Controller
         return view('biblioteca.index')->with('agendamentos',$agendamentos);
     }
 
+    public function published(Request $request)
+    {
+        $this->authorize('biblioteca');
+        $query = Agendamento::where('status', 1)->orderBy('data_horario', 'asc');
+        
+        $agendamentos = $query->paginate(20);
+        
+        if ($agendamentos->count() == null) {
+            $request->session()->flash('alert-danger', 'Não há registros!');
+        }
+        return view('biblioteca.index')->with('agendamentos',$agendamentos);
+    }
+
     public function show(Agendamento $agendamento)
     {
         $this->authorize('biblioteca');
