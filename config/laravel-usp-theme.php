@@ -46,6 +46,10 @@ $biblioteca =  [
         'text' => '<i class="fas fa-plus-square"></i> Defesas a serem Publicadas',
         'url'  => '/teses',
     ],
+    [
+        'text' => '<i class="fas fa-plus-square"></i> Defesas Publicadas',
+        'url'  => '/teses/publicadas',
+    ],
 ];
 
 $right_menu = [

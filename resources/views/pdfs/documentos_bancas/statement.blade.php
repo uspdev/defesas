@@ -81,3 +81,7 @@
         Graduate Studies Services of University of São Paulo, {{Carbon\Carbon::parse($agendamento->data_horario)->format('F jS\, Y')}}    
     </div><br>
 @endsection('content')
+
+@section('footer')
+    {!! $configs->footer !!}
+@endsection('footer') 

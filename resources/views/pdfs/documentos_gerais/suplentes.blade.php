@@ -1,6 +1,6 @@
 @inject('pessoa','Uspdev\Replicado\Pessoa')
 
-@extends('laravel-fflch-pdf::main')
+@extends('pdfs.fflch')
 @section('other_styles')
 <style type="text/css">
     .data_hoje{
