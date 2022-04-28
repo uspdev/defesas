@@ -7,6 +7,21 @@
 @section('content')
     @inject('pessoa','Uspdev\Replicado\Pessoa')
     @include('flash')
+    <div class="card">
+        <div class="card-header">Busca</div>
+        <div class="card-body">
+            <form method="GET" action="{{ $action }}">
+                <div class="row">
+                    <div class="col-sm">
+                        <input type="text" name="term" class="form-control"/>
+                    </div>
+                    <div class=" col-auto">
+                        <button type="submit" class="btn btn-success">Buscar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
     <table class="table table-striped">
         <theader>
             <tr>

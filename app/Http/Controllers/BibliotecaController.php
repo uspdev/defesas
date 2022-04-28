@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Auth;
 use Uspdev\Replicado\Pessoa;
 use App\Utils\ReplicadoUtils;
+use App\Models\Biblioteca;
 
 class BibliotecaController extends Controller
 {
@@ -15,27 +16,31 @@ class BibliotecaController extends Controller
     public function index(Request $request)
     {
         $this->authorize('biblioteca');
-        $query = Agendamento::where('status', 0)->orderBy('data_horario', 'asc');
         
-        $agendamentos = $query->paginate(20);
-        
+        $agendamentos = Biblioteca::returnSchedules($request);
+
         if ($agendamentos->count() == null) {
             $request->session()->flash('alert-danger', 'Não há registros!');
         }
-        return view('biblioteca.index')->with('agendamentos',$agendamentos);
+
+        $action = '/teses';
+
+        return view('biblioteca.index', compact(['agendamentos', 'action']));
     }
 
     public function published(Request $request)
     {
         $this->authorize('biblioteca');
-        $query = Agendamento::where('status', 1)->orderBy('data_horario', 'asc');
-        
-        $agendamentos = $query->paginate(20);
+
+        $agendamentos = Biblioteca::returnSchedules($request, 1);
         
         if ($agendamentos->count() == null) {
             $request->session()->flash('alert-danger', 'Não há registros!');
         }
-        return view('biblioteca.index')->with('agendamentos',$agendamentos);
+
+        $action = '/teses/publicadas';
+
+        return view('biblioteca.index', compact(['agendamentos', 'action']));
     }
 
     public function show(Agendamento $agendamento)
