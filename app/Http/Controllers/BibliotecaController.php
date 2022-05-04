@@ -19,10 +19,6 @@ class BibliotecaController extends Controller
         
         $agendamentos = Biblioteca::returnSchedules($request);
 
-        if ($agendamentos->count() == null) {
-            $request->session()->flash('alert-danger', 'Não há registros!');
-        }
-
         $action = '/teses';
 
         return view('biblioteca.index', compact(['agendamentos', 'action']));
@@ -33,10 +29,6 @@ class BibliotecaController extends Controller
         $this->authorize('biblioteca');
 
         $agendamentos = Biblioteca::returnSchedules($request, 1);
-        
-        if ($agendamentos->count() == null) {
-            $request->session()->flash('alert-danger', 'Não há registros!');
-        }
 
         $action = '/teses/publicadas';
 

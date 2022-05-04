@@ -34,7 +34,7 @@
             </tr>
         </theader>
         <tbody>
-        @foreach ($agendamentos as $agendamento)
+        @forelse ($agendamentos as $agendamento)
             <tr>
                 <td>{{ $agendamento->codpes }}</td>
                 <td><a href="/agendamentos/{{$agendamento->id}}">{{ $agendamento->nome }}</a></td>
@@ -45,7 +45,11 @@
                     <a href="/agendamentos/{{$agendamento->id}}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
                 </td>
             </tr>
-        @endforeach
+        @empty
+            <tr>
+                <td colspan='7'>Não foi encontrado nenhum registro</td>
+            </tr>
+        @endforelse
         </tbody>
     </table>
     {{ $agendamentos->appends(request()->query())->links() }}

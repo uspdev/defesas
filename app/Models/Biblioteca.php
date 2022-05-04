@@ -9,9 +9,7 @@ use Illuminate\Http\Request;
 
 class Biblioteca
 {
-    public static function returnSchedules(Request $request, $status = 0){
-        $request->validate(['term' => 'nullable']);
-        
+    public static function returnSchedules(Request $request, $status = 0){        
         $query = Agendamento::where('status', $status)->orderBy('data_horario', 'asc');
         
         $query->when($request->term, function($query) use ($request){
