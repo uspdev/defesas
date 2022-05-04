@@ -26,7 +26,7 @@ class DocenteRequest extends FormRequest
     {
         $rules = [
             'nome' => 'required',
-            'n_usp' => 'required|codpes',
+            'n_usp' => ['required'],
             'cpf' => ['cpf'],
             'tipo' => Rule::in(Docente::documentoOptions()),
             'documento' => '',
@@ -48,9 +48,11 @@ class DocenteRequest extends FormRequest
         ];
         if ($this->method() == 'PATCH' || $this->method() == 'PUT'){
             array_push($rules['cpf'], 'unique:docentes,cpf,'.$this->docente->id);
+            array_push($rules['n_usp'], 'unique:docentes,n_usp,'.$this->docente->id);
         }
         else{
             array_push($rules['cpf'], 'unique:docentes');
+            array_push($rules['n_usp'], 'unique:docentes');
         }
         return $rules;
     }

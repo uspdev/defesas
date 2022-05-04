@@ -7,6 +7,21 @@
 @section('content')
     @inject('pessoa','Uspdev\Replicado\Pessoa')
     @include('flash')
+    <div class="card">
+        <div class="card-header">Busca</div>
+        <div class="card-body">
+            <form method="GET" action="{{ $action }}">
+                <div class="row">
+                    <div class="col-sm">
+                        <input type="text" name="term" class="form-control"/>
+                    </div>
+                    <div class=" col-auto">
+                        <button type="submit" class="btn btn-success">Buscar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
     <table class="table table-striped">
         <theader>
             <tr>
@@ -19,7 +34,7 @@
             </tr>
         </theader>
         <tbody>
-        @foreach ($agendamentos as $agendamento)
+        @forelse ($agendamentos as $agendamento)
             <tr>
                 <td>{{ $agendamento->codpes }}</td>
                 <td><a href="/agendamentos/{{$agendamento->id}}">{{ $agendamento->nome }}</a></td>
@@ -30,7 +45,11 @@
                     <a href="/agendamentos/{{$agendamento->id}}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
                 </td>
             </tr>
-        @endforeach
+        @empty
+            <tr>
+                <td colspan='7'>Não foi encontrado nenhum registro</td>
+            </tr>
+        @endforelse
         </tbody>
     </table>
     {{ $agendamentos->appends(request()->query())->links() }}
