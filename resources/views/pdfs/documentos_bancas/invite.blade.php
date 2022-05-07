@@ -61,7 +61,7 @@
 
     <div align="right">
         São Paulo, {{date('F jS\, Y')}}
-    </div><br><br>
+    </div><br>
 
     <div class="moremargin">Subject: @if($agendamento->nivel == 'Mestrado') <b>Master's</b> @else <b>Doctorate's</b> @endif Examination Committee</div> 
     <div class="moremargin">Candidate: <b>{{$agendamento->nome}}</b> </div>
@@ -97,7 +97,7 @@
             {{Auth::user()->name}} @if($pessoa::cracha(Auth::user()->codpes)) - Defenses of Master and Doctorate {{$pessoa::cracha(Auth::user()->codpes)['nomorg']}}/USP @endif 
 		</b>
     </p>
-    <br><br>
+    <br>
     {{$agendamento->dadosProfessor($professor->codpes)['nome'] ?? 'Professor não cadastrado'}}<br>
     {{$agendamento->dadosProfessor($professor->codpes)->endereco ?? ' '}}, {{$agendamento->dadosProfessor($professor->codpes)->bairro ?? ' '}} <br>
     Post Code:{{$agendamento->dadosProfessor($professor->codpes)->cep ?? ' '}} - {{$agendamento->dadosProfessor($professor->codpes)->cidade ?? ' '}}/{{$agendamento->dadosProfessor($professor->codpes)->estado ?? ' '}}

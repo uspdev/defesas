@@ -63,7 +63,7 @@
             <div align="right">
                 @php(setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese'))
                 São Paulo, {{ strftime('%d de %B de %Y', strtotime('today')) }}
-            </div><br><br>
+            </div><br>
 
             <div class="moremargin">Assunto: Banca Examinadora de <b>{{$agendamento->nivel}}</b></div> 
             <div class="moremargin">Candidato(a): <b>{{$agendamento->nome}}</b> </div>
