@@ -35,6 +35,7 @@
 @section('content')
 	@inject('pessoa','Uspdev\Replicado\Pessoa')
 	@foreach($professores as $professor)
+		<br><br>
 		@if($agendamento->dadosProfessor($professor->codpes)->docente_usp == 'sim')
 			<table width="18cm" class="negrito">
 				<tr>

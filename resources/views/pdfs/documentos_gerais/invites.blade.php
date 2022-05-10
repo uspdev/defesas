@@ -62,7 +62,7 @@
         <p>
             <div align="right">
                 São Paulo, {{date('F jS\, Y')}}
-            </div><br><br>
+            </div><br>
 
             <div class="moremargin">Subject: @if($agendamento->nivel == 'Mestrado') <b>Master's</b> @else <b>Doctorate's</b> @endif Examination Committee</div> 
             <div class="moremargin">Candidate: <b>{{$agendamento->nome}}</b> </div>
