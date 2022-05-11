@@ -125,10 +125,22 @@ class ReplicadoUtils {
     {
         $codundclgi = getenv('REPLICADO_CODUNDCLG');
         //obtém programas
-        $query = "SELECT DISTINCT (n.nomare), (a.codare) FROM AREA a inner join CURSO c ON a.codcur = c.codcur INNER JOIN NOMEAREA n on n.codare = a.codare INNER JOIN CREDAREA ca ON a.codare = ca.codare where c.codclg = convert(int, :codundclgi) and n.dtafimare = NULL";
-        $param = [
-            'codundclgi' => $codundclgi,
-        ];
+
+        //monta um array com os códigos dos programas
+        $codundclgi = array_map('intval', explode(",", $codundclgi));
+
+        $query = "SELECT DISTINCT (n.nomare), (a.codare) FROM AREA a inner join CURSO c ON a.codcur = c.codcur INNER JOIN NOMEAREA n on n.codare = a.codare INNER JOIN CREDAREA ca ON a.codare = ca.codare where n.dtafimare = NULL and c.codclg in (";
+
+        //altera a query para fazer com que sejam considerados todos os programas colocados no .env
+        $param = [];
+        for($i = 0; $i < sizeof($codundclgi); $i++){
+            $query .= ":c$i, ";
+            $param["c$i"] = $codundclgi[$i];
+        }
+        $query = rtrim($query, ", ");
+        $query .= ")";
+
+
         $result = DBreplicado::fetchAll($query, $param);
         if(!empty($result)) {
             $result = Uteis::utf8_converter($result);
