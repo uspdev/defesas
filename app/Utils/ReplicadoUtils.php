@@ -132,16 +132,14 @@ class ReplicadoUtils {
         $query = "SELECT DISTINCT (n.nomare), (a.codare) FROM AREA a inner join CURSO c ON a.codcur = c.codcur INNER JOIN NOMEAREA n on n.codare = a.codare INNER JOIN CREDAREA ca ON a.codare = ca.codare where n.dtafimare = NULL and c.codclg in (";
 
         //altera a query para fazer com que sejam considerados todos os programas colocados no .env
-        $param = [];
-        for($i = 0; $i < sizeof($codundclgi); $i++){
-            $query .= ":c$i, ";
-            $param["c$i"] = $codundclgi[$i];
+        foreach($codundclgi as $c){
+            $query .= "$c, ";
         }
         $query = rtrim($query, ", ");
         $query .= ")";
 
 
-        $result = DBreplicado::fetchAll($query, $param);
+        $result = DBreplicado::fetchAll($query);
         if(!empty($result)) {
             $result = Uteis::utf8_converter($result);
             $result = Uteis::trim_recursivo($result);
