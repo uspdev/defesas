@@ -7,9 +7,9 @@ use App\Http\Controllers\DocenteController;
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\EmailController;
-use App\Http\Controllers\DevController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\BibliotecaController;
+use App\Http\Controllers\ImportacaoController;
 
 // rotas para login/logout
 Route::get('/', [indexController::class, 'index'])->name('index');
@@ -46,8 +46,8 @@ Route::post('agendamentos/passagem/{agendamento}/{banca}', [AgendamentoControlle
 Route::post('agendamentos/dados_prof_externo/{agendamento}/{banca}', [AgendamentoController::class,'enviarEmailDeConfirmacaoDadosProfExterno']);
 
 # Features em Desenvolvimento
-Route::get('/dev/bancas_aprovadas', [DevController::class,'bancas_aprovadas']);
-Route::post('/dev/codpes/{codpes}', [DevController::class,'dados_defesa_aluno']);
+Route::get('/dev/bancas_aprovadas', [ImportacaoController::class, 'bancas_aprovadas']);
+Route::post('/dev/codpes/{codpes}', [ImportacaoController::class,'dados_defesa_aluno']);
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->middleware('can:admin');
 

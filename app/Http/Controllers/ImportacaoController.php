@@ -11,7 +11,7 @@ use Carbon\Carbon;
 use App\Models\Banca;
 use PhpParser\Node\Expr\Cast\Array_;
 
-class DevController extends Controller
+class ImportacaoController extends Controller
 {
     public function bancas_aprovadas(){
         $this->authorize('admin');
@@ -54,7 +54,7 @@ class DevController extends Controller
             }
         }
 
-        return view('dev.bancas_aprovadas',[
+        return view('importacao.bancas_aprovadas',[
             'bancas_aprovadas' => $bancas_aprovadas
         ]);
     }
