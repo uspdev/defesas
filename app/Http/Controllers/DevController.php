@@ -16,11 +16,10 @@ class DevController extends Controller
     public function bancas_aprovadas(){
         $this->authorize('admin');
         $query = "
-        SELECT V.codpes, V.nompes, A.dtaaprbantrb, A.dtadfapgm FROM DDTDEPOSITOTRABALHO D, VINCULOPESSOAUSP V
+        SELECT V.codpes, V.nompes, A.dtaaprbantrb, R.tittrb FROM DDTENTREGATRABALHO R, DDTDEPOSITOTRABALHO D, VINCULOPESSOAUSP V
         INNER JOIN AGPROGRAMA A ON V.codpes = A.codpes
         WHERE
         V.tipvin = 'ALUNOPOS'
-        AND V.codclg=45
         AND A.dtaaprbantrb IS NOT NULL
         AND A.dtadfapgm IS NULL
         AND V.sitatl = 'A'
@@ -28,9 +27,32 @@ class DevController extends Controller
         AND D.codare = A.codare
         AND D.numseqpgm = A.numseqpgm
         AND D.dtahomdpotrb IS NOT NULL
+        AND D.coddpodgttrb = R.coddpodgttrb
+        AND V.codclg IN (
         ";
 
+        $codundclgi = getenv('REPLICADO_CODUNDCLG');
+        $codundclgi = array_map('intval', explode(",", $codundclgi));
+
+        foreach($codundclgi as $c){
+            $query .= "$c, ";
+        }
+        $query = rtrim($query, ", ");
+        $query .= ")";
+
         $bancas_aprovadas =  DB::fetchAll($query);
+
+        //MOSTRAR APENAS AS DEFESAS QUE AINDA NÃO FORAM SALVAS NO BANCO
+        $agendamentos = Agendamento::all();
+        foreach($agendamentos as $agendamento){
+            for($i = 0; $i < sizeof($bancas_aprovadas); $i++){
+                if($agendamento['codpes'] == $bancas_aprovadas[$i]['codpes'] && strcmp($agendamento['titulo'], $bancas_aprovadas[$i]['tittrb']) == 0){
+                    unset($bancas_aprovadas[$i]);
+                    $bancas_aprovadas = array_values($bancas_aprovadas);
+                    break;
+                }
+            }
+        }
 
         return view('dev.bancas_aprovadas',[
             'bancas_aprovadas' => $bancas_aprovadas
@@ -116,7 +138,6 @@ class DevController extends Controller
         $trabalho = $this->get_dados_trabalho($codpes);
         $orientador = $this->get_dados_orientador($codpes);
 
-        $date = getdate();
         $agendamento = array(
             'codpes' => $dadosGerais[0]['codpes'],
             'nome' => $dadosGerais[0]['nompes'], 
@@ -124,12 +145,14 @@ class DevController extends Controller
             'orientador_votante' => "Sim", 
             'sexo' => $dadosGerais[0]['sexpes'], 
             'nivel' => $dadosGerais[0]['nivpgm'], 
-            'titulo' => " ", 
-            'area_programa' => $dadosGerais[0]['codare'], 
-            'data_horario' => Carbon::CreatefromFormat('d/m/Y H:i', "17/06/2021 ".strval($date['hours']).":".strval($date['minutes'])), 
+            'titulo' => $trabalho[0]['tittrb'], 
+            'area_programa' => $dadosGerais[0]['codare'],
+            'data_horario' => null, 
             'sala' => " ", 
-            'orientador' => $orientador[0]['codpes'], 
-            'nome_orientador' => $orientador[0]['nompes']
+            'orientador' => $orientador[0]['codpes'],
+            'resumo' => $trabalho[0]['rsutrb'],
+            'palavras_chave' => $trabalho[0]['palcha'],
+            'nome_orientador' => $orientador[0]['nompes'],
         );
 
        

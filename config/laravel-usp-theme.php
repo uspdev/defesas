@@ -36,7 +36,7 @@ $submenu3 =  [
 
 $dev =  [
     [
-        'text' => '<i class="fas fa-plus-square"></i> Bancas Aprovadas',
+        'text' => '<i class="fas fa-plus-square"></i> Defesas com Bancas Aprovadas',
         'url'  => '/dev/bancas_aprovadas',
     ],
 ];
@@ -110,7 +110,7 @@ return [
             'can' => 'admin',
         ],
         [
-            'text'    => '<i class="fas fa-chalkboard-teacher"></i> Em desenvolvimento',
+            'text'    => '<i class="fa fa-download"></i> Importação',
             'submenu' => $dev,
             'can' => 'admin',
         ],
