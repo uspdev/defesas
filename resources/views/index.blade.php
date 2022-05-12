@@ -77,7 +77,7 @@
             <tbody>
             @foreach ($agendamentos as $agendamento)
                 <tr>
-                    <td>{{ Carbon\Carbon::parse($agendamento->data_horario)->format('d/m/Y H:i') }}</td>
+                    <td>{{ $agendamento->data_horario ? Carbon\Carbon::parse($agendamento->data_horario)->format('d/m/Y H:i') : null}}</td>
                     <td>{{ $agendamento->titulo }}</td>
                     <td>{{ $agendamento->nome }}</td>
                     <td>{{ $agendamento->nivel }}</td>

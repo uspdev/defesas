@@ -56,8 +56,8 @@
             <tr>
                 <td>{{ $agendamento->codpes }}</td>
                 <td><a href="/agendamentos/{{$agendamento->id}}">{{ $agendamento->nome }}</a></td>
-                <td>{{ Carbon\Carbon::parse($agendamento->data_horario)->format('d/m/Y') }}</td>
-                <td>{{ Carbon\Carbon::parse($agendamento->data_horario)->format('H:i')}}</td>
+                <td>{{ $agendamento->data_horario ? Carbon\Carbon::parse($agendamento->data_horario)->format('d/m/Y') : null}}</td>
+                <td>{{ $agendamento->data_horario ? Carbon\Carbon::parse($agendamento->data_horario)->format('H:i') : null}}</td>
                 <td>{{ $pessoa::dump($agendamento->orientador)['nompes']}}</td>
                 <td>
                     <a href="/agendamentos/{{$agendamento->id}}/edit" class="btn btn-warning"><i class="fas fa-pencil-alt"></i></a>

@@ -114,11 +114,11 @@
 <div class="row form-group">
     <div class="col-sm">
         <label for="data" class="required">Data</label> 
-        <input type="text" name="data" class="form-control datepicker data" autocomplete="off" value="{{ old('data', $agendamento->data) }}"> 
+        <input type="text" name="data" class="form-control datepicker data" autocomplete="off" value="{{ $agendamento->data_horario ? old('data', $agendamento->data) : null}}"> 
     </div>
     <div class="col-sm">
         <label for="horario" class="required">Horário</label> 
-        <input type="text" name="horario" class="form-control horario" value="{{ old('horario', $agendamento->horario) }}">
+        <input type="text" name="horario" class="form-control horario" value="{{ $agendamento->data_horario ? old('horario', $agendamento->horario) : null}}">
     </div> 
 </div>
 <div class="row form-group">
