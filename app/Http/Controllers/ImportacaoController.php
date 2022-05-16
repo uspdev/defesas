@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AgendamentoRequest;
 use App\Models\Agendamento;
+use App\Models\Docente;
 use DateTime;
 use Illuminate\Http\Request;
 use Uspdev\Replicado\DB;
@@ -159,8 +160,11 @@ class ImportacaoController extends Controller
         $defesa_dadosGerais = Agendamento::create($agendamento);
         
         $newBanca = array();
+        $newDocente = array();
         foreach($banca_aluno as $banca){
             $newBanca['codpes'] = $banca['codpesdct'];
+            $newDocente['n_usp'] = $banca['codpesdct'];
+            $newDocente['nome'] = $banca['nompes'];
             switch($banca['vinptpbantrb']){
                 case 'PRE':
                     $newBanca['presidente'] = 'Sim';
@@ -177,6 +181,7 @@ class ImportacaoController extends Controller
             }
             $newBanca['agendamento_id'] = $defesa_dadosGerais->id;
             Banca::create($newBanca);
+            Docente::create($newDocente);
         }
         request()->session()->flash('alert-info', 'Dados importados com sucesso');
         return back();
