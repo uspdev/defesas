@@ -74,7 +74,8 @@
                 {!! $configs->importante_oficio !!}
             </div>
             <div> 
-                <i>Data e hora da defesa:  </i> <b> {{$agendamento->data}} {{$agendamento->hora}} </b> <br> 
+                @php(\App\Models\Agendamento::formatDataHorario($agendamento))
+                <i>Data e hora da defesa:  </i> <b> {{$agendamento->data}}, às {{$agendamento->horario}} </b> <br> 
                 <i>Local:</i> <b> {{$agendamento->sala}} </b> - Administração da FFLCH 
             </div>  
             <i>Composição da banca examinadora:</i> 
