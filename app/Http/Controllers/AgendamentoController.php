@@ -121,6 +121,7 @@ class AgendamentoController extends Controller
     {
         $this->authorize('admin');
         $agendamento->bancas()->delete();
+        $agendamento->files()->delete();
         $agendamento->delete();
         return redirect('/agendamentos');
     }
