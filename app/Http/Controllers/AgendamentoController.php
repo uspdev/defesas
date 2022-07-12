@@ -16,6 +16,7 @@ use App\Mail\ReciboExternoMail;
 use App\Mail\ProLaboreMail;
 use App\Mail\PassagemMail;
 use App\Mail\DadosProfExternoMail;
+use Storage;
 
 class AgendamentoController extends Controller
 {
@@ -121,6 +122,10 @@ class AgendamentoController extends Controller
     {
         $this->authorize('admin');
         $agendamento->bancas()->delete();
+        foreach($agendamento->files as $file){
+            Storage::delete($file->path);
+            $file->delete();
+        }
         $agendamento->files()->delete();
         $agendamento->delete();
         return redirect('/agendamentos');
