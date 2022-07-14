@@ -79,7 +79,8 @@
         @endforeach
     </table>
 	<div style="margin-top:2cm;" align="center"> 
-        Atenciosamente,<br>  
+        Atenciosamente,<br><br><br><br><br>
+        _____________________________________________________________ <br>
         <b>
             {{Auth::user()->name}} @if($pessoa::cracha(Auth::user()->codpes)) - Defesas de Mestrado e Doutorado da {{$pessoa::cracha(Auth::user()->codpes)['nomorg']}}/USP @endif 
         </b>
