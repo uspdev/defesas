@@ -126,7 +126,6 @@ class AgendamentoController extends Controller
             Storage::delete($file->path);
             $file->delete();
         }
-        $agendamento->files()->delete();
         $agendamento->delete();
         return redirect('/agendamentos');
     }
