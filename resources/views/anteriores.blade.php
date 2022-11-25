@@ -72,6 +72,7 @@
                     <th>Orientador</th>
                     <th>Local</th>
                     <th>Banca</th>
+                    <th>Status</th>
                 </tr>
             </theader>
             <tbody>
@@ -88,6 +89,23 @@
                         @foreach ($agendamento->bancas()->where('tipo', 'Titular')->get() as $banca)
                             {{ $agendamento->dadosProfessor($banca->codpes)->nome }}({{ $agendamento->dadosProfessor($banca->codpes)->lotado  ?? ''}})@if($loop->count != $loop->iteration), @endif
                         @endforeach
+                    </td>
+                    <td>
+                        @if(is_null($agendamento->approval_status))
+                            <b>Status ainda não cadastrado</b> <br>
+                            @can('admin')
+                                <a href ="status/{{$agendamento->id}}">
+                                    Cadastrar</br>
+                                </a>   
+                            @endcan
+                        @else
+                            <b>{{ $agendamento->approval_status }}</b> <br>
+                            @can('admin')
+                            <a href ="status/{{$agendamento->id}}">
+                                Editar</br>
+                            </a>
+                            @endcan
+                        @endif 
                     </td>
                 </tr>
             @endforeach
