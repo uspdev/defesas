@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use App\Models\Agendamento;
 
-class AddColumnStatusInAgendamentos extends Migration
+class AddColumnApprovalStatusInAgendamentos extends Migration
 {
     /**
      * Run the migrations.
@@ -17,13 +17,12 @@ class AddColumnStatusInAgendamentos extends Migration
         Schema::table('agendamentos', function (Blueprint $table) {
             $table->string('approval_status')->nullable();
         });
-        $agendamentos = Agendamento::all();
-        foreach($agendamentos as $agendamentos){
-            $agendamento->status = 'Aprovado';
-            $agendamento->save();
-        }
+
+        //Agendamento::update([approval_status' => 'Aprovado']);
+        DB::raw("UPDATE agendamentos Set approval_status='Aprovado'");
+
         Schema::table('agendamentos', function (Blueprint $table) {
-            $table->string('approval_status')->required();
+            $table->string('approval_status')->required()->change();
         });
     }
 

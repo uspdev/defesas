@@ -5,8 +5,9 @@
     <div class="card">
         <div class="card-header"><h5><b>Cadastrar Status de Defesa</b></h5></div>
             <div class="card-body">
-                <form method="POST" action="status/{{$agendamento->id}}/create_status" id="formStatus">
+                <form method="POST" action="status/{{$agendamento->id}}" id="formStatus">
                     @csrf
+                    @method('patch')
                     <label for="approval_status"><b>Defesa foi aprovada?</b></label>
                     <div class="row">
                         <div class="col-3">

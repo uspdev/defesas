@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Agendamento;
 use Illuminate\Validation\Rule;
 
-class Approval_statusRequest extends FormRequest
+class ApprovalStatusRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
