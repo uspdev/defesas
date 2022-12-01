@@ -103,4 +103,12 @@ class Agendamento extends Model
     public function nomeUsuario($id){
         return User::where('id',$id)->first()->name;
     }
+
+    //Função para devolver valores de select status
+    public static function statusApprovalOptions(){
+        return [
+            'Aprovado',
+            'Reprovado'
+        ];
+    }
 }

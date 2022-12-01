@@ -10,6 +10,7 @@ use App\Http\Controllers\EmailController;
 use App\Http\Controllers\DevController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\BibliotecaController;
+use App\Http\Controllers\ApprovalStatusDefesaController;
 
 // rotas para login/logout
 Route::get('/', [indexController::class, 'index'])->name('index');
@@ -20,6 +21,10 @@ Route::resource('agendamentos', AgendamentoController::class);
 Route::resource('docentes',DocenteController::class);
 Route::resource('bancas', BancaController::class);
 Route::resource('files', FileController::class)->only(['store', 'show', 'destroy']);
+
+// rotas do Status de Defesa
+Route::get('status/{agendamento}', [ApprovalStatusDefesaController::class, 'show']);
+Route::patch('status/{agendamento}', [ApprovalStatusDefesaController::class, 'update']);
 
 // rotas para biblioteca
 Route::get('/teses',[BibliotecaController::class, 'index']);
