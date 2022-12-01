@@ -26,7 +26,10 @@ class ApprovalStatusRequest extends FormRequest
     public function rules()
     {
         return [
-            'approval_status' => 'required',
+            'approval_status' => [
+                'required',
+                Rule::in(Agendamento::statusApprovalOptions()),
+            ],
         ];
     }
 
@@ -34,6 +37,7 @@ class ApprovalStatusRequest extends FormRequest
     {
         return [
             'approval_status.required' => 'Status de Defesa é obrigatório',
+            'approval_status.in' => 'O Status selecionado é invalido',
         ];
     }
 }

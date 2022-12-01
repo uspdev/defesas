@@ -18,8 +18,7 @@ class AddColumnApprovalStatusInAgendamentos extends Migration
             $table->string('approval_status')->nullable();
         });
 
-        //Agendamento::update([approval_status' => 'Aprovado']);
-        DB::raw("UPDATE agendamentos Set approval_status='Aprovado'");
+        DB::table('agendamentos')->update(['approval_status' => 'Aprovado']);
 
         Schema::table('agendamentos', function (Blueprint $table) {
             $table->string('approval_status')->required()->change();

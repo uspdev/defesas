@@ -17,10 +17,9 @@ class ApprovalStatusDefesaController extends Controller
         ]);
     }
 
-    //mudar nome do form request
     public function update(ApprovalStatusRequest $request, Agendamento $agendamento){
         $this->authorize('admin');
-        $agendamento->approval_status = $request->approval_status;
+        $agendamento->fill($request->validated());
         $agendamento->save();
         return redirect('anteriores');
     }
