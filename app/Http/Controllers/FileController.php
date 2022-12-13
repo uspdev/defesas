@@ -16,16 +16,23 @@ class FileController extends Controller
         $request->validate([
             'file' => 'required|mimetypes:application/pdf|max:122880',
             'tipo' => 'required',
-            'agendamento_id' => 'required|integer|exists:agendamentos,id', 
+            'agendamento_id' => 'required|integer|exists:agendamentos,id',
         ]);
-        $file = new File;
-        $file->agendamento_id = $request->agendamento_id;
-        $file->original_name = $request->file('file')->getClientOriginalName();
-        $file->path = $request->file('file')->store('.');
-        $file->tipo = $request->tipo;
-        $file->user_id_admin = Auth::user()->id;
-        $file->save();
-        Agendamento::where('id', $request->agendamento_id)->update(['status' => 0]);
+
+        $agendamento = Agendamento::find($request->agendamento_id);
+        if($agendamento->status == 0 && $agendamento->user_id_biblioteca == null){
+            $file = new File;
+            $file->agendamento_id = $request->agendamento_id;
+            $file->original_name = $request->file('file')->getClientOriginalName();
+            $file->path = $request->file('file')->store('.');
+            $file->tipo = $request->tipo;
+            $file->user_id_admin = Auth::user()->id;
+            $file->save();
+        }
+        else{
+            session()->flash('alert-danger', 'Não é possível adicionar outro arquivo, pois a defesa já foi publicada!');
+        }
+
         return back();
     }
 
@@ -34,14 +41,15 @@ class FileController extends Controller
         return Storage::download($file->path, $file->original_name);
     }
 
-    public function destroy(File $file){
+    public function destroy(File $file, Request $request){
         $this->authorize('admin');
-        if($file->status == 0 && $file->user_id_biblioteca == null){
+        $agendamento = Agendamento::find($file->agendamento_id);
+        if($agendamento->status == 0 && $agendamento->user_id_biblioteca == null){
             Storage::delete($file->path);
             $file->delete();
         }
         else{
-            $request->session()->flash('alert-danger', 'Não é possível excluir um arquivo já publicado!');
+            session()->flash('alert-danger', 'Não é possível excluir um arquivo já publicado!');
         }
         return back();
     }
