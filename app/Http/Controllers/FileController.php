@@ -16,7 +16,7 @@ class FileController extends Controller
         $request->validate([
             'file' => 'required|mimetypes:application/pdf|max:122880',
             'tipo' => 'required',
-            'agendamento_id' => 'required|integer|exists:agendamentos,id', 
+            'agendamento_id' => 'required|integer|exists:agendamentos,id',
         ]);
 
         $agendamento = Agendamento::find($request->agendamento_id);
@@ -32,7 +32,7 @@ class FileController extends Controller
         else{
             session()->flash('alert-danger', 'Não é possível adicionar outro arquivo, pois a defesa já foi publicada!');
         }
-       
+
         return back();
     }
 
