@@ -20,7 +20,7 @@ class FileController extends Controller
         ]);
 
         $agendamento = Agendamento::find($request->agendamento_id);
-        if($agendamento->status == 0 && $agendamento->user_id_biblioteca == null){
+        if($agendamento->user_id_biblioteca == null){
             $file = new File;
             $file->agendamento_id = $request->agendamento_id;
             $file->original_name = $request->file('file')->getClientOriginalName();
@@ -28,6 +28,9 @@ class FileController extends Controller
             $file->tipo = $request->tipo;
             $file->user_id_admin = Auth::user()->id;
             $file->save();
+
+            $agendamento->status = 0;
+            $agendamento->save();
         }
         else{
             session()->flash('alert-danger', 'Não é possível adicionar outro arquivo, pois a defesa já foi publicada!');

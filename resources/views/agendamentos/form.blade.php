@@ -127,6 +127,27 @@
         <input type="text" name="sala" class="form-control" value="{{ old('sala', $agendamento->sala) }}">
     </div>  
 </div> 
+
+<label for="approval_status"><b>Defesa foi aprovada?</b></label>
+<div class="row">
+    <div class="col-3">
+        <select class="form-control" name="approval_status">
+            <option value="" selected="">- Selecione -</option>
+            @foreach ($agendamento->statusApprovalOptions() as $option)
+                @if (old('approval_status') == '' and isset($agendamento->approval_status))
+                <option value="{{$option}}" {{ ( $agendamento->approval_status == $option) ? 'selected' : ''}}>
+                    {{$option}}
+                </option>
+                @else
+                <option value="{{$option}}" {{ ( old('approval_status') == $option) ? 'selected' : ''}}>
+                    {{$option}}
+                </option>
+                @endif
+            @endforeach
+        </select>
+    </div>
+</div>
+
 <div class="row form-group">
     <div class="col-sm">
         <button type="submit" class="btn btn-success float-right">Enviar</button>

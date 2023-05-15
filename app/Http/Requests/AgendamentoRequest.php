@@ -43,6 +43,10 @@ class AgendamentoRequest extends FormRequest
             'nome_orientador' => 'nullable',
             'co_orientador' => 'nullable|integer|codpes',
             'nome_co_orientador' => 'nullable',
+            'approval_status' => [
+                'nullable',
+                Rule::in(Agendamento::statusApprovalOptions()),
+            ],
         ];
     }
 
