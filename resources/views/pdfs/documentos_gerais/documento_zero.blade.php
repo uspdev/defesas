@@ -9,6 +9,9 @@
     #footer{
         text-align:center;
     }
+    .obs{
+        height: 120px;
+    }
 </style>
 @endsection('other_styles')
 
@@ -28,88 +31,53 @@
         <td> Sala: {{$agendamento->sala}} </td>
       </tr>
     </table>
-  </b> 
+  </b>
 
   <hr style="width: 18.6cm;">
-    <b>
-      <table>
-        <tr> 
-          <td> 2 PRÉ-RELATÓRIOS </td> 
-          <td>  (&nbsp;&nbsp; ) </td> 
-        </tr>
-        <tr> 
-          <td>ENVIO IMPRESSO ___/____   </td> 
-          <td>  (&nbsp;&nbsp; )  </td> 
-        </tr>
-        <tr> 
-          <td>  ENVIO PDF ___/____ </td> 
-          <td>  (&nbsp;&nbsp; ) </td> 
-        </tr>
-        <tr> 
-          <td>  SITE    </td> 
-          <td>  (&nbsp;&nbsp; )  </td> 
-        </tr>
-        <tr> 
-          <td>  PRÓ-LABORE </td> 
-          <td>  (&nbsp;&nbsp; ) </td> 
-        </tr>
-      </table>
+  <div class="obs"></div>
       <hr style="width: 18.6cm;">
-      <p> 
-        <u> PASSAGENS, HOTEL E DIÁRIAS: <u>
-      </p> 
-    </b> 
-  
+    </b>
+
   @foreach($professores as $professor)
       @if($agendamento->dadosProfessor($professor->codpes)->docente_usp == 'nao')
           <table style="border: 1px solid black; border-spacing: 5px; width: 18.6cm;">
-            <tr> 
+            <tr>
               <td>
                 Prof: <b> {{$agendamento->dadosProfessor($professor->codpes)->nome ?? 'Professor não cadastrado'}}  </b>
               </td>
             </tr>
-            <tr> 
+            <tr>
               <td>
                 PASSAGEM: {{$agendamento->dadosProfessor($professor->codpes)->cidade ?? ''}}/
                 {{$agendamento->dadosProfessor($professor->codpes)->estado ?? ''}}
-                (_____)/_______ Ida: ___/___ Hora: ____ Volta: ____/____ Hora: _____
               </td>
             </tr>
             <tr>
               <td>
-                Cotação:___/___ Compra:___/___
+                Ida: __________/______________ Hora: ______________ Volta: __________/______________ Hora: ______________
               </td>
             </tr>
             <tr>
               <td>
-                HOTEL:___________ Reserva em:___/___ Reserva ok? (  ) CheckIn: _______ CheckOut_______
+                Cotação: __________/______________ Compra: __________/______________
+              </td>
+            </tr>
+            </tr>
+            <tr>
+              <td>
+                Diárias: 1/2 (  ) 1 (  ) 2 (  ) Pedido ok (  )
               </td>
             </tr>
             <tr>
               <td>
-                Diárias: 1/2 (  ) 1 (  ) 2 (  ) Pedido ok ( )
+                Cadastro no taxi ok? (  )
               </td>
             </tr>
-            <tr>
-              <td>
-                Cadastro no Usetaxi ok? (   )
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Skype? Sim(  )  Não (  )
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Videoconferência? Sim(  )  Não (  )
-              </td>
-            </tr>
-          </table> 
+          </table>
           <br/>
       @endif
   @endforeach
-  <p class="page-break"></p> 
+  <p class="page-break"></p>
 @endsection('content')
 
 @section('footer')
