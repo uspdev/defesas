@@ -73,7 +73,7 @@
     </div>
     <p>
         <i>Data e hora da defesa:  </i> <b> {{$agendamento->data}}, às {{$agendamento->horario}} </b> <br> 
-        <i>Local:</i> <b> {{$agendamento->sala}} </b> - Administração da FFLCH 
+        <i>Local:</i> <b> {{$agendamento->sala}} </b>
     </p>  
     <i>Composição da banca examinadora:</i> 
 
