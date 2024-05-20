@@ -137,17 +137,6 @@
         <input type="text" name="horario" class="form-control horario" value="{{ old('horario', $agendamento->horario) }}">
     </div> 
 </div>
-<div class="row form-group">
-    <div class="col-sm">
-        <label for="sala" class="required">Local</label>
-        <input type="text" name="sala" class="form-control" value="{{ old('sala', $agendamento->sala) }}">
-    </div>
-    <div class="col-sm">
-        <input type="checkbox" class="form-check-input" id="ask_link">
-        <label class="form-check-label" for="ask_link">Disparar email ao orientador e aluno solicitando a criação do link</label>
-    </div>
-</div> 
-
 <label for="approval_status"><b>Defesa foi aprovada?</b></label>
 <div class="row">
     <div class="col-3">
