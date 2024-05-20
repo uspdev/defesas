@@ -24,10 +24,10 @@ class AgendamentoController extends Controller
     public function index(Request $request)
     {
         $this->authorize('admin');
-        $query = Agendamento::orderBy('data_horario', 'asc');
+        $query = Agendamento::orderBy('data_horario', 'asc')->paginate(20);
         $query2 = Docente::orderBy('nome', 'asc');
         if($request->filtro_busca == 'numero_nome') {
-            $query->where('codpes', '=', $request->busca)->orderBy('data_horario', 'asc');
+            $query->where('codpes', '=', $request->busca);
             if($query->count() == null){
                 $query->orWhere('nome', 'LIKE', "%$request->busca%");
             }
@@ -46,7 +46,7 @@ class AgendamentoController extends Controller
         else{
             $query->where('data_horario','>=',date('Y-m-d H:i:s'));
         }
-        $agendamentos = $query->paginate(20);
+        $agendamentos = $query;
         
         if ($agendamentos->count() == null) {
             $request->session()->flash('alert-danger', 'Não há registros!');

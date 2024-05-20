@@ -16,11 +16,6 @@
         <label for="codpes" class="required">Número USP </label> 
         <input type="text" name="codpes" id="codpes" class="form-control" value="{{ old('codpes', $agendamento->codpes) }}"> 
     </div>
-    <div class="col-sm">
-        <label for="sexo" class="required">Sexo</label>
-        <input type="text" name="sexo" id="sexo" class="form-control" value="{{ old('sexo', $agendamento->sexo) }}"> 
-        <div id="info"></div>
-    </div>
 </div>
 <div class="row form-group">
     <div class="col-sm">
@@ -101,6 +96,27 @@
             @endforeach
         </select>
     </div>
+{{-- Tentativa de adição de um novo campo select chamado tipo --}}
+    <div class="col-sm">
+        <label for="tipo" class="required">Tipo</label>
+        <select class="form-control" name="tipo">
+            <option value="" selected="">- Selecione -</option>
+            @foreach ($agendamento->tipodefesaOptions() as $option)
+                {{-- 1. Situação em que não houve tentativa de submissão e é uma edição --}}
+                @if (old('tipo') == '' and isset($agendamento->tipo))
+                <option value="{{$option}}" {{ ( $agendamento->tipo == $option) ? 'selected' : ''}}>
+                    {{$option}}
+                </option>
+                {{-- 2. Situação em que houve tentativa de submissão, o valor de old prevalece --}}
+                @else
+                <option value="{{$option}}" {{ ( old('tipo') == $option) ? 'selected' : ''}}>
+                    {{$option}}
+                </option>
+                @endif
+            @endforeach
+        </select>
+     </div>
+{{-- Fim desse novo campo select --}}
     <div class="col-sm">
         <label for="orientador" class="required">Nº USP Orientador</label>
         <input type="text" name="orientador" class="form-control" value="{{ old('orientador', $agendamento->orientador) }}"> 
@@ -125,7 +141,11 @@
     <div class="col-sm">
         <label for="sala" class="required">Local</label>
         <input type="text" name="sala" class="form-control" value="{{ old('sala', $agendamento->sala) }}">
-    </div>  
+    </div>
+    <div class="col-sm">
+        <input type="checkbox" class="form-check-input" id="ask_link">
+        <label class="form-check-label" for="ask_link">Disparar email ao orientador e aluno solicitando a criação do link</label>
+    </div>
 </div> 
 
 <label for="approval_status"><b>Defesa foi aprovada?</b></label>
