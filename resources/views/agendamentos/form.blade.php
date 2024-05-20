@@ -126,7 +126,6 @@
         <input type="text" name="co_orientador" class="form-control" value="{{ old('co_orientador', $agendamento->co_orientador) }}"> 
     </div>  
 </div>
-
 <div class="row form-group">
     <div class="col-sm">
         <label for="data" class="required">Data</label> 
@@ -137,6 +136,13 @@
         <input type="text" name="horario" class="form-control horario" value="{{ old('horario', $agendamento->horario) }}">
     </div> 
 </div>
+<div class="row form-group">
+    <div class="col-sm">
+        <label for="sala" class="required">Local</label>
+        <input type="text" name="sala" class="form-control" value="{{ old('sala', $agendamento->sala) }}">
+    </div>  
+</div> 
+
 <label for="approval_status"><b>Defesa foi aprovada?</b></label>
 <div class="row">
     <div class="col-3">
