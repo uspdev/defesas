@@ -40,7 +40,7 @@ class AgendamentoRequest extends FormRequest
             'data_horario' => 'required',
             'orientador' => 'required|integer|codpes',
             'nome_orientador' => 'nullable',
-	    'tipo' => ['required',Rule::in($agendamento->tipodefesaOptions())],
+            'tipo' => ['required',Rule::in($agendamento->tipodefesaOptions())],
             'co_orientador' => 'nullable|integer|codpes',
             'nome_co_orientador' => 'nullable',
             'approval_status' => [
@@ -76,7 +76,7 @@ class AgendamentoRequest extends FormRequest
             'sala.required' => 'É necessário indicar a sala da defesa.',
             'data_horario.required' => 'É necessário indicar a data e o horário da defesa.',
             'orientador.required' => 'O preenchimento do Número USP do Orientador é obrigatório.',
-	    'tipo.required' => 'O preenchimento do Tipo da defesa é obrigatório.',
+            'tipo.required' => 'O preenchimento do Tipo da defesa é obrigatório.',
         ];
     }
 }

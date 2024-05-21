@@ -14,7 +14,7 @@ class DropSexoToAgendamentos extends Migration
     public function up()
     {
         Schema::table('agendamentos', function (Blueprint $table) {
-	    $table->dropColumn('sexo');
+           $table->dropColumn('sexo');
         });
     }
 

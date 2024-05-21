@@ -15,8 +15,7 @@ class Agendamento extends Model
 
     protected $guarded = ['id'];
 
-    //Função para devolver valores do select que eu tentei reproduzir
-    public static function tipodefesaOptions(){
+    public static function tipodefesaOptions() {
         return [
             'Presencial',
             'Hibrido',

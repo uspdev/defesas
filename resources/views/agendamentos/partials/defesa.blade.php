@@ -14,7 +14,7 @@
             <b>Data:</b> {{$agendamento->data}}</br>
             <b>Horário:</b> {{$agendamento->horario}}</br>
             <b>Local:</b> {{$agendamento->sala}}</br>
-	    <b>Tipo da Defesa:</b> {{$agendamento->tipo}}</br>
+            <b>Tipo da Defesa:</b> {{$agendamento->tipo}}</br>
             @if($agendamento->status == 1)
                 <b>URL:</b> {{$agendamento->url}}</br>
                 <b>Data de Publicação:</b> {{Carbon\Carbon::parse($agendamento->data_publicacao)->format('d/m/Y')}}</br>
