@@ -33,8 +33,8 @@ class AgendamentoRequest extends FormRequest
             'regimento' => ['required',Rule::in($agendamento->regimentoOptions())],
             'orientador_votante' => ['required',Rule::in($agendamento->orientadorvotanteOptions())],
             'nivel' => ['required',Rule::in($agendamento->nivelOptions())],
-            'titulo' => 'required',
-            'title' => 'nullable',
+            'titulo' => 'required|max:2000',
+            'title' => 'nullable|max:2000',
             'area_programa' => ['required',Rule::in(Agendamento::devolverCodProgramas())],
             'sala' => 'required',
             'data_horario' => 'required',
@@ -77,6 +77,8 @@ class AgendamentoRequest extends FormRequest
             'data_horario.required' => 'É necessário indicar a data e o horário da defesa.',
             'orientador.required' => 'O preenchimento do Número USP do Orientador é obrigatório.',
             'tipo.required' => 'O preenchimento do Tipo da defesa é obrigatório.',
+            'titulo.max' => 'Ultrapassou o número máximo de 2000 caracteres no título.',
+            'title.max' => 'Ultrapassou o número máximo de 2000 caracteres no título em inglês.',
         ];
     }
 }
