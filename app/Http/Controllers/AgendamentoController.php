@@ -20,11 +20,11 @@ use Storage;
 
 class AgendamentoController extends Controller
 {
-    
+
     public function index(Request $request)
     {
         $this->authorize('admin');
-        $query = Agendamento::orderBy('data_horario', 'asc')->paginate(20);
+        $query = Agendamento::orderBy('data_horario', 'asc');
         $query2 = Docente::orderBy('nome', 'asc');
         if($request->filtro_busca == 'numero_nome') {
             $query->where('codpes', '=', $request->busca);
@@ -35,19 +35,19 @@ class AgendamentoController extends Controller
             foreach($query2->get() as $orientador){
                 $query->orWhere('orientador', '=', $orientador->n_usp);
             }
-        } 
+        }
         elseif($request->filtro_busca == 'data'){
             $validated = $request->validate([
                 'busca_data' => 'required|data',
-            ]);        
+            ]);
             $data = Carbon::CreatefromFormat('d/m/Y H:i', $validated['busca_data']." 00:00");
             $query->whereDate('data_horario','=', $data);
         }
         else{
             $query->where('data_horario','>=',date('Y-m-d H:i:s'));
         }
-        $agendamentos = $query;
-        
+        $agendamentos = $query->paginate(20);
+
         if ($agendamentos->count() == null) {
             $request->session()->flash('alert-danger', 'Não há registros!');
         }
@@ -73,8 +73,8 @@ class AgendamentoController extends Controller
         //Salva o orientador na banca
         $banca = new Banca;
         $banca->codpes = $validated['orientador'];
-        $banca->presidente = 'Sim'; 
-        $banca->tipo = 'Titular'; 
+        $banca->presidente = 'Sim';
+        $banca->tipo = 'Titular';
         $banca->agendamento_id = $agendamento->id;
         $agendamento->bancas()->save($banca);
         //Salva o co-orientador na banca
@@ -82,12 +82,12 @@ class AgendamentoController extends Controller
             $validated['nome_co_orientador'] = Pessoa::dump($validated['co_orientador'])['nompes'];
             $banca = new Banca;
             $banca->codpes = $validated['co_orientador'];
-            $banca->presidente = 'Não'; 
-            $banca->tipo = 'Titular'; 
+            $banca->presidente = 'Não';
+            $banca->tipo = 'Titular';
             $banca->agendamento_id = $agendamento->id;
             $agendamento->bancas()->save($banca);
         }
-        
+
         return redirect("/agendamentos/$agendamento->id");
     }
 
@@ -170,7 +170,7 @@ class AgendamentoController extends Controller
         if(empty($request->codpes)){
             return response('Pessoa não encontrada');
         }
-        
+
         if(!is_int((int)$request->codpes)){
             return response('Pessoa não encontrada');
         }
@@ -190,5 +190,5 @@ class AgendamentoController extends Controller
         }
     }
 
-    
+
 }
