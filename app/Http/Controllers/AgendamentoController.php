@@ -16,6 +16,9 @@ use App\Mail\ReciboExternoMail;
 use App\Mail\ProLaboreMail;
 use App\Mail\PassagemMail;
 use App\Mail\DadosProfExternoMail;
+use App\Mail\MailSalaVirtual;
+use App\Mail\SalaVirtual;
+use App\Jobs\SendDailyMail;
 use Storage;
 
 class AgendamentoController extends Controller
@@ -65,6 +68,7 @@ class AgendamentoController extends Controller
     {
         $this->authorize('admin');
         $validated = $request->validated();
+        //se o nome for vazio, pega o nome completo da base de dados que há no Replicado
         if($validated['nome'] == ''){
             $validated['nome'] = Pessoa::dump($validated['codpes'])['nompes'];
         }
@@ -143,6 +147,48 @@ class AgendamentoController extends Controller
         return redirect('/agendamentos/'.$agendamento->id);
     }
 
+    public function exibeDisparo(Request $request, Agendamento $tipoDefesa){
+        $this->authorize('admin');
+
+        $docentes = Docente::select('docentes.*')->get();
+
+        if($request->tipo != null){
+            $agendamentosTipo = Agendamento::join('docentes','agendamentos.orientador','docentes.n_usp')
+            ->select('agendamentos.*','docentes.nome as nome_doc','docentes.email as email_doc')
+            ->where('agendamentos.tipo','like','%'.$request->tipo.'%')
+            ->where('agendamentos.sala_virtual',null)
+            ->get();
+        }else{
+            $agendamentosTipo = Agendamento::join('docentes','agendamentos.orientador','docentes.n_usp')
+            ->select('agendamentos.*','docentes.nome as nome_doc','docentes.email as email_doc')
+            ->where('agendamentos.tipo','like','%virtual')
+            ->where('agendamentos.sala_virtual',null)
+            ->orwhere('agendamentos.tipo','like','%hibrido')
+            ->where('agendamentos.sala_virtual',null)
+            ->get();
+        }
+
+        return view('agendamentos.recibos.defesa')->with([
+            'docentes' => $docentes, 
+            'agendamentosTipo' => $agendamentosTipo,
+            'tipoDefesa' => $tipoDefesa
+        ]);
+    }
+
+    public function disparoEmailProf(Agendamento $agendamento, Docente $docente){
+        $this->authorize('admin');
+        $agendamentos = Agendamento::where('enviar_email',0)
+        ->where('sala_virtual',null)
+        ->where('agendamentos.tipo','like','%Virtual%')
+        ->orWhere('agendamentos.tipo','like','%Hibrido%')
+        ->get();
+        foreach($agendamentos as $agendamento){
+            $agendamento->enviar_email = TRUE; //1
+            $agendamento->update();
+        }
+        return redirect('/teste/'.$agendamento->id);
+    }
+
     public function enviarEmailPassagem(Agendamento $agendamento, Banca $banca){
         $this->authorize('admin');
         $agendamento->formatDataHorario($agendamento);
@@ -190,5 +236,10 @@ class AgendamentoController extends Controller
         }
     }
 
+    public function job_email_prof(Agendamento $agendamento, Docente $docente){
+        $this->authorize('admin');
+        $daily = SendDailyMail::dispatch();
+        return 'Emails Enviados com sucesso';
+    }
 
 }

@@ -52,6 +52,7 @@ class ConfigRequest extends FormRequest
             'mail_passagem' => 'required',
             'mail_pro_labore' => 'required',
             'mail_recibo_externo' => 'required',
+	        'mail_sala_virtual' => 'required',
         ];
     }
 
@@ -86,6 +87,7 @@ class ConfigRequest extends FormRequest
             'mail_passagem.required' => 'É obrigatório o preenchimento do campo Mensagem de Email para Passagem',
             'mail_pro_labore.required' => 'É obrigatório o preenchimento do campo Mensagem de Email para Pró-Labore',
             'mail_recibo_externo.required' => 'É obrigatório o preenchimento do campo Mensagem de Email para Recibo Externo',
+            'mail_sala_virtual.required' => 'É obrigatório o preenchimento do campo Mensagem de Email para Sala Virtual',
         ];
     }
 }

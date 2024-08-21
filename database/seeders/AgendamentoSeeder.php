@@ -40,8 +40,8 @@ class AgendamentoSeeder extends Seeder
         Agendamento::create($agendamento);
         Banca::create($professor);*/
 
-        Agendamento::factory(5)->create()->each(function ($agendamento) {           
-            $bancas = Banca::factory(5)->make();
+        Agendamento::factory(1)->create()->each(function ($agendamento) {           
+            $bancas = Banca::factory(1)->make();
             $agendamento->bancas()->saveMany($bancas);
         });
     }

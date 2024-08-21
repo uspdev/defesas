@@ -3,17 +3,21 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use Uspdev\Replicado\Posgraduacao;
 use App\Utils\ReplicadoUtils;
 use App\Models\Banca;
 use App\Models\Docente;
+
 class Agendamento extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     protected $guarded = ['id'];
+
+    
 
     public static function tipodefesaOptions() {
         return [
@@ -21,6 +25,14 @@ class Agendamento extends Model
             'Hibrido',
             'Virtual'
         ];
+    }
+
+    public static function tipoSalaVirtual(){
+        $tipoDefesa = [
+            'Virtual',
+            'Hibrido'
+        ];
+        return $tipoDefesa;
     }
 
     public function bancas()
@@ -109,7 +121,7 @@ class Agendamento extends Model
     }
 
     public function nomeUsuario($id){
-        return User::where('id',$id)->first()->name;
+        return User::where('id',$id)->first();
     }
 
     //Função para devolver valores de select status

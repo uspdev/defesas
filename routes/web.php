@@ -10,7 +10,7 @@ use App\Http\Controllers\EmailController;
 use App\Http\Controllers\DevController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\BibliotecaController;
-//use App\Http\Controllers\ApprovalStatusDefesaController;
+use App\Http\Controllers\ApprovalStatusDefesaController;
 
 // rotas para login/logout
 Route::get('/', [indexController::class, 'index'])->name('index');
@@ -23,8 +23,9 @@ Route::resource('bancas', BancaController::class);
 Route::resource('files', FileController::class)->only(['store', 'show', 'destroy']);
 
 // rotas do Status de Defesa
-//Route::get('status/{agendamento}', [ApprovalStatusDefesaController::class, 'show']);
-//Route::patch('status/{agendamento}', [ApprovalStatusDefesaController::class, 'update']);
+Route::get('status/{agendamento}', [ApprovalStatusDefesaController::class, 'show']);
+Route::put('status/aprovar/{agendamento}', [ApprovalStatusDefesaController::class, 'aprovar']);
+Route::put('status/reprovar/{agendamento}', [ApprovalStatusDefesaController::class, 'reprovar']);
 
 // rotas para biblioteca
 Route::get('/teses',[BibliotecaController::class, 'index']);
@@ -50,6 +51,9 @@ Route::post('agendamentos/pro_labore/{agendamento}/{docente}', [AgendamentoContr
 Route::post('agendamentos/passagem/{agendamento}/{banca}', [AgendamentoController::class,'enviarEmailPassagem']);
 Route::post('agendamentos/dados_prof_externo/{agendamento}/{banca}', [AgendamentoController::class,'enviarEmailDeConfirmacaoDadosProfExterno']);
 
+Route::get('/pendencia_sala_virtual', [AgendamentoController::class, 'exibeDisparo']);
+// Route::put('agendamentos/sala_virtual/{agendamento}', [AgendamentoController::class, 'disparoEmailProf']);
+
 # Features em Desenvolvimento
 Route::get('/dev/bancas_aprovadas', [DevController::class,'bancas_aprovadas']);
 Route::post('/dev/codpes/{codpes}', [DevController::class,'dados_defesa_aluno']);
@@ -58,3 +62,5 @@ Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->m
 
 #Api para devolução de dados do aluno
 Route::get('info', [AgendamentoController::class, 'info'])->name('pedidos.info');
+
+Route::get('job_email_prof', [AgendamentoController::class, 'job_email_prof']);

@@ -36,4 +36,14 @@ class EmailController extends Controller
         $configs = Config::setConfigEmail($agendamento,$banca);
         return view('agendamentos.recibos.email', compact(['agendamento','docente','dados','configs']));
     }
+
+    public function exibirDisparoEmail(Agendamento $agendamento, Banca $banca, Request $request){
+        $this->authorize('admin');
+        $dados = $request;
+        $agendamento->formatDataHorario($agendamento);
+        $docente = Docente::where('n_usp', $banca->codpes)->first();
+        $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
+        $configs = Config::setConfigEmail($agendamento, $banca);
+        return view('agendamentos.recibos.defesa', compact(['agendamento', 'docente', 'dados', 'configs']));
+    }
 }

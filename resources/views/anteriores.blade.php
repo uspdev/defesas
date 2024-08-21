@@ -101,8 +101,7 @@
                         @else
                             <b>{{ $agendamento->approval_status }}</b> <br>
                             @can('admin')
-                            <a href ="status/{{$agendamento->id}}">
-                                Editar</br>
+                            <a class="btn btn-primary" href ="status/{{$agendamento->id}}"><i class="fa fa-eye"></i> Ver/ Editar
                             </a>
                             @endcan
                         @endif 

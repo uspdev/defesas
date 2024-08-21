@@ -134,6 +134,15 @@ class Config extends Model
         return $configs['mail_dados_prof_externo'];
     }
 
+    public static function configMailConviteDefesa($agendamento, $docente){
+        $configs = Config::orderbyDesc('created_at')->first();
+        $configs['mail_convite_defesa'] = str_replace(
+            ["%docente","%candidato", "%data", "%sala"],
+            [$docente['nome'], $agendamento['nome'], $agendamento['data'], $agendamento['sala']],
+            $configs['mail_convite_defesa']
+        ); 
+    }
+
     public static function configMailPassagem($agendamento, $docente){
         $configs = Config::orderbyDesc('created_at')->first();
         $configs['mail_passagem'] = str_replace(
@@ -180,4 +189,28 @@ class Config extends Model
         );
         return $configs['mail_recibo_externo'];
     }
+
+    public static function configMailSalaVirtual($agendamento, $docente, $dados){
+        $configs = Config::orderbyDesc('created_at')->first();
+        // $agendamento->formatDataHorario($agendamento);
+        $nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento['area_programa']);
+        setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese');
+        $datahora = strftime("%d de %B de %Y", strtotime($agendamento['data_horario']))." às ".$agendamento['horario'];
+        if($dados->diaria == "diaria_simples"){
+            $diaria = "<p><b>Diária Simples:</b> {$configs->diaria_simples}</p>";
+        }
+        elseif($dados->diaria == "diaria_completa"){
+            $diaria = "<p><b>Diária Completa:</b> {$configs->diaria_completa}</p>";
+        }
+        else{
+            $diaria = "<p><b>2 Diárias:</b> {$configs->duas_diarias}</p>";
+        }
+        $configs[''] = str_replace(
+            ["%docente", "%nusp", "%origem", "%ida", "%volta", "%email", "%programa", "%nivel", "%candidato", "%datahora", "%diaria"],
+            [$docente['nome'], $docente['n_usp'], $dados['origem'], $dados['ida'], $dados['volta'], $docente['email'], $nome_area, $agendamento['nivel'], $agendamento['nome'], $datahora, $diaria],
+            $configs['mail_sala_virtual']
+        );
+        return $configs['mail_sala_virtual'];
+    }
+
 }

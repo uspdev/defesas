@@ -1,3 +1,4 @@
+
 <div class="form-group">
     <label for="titulo" class="required">Título da Tese</label> 
     <input type="text" name="titulo" class="form-control" value="{{ old('titulo', $agendamento->titulo) }}">
@@ -99,7 +100,7 @@
 {{-- Tentativa de adição de um novo campo select chamado tipo --}}
     <div class="col-sm">
         <label for="tipo" class="required">Tipo</label>
-        <select class="form-control" name="tipo">
+        <select class="form-control" name="tipo" id="tipo">
             <option value="" selected="">- Selecione -</option>
             @foreach ($agendamento->tipodefesaOptions() as $option)
                 {{-- 1. Situação em que não houve tentativa de submissão e é uma edição --}}
@@ -115,6 +116,10 @@
                 @endif
             @endforeach
         </select>
+     </div>
+     <div class="col-sm" id="campoAdicional">
+        <label for="sala_virtual">Link da sala virtual</label>
+        <input type="text" name="sala_virtual" class="form-control" value="{{ old('sala_virtual', $agendamento->sala_virtual) }}">
      </div>
 {{-- Fim desse novo campo select --}}
     <div class="col-sm">
@@ -143,6 +148,13 @@
     </div>  
 </div> 
 
+<div class="row form-group">
+    <div class="col-sm">
+        <label for="resumo" class="required">Resumo</label>
+        <textarea name="resumo" class="form-control">{{old('resumo', $agendamento->resumo)}}</textarea>
+    </div>
+</div>
+
 <label for="approval_status"><b>Defesa foi aprovada?</b></label>
 <div class="row">
     <div class="col-3">
@@ -167,4 +179,17 @@
     <div class="col-sm">
         <button type="submit" class="btn btn-success float-right">Enviar</button>
     </div> 
-</div> 
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const meuSelect = document.getElementById('tipo');
+        const campoAdicional = document.getElementById('campoAdicional');
+
+        const selectedIndex = meuselect.selectedIndex;
+        if(selectedIndex === 3 || selectedIndex === 2){
+            campoAdicional.style.display = 'block';
+        }else{
+            campoAdicional.style.dispaly = 'none';
+        }
+    });
+</script>

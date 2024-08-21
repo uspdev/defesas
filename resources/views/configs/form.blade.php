@@ -182,6 +182,14 @@
 	</div>
 </div>
 
+<div class="form-group row">
+	<div class="col-sm">
+		<label class="config" for="mail_sala_virtual"> Mensagem de Email para Criação de sala Virtual </label>  
+		<textarea rows="10" class="form-control" cols="70" name="mail_sala_virtual">{{$config->mail_sala_virtual}}</textarea>
+		<span class="badge badge-warning">Token de substituição: %docente, %nusp, %origem, %ida, %volta, %email %programa, %nivel, %candi>
+	</div>
+</div>
+
 <div class="form-group">
 	<div class="col-sm">
     	<button type="submit" class="btn btn-success float-right">Salvar</button>

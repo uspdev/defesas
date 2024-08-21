@@ -4,6 +4,7 @@ namespace App\Utils;
 use Uspdev\Replicado\DB as DBreplicado;
 use Uspdev\Replicado\Uteis;
 use Uspdev\Replicado\Posgraduacao;
+use Uspdev\Replicado\Pessoa;
 
 class ReplicadoUtils {
 
@@ -161,5 +162,16 @@ class ReplicadoUtils {
         }
         return false;
     }
+
+    // public static function retornarEmailUsp($codpes){
+    //     return Pessoa::email($codpes);
+    // }
+
+    public static function retornarNomeUsp($codpes){
+        return Pessoa::nomeCompleto($codpes);
+    }
+
+    
+
 } 
 

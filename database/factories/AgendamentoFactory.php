@@ -35,7 +35,7 @@ class AgendamentoFactory extends Factory
             'nome' => Pessoa::dump($aluno)['nompes'],
             'regimento' => $regimento[array_rand($regimento)],
             'orientador_votante' => 'Não',
-            'sexo' => $sexo[array_rand($sexo)],
+            // 'sexo' => $sexo[array_rand($sexo)],
             'nivel' => $nivel[array_rand($nivel)],
             'titulo' => $this->faker->sentence($nbWords = 6, $variableNbWords = true),
             'area_programa' => $area_programa[array_rand($area_programa)]['codare'],

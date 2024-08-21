@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "63a949c3800a4c8370de3eba33e584cf",
+    "content-hash": "8944caf1e671ddc066ecbf80724fb998",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1614,6 +1614,67 @@
                 }
             ],
             "time": "2022-03-20T21:55:58+00:00"
+        },
+        {
+            "name": "kyslik/column-sortable",
+            "version": "6.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Kyslik/column-sortable.git",
+                "reference": "0f753dfd34338e87a8964a3fb2cd10fa86174b3c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Kyslik/column-sortable/zipball/0f753dfd34338e87a8964a3fb2cd10fa86174b3c",
+                "reference": "0f753dfd34338e87a8964a3fb2cd10fa86174b3c",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "5.8.*|^6.0|^7.0|^8.0|^9.0|^10.0|^11.0",
+                "illuminate/support": "5.8.*|^6.0|^7.0|^8.0|^9.0|^10.0|^11.0",
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^5.0|^7.0|^8.0|^9.0",
+                "phpunit/phpunit": "^8.5|^9.5.10|^10.5"
+            },
+            "type": "package",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Kyslik\\ColumnSortable\\ColumnSortableServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Kyslik\\ColumnSortable\\": "src/ColumnSortable/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Martin Kiesel",
+                    "email": "martin.kiesel@gmail.com",
+                    "role": "Developer and maintainer"
+                }
+            ],
+            "description": "Package for handling column sorting in Laravel 6.x",
+            "keywords": [
+                "column",
+                "laravel",
+                "sort",
+                "sortable",
+                "sorting"
+            ],
+            "support": {
+                "issues": "https://github.com/Kyslik/column-sortable/issues",
+                "source": "https://github.com/Kyslik/column-sortable/tree/6.6.0"
+            },
+            "time": "2024-03-14T08:22:23+00:00"
         },
         {
             "name": "laravel/framework",
@@ -6622,16 +6683,16 @@
         },
         {
             "name": "uspdev/replicado",
-            "version": "1.11.3",
+            "version": "1.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/uspdev/replicado.git",
-                "reference": "db029a0d0dc5eeb695814089d3bf97dbf790db2e"
+                "reference": "440312a8d28bdefe64be57e49fa5b6b37fa3ddb3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/uspdev/replicado/zipball/db029a0d0dc5eeb695814089d3bf97dbf790db2e",
-                "reference": "db029a0d0dc5eeb695814089d3bf97dbf790db2e",
+                "url": "https://api.github.com/repos/uspdev/replicado/zipball/440312a8d28bdefe64be57e49fa5b6b37fa3ddb3",
+                "reference": "440312a8d28bdefe64be57e49fa5b6b37fa3ddb3",
                 "shasum": ""
             },
             "require": {
@@ -6666,30 +6727,31 @@
             "homepage": "https://github.com/uspdev/replicado",
             "support": {
                 "issues": "https://github.com/uspdev/replicado/issues",
-                "source": "https://github.com/uspdev/replicado/tree/1.11.3"
+                "source": "https://github.com/uspdev/replicado/tree/1.15.0"
             },
-            "time": "2022-03-22T14:01:59+00:00"
+            "time": "2022-11-09T19:48:14+00:00"
         },
         {
             "name": "uspdev/senhaunica-socialite",
-            "version": "4.3.1",
+            "version": "4.3.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/uspdev/senhaunica-socialite.git",
-                "reference": "773129848337aa97220f13bae9bb4febd1d8da3f"
+                "reference": "0b66fb35fb91ab70e7c1864a4361a931c5312874"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/uspdev/senhaunica-socialite/zipball/773129848337aa97220f13bae9bb4febd1d8da3f",
-                "reference": "773129848337aa97220f13bae9bb4febd1d8da3f",
+                "url": "https://api.github.com/repos/uspdev/senhaunica-socialite/zipball/0b66fb35fb91ab70e7c1864a4361a931c5312874",
+                "reference": "0b66fb35fb91ab70e7c1864a4361a931c5312874",
                 "shasum": ""
             },
             "require": {
                 "doctrine/dbal": "^3.1",
+                "kyslik/column-sortable": "^6.5",
                 "laravel/socialite": "^5.0",
                 "php": ">=7.1.3",
                 "socialiteproviders/manager": "^3.4.2 | ^4.0",
-                "spatie/laravel-permission": "^4.2"
+                "spatie/laravel-permission": "^4.2 | ^5.0 | ^6.0"
             },
             "type": "library",
             "extra": {
@@ -6722,9 +6784,9 @@
             "homepage": "https://github.com/uspdev/senhaunica-socialite",
             "support": {
                 "issues": "https://github.com/uspdev/senhaunica-socialite/issues",
-                "source": "https://github.com/uspdev/senhaunica-socialite/tree/4.3.1"
+                "source": "https://github.com/uspdev/senhaunica-socialite/tree/4.3.12"
             },
-            "time": "2021-11-29T11:42:02+00:00"
+            "time": "2024-06-06T20:31:12+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -9329,5 +9391,5 @@
         "php": "^7.2.5"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }

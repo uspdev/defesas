@@ -14,6 +14,9 @@
             <b>Data:</b> {{$agendamento->data}}</br>
             <b>Horário:</b> {{$agendamento->horario}}</br>
             <b>Local:</b> {{$agendamento->sala}}</br>
+            @if($agendamento->tipo == 'Virtual' || $agendamento->tipo == 'Hibrido')
+            <b>Link da Sala Virtual: </b>{{$agendamento->sala_virtual ?? 'não encontrado'}}<br/>
+            @endif
             <b>Tipo da Defesa:</b> {{$agendamento->tipo}}</br>
             @if($agendamento->status == 1)
                 <b>URL:</b> {{$agendamento->url}}</br>

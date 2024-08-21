@@ -10,6 +10,10 @@ $submenu1 =  [
         'text' => '<i class="fas fa-list-alt"></i> Listar Agendamentos',
         'url'  => '/agendamentos',
     ],
+    [
+        'text' => '<i class="fas fa-search"></i> Pendência de sala virtual',
+        'url' => '/pendencia_sala_virtual'
+    ],
 ];
 
 $submenu2 =  [

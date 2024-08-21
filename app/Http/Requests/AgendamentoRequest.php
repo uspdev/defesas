@@ -43,6 +43,9 @@ class AgendamentoRequest extends FormRequest
             'tipo' => ['required',Rule::in($agendamento->tipodefesaOptions())],
             'co_orientador' => 'nullable|integer|codpes',
             'nome_co_orientador' => 'nullable',
+            'resumo' => 'nullable',
+            'enviar_email' => 'nullable',
+            'sala_virtual' => 'nullable',
             'approval_status' => [
                 'nullable',
                 Rule::in(Agendamento::statusApprovalOptions()),
@@ -79,6 +82,7 @@ class AgendamentoRequest extends FormRequest
             'tipo.required' => 'O preenchimento do Tipo da defesa é obrigatório.',
             'titulo.max' => 'Ultrapassou o número máximo de 2000 caracteres no título.',
             'title.max' => 'Ultrapassou o número máximo de 2000 caracteres no título em inglês.',
+            'enviar_email.nullable' => 'Você terá que enviar aos responsáveis o link da sala virtual'
         ];
     }
 }
