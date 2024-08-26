@@ -12,7 +12,7 @@
         <div class="col-sm ">
             <div class="row float-right">
                 <div class="col-auto">
-                    <a href="/agendamentos/{{$agendamento->id}}/edit" class="btn btn-warning">Editar Defesa</a>
+                    <a href="/agendamentos/{{$agendamento->id}}/edit" class="btn btn-warning">Editar Defesa</a>       
                 </div>
                 <div class="col-auto">
                     <form method="POST" action="/agendamentos/{{ $agendamento->id }}">

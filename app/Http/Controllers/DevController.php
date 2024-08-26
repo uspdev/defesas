@@ -13,6 +13,7 @@ use PhpParser\Node\Expr\Cast\Array_;
 
 class DevController extends Controller
 {
+    
     public function bancas_aprovadas(){
         $this->authorize('admin');
         $query = "
@@ -36,7 +37,15 @@ class DevController extends Controller
             'bancas_aprovadas' => $bancas_aprovadas
         ]);
     }
-
+    /*
+    public function bancas_aprovadas(){
+        $this->authorize('admin');
+        $bancas_aprovadas = Banca::join('docentes','bancas.codpes','docentes.n_usp')
+        ->join('agendamentos','bancas.agendamento_id','agendamentos.id')
+        ->get();
+        return view('dev.bancas_aprovadas', ['bancas_aprovadas' => $bancas_aprovadas]);
+    }
+    */
     // Retorna os dados gerais do aluno com NUSP = $codpes
     private function get_dados_aluno($codpes){
         $query_dadosGerais = "

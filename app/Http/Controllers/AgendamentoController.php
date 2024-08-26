@@ -73,6 +73,8 @@ class AgendamentoController extends Controller
             $validated['nome'] = Pessoa::dump($validated['codpes'])['nompes'];
         }
         $validated['nome_orientador'] = Pessoa::dump($validated['orientador'])['nompes'];
+
+        $validated['data_horario'] = Carbon::createFromFormat('d/m/Y H:i', $request['data'] . $request['horario'])->format('Y-m-d H:i');        
         $agendamento = Agendamento::create($validated);
         //Salva o orientador na banca
         $banca = new Banca;
@@ -97,8 +99,8 @@ class AgendamentoController extends Controller
 
     public function show(Agendamento $agendamento)
     {
-        //$this->authorize('admin');
-        $agendamento->formatDataHorario($agendamento);
+        $this->authorize('admin');
+        // $agendamento->formatDataHorario($agendamento);
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         $dadosJanus = ReplicadoUtils::retornarDadosJanus($agendamento->codpes);
         return view('agendamentos.show', compact(['agendamento','dadosJanus']));
@@ -107,7 +109,7 @@ class AgendamentoController extends Controller
     public function edit(Agendamento $agendamento)
     {
         $this->authorize('admin');
-        $agendamento->formatDataHorario($agendamento);
+        // //$agendamento->formatDataHorario($agendamento);
         return view('agendamentos.edit')->with('agendamento', $agendamento);
     }
 
@@ -118,6 +120,7 @@ class AgendamentoController extends Controller
         if($validated['nome'] == ''){
             $validated['nome'] = Pessoa::dump($validated['codpes'])['nompes'];
         }
+        $validated['data_horario'] = Carbon::createFromFormat('d/m/Y H:i', $request['data'] . $request['horario'])->format('Y-m-d H:i');
         $agendamento->update($validated);
         return redirect("/agendamentos/$agendamento->id");
     }
@@ -142,20 +145,35 @@ class AgendamentoController extends Controller
 
     public function enviarEmailProLabore(Agendamento $agendamento, Docente $docente){
         $this->authorize('admin');
-        $agendamento->formatDataHorario($agendamento);
+        //$agendamento->formatDataHorario($agendamento);
         Mail::send(new ProLaboreMail($agendamento, $docente));
         return redirect('/agendamentos/'.$agendamento->id);
     }
 
     public function exibeDisparo(Request $request, Agendamento $tipoDefesa){
         $this->authorize('admin');
-
         $docentes = Docente::select('docentes.*')->get();
-
-        if($request->tipo != null){
+        
+        if($request->tipo != null && $request->busca != null){
+            $agendamentosTipo = Agendamento::join('docentes','agendamentos.orientador','docentes.n_usp')
+            ->select('agendamentos.*','docentes.nome as nome_doc','docentes.email as email_doc')
+            ->where('agendamentos.codpes','like','%'.$request->busca.'%')
+            ->orwhere('agendamentos.orientador','like','%'.$request->busca.'%')
+            ->where('agendamentos.sala_virtual',null)
+            ->where('agendamentos.tipo','like','%'.$request->tipo.'%')
+            ->where('agendamentos.sala_virtual',null)
+            ->get();
+        }else if(isset($request->tipo)){
             $agendamentosTipo = Agendamento::join('docentes','agendamentos.orientador','docentes.n_usp')
             ->select('agendamentos.*','docentes.nome as nome_doc','docentes.email as email_doc')
             ->where('agendamentos.tipo','like','%'.$request->tipo.'%')
+            ->where('agendamentos.sala_virtual',null)
+            ->get();
+        }else if(isset($request->busca)){
+            $agendamentosTipo = Agendamento::join('docentes','agendamentos.orientador','docentes.n_usp')
+            ->select('agendamentos.*','docentes.nome as nome_doc','docentes.email as email_doc')
+            ->where('agendamentos.codpes','like','%'.$request->busca.'%')
+            ->orwhere('agendamentos.orientador','like','%'.$request->busca.'%')
             ->where('agendamentos.sala_virtual',null)
             ->get();
         }else{
@@ -171,7 +189,7 @@ class AgendamentoController extends Controller
         return view('agendamentos.recibos.defesa')->with([
             'docentes' => $docentes, 
             'agendamentosTipo' => $agendamentosTipo,
-            'tipoDefesa' => $tipoDefesa
+            'tipoDefesa' => $tipoDefesa,
         ]);
     }
 
@@ -191,7 +209,7 @@ class AgendamentoController extends Controller
 
     public function enviarEmailPassagem(Agendamento $agendamento, Banca $banca){
         $this->authorize('admin');
-        $agendamento->formatDataHorario($agendamento);
+        //$agendamento->formatDataHorario($agendamento);
         $docente = Docente::where('n_usp',$banca->codpes)->first();
         $emails = explode(" /", $docente->email);
         foreach($emails as $email){
@@ -202,7 +220,7 @@ class AgendamentoController extends Controller
 
     public function enviarEmailDeConfirmacaoDadosProfExterno(Agendamento $agendamento, Banca $banca){
         $this->authorize('admin');
-        $agendamento->formatDataHorario($agendamento);
+        //$agendamento->formatDataHorario($agendamento);
         $docente = Docente::where('n_usp',$banca->codpes)->first();
         $emails = explode(" /", $docente->email);
         foreach($emails as $email){
@@ -238,7 +256,7 @@ class AgendamentoController extends Controller
 
     public function job_email_prof(Agendamento $agendamento, Docente $docente){
         $this->authorize('admin');
-        $daily = SendDailyMail::dispatch();
+        $daily = SendDailyMail::dispatch_sync();
         return 'Emails Enviados com sucesso';
     }
 

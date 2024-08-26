@@ -38,7 +38,7 @@ class BibliotecaController extends Controller
     public function show(Agendamento $agendamento)
     {
         $this->authorize('biblioteca');
-        $agendamento->formatDataHorario($agendamento);
+        //$agendamento->formatDataHorario($agendamento);
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         return view('agendamentos.show', compact('agendamento'));
     }
@@ -54,7 +54,7 @@ class BibliotecaController extends Controller
         $agendamento->user_id_biblioteca = Auth::user()->id;
         $agendamento->save();
         
-        $agendamento->formatDataHorario($agendamento);
+        //$agendamento->formatDataHorario($agendamento);
         return redirect("/agendamentos/$agendamento->id");
     }
 }

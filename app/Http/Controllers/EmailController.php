@@ -19,7 +19,7 @@ class EmailController extends Controller
     public function exibirReciboExterno(Agendamento $agendamento, Banca $banca, Request $request){
         $this->authorize('admin');
         $dados = $request;
-        $agendamento->formatDataHorario($agendamento);
+        //$agendamento->formatDataHorario($agendamento);
         $docente = Docente::where('n_usp', $banca->codpes)->first();
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         $configs = Config::orderbyDesc('created_at')->first();
@@ -30,7 +30,7 @@ class EmailController extends Controller
     public function exibirEmailDocente(Agendamento $agendamento, Banca $banca, Request $request){
         $this->authorize('admin');
         $dados = $request;
-        $agendamento->formatDataHorario($agendamento);
+        //$agendamento->formatDataHorario($agendamento);
         $docente = Docente::where('n_usp', $banca->codpes)->first();
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         $configs = Config::setConfigEmail($agendamento,$banca);
@@ -40,7 +40,7 @@ class EmailController extends Controller
     public function exibirDisparoEmail(Agendamento $agendamento, Banca $banca, Request $request){
         $this->authorize('admin');
         $dados = $request;
-        $agendamento->formatDataHorario($agendamento);
+        //$agendamento->formatDataHorario($agendamento);
         $docente = Docente::where('n_usp', $banca->codpes)->first();
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         $configs = Config::setConfigEmail($agendamento, $banca);

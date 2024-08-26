@@ -22,11 +22,6 @@ Route::resource('docentes',DocenteController::class);
 Route::resource('bancas', BancaController::class);
 Route::resource('files', FileController::class)->only(['store', 'show', 'destroy']);
 
-// rotas do Status de Defesa
-Route::get('status/{agendamento}', [ApprovalStatusDefesaController::class, 'show']);
-Route::put('status/aprovar/{agendamento}', [ApprovalStatusDefesaController::class, 'aprovar']);
-Route::put('status/reprovar/{agendamento}', [ApprovalStatusDefesaController::class, 'reprovar']);
-
 // rotas para biblioteca
 Route::get('/teses',[BibliotecaController::class, 'index']);
 Route::patch('/teses/{agendamento}/publish',[BibliotecaController::class, 'publish']);

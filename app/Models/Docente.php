@@ -8,14 +8,13 @@ use App\Models\Banca;
 use App\Models\Agendamento;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Uspdev\Replicado\Pessoa;
 
 class Docente extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id'];
-
-    protected $fillable = ['nome','email'];
 
     public static function documentoOptions(){
         return [

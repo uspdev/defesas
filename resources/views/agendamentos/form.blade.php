@@ -1,4 +1,8 @@
-
+<style>
+    #campoAdicional{
+        display:none;
+    }
+</style>
 <div class="form-group">
     <label for="titulo" class="required">Título da Tese</label> 
     <input type="text" name="titulo" class="form-control" value="{{ old('titulo', $agendamento->titulo) }}">
@@ -134,11 +138,11 @@
 <div class="row form-group">
     <div class="col-sm">
         <label for="data" class="required">Data</label> 
-        <input type="text" name="data" class="form-control datepicker data" autocomplete="off" value="{{ old('data', $agendamento->data) }}"> 
+        <input type="text" name="data" class="form-control datepicker data" autocomplete="off" value="{{ old('data_horario', date('d/m/Y',strtotime($agendamento->data_horario))) }}">
     </div>
     <div class="col-sm">
         <label for="horario" class="required">Horário</label> 
-        <input type="text" name="horario" class="form-control horario" value="{{ old('horario', $agendamento->horario) }}">
+        <input type="text" name="horario" class="form-control horario" value="{{ old('data_horario', date('H:i', strtotime($agendamento->data_horario))) }}">
     </div> 
 </div>
 <div class="row form-group">
@@ -180,16 +184,23 @@
         <button type="submit" class="btn btn-success float-right">Enviar</button>
     </div> 
 </div>
+
 <script>
+    // Adiciona um listener de evento para garantir que o DOM está carregado
     document.addEventListener('DOMContentLoaded', function() {
-        const meuSelect = document.getElementById('tipo');
+        const select = document.getElementById('tipo');
         const campoAdicional = document.getElementById('campoAdicional');
 
-        const selectedIndex = meuselect.selectedIndex;
-        if(selectedIndex === 3 || selectedIndex === 2){
-            campoAdicional.style.display = 'block';
-        }else{
-            campoAdicional.style.dispaly = 'none';
+        if (select && campoAdicional) {
+            select.addEventListener('change', function() {
+                const selectedIndex = select.selectedIndex;
+
+                if (selectedIndex === 3 || selectedIndex === 2) {
+                    campoAdicional.style.display = 'block';
+                } else {
+                    campoAdicional.style.display = 'none';
+                }
+            });
         }
     });
 </script>

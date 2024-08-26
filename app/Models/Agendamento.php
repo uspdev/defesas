@@ -45,13 +45,6 @@ class Agendamento extends Model
         return $this->hasMany(File::class);
     }
 
-    //Função para formatar horário do agendamento
-    public function formatDataHorario($agendamento){
-        $agendamento->data = Carbon::parse($agendamento->data_horario)->format('d/m/Y');
-        $agendamento->horario = Carbon::parse($agendamento->data_horario)->format('H:i');
-        return $agendamento;
-    }
-
     //Função para devolver valores de select
     public static function regimentoOptions(){
         return [

@@ -31,10 +31,10 @@ class EnviarEmailDiario extends Command
     {
 
         /*
-        o enviar_email não precisa ser 1, pois por default
-        vem como 0. Ou seja, se um docente criar um agendamento
-        sem sala virtual (por algum motivo), ele será automaticamente (às 0h) notificado
-        após a criação do agendamento.
+        Deixar "enviar_email" como 0 para que, ao enviar o email à meia-noite,
+        atualize na DB para mostrar que o e-mail foi enviado.
+        Não será enviado email caso o professor mande o link da sala virtual
+        antes da meia-noite.
         */
         $docentes = Docente::select('docentes.*')->get();
         $agendamentos = Agendamento::select('agendamentos.*')
@@ -45,7 +45,7 @@ class EnviarEmailDiario extends Command
         ->get();
 
         foreach($agendamentos as $agendamento){
-            $agendamento->enviar_email = TRUE;
+            $agendamento->enviar_email = TRUE; //mostra que o e-mail já foi enviado
             $agendamento->update();
             $email = Pessoa::retornarEmailUsp($agendamento->orientador); //codpes do orientador
             Mail::to("$email")->send(new MailSalaVirtual($agendamento, $docentes));

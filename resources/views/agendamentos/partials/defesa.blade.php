@@ -11,8 +11,8 @@
             <b>Programa:</b> {{$agendamento->nome_area}}</br>
             @can('logado')<b>Orientador Votante:</b> {{$agendamento->orientador_votante}}</br>@endcan
             <b>Orientador:</b> {{$agendamento->nome_orientador ?? $agendamento->dadosProfessor($agendamento->orientador)->nome}} @if($agendamento->co_orientador) e {{$agendamento->nome_co_orientador ?? $agendamento->dadosProfessor($agendamento->co_orientador)->nome}} @endif</br>
-            <b>Data:</b> {{$agendamento->data}}</br>
-            <b>Horário:</b> {{$agendamento->horario}}</br>
+            <b>Data:</b> {{ date('d/m/Y', strtotime($agendamento->data_horario))}} às {{date('H:i', strtotime($agendamento->data_horario))}}</br>
+            {{--<b>Horário:</b> {{$agendamento->horario}}</br>--}}
             <b>Local:</b> {{$agendamento->sala}}</br>
             @if($agendamento->tipo == 'Virtual' || $agendamento->tipo == 'Hibrido')
             <b>Link da Sala Virtual: </b>{{$agendamento->sala_virtual ?? 'não encontrado'}}<br/>
