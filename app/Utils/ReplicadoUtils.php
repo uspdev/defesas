@@ -118,7 +118,7 @@ class ReplicadoUtils {
             $result = Uteis::trim_recursivo($result);
             return $result[0];
         }
-        
+
         return $result[] = ['nomset' => ' '];
     }
 
@@ -140,11 +140,11 @@ class ReplicadoUtils {
     }
 
     public static function retornarDadosJanus($codpes){
-        $query = "SELECT A.codpes, T.tittrb, T.rsutrb, T.palcha, 
-                  T.tittrbigl, T.rsutrbigl, T.palchaigl 
+        $query = "SELECT A.codpes, T.tittrb, T.rsutrb, T.palcha,
+                  T.tittrbigl, T.rsutrbigl, T.palchaigl
                   FROM AGPROGRAMA AS A INNER JOIN DDTDEPOSITOTRABALHO AS D
                   ON A.codpes = D.codpes
-                  INNER JOIN DDTENTREGATRABALHO AS T                  
+                  INNER JOIN DDTENTREGATRABALHO AS T
                   ON D.coddpodgttrb = T.coddpodgttrb
                   WHERE A.codpes = convert(int, :codpes)
                   AND A.codare = D.codare
@@ -163,15 +163,5 @@ class ReplicadoUtils {
         return false;
     }
 
-    // public static function retornarEmailUsp($codpes){
-    //     return Pessoa::email($codpes);
-    // }
-
-    public static function retornarNomeUsp($codpes){
-        return Pessoa::nomeCompleto($codpes);
-    }
-
-    
-
-} 
+}
 

@@ -19,6 +19,6 @@ class DatabaseSeeder extends Seeder
             BancaSeeder::class,
             ConfigSeeder::class,
         ]);
-        
+
     }
 }

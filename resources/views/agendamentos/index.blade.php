@@ -48,7 +48,7 @@
                 <th>Data</th>
                 <th>Horário</th>
                 <th>Orientador</th>
-                <th colspan="3">Ações</th>
+                <th colspan="2">Ações</th>
             </tr>
         </theader>
         <tbody>
@@ -64,13 +64,10 @@
                 </td>
                 <td>
                     <form method="POST" action="/agendamentos/{{ $agendamento->id }}">
-                        @csrf 
+                        @csrf
                         @method('delete')
                         <button type="submit" class="btn btn-danger" onclick="return confirm('Você tem certeza que deseja apagar?')"><i class="fas fa-trash-alt"></i></button>
                     </form>
-                    </td>
-                <td>
-                    <a href="/status/{{$agendamento->id}}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
                 </td>
             </tr>
         @endforeach
