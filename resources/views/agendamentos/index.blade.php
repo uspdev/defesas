@@ -64,7 +64,7 @@
                 </td>
                 <td>
                     <form method="POST" action="/agendamentos/{{ $agendamento->id }}">
-                        @csrf 
+                        @csrf
                         @method('delete')
                         <button type="submit" class="btn btn-danger" onclick="return confirm('Você tem certeza que deseja apagar?')"><i class="fas fa-trash-alt"></i></button>
                     </form>

@@ -24,9 +24,9 @@ class AgendamentoFactory extends Factory
      */
     public function definition()
     {
-        $sexo = ['Masculino','Feminino']; 
-        $regimento = Agendamento::regimentoOptions(); 
-        $nivel = Agendamento::nivelOptions(); 
+        $sexo = ['Masculino','Feminino'];
+        $regimento = Agendamento::regimentoOptions();
+        $nivel = Agendamento::nivelOptions();
         $area_programa = Agendamento::programaOptions();
         $aluno = $this->faker->unique()->posgraduacao();
         $orientador = Docente::factory()->create()->n_usp;
@@ -35,13 +35,14 @@ class AgendamentoFactory extends Factory
             'nome' => Pessoa::dump($aluno)['nompes'],
             'regimento' => $regimento[array_rand($regimento)],
             'orientador_votante' => 'Não',
-            'sexo' => $sexo[array_rand($sexo)],
             'nivel' => $nivel[array_rand($nivel)],
             'titulo' => $this->faker->sentence($nbWords = 6, $variableNbWords = true),
+            'title' => $this->faker->sentence($nbWords = 6, $variableNbWords = true),
             'area_programa' => $area_programa[array_rand($area_programa)]['codare'],
             'data_horario' => $this->faker->dateTimeBetween($startDate = '-2 years', $endDate = '+2 years'),
             'sala' => $this->faker->sentence($nbWords = 2, $variableNbWords = true),
             'orientador' => $orientador,
+            'approval_status' => 'Não avaliado',
         ];
     }
 }

@@ -16,22 +16,23 @@
         <th>NÚMERO USP</th>
 
         <th>NOME</th>
-        
+
         <th>AGENDAMENTO</th>
 
         <th></th>
-    
+
     </tr>
     @foreach($bancas_aprovadas as $aluno)
-        
+
         {{ csrf_field() }}
 
             <tr>
             <form action="{{ '/dev/codpes/'.$aluno['codpes'] }}" method="POST" class="form-horizontal">
+                @csrf
                 <td>{{ $aluno['codpes'] }}</td>
 
-                <td>{{ $aluno['nompes'] }}</td>
-                
+                <td>{{$aluno->nome}}</td>
+
                 @if(\App\Models\Agendamento::where('codpes', $aluno['codpes'])->first() )
                     <td>{{ (new Datetime(\App\Models\Agendamento::where('codpes', $aluno['codpes'])->first()->data_horario))->format('d/m/Y') }}</td>
                 @else

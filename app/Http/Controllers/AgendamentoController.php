@@ -16,7 +16,11 @@ use App\Mail\ReciboExternoMail;
 use App\Mail\ProLaboreMail;
 use App\Mail\PassagemMail;
 use App\Mail\DadosProfExternoMail;
+use App\Mail\MailSalaVirtual;
+use App\Mail\SalaVirtual;
+use App\Jobs\SendDailyMail;
 use Storage;
+use Illuminate\Support\Arr;
 
 class AgendamentoController extends Controller
 {
@@ -93,8 +97,7 @@ class AgendamentoController extends Controller
 
     public function show(Agendamento $agendamento)
     {
-        //$this->authorize('admin');
-        $agendamento->formatDataHorario($agendamento);
+        $this->authorize('admin');
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         $dadosJanus = ReplicadoUtils::retornarDadosJanus($agendamento->codpes);
         return view('agendamentos.show', compact(['agendamento','dadosJanus']));
@@ -103,7 +106,6 @@ class AgendamentoController extends Controller
     public function edit(Agendamento $agendamento)
     {
         $this->authorize('admin');
-        $agendamento->formatDataHorario($agendamento);
         return view('agendamentos.edit')->with('agendamento', $agendamento);
     }
 
@@ -138,14 +140,48 @@ class AgendamentoController extends Controller
 
     public function enviarEmailProLabore(Agendamento $agendamento, Docente $docente){
         $this->authorize('admin');
-        $agendamento->formatDataHorario($agendamento);
         Mail::send(new ProLaboreMail($agendamento, $docente));
         return redirect('/agendamentos/'.$agendamento->id);
     }
 
+    public function pendencia(Request $request){
+        $this->authorize('admin');
+
+        $query = Agendamento::with('docente')
+            ->whereNull('sala_virtual')
+            ->whereDate('data_horario', '>=', now())
+            ->orderBy('data_horario');
+
+        $query->when(!$request->busca && !$request->tipo, function ($query) {
+            return $query->where('tipo', '<>', 'Presencial');
+        });
+
+        $query->when($request->busca && $request->tipo, function ($query) use ($request) {
+            return $query->where('tipo', $request->tipo)
+                ->where(function($query) use ($request) {
+                    $query->where('codpes', $request->busca)
+                        ->orWhere('orientador', $request->busca);
+                });
+        });
+
+        $query->when($request->busca && !$request->tipo, function ($query) use ($request) {
+            return $query->where('codpes', $request->busca)
+               ->orWhere('orientador', $request->busca)
+               ->where('tipo','<>', 'Presencial');
+        });
+
+        $query->when(!$request->busca && $request->tipo, function ($query) use ($request) {
+            return $query->where('tipo', $request->tipo);
+        });
+
+        return view('agendamentos.recibos.defesa')->with([
+            'agendamentos' => $query->get(),
+            'tipoDefesa' => Arr::except(Agendamento::tipodefesaOptions(), ['0']),
+        ]);
+    }
+
     public function enviarEmailPassagem(Agendamento $agendamento, Banca $banca){
         $this->authorize('admin');
-        $agendamento->formatDataHorario($agendamento);
         $docente = Docente::where('n_usp',$banca->codpes)->first();
         $emails = explode(" /", $docente->email);
         foreach($emails as $email){
@@ -156,7 +192,6 @@ class AgendamentoController extends Controller
 
     public function enviarEmailDeConfirmacaoDadosProfExterno(Agendamento $agendamento, Banca $banca){
         $this->authorize('admin');
-        $agendamento->formatDataHorario($agendamento);
         $docente = Docente::where('n_usp',$banca->codpes)->first();
         $emails = explode(" /", $docente->email);
         foreach($emails as $email){
@@ -190,5 +225,10 @@ class AgendamentoController extends Controller
         }
     }
 
+    public function job_email_prof(Agendamento $agendamento, Docente $docente){
+        $this->authorize('admin');
+        $daily = SendDailyMail::dispatch_sync();
+        return 'Emails Enviados com sucesso';
+    }
 
 }

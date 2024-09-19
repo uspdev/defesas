@@ -72,7 +72,7 @@
         {!! $configs->importante_oficio !!}
     </div>
     <p>
-        <i>Data e hora da defesa:  </i> <b> {{$agendamento->data}}, às {{$agendamento->horario}} </b> <br> 
+        <i>Data e hora da defesa:  </i> <b> {{ date('d/m/Y', strtotime($agendamento->data_horario))}}, às {{ date('H:i', strtotime($agendamento->data_horario))}} </b> <br> 
         <i>Local:</i> <b> {{$agendamento->sala}} </b>
     </p>  
     <i>Composição da banca examinadora:</i> 

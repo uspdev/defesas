@@ -22,7 +22,6 @@ class PdfController extends Controller
     public function gerarDocumentosGerais(Agendamento $agendamento, $tipo){
         $this->authorize('admin');
         $configs = Config::orderbyDesc('created_at')->first();
-        $agendamento->formatDataHorario($agendamento);
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         if($tipo == 'placa'){
             $pdf = PDF::loadView('pdfs.documentos_gerais.placa', compact('agendamento'))->setPaper('a4', 'landscape');
@@ -55,7 +54,6 @@ class PdfController extends Controller
     //Bloco destinado aos documentos individuais
     public function gerarDocumentosIndividuais(Agendamento $agendamento, Banca $banca, $tipo){
         $this->authorize('admin');
-        $agendamento->formatDataHorario($agendamento);
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         if($tipo == 'statement' or $tipo == 'invite'){
             config(['laravel-fflch-pdf.setor' => "Graduate Service"]);
@@ -104,7 +102,6 @@ class PdfController extends Controller
     public function gerarRecibosAuxilios(Agendamento $agendamento, Banca $banca, Request $request, $tipo){
         $this->authorize('admin');
         $dados = $request;
-        $agendamento->formatDataHorario($agendamento);
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         $configs = Config::orderbyDesc('created_at')->first();
         $docente = Docente::where('n_usp', '=', $banca->codpes)->first();

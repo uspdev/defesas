@@ -1,11 +1,11 @@
 <div class="form-group">
-    <label for="titulo" class="required">Título da Tese</label> 
+    <label for="titulo" class="required">Título da Tese</label>
     <input type="text" name="titulo" class="form-control" value="{{ old('titulo', $agendamento->titulo) }}">
-</div> 
+</div>
 <div class="form-group">
-    <label for="title">Título da Tese em Inglês</label> 
+    <label for="title">Título da Tese em Inglês</label>
     <input type="text" name="title" class="form-control" value="{{ old('title', $agendamento->title) }}">
-</div> 
+</div>
 <div class="form-group row">
     <div class="col-sm ">
         <label for="nome">Nome Completo</label>
@@ -13,8 +13,8 @@
         <span class="badge badge-warning">Se este campo ficar vazio, o nome utilizado será o cadastrado nos sistemas da USP</span>
     </div>
     <div class="col-sm">
-        <label for="codpes" class="required">Número USP </label> 
-        <input type="text" name="codpes" id="codpes" class="form-control" value="{{ old('codpes', $agendamento->codpes) }}"> 
+        <label for="codpes" class="required">Número USP </label>
+        <input type="text" name="codpes" id="codpes" class="form-control" value="{{ old('codpes', $agendamento->codpes) }}">
     </div>
 </div>
 <div class="row form-group">
@@ -35,7 +35,7 @@
                 </option>
                 @endif
             @endforeach
-        </select> 
+        </select>
     </div>
     <div class="col-sm">
         <label for="nivel" class="required">Nível</label>
@@ -54,7 +54,7 @@
                 </option>
                 @endif
             @endforeach
-        </select> 
+        </select>
     </div>
     <div class="col-sm">
         <label for="area_programa" class="required">Programa</label>
@@ -73,8 +73,8 @@
                 </option>
                 @endif
             @endforeach
-        </select> 
-    </div>   
+        </select>
+    </div>
 </div>
 <div class="row form-group">
     <div class="col-sm">
@@ -99,7 +99,7 @@
 {{-- Tentativa de adição de um novo campo select chamado tipo --}}
     <div class="col-sm">
         <label for="tipo" class="required">Tipo</label>
-        <select class="form-control" name="tipo">
+        <select class="form-control" name="tipo" id="tipo">
             <option value="" selected="">- Selecione -</option>
             @foreach ($agendamento->tipodefesaOptions() as $option)
                 {{-- 1. Situação em que não houve tentativa de submissão e é uma edição --}}
@@ -116,32 +116,43 @@
             @endforeach
         </select>
      </div>
+     <div class="col-sm">
+        <label for="sala_virtual">Link da sala virtual</label>
+        <input type="text" name="sala_virtual" class="form-control" value="{{ old('sala_virtual', $agendamento->sala_virtual) }}">
+     </div>
 {{-- Fim desse novo campo select --}}
     <div class="col-sm">
         <label for="orientador" class="required">Nº USP Orientador</label>
-        <input type="text" name="orientador" class="form-control" value="{{ old('orientador', $agendamento->orientador) }}"> 
+        <input type="text" name="orientador" class="form-control" value="{{ old('orientador', $agendamento->orientador) }}">
     </div>
     <div class="col-sm">
         <label for="co_orientador">Nº USP do Co-Orientador</label>
-        <input type="text" name="co_orientador" class="form-control" value="{{ old('co_orientador', $agendamento->co_orientador) }}"> 
-    </div>  
+        <input type="text" name="co_orientador" class="form-control" value="{{ old('co_orientador', $agendamento->co_orientador) }}">
+    </div>
 </div>
 <div class="row form-group">
     <div class="col-sm">
-        <label for="data" class="required">Data</label> 
-        <input type="text" name="data" class="form-control datepicker data" autocomplete="off" value="{{ old('data', $agendamento->data) }}"> 
+        <label for="data" class="required">Data</label>
+        <input type="text" name="data" class="form-control datepicker data" autocomplete="off" value="{{ old('data_horario', date('d/m/Y',strtotime($agendamento->data_horario))) }}">
     </div>
     <div class="col-sm">
-        <label for="horario" class="required">Horário</label> 
-        <input type="text" name="horario" class="form-control horario" value="{{ old('horario', $agendamento->horario) }}">
-    </div> 
+        <label for="horario" class="required">Horário</label>
+        <input type="text" name="horario" class="form-control horario" value="{{ old('data_horario', date('H:i', strtotime($agendamento->data_horario))) }}">
+    </div>
 </div>
 <div class="row form-group">
     <div class="col-sm">
         <label for="sala" class="required">Local</label>
         <input type="text" name="sala" class="form-control" value="{{ old('sala', $agendamento->sala) }}">
-    </div>  
-</div> 
+    </div>
+</div>
+
+<div class="row form-group">
+    <div class="col-sm">
+        <label for="resumo" class="required">Resumo</label>
+        <textarea name="resumo" class="form-control">{{old('resumo', $agendamento->resumo)}}</textarea>
+    </div>
+</div>
 
 <label for="approval_status"><b>Defesa foi aprovada?</b></label>
 <div class="row">
@@ -166,5 +177,5 @@
 <div class="row form-group">
     <div class="col-sm">
         <button type="submit" class="btn btn-success float-right">Enviar</button>
-    </div> 
-</div> 
+    </div>
+</div>

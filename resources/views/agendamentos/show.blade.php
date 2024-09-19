@@ -16,7 +16,7 @@
                 </div>
                 <div class="col-auto">
                     <form method="POST" action="/agendamentos/{{ $agendamento->id }}">
-                        @csrf 
+                        @csrf
                         @method('delete')
                         <button type="submit" class="btn btn-danger" onclick="return confirm('Você tem certeza que deseja apagar?')">Apagar</button>
                     </form>
@@ -30,7 +30,7 @@
     @include('agendamentos.partials.banca')
     @can('biblioteca') @include('agendamentos.partials.files') @endcan
     @can('biblioteca')
-        @if($agendamento->files->count() > 0) 
+        @if($agendamento->files->count() > 0)
             @include('agendamentos.partials.biblioteca')
         @endif
     @endcan

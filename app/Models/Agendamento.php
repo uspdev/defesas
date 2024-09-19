@@ -3,15 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use Uspdev\Replicado\Posgraduacao;
 use App\Utils\ReplicadoUtils;
 use App\Models\Banca;
 use App\Models\Docente;
+
 class Agendamento extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     protected $guarded = ['id'];
 
@@ -31,13 +33,6 @@ class Agendamento extends Model
     public function files()
     {
         return $this->hasMany(File::class);
-    }
-
-    //Função para formatar horário do agendamento
-    public function formatDataHorario($agendamento){
-        $agendamento->data = Carbon::parse($agendamento->data_horario)->format('d/m/Y');
-        $agendamento->horario = Carbon::parse($agendamento->data_horario)->format('H:i');
-        return $agendamento;
     }
 
     //Função para devolver valores de select
@@ -109,7 +104,7 @@ class Agendamento extends Model
     }
 
     public function nomeUsuario($id){
-        return User::where('id',$id)->first()->name;
+        return User::where('id',$id)->first();
     }
 
     //Função para devolver valores de select status
@@ -119,4 +114,9 @@ class Agendamento extends Model
             'Reprovado'
         ];
     }
+
+    public function docente() {
+        return $this->hasOne(Docente::class, 'n_usp', 'orientador');
+    }
+
 }

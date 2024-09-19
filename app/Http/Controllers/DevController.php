@@ -13,7 +13,9 @@ use PhpParser\Node\Expr\Cast\Array_;
 
 class DevController extends Controller
 {
+
     public function bancas_aprovadas(){
+        dd('oi');
         $this->authorize('admin');
         $query = "
         SELECT V.codpes, V.nompes, A.dtaaprbantrb, A.dtadfapgm FROM DDTDEPOSITOTRABALHO D, VINCULOPESSOAUSP V
@@ -58,7 +60,7 @@ class DevController extends Controller
         FROM
         R48PGMTRBDOC AS R, AGPROGRAMA AS A, PESSOA AS P
         WHERE
-        R.codpes = $codpes    
+        R.codpes = $codpes
         AND R.codpesdct = P.codpes
         AND A.codare = R.codare
         AND R.codpes = A.codpes
@@ -78,7 +80,7 @@ class DevController extends Controller
         WHERE A.codpes = $codpes
         AND D.codpes = A.codpes
         AND D.codare = A.codare
-        AND D.numseqpgm = A.numseqpgm 
+        AND D.numseqpgm = A.numseqpgm
         AND D.coddpodgttrb = R.coddpodgttrb
         ";
         $trabalho = DB::fetchAll($query_trabalho);
@@ -119,22 +121,22 @@ class DevController extends Controller
         $date = getdate();
         $agendamento = array(
             'codpes' => $dadosGerais[0]['codpes'],
-            'nome' => $dadosGerais[0]['nompes'], 
+            'nome' => $dadosGerais[0]['nompes'],
             'regimento' => "Novo",
-            'orientador_votante' => "Sim", 
-            'sexo' => $dadosGerais[0]['sexpes'], 
-            'nivel' => $dadosGerais[0]['nivpgm'], 
-            'titulo' => " ", 
-            'area_programa' => $dadosGerais[0]['codare'], 
-            'data_horario' => Carbon::CreatefromFormat('d/m/Y H:i', "17/06/2021 ".strval($date['hours']).":".strval($date['minutes'])), 
-            'sala' => " ", 
-            'orientador' => $orientador[0]['codpes'], 
+            'orientador_votante' => "Sim",
+            'sexo' => $dadosGerais[0]['sexpes'],
+            'nivel' => $dadosGerais[0]['nivpgm'],
+            'titulo' => " ",
+            'area_programa' => $dadosGerais[0]['codare'],
+            'data_horario' => Carbon::CreatefromFormat('d/m/Y H:i', "17/06/2021 ".strval($date['hours']).":".strval($date['minutes'])),
+            'sala' => " ",
+            'orientador' => $orientador[0]['codpes'],
             'nome_orientador' => $orientador[0]['nompes']
         );
 
-       
+
         $defesa_dadosGerais = Agendamento::create($agendamento);
-        
+
         $newBanca = array();
         foreach($banca_aluno as $banca){
             $newBanca['codpes'] = $banca['codpesdct'];
