@@ -17,22 +17,12 @@ class Agendamento extends Model
 
     protected $guarded = ['id'];
 
-    
-
     public static function tipodefesaOptions() {
         return [
             'Presencial',
             'Hibrido',
             'Virtual'
         ];
-    }
-
-    public static function tipoSalaVirtual(){
-        $tipoDefesa = [
-            'Virtual',
-            'Hibrido'
-        ];
-        return $tipoDefesa;
     }
 
     public function bancas()
@@ -124,4 +114,9 @@ class Agendamento extends Model
             'Reprovado'
         ];
     }
+
+    public function docente() {
+        return $this->hasOne(Docente::class, 'n_usp', 'orientador');
+    }
+
 }

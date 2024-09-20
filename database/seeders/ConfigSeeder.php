@@ -31,8 +31,8 @@ class ConfigSeeder extends Seeder
             will take place in a public session, and should not exceed the three-hour period for the
             master's, five hours for the doctorate (previous regiment) and four hours for students of
             the new regiment (bank with 3 examiners). </center></b>",
-            'oficio_suplente' => '<p> Venho, pelo presente, informar que seu nome foi aprovado pela Comissão de Pós-Graduação para, na qualidade de </b>membro suplente</b>, integrar a banca examinadora do(a) aluno(a) supracitado(a).</p> 
-            <p> A defesa está prevista para o dia <b>%data_oficio_suplente</b>, no(a) %nome_sala do Prédio da %predio.</p> 
+            'oficio_suplente' => '<p> Venho, pelo presente, informar que seu nome foi aprovado pela Comissão de Pós-Graduação para, na qualidade de </b>membro suplente</b>, integrar a banca examinadora do(a) aluno(a) supracitado(a).</p>
+            <p> A defesa está prevista para o dia <b>%data_oficio_suplente</b>, no(a) %nome_sala do Prédio da %predio.</p>
             <p>Na impossibilidade do comparecimento de um dos membros titulares, V. Sa. será convidado(a) a integrar a referida banca, motivo pelo qual, segue anexo a versão PDF do trabalho.',
             'declaracao' => 'Declaro, para os devidos fins, que o(a) Prof(a). Dr(a). <b>%docente_nome</b> participou, nesta data, da defesa do trabalho de %nivel do(a) Sr(a) %candidato_nome, intitulado: "%titulo", na área %area, sob a presidência do(a) Prof.(a) Dr.(a) %orientador, integrando a Comissão Julgadora, formada pelos Professores Doutores:',
             'statement' => 'I, the undersigned, certify that Professor <b>%docente_nome</b> participated in the %nivel Thesis Defense of <b> %candidato_nome </b> with the following title: "%titulo", in the area of %area, chaired by Professor %orientador, on %data. The following professors were members of the Examination Committee:',
@@ -54,13 +54,13 @@ class ConfigSeeder extends Seeder
             <p>Data da defesa: %data_defesa <p>
             <p>Local: %local_defesa <p>
             <br>
-            
+
             <p><b><u><font size=3>
             1. Tipo de participação:</u></b>
             <br>
             <br>
             <p><font size=3><b>
-            [   ] Presencial 
+            [   ] Presencial
             </font></p></b>
             <br>
             <p><font size=3><b>
@@ -68,7 +68,7 @@ class ConfigSeeder extends Seeder
             </font></p></b>
             <br>
             <br>
-            <p><b><u><font size=3> 2.  Qual será seu meio de Transporte: </font></u></b> 
+            <p><b><u><font size=3> 2.  Qual será seu meio de Transporte: </font></u></b>
             <br>
             <br>
             <p><font size=3>[   ]<b>  Carro </b>–   não há reembolso de combustível</font></p>
@@ -78,7 +78,7 @@ class ConfigSeeder extends Seeder
             <p><font size=3>[   ]<b>  Aéreo (*)</b> – passagem comprada pelo Serviço de Pós-Graduação</font></p> <p><b>
             <br>
             <br>
-            <p><b><u><font size=3> 3.  Qual será o itinerário? - só em caso de passagem aérea </font></u></b> 
+            <p><b><u><font size=3> 3.  Qual será o itinerário? - só em caso de passagem aérea </font></u></b>
             <br>
             <br>
             <p><b><font size=3> Ida:</font></b>_________________________________/São Paulo (Capital)</p>
@@ -110,7 +110,7 @@ class ConfigSeeder extends Seeder
             <br>
             <div class="col-auto float-right">
                 <form method="POST" action="/agendamentos/passagem/%agendamento/%docente">
-                %token 
+                %token
                 <button type="submit" class="btn btn-success" onclick="return confirm("Tem certeza que deseja enviar para E-mail?")"> Enviar E-mail </button>
                 </form>
             </div><br><br>
@@ -142,10 +142,10 @@ class ConfigSeeder extends Seeder
             <p>Desde já lhe agradeço e aguardo o retorno.</p>
             <div class="col-auto float-right">
                 <form method="POST" action="/agendamentos/dados_prof_externo/%agendamento/%docente">
-                    %token 
+                    %token
                     <button type="submit" class="btn btn-success" onclick="return confirm("Tem certeza que deseja enviar para E-mail?")"> Enviar E-mail </button>
                 </form>
-            </div><br><br> 
+            </div><br><br>
             <hr>
             <p> <b> e-mail para enviar convite e dissertação/tese em PDF </b> </p> <br>
             <p>Prezados Professores, </p>
@@ -186,11 +186,11 @@ class ConfigSeeder extends Seeder
             'obs_passagem' => '<p>OBS: A cada solicitação de passagem, deverão ser
 
             encaminhados orçamentos de, no mínimo três companhias, para
-            
+
             que esta Administração confirme a emissão do bilhete mais
-            
+
             vantajoso. Se não houver as três companhias solicito que seja
-            
+
             informado por escrito em nossa solicitação. </p> <b> <p>
             </p></b> Sem mais',
             'header_auxilio' => '<b>A <br>
@@ -214,13 +214,13 @@ class ConfigSeeder extends Seeder
             <p>Data da defesa: %data <p>
             <p>Local: %sala <p>
             <br>
-            
+
             <p><b><u><font size=3>
             1. Tipo de participação:</u></b>
             <br>
             <br>
             <p><font size=3><b>
-            [   ] Presencial 
+            [   ] Presencial
             </font></p></b>
             <br>
             <p><font size=3><b>
@@ -228,7 +228,7 @@ class ConfigSeeder extends Seeder
             </font></p></b>
             <br>
             <br>
-            <p><b><u><font size=3> 2.  Qual será seu meio de Transporte: </font></u></b> 
+            <p><b><u><font size=3> 2.  Qual será seu meio de Transporte: </font></u></b>
             <br>
             <br>
             <p><font size=3>[   ]<b>  Carro </b>–   não há reembolso de combustível</font></p>
@@ -238,7 +238,7 @@ class ConfigSeeder extends Seeder
             <p><font size=3>[   ]<b>  Aéreo (*)</b> – passagem comprada pelo Serviço de Pós-Graduação</font></p> <p><b>
             <br>
             <br>
-            <p><b><u><font size=3> 3.  Qual será o itinerário? - só em caso de passagem aérea </font></u></b> 
+            <p><b><u><font size=3> 3.  Qual será o itinerário? - só em caso de passagem aérea </font></u></b>
             <br>
             <br>
             <p><b><font size=3> Ida:</font></b>_________________________________/São Paulo (Capital)</p>
@@ -275,19 +275,25 @@ class ConfigSeeder extends Seeder
             Item(s):
             <p>Prof. Dr. %docente </p>
             <p>Número USP: %nusp </p>
-            <p>PIS/PASEP: %pispasep </p> 
+            <p>PIS/PASEP: %pispasep </p>
             <br>",
-            'mail_recibo_externo' => '<p><b>Nome:</b> %docente </p> 
-            <p><b>N° USP:</b> %nusp </p> 
-            <p><b>Origem:</b> %origem </p> 
-            <p><b>Ida:</b> %ida </p> 
-            <p><b>Volta:</b> %volta </p> 
+            'mail_recibo_externo' => '<p><b>Nome:</b> %docente </p>
+            <p><b>N° USP:</b> %nusp </p>
+            <p><b>Origem:</b> %origem </p>
+            <p><b>Ida:</b> %ida </p>
+            <p><b>Volta:</b> %volta </p>
             <p><b>E-mail:</b> %email
             </p><br>
             <p>Banca de <b> %programa / %nivel </b> </p>
             <p>Do(a) aluno(a) <b> %candidato </b> </p>
             <p><b>Data da defesa:</b> %datahora </p></br></br>
             %diaria',
+            'mail_sala_virtual' => '<p><b>Nome:</b> %docente </p>
+            <p>Prezado(a) Prof.(a) Dr.(a): %docente, de Nº USP <b>%nusp</b></p>
+            <br />
+            <p>Solicitamos que envie o link da sala virtual de %candidato, de Nº USP <b>%codpes</b> para o email <b>defesaspos.fflch@usp.br</b>.</p>
+            <br /><br />
+            <p>Tipo da defesa: <b>%tipo</b></p>',
         ];
         Config::create($config);
     }

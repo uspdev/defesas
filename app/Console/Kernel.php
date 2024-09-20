@@ -4,10 +4,6 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use App\Console\Commands\EnviarEmailDiario;
-use Uspdev\Replicado\Pessoa;
-use App\Utils\ReplicadoUtils;
-use App\Models\Agendamento;
 
 class Kernel extends ConsoleKernel
 {
@@ -17,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\EnviarEmailDiario::class,
+        //
     ];
 
     /**
@@ -28,7 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('example:cron')->daily()->runInBackground();
+        // $schedule->command('inspire')->hourly();
     }
 
     /**

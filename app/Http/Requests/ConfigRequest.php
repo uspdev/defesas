@@ -52,7 +52,7 @@ class ConfigRequest extends FormRequest
             'mail_passagem' => 'required',
             'mail_pro_labore' => 'required',
             'mail_recibo_externo' => 'required',
-	        'mail_sala_virtual' => 'required',
+            'mail_sala_virtual' => 'required',
         ];
     }
 

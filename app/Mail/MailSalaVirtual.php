@@ -14,25 +14,17 @@ use Uspdev\Replicado\Pessoa;
 class MailSalaVirtual extends Mailable
 {
     use Queueable, SerializesModels;
-    private $aluno;
-    private $orientador;
+
+    private $agendamento;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($agendamento)
+    public function __construct(Agendamento $agendamento)
     {
-    $this->agendamento = $agendamento;
-    $this->codpesAluno = $this->agendamento->codpes;
-    $this->aluno = Pessoa::retornarEmailUsp($this->agendamento->codpes);
-    $this->orientador = Pessoa::retornarEmailUsp($this->agendamento->orientador);
-    $this->nomeCompleto = Pessoa::retornarNome($this->agendamento->orientador);
-    $this->nomeAluno = Pessoa::retornarNome($this->agendamento->nome);
-    $this->codpes = $this->agendamento->orientador;
-	// dump($this->aluno);
-	// dd($this->orientador);
-
+        $this->agendamento = $agendamento;
     }
 
     /**
@@ -42,18 +34,11 @@ class MailSalaVirtual extends Mailable
      */
     public function build()
     {
-
-        $subject = "Criação da Sala Virtual de ".$this->agendamento->nome;
+        $subject = "Criação da Sala Virtual de " . $this->agendamento->nome;
         return $this->view('emails.virtual_class')
-        ->subject($subject)
-        ->with([
-            'agendamento' => $this->agendamento,
-            'nomeAluno' => $this->nomeAluno,
-            'aluno' => $this->aluno, //n usp do aluno
-            'orientador' => $this->orientador, //email usp do orientador
-            'nomeCompleto' => $this->nomeCompleto, //nome do orientador
-            'codpes' => $this->codpes, //codpes do orientador
-            'codpesAluno' => $this->codpesAluno
-        ]); 
+            ->subject($subject)
+            ->with([
+                'agendamento' => $this->agendamento,
+            ]);
     }
 }

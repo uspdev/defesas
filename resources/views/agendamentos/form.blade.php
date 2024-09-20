@@ -1,16 +1,11 @@
-<style>
-    #campoAdicional{
-        display:none;
-    }
-</style>
 <div class="form-group">
-    <label for="titulo" class="required">Título da Tese</label> 
+    <label for="titulo" class="required">Título da Tese</label>
     <input type="text" name="titulo" class="form-control" value="{{ old('titulo', $agendamento->titulo) }}">
-</div> 
+</div>
 <div class="form-group">
-    <label for="title">Título da Tese em Inglês</label> 
+    <label for="title">Título da Tese em Inglês</label>
     <input type="text" name="title" class="form-control" value="{{ old('title', $agendamento->title) }}">
-</div> 
+</div>
 <div class="form-group row">
     <div class="col-sm ">
         <label for="nome">Nome Completo</label>
@@ -18,8 +13,8 @@
         <span class="badge badge-warning">Se este campo ficar vazio, o nome utilizado será o cadastrado nos sistemas da USP</span>
     </div>
     <div class="col-sm">
-        <label for="codpes" class="required">Número USP </label> 
-        <input type="text" name="codpes" id="codpes" class="form-control" value="{{ old('codpes', $agendamento->codpes) }}"> 
+        <label for="codpes" class="required">Número USP </label>
+        <input type="text" name="codpes" id="codpes" class="form-control" value="{{ old('codpes', $agendamento->codpes) }}">
     </div>
 </div>
 <div class="row form-group">
@@ -40,7 +35,7 @@
                 </option>
                 @endif
             @endforeach
-        </select> 
+        </select>
     </div>
     <div class="col-sm">
         <label for="nivel" class="required">Nível</label>
@@ -59,7 +54,7 @@
                 </option>
                 @endif
             @endforeach
-        </select> 
+        </select>
     </div>
     <div class="col-sm">
         <label for="area_programa" class="required">Programa</label>
@@ -78,8 +73,8 @@
                 </option>
                 @endif
             @endforeach
-        </select> 
-    </div>   
+        </select>
+    </div>
 </div>
 <div class="row form-group">
     <div class="col-sm">
@@ -121,36 +116,36 @@
             @endforeach
         </select>
      </div>
-     <div class="col-sm" id="campoAdicional">
+     <div class="col-sm">
         <label for="sala_virtual">Link da sala virtual</label>
         <input type="text" name="sala_virtual" class="form-control" value="{{ old('sala_virtual', $agendamento->sala_virtual) }}">
      </div>
 {{-- Fim desse novo campo select --}}
     <div class="col-sm">
         <label for="orientador" class="required">Nº USP Orientador</label>
-        <input type="text" name="orientador" class="form-control" value="{{ old('orientador', $agendamento->orientador) }}"> 
+        <input type="text" name="orientador" class="form-control" value="{{ old('orientador', $agendamento->orientador) }}">
     </div>
     <div class="col-sm">
         <label for="co_orientador">Nº USP do Co-Orientador</label>
-        <input type="text" name="co_orientador" class="form-control" value="{{ old('co_orientador', $agendamento->co_orientador) }}"> 
-    </div>  
+        <input type="text" name="co_orientador" class="form-control" value="{{ old('co_orientador', $agendamento->co_orientador) }}">
+    </div>
 </div>
 <div class="row form-group">
     <div class="col-sm">
-        <label for="data" class="required">Data</label> 
+        <label for="data" class="required">Data</label>
         <input type="text" name="data" class="form-control datepicker data" autocomplete="off" value="{{ old('data_horario', date('d/m/Y',strtotime($agendamento->data_horario))) }}">
     </div>
     <div class="col-sm">
-        <label for="horario" class="required">Horário</label> 
+        <label for="horario" class="required">Horário</label>
         <input type="text" name="horario" class="form-control horario" value="{{ old('data_horario', date('H:i', strtotime($agendamento->data_horario))) }}">
-    </div> 
+    </div>
 </div>
 <div class="row form-group">
     <div class="col-sm">
         <label for="sala" class="required">Local</label>
         <input type="text" name="sala" class="form-control" value="{{ old('sala', $agendamento->sala) }}">
-    </div>  
-</div> 
+    </div>
+</div>
 
 <div class="row form-group">
     <div class="col-sm">
@@ -182,25 +177,5 @@
 <div class="row form-group">
     <div class="col-sm">
         <button type="submit" class="btn btn-success float-right">Enviar</button>
-    </div> 
+    </div>
 </div>
-
-<script>
-    // Adiciona um listener de evento para garantir que o DOM está carregado
-    document.addEventListener('DOMContentLoaded', function() {
-        const select = document.getElementById('tipo');
-        const campoAdicional = document.getElementById('campoAdicional');
-
-        if (select && campoAdicional) {
-            select.addEventListener('change', function() {
-                const selectedIndex = select.selectedIndex;
-
-                if (selectedIndex === 3 || selectedIndex === 2) {
-                    campoAdicional.style.display = 'block';
-                } else {
-                    campoAdicional.style.display = 'none';
-                }
-            });
-        }
-    });
-</script>

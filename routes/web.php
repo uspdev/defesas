@@ -46,8 +46,7 @@ Route::post('agendamentos/pro_labore/{agendamento}/{docente}', [AgendamentoContr
 Route::post('agendamentos/passagem/{agendamento}/{banca}', [AgendamentoController::class,'enviarEmailPassagem']);
 Route::post('agendamentos/dados_prof_externo/{agendamento}/{banca}', [AgendamentoController::class,'enviarEmailDeConfirmacaoDadosProfExterno']);
 
-Route::get('/pendencia_sala_virtual', [AgendamentoController::class, 'exibeDisparo']);
-// Route::put('agendamentos/sala_virtual/{agendamento}', [AgendamentoController::class, 'disparoEmailProf']);
+Route::get('/pendencia_sala_virtual', [AgendamentoController::class, 'pendencia']);
 
 # Features em Desenvolvimento
 Route::get('/dev/bancas_aprovadas', [DevController::class,'bancas_aprovadas']);

@@ -12,11 +12,11 @@ use App\Models\Biblioteca;
 
 class BibliotecaController extends Controller
 {
-    
+
     public function index(Request $request)
     {
         $this->authorize('biblioteca');
-        
+
         $agendamentos = Biblioteca::returnSchedules($request);
 
         $action = '/teses';
@@ -38,7 +38,6 @@ class BibliotecaController extends Controller
     public function show(Agendamento $agendamento)
     {
         $this->authorize('biblioteca');
-        //$agendamento->formatDataHorario($agendamento);
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         return view('agendamentos.show', compact('agendamento'));
     }
@@ -53,8 +52,7 @@ class BibliotecaController extends Controller
         $agendamento->status = $validated['status'];
         $agendamento->user_id_biblioteca = Auth::user()->id;
         $agendamento->save();
-        
-        //$agendamento->formatDataHorario($agendamento);
+
         return redirect("/agendamentos/$agendamento->id");
     }
 }

@@ -13,14 +13,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Notifications\AnnouncementCreated;
 use Illuminate\Support\Facades\Notification;
-// use App\Utils\ReplicadoUtils;
 use Uspdev\Replicado\Pessoa;
 
-class EnviarEmailDiario extends Command
+class EmailSalavirtual extends Command
 {
-    protected $signature = 'example:cron';
+    protected $signature = 'send:email-salavirtual';
 
-    protected $description = 'Envia emails diários para os docentes';
+    protected $description = 'Envia emails diários para os docentes que não criaram o link para sala virtual';
 
     public function __construct()
     {
@@ -36,22 +35,21 @@ class EnviarEmailDiario extends Command
         Não será enviado email caso o professor mande o link da sala virtual
         antes da meia-noite.
         */
-        $docentes = Docente::select('docentes.*')->get();
-        $agendamentos = Agendamento::select('agendamentos.*')
-        ->where('tipo','like','%virtual%')
-        ->where('sala_virtual',null)
-        ->orWhere('tipo','like','%hibrido%')
-        ->where('sala_virtual',null)
-        ->get();
+
+        $agendamentos = Agendamento::where('sala_virtual', null)
+            ->whereDate('data_horario', '>=', now())
+            ->where('tipo', '<>','Presencial')
+            ->orderBy('data_horario')
+            ->get();
 
         foreach($agendamentos as $agendamento){
-            $agendamento->enviar_email = TRUE; //mostra que o e-mail já foi enviado
-            $agendamento->update();
-            $email = Pessoa::retornarEmailUsp($agendamento->orientador); //codpes do orientador
-            Mail::to("$email")->send(new MailSalaVirtual($agendamento, $docentes));
+            $email = Pessoa::retornarEmailUsp($agendamento->orientador);
+            if($email) {
+                Mail::to($email)->queue(new MailSalaVirtual($agendamento));
+                $agendamento->enviar_email = TRUE; //mostra que o e-mail já foi enviado
+                $agendamento->update();
+            }
         }
-        $this->info('Enviado com sucesso');
-        
-        
+
     }
 }
