@@ -38,7 +38,7 @@ class EmailSalavirtual extends Command
 
         $agendamentos = Agendamento::where('sala_virtual', null)
             ->whereDate('data_horario', '>=', now())
-            ->where('tipo', '<>','Presencial')
+            ->where('tipo','=','Virtual')
             ->orderBy('data_horario')
             ->get();
 
@@ -50,6 +50,5 @@ class EmailSalavirtual extends Command
                 $agendamento->update();
             }
         }
-
     }
 }

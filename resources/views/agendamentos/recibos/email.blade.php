@@ -19,6 +19,14 @@
             <p>Prof. Dr. {{$docente->nome}} - Número USP: {{$docente->n_usp}} - PIS/PASEP: {{$docente->pis_pasep}} - CPF: {{$docente->cpf}}</p>
             <p>Banco: {{$docente->banco}} - Agência: {{$docente->agencia}} - Conta: {{$docente->c_corrente}} </p>
             <br>
+            <hr />
+<!-- a pedido do usuario. serve somente para copiar  -->
+            <h4>Dados pessoais:</h4>
+            <p><i>Campo somente para copiar</i></p>
+            <p><b>Nome completo:</b>_______________________________________________________</p>
+            <p><b>Data de nascimento:</b>_______/_______/__________</p>
+            <p><b>CPF:</b>_______________________________________</p>
+            <p><b>Telefone celular:</b>__________________________</p>
             <div class="col-auto float-right">
                 <form method="POST" action="/agendamentos/pro_labore/{{ $agendamento->id }}/{{ $docente->id }}">
                     @csrf 

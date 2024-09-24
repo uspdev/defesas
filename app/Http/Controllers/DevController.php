@@ -15,7 +15,6 @@ class DevController extends Controller
 {
 
     public function bancas_aprovadas(){
-        dd('oi');
         $this->authorize('admin');
         $query = "
         SELECT V.codpes, V.nompes, A.dtaaprbantrb, A.dtadfapgm FROM DDTDEPOSITOTRABALHO D, VINCULOPESSOAUSP V
