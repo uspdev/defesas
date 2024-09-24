@@ -29,7 +29,7 @@
 			</div>
 			<br><br><br>
 			<div class="candidato">Candidato(a): {{$agendamento->nome}}</div> 
-			<div class="candidato">Data e Hora: {{$agendamento->data}}, {{$agendamento->horario}}.</div>
+			<div class="candidato">Data e Hora: {{date('d/m/Y H:i', strtotime($agendamento->data_horario))}}.</div>
 			<div class="candidato">Defesa de {{$agendamento->nivel}} em {{$agendamento->nome_area}}</div> 
 			<div class="candidato">Título: <i>"{{$agendamento->titulo}}"</i></div>
 
