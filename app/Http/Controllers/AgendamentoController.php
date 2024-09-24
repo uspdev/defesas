@@ -156,26 +156,13 @@ class AgendamentoController extends Controller
             return $query->where('tipo', '=', 'Virtual');
         });
 
-/*
-        $query->when($request->busca && $request->tipo, function ($query) use ($request) {
-            return $query->where('tipo', $request->tipo)
-                ->where(function($query) use ($request) {
-                    $query->where('codpes', $request->busca)
-                        ->orWhere('orientador', $request->busca);
-                });
-        });
-*/
         $query->when($request->busca, function ($query) use ($request) {
             return $query->where('codpes', $request->busca)
                ->orWhere('orientador', $request->busca)
                ->where('tipo','=', 'Virtual')
                ->whereNull('sala_virtual');
         });
-/*
-        $query->when(!$request->busca && $request->tipo, function ($query) use ($request) {
-            return $query->where('tipo', $request->tipo);
-        });
-*/
+
         return view('agendamentos.recibos.defesa')->with([
             'agendamentos' => $query->get(),
         ]);
