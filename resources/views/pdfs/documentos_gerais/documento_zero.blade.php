@@ -20,11 +20,11 @@
     <table width="18cm">
       <tr>
         <td width="9cm" > Nome: {{$agendamento->nome}} </td>
-        <td> Data da Defesa: {{$agendamento->data}} </td>
+        <td> Data da Defesa: {{date('d/m/Y', strtotime($agendamento->data_horario))}} </td>
       </tr>
       <tr>
         <td> {{$agendamento->nivel}}: {{$agendamento->nome_area}} </td>
-        <td> Hora: {{$agendamento->horario}} </td>
+        <td> Hora: {{date('H:i', strtotime($agendamento->data_horario))}} </td>
       </tr>
       <tr>
         <td> N° USP: {{$agendamento->codpes}}  </td>

@@ -50,7 +50,7 @@
 		Interessado(a): Prof(a). Dr(a). <b> {{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}</b> <br>
 		E-mail: <b>{{$agendamento->dadosProfessor($banca->codpes)->email ?? ' '}}</b> <br>
 		Telefone:<b> {{$agendamento->dadosProfessor($banca->codpes)->telefone ?? ' '}} </b> <br>
-		Data da defesa:<b> {{$agendamento->data}}</b> <br>
+		Data da defesa:<b> {{date('d/m/Y', strtotime($agendamento->data_horario))}}</b> <br>
 		Trajeto da passagem aérea <b> {{$dados->trajeto}}</b> <br>
 	</div> <br>
 	<table style="width:15.5cm; text-align:center;"> 
