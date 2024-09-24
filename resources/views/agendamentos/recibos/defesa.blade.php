@@ -7,19 +7,8 @@
       <form method="get" action="/pendencia_sala_virtual">
         @csrf
           <div class="row" style="margin-bottom:10px;">
-            <div class="col-md-4">
+            <div class="col-md-6" style="margin-right:-20px;">
               <input type="text" value="{{request()->busca}}" name="busca" class="form-control" placeholder="Procurar por Nº USP">
-            </div>
-            <div class="col-md-4" style="margin-right:-25px; margin-left:-20px;">
-              <select name="tipo" class="form-control" style="width:100%;">
-                  <option value="" name="">- Selecionar o tipo da defesa -</option>
-                  @foreach($tipoDefesa as $tipo)
-                  <option value="{{$tipo}}" name="tipo"
-                  @if($tipo == Request()->tipo) selected @endif>
-                  {{$tipo}}
-                  </option>
-                  @endforeach
-              </select>
             </div>
             <div class="col-md-2">
               <button type="submit" class="btn btn-success">Procurar</button>
@@ -29,7 +18,7 @@
 
       <div class="card">
         <div class="card-header">
-          <b>Agendamentos VIRTUAIS ou HÍBRIDOS sem Link da sala virtual</b>
+          <b>Agendamentos virtuais sem o link da sala virtual</b>
         </div>
         @forelse($agendamentos as $agendamento)
         <div class="card-body">

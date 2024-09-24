@@ -42,7 +42,7 @@ class AgendamentoController extends Controller
         }
         elseif($request->filtro_busca == 'data'){
             $validated = $request->validate([
-                'busca_data' => 'required|data',
+                'busca_data' => 'required|date_format:d/m/Y', //arrumado para date_format
             ]);
             $data = Carbon::CreatefromFormat('d/m/Y H:i', $validated['busca_data']." 00:00");
             $query->whereDate('data_horario','=', $data);
@@ -152,10 +152,11 @@ class AgendamentoController extends Controller
             ->whereDate('data_horario', '>=', now())
             ->orderBy('data_horario');
 
-        $query->when(!$request->busca && !$request->tipo, function ($query) {
-            return $query->where('tipo', '<>', 'Presencial');
+        $query->when(!$request->busca, function ($query) {
+            return $query->where('tipo', '=', 'Virtual');
         });
 
+/*
         $query->when($request->busca && $request->tipo, function ($query) use ($request) {
             return $query->where('tipo', $request->tipo)
                 ->where(function($query) use ($request) {
@@ -163,20 +164,20 @@ class AgendamentoController extends Controller
                         ->orWhere('orientador', $request->busca);
                 });
         });
-
-        $query->when($request->busca && !$request->tipo, function ($query) use ($request) {
+*/
+        $query->when($request->busca, function ($query) use ($request) {
             return $query->where('codpes', $request->busca)
                ->orWhere('orientador', $request->busca)
-               ->where('tipo','<>', 'Presencial');
+               ->where('tipo','=', 'Virtual')
+               ->whereNull('sala_virtual');
         });
-
+/*
         $query->when(!$request->busca && $request->tipo, function ($query) use ($request) {
             return $query->where('tipo', $request->tipo);
         });
-
+*/
         return view('agendamentos.recibos.defesa')->with([
             'agendamentos' => $query->get(),
-            'tipoDefesa' => Arr::except(Agendamento::tipodefesaOptions(), ['0']),
         ]);
     }
 
