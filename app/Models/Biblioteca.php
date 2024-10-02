@@ -13,7 +13,7 @@ class Biblioteca
         $query = Agendamento::where('status', $status)
         ->where('data_horario','<',now())
         ->orderBy('data_horario', 'asc');
-        
+
         $query->when($request->term, function($query) use ($request){
             $query->where(function($query) use($request){
                 $query->orWhere('nome', 'LIKE', "%$request->term%");
