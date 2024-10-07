@@ -43,7 +43,7 @@ class EmailSalavirtual extends Command
             ->get();
 
         foreach($agendamentos as $agendamento){
-            $email = Pessoa::retornarEmailUsp($agendamento->orientador);
+            $email = Pessoa::email($agendamento->orientador);
             if($email) {
                 Mail::to($email)->queue(new MailSalaVirtual($agendamento));
                 $agendamento->enviar_email = TRUE; //mostra que o e-mail já foi enviado
