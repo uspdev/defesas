@@ -97,7 +97,7 @@ class AgendamentoController extends Controller
 
     public function show(Agendamento $agendamento)
     {
-        $this->authorize('admin');
+        $this->authorize('biblioteca');
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         $dadosJanus = ReplicadoUtils::retornarDadosJanus($agendamento->codpes);
         return view('agendamentos.show', compact(['agendamento','dadosJanus']));
