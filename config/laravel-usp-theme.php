@@ -101,11 +101,6 @@ return [
             'can' => 'admin',
         ],
         [
-            'text'    => '<i class="fas fa-chalkboard-teacher"></i> Em desenvolvimento',
-            'submenu' => $dev,
-            'can' => 'admin',
-        ],
-        [
             'text'    => '<i class="fas fa-file-export"></i> Publicação',
             'submenu' => $biblioteca,
             'can' => 'biblioteca',

@@ -30,6 +30,7 @@
               <p><b>Nível: </b>{{ $agendamento->nivel }}</p>
               <p><b>Resumo: </b>{{ $agendamento->resumo }}</p>
               <p><b>Nome do orientador: </b>{{ $agendamento->docente->nome ?? '' }} - <b>Nº USP: </b>{{ $agendamento->orientador }}</p>
+              <p><b>Data da defesa:</b> {{ date('d/m/Y',strtotime($agendamento->data_horario))}}</p>
             </div>
             <div class="col-md-4">
               <h4><b>Tipo: </b>{{$agendamento->tipo}}</h4>
