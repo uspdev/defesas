@@ -35,5 +35,11 @@ class AuthServiceProvider extends ServiceProvider
             return in_array($user->codpes,$biblioteca);
         });
 
+        Gate::define('comunicacao', function ($user) {
+            if(Gate::allows('admin')) return true;
+            $comunicacao = explode(',', trim(env('CODPES_COMUNICACAO')));
+            return in_array($user->codpes,$comunicacao);
+        });
+
     }
 }
