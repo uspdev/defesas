@@ -137,9 +137,11 @@ class Config extends Model
 
     public static function configMailPassagem($agendamento, $docente){
         $configs = Config::orderbyDesc('created_at')->first();
+        setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8','portuguese');
         $configs['mail_passagem'] = str_replace(
             ["%docente","%candidato", "%data", "%sala"],
-            [$docente['nome'], $agendamento['nome'], $agendamento['data'], $agendamento['sala']],
+            [$docente['nome'], $agendamento['nome'], 
+             strftime("%d de %B de %Y", strtotime($agendamento['data_horario'])) . " às " . date('H:i',strtotime($agendamento["data_horario"])), $agendamento['sala']],
             $configs['mail_passagem']
         );
         return $configs['mail_passagem'];
@@ -164,10 +166,11 @@ class Config extends Model
         $nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento['area_programa']);
         setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese');
         $datahora = strftime("%d de %B de %Y", strtotime($agendamento['data_horario']))." às ".date('H:i',strtotime($agendamento['data_horario']));
-        if($dados->diaria == "diaria_simples"){
+        //acessando $dados como array (devido ao método queue no Mail)
+        if($dados['diaria'] == "diaria_simples"){
             $diaria = "<p><b>Diária Simples:</b> {$configs->diaria_simples}</p>";
         }
-        elseif($dados->diaria == "diaria_completa"){
+        elseif($dados['diaria'] == "diaria_completa"){
             $diaria = "<p><b>Diária Completa:</b> {$configs->diaria_completa}</p>";
         }
         else{

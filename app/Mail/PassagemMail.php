@@ -13,7 +13,9 @@ use App\Models\Banca;
 class PassagemMail extends Mailable
 {
     use Queueable, SerializesModels;
-
+    private $agendamento;
+    private $docente;
+    private $email;
     /**
      * Create a new message instance.
      *

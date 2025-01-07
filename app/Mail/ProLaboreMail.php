@@ -12,7 +12,8 @@ use App\Models\Docente;
 class ProLaboreMail extends Mailable
 {
     use Queueable, SerializesModels;
-
+    private $agendamento;
+    private $docente;
     /**
      * Create a new message instance.
      *

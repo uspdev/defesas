@@ -12,13 +12,15 @@ use App\Models\Docente;
 class ReciboExternoMail extends Mailable
 {
     use Queueable, SerializesModels;
-
+    private $agendamento;
+    private $docente;
+    private $dados;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Agendamento $agendamento, Docente $docente, $dados)
+    public function __construct(Agendamento $agendamento, Docente $docente, array $dados)
     {
         $this->agendamento = $agendamento;
         $this->docente = $docente;
