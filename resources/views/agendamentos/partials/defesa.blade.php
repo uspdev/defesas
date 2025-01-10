@@ -20,7 +20,7 @@
             @if($agendamento->status == 1)
                 <b>URL:</b> {{$agendamento->url}}</br>
                 <b>Data de Publicação:</b> {{Carbon\Carbon::parse($agendamento->data_publicacao)->format('d/m/Y')}}</br>
-                <b>Responsável Biblioteca:</b> {{$agendamento->nomeUsuario($agendamento->user_id_biblioteca)->name}},{{$agendamento->nomeUsuario($agendamento->user_id_biblioteca)->codpes}}
+                <b>Responsável Biblioteca: </b> {{$agendamento->user->name}}, {{$agendamento->user->codpes}}
             @endif
         </div>
     </div>

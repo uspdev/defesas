@@ -38,6 +38,13 @@ $submenu3 =  [
     ],
 ];
 
+$submenu4 =  [
+    [
+        'text' => 'Defesas aprovadas',
+        'url'  => '/comunicacao',
+    ]
+];
+
 $dev =  [
     [
         'text' => '<i class="fas fa-plus-square"></i> Bancas Aprovadas',
@@ -104,6 +111,11 @@ return [
             'text'    => '<i class="fas fa-file-export"></i> Publicação',
             'submenu' => $biblioteca,
             'can' => 'biblioteca',
+        ],
+        [
+            'text' => '<i class="fas fa-bullhorn"></i> Comunicação',
+            'submenu' => $submenu4,
+            'can' => 'comunicacao'
         ],
     ],
     'right_menu' => $right_menu,
