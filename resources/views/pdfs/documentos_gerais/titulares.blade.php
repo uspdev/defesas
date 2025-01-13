@@ -79,15 +79,12 @@
             </div>
             <i>Composição da banca examinadora:</i>
 
-
-            <table width="16cm" style="border='0'; margin-left:4cm; align-items: center; justify-content: center;">
                 @foreach($bancas as $banca)
-                <tr style="border='0'">
-                    <td> {{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}} </td>
-                    <td><b>{{$agendamento->dadosProfessor($banca->codpes)->lotado ?? ' '}}</b></td>
-                </tr>
+                <div class="col">
+                    {{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}} 
+                   <b>{{$agendamento->dadosProfessor($banca->codpes)->lotado ?? ' '}}</b>
+                </div>
                 @endforeach
-            </table>
             <div class="importante" align="center">
                 {!! $configs->regimento !!}
             </div>

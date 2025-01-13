@@ -134,13 +134,16 @@ class AgendamentoController extends Controller
 
     public function enviarEmailReciboExterno(Agendamento $agendamento, Docente $docente, Request $request){
         $this->authorize('admin');
-        Mail::send(new ReciboExternoMail($agendamento, $docente, $request));
+        $dados = $request->all(); //tratado como array agora.
+        /* evitando o erro "Serialization of 'Closure' is not allowed" que dá ao trocar o método send pelo queue.
+*/
+        Mail::queue(new ReciboExternoMail($agendamento, $docente, $dados));
         return redirect('/agendamentos/'.$agendamento->id);
     }
 
     public function enviarEmailProLabore(Agendamento $agendamento, Docente $docente){
         $this->authorize('admin');
-        Mail::send(new ProLaboreMail($agendamento, $docente));
+        Mail::queue(new ProLaboreMail($agendamento, $docente));
         return redirect('/agendamentos/'.$agendamento->id);
     }
 
@@ -173,7 +176,7 @@ class AgendamentoController extends Controller
         $docente = Docente::where('n_usp',$banca->codpes)->first();
         $emails = explode(" /", $docente->email);
         foreach($emails as $email){
-            if($email != '') Mail::send(new PassagemMail($agendamento, $docente, $email));
+            if($email != '') Mail::queue(new PassagemMail($agendamento, $docente, $email));
         }
         return redirect('/agendamentos/'.$agendamento->id);
     }
@@ -183,7 +186,7 @@ class AgendamentoController extends Controller
         $docente = Docente::where('n_usp',$banca->codpes)->first();
         $emails = explode(" /", $docente->email);
         foreach($emails as $email){
-            if($email != '') Mail::send(new DadosProfExternoMail($docente, $email));;
+            if($email != '') Mail::queue(new DadosProfExternoMail($docente, $email));;
         }
         return redirect('/agendamentos/'.$agendamento->id);
     }

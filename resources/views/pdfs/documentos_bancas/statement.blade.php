@@ -67,14 +67,12 @@
         {!!$configs->statement!!}
     </p> <br>
 
-    <table width="16cm" style="border='0'; margin-left:4cm; align-items: center; justify-content: center;">
         @foreach($professores as $componente)    
-        <tr style="border='0'">
-            <td><b>{{$agendamento->dadosProfessor($componente->codpes)->nome ?? 'Professor não cadastrado'}}</b> </td>
-            <td><b>{{$agendamento->dadosProfessor($componente->codpes)->lotado ?? ' '}}</b></td>           
-        </tr>
+        <div class="col">
+            <b>{{$agendamento->dadosProfessor($componente->codpes)->nome ?? 'Professor não cadastrado'}}</b> 
+            <b>{{$agendamento->dadosProfessor($componente->codpes)->lotado ?? ' '}}</b>
+        </div>
         @endforeach
-    </table>
     <br><br>
     <div align="right">
         @php(setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese'))

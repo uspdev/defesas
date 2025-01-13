@@ -11,6 +11,7 @@ use App\Http\Controllers\DevController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\BibliotecaController;
 use App\Http\Controllers\ApprovalStatusDefesaController;
+use App\Http\Controllers\CommunicationController;
 
 // rotas para login/logout
 Route::get('/', [indexController::class, 'index'])->name('index');
@@ -54,3 +55,6 @@ Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->m
 Route::get('info', [AgendamentoController::class, 'info'])->name('pedidos.info');
 
 Route::get('job_email_prof', [AgendamentoController::class, 'job_email_prof']);
+
+#comunicacao
+Route::resource('comunicacao', CommunicationController::class);

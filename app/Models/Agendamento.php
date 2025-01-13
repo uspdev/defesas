@@ -10,6 +10,8 @@ use Uspdev\Replicado\Posgraduacao;
 use App\Utils\ReplicadoUtils;
 use App\Models\Banca;
 use App\Models\Docente;
+use App\Models\User;
+use App\Models\Communication;
 
 class Agendamento extends Model
 {
@@ -117,6 +119,15 @@ class Agendamento extends Model
 
     public function docente() {
         return $this->hasOne(Docente::class, 'n_usp', 'orientador');
+    }
+
+
+    public function user(){
+        return $this->hasOne(User::class,'id','user_id_biblioteca');
+    }
+
+    public function comunicacao(){
+        return $this->hasOne(Communication::class,'agendamento_id','id');
     }
 
 }

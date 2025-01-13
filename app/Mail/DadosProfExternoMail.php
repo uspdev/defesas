@@ -11,7 +11,8 @@ use App\Models\Docente;
 class DadosProfExternoMail extends Mailable
 {
     use Queueable, SerializesModels;
-
+    private $docente;
+    private $email;
     /**
      * Create a new message instance.
      *

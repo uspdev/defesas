@@ -70,14 +70,12 @@
         {!!$configs->declaracao!!}
     </p> <br>
 
-    <table width="16cm" style="border='0'; margin-left:4cm; align-items: center; justify-content: center;">
         @foreach($professores as $componente)    
-        <tr style="border='0'">
-            <td><b>{{$agendamento->dadosProfessor($componente->codpes)->nome ?? 'Professor não cadastrado'}}</b> </td>
-            <td><b>{{$agendamento->dadosProfessor($componente->codpes)->lotado ?? ' '}}</b></td>           
-        </tr>
+        <div class="col">
+            <b>{{$agendamento->dadosProfessor($componente->codpes)->nome ?? 'Professor não cadastrado'}}</b> 
+            <b>{{$agendamento->dadosProfessor($componente->codpes)->lotado ?? ' '}}</b>
+        </div>
         @endforeach
-    </table>
 	<div style="margin-top:2cm;" align="center"> 
         Atenciosamente,<br><br><br>
         _____________________________________________________________ <br>
