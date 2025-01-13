@@ -66,14 +66,12 @@
             {!! App\Models\Config::setConfigStatement($agendamento,$bancas,$professor)->statement !!}
         </p><br>
 
-        <table width="16cm" style="border='0'; margin-left:4cm; align-items: center; justify-content: center;">
             @foreach($bancas as $banca)    
-            <tr style="border='0'">
-                <td><b>{{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}</b> </td> 
-                <td><b>{{$agendamento->dadosProfessor($banca->codpes)->lotado ?? ' '}}</b></td>           
-            </tr>
+            <div class="col">
+                <b>{{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}</b> 
+                <b>{{$agendamento->dadosProfessor($banca->codpes)->lotado ?? ' '}}</b>
+            </div>
             @endforeach
-        </table>
         <br>
         <div align="right">
             Graduate Studies Services of University of São Paulo, {{Carbon\Carbon::parse($agendamento->data_horario)->format('F jS\, Y')}}    

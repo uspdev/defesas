@@ -71,14 +71,12 @@
             {!! App\Models\Config::setConfigDeclaracao($agendamento,$bancas,$professor)->declaracao !!}
         </p><br>
 
-        <table width="16cm" style="border='0'; margin-left:4cm; align-items: center; justify-content: center;">
-            @foreach($bancas as $banca)    
-            <tr style="border='0'">
-                <td><b>{{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}</b> </td> 
-                <td><b>{{$agendamento->dadosProfessor($banca->codpes)->lotado ?? ' '}}</b></td>           
-            </tr>
+        @foreach($bancas as $banca)    
+        <div class="col">
+            <b>{{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}</b> 
+            <b>{{$agendamento->dadosProfessor($banca->codpes)->lotado ?? ' '}}</b>
+        </div>
             @endforeach
-        </table>
         <div style="margin-top:2cm;" align="center"> 
             Atenciosamente,<br><br><br>
             _____________________________________________________________ <br>  

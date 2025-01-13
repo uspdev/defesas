@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-sm">
             <label for="tipo" class="required"><b>Tipo</b></label> 
-            <input type="text" name="tipo" id="tipo" class="form-control" value="{{ old('tipo') }}"> 
+            <input type="text" dusk="tipo" name="tipo" id="tipo" class="form-control" value="{{ old('tipo') }}"> 
         </div>
     </div>
     <div class="row">
@@ -15,7 +15,7 @@
             <span class="badge badge-warning"><b>Atenção:</b> Os arquivos a serem enviados devem ter no máximo 120mb.</span><br>
         </div>
         <div class="col-auto">
-            <button type="submit" style="margin-top:2.98em" class="btn btn-success float-right">Enviar</button> 
+            <button dusk="enviar_arquivo" type="submit" style="margin-top:2.98em" class="btn btn-success float-right">Enviar</button> 
         </div>
     </div>     
 </form>
