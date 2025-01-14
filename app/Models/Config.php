@@ -39,7 +39,7 @@ class Config extends Model
             $docenteNome = 'Professor não cadastrado';
         }
         else{
-            $docenteNome = Agendamento::dadosProfessor($professor->codpes)->nome;
+            $docenteNome = Agendamento::dadosProfessor($professor->codpes)['nompes'];
         }
         $configs['declaracao'] = str_replace(
             ["%docente_nome","%nivel","%candidato_nome", "%titulo"],
@@ -56,7 +56,7 @@ class Config extends Model
                     $docenteNome = 'Professor não cadastrado';
                 }
                 else{
-                    $docenteNome = Agendamento::dadosProfessor($presidente->codpes)->nome;
+                    $docenteNome = Agendamento::dadosProfessor($presidente->codpes)['nompes'];
                 }
                 $configs['declaracao'] = str_replace("%orientador", $docenteNome, $configs['declaracao']);
             }
@@ -73,7 +73,7 @@ class Config extends Model
             $docenteNome = 'Professor não cadastrado';
         }
         else{
-            $docenteNome = Agendamento::dadosProfessor($professor->codpes)->nome;
+            $docenteNome = Agendamento::dadosProfessor($professor->codpes)['nompes'];
         }
 
         if($agendamento['nivel'] == 'Mestrado'){
@@ -96,7 +96,7 @@ class Config extends Model
                     $docenteNome = 'Professor não cadastrado';
                 }
                 else{
-                    $docenteNome = Agendamento::dadosProfessor($presidente->codpes)->nome;
+                    $docenteNome = Agendamento::dadosProfessor($presidente->codpes)['nompes'];
                 }
                 $configs['statement'] = str_replace("%orientador", $docenteNome, $configs['statement']);
             }
@@ -114,7 +114,7 @@ class Config extends Model
             $docenteNome = 'Professor não cadastrado';
         }
         else{
-            $docenteNome = Agendamento::dadosProfessor($professor->codpes)->nome;
+            $docenteNome = Agendamento::dadosProfessor($professor->codpes)['nompes'];
         }
         $configs['mail_docente'] = str_replace(
             ["%docente_nome","%candidato_nome", "%data_defesa", "%local_defesa", "%agendamento", "%docente", "%token"],
@@ -187,7 +187,7 @@ class Config extends Model
     public static function configMailSalaVirtual(Agendamento $agendamento){
         $configs = Config::orderbyDesc('created_at')->first();
 
-        $docenteNome = Agendamento::dadosProfessor($agendamento->orientador)->nome;
+        $docenteNome = Agendamento::dadosProfessor($agendamento->orientador)['nompes'];
 
         $configs['mail_sala_virtual'] = str_replace(
             ["%docente", "%nusp", "%candidato", "%codpes", "%titulo", "%tipo"],
