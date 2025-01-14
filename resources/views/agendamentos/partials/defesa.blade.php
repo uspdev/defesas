@@ -10,7 +10,7 @@
             <b>Nível:</b> {{$agendamento->nivel}}</br>
             <b>Programa:</b> {{$agendamento->nome_area}}</br>
             @can('logado')<b>Orientador Votante:</b> {{$agendamento->orientador_votante}}</br>@endcan
-            <b>Orientador:</b> {{$agendamento->nome_orientador ?? $agendamento->dadosProfessor($agendamento->orientador)->nome}} @if($agendamento->co_orientador) e {{$agendamento->nome_co_orientador ?? $agendamento->dadosProfessor($agendamento->co_orientador)->nome}} @endif</br>
+            <b>Orientador:</b> {{$agendamento->dadosProfessor($agendamento->orientador)['nompes'] }} @if($agendamento->co_orientador) e {{$agendamento->dadosProfessor($agendamento->co_orientador)['nompes'] }} @endif</br>
             <b>Data:</b> {{ date('d/m/Y', strtotime($agendamento->data_horario))}} às {{date('H:i', strtotime($agendamento->data_horario))}}</br>
             <b>Local:</b> {{$agendamento->sala}}</br>
             @if($agendamento->tipo == 'Virtual' || $agendamento->tipo == 'Hibrido')

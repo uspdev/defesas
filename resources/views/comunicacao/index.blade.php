@@ -29,7 +29,7 @@
             </a>
           </td>
         <td>{{$agendamento->resumo}}</td>
-        <td> {{\App\Models\Agendamento::dadosProfessor($agendamento->orientador)->nome}} </td>
+        <td> {{\App\Models\Agendamento::telefoneProfessor($agendamento->orientador)}} </td>
         <td> {{date('d/m/Y', strtotime($agendamento->data_horario))}} </td>
     </tr>
     @endforeach

@@ -73,8 +73,8 @@
 
         @foreach($bancas as $banca)    
         <div class="col">
-            <b>{{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}</b> 
-            <b>{{$agendamento->dadosProfessor($banca->codpes)->lotado ?? ' '}}</b>
+            <b>{{$agendamento->dadosProfessor($banca->codpes)['nompes']}}</b> 
+            <b>{{$agendamento->dadosProfessor($banca->codpes)['sglclgund']}}</b>
         </div>
             @endforeach
         <div style="margin-top:2cm;" align="center"> 
