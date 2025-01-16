@@ -28,12 +28,24 @@
               </div>
             </a>
           </td>
-        <td>{{$agendamento->resumo}}</td>
-        <td> {{\App\Models\Agendamento::dadosProfessor($agendamento->orientador)->nome}} </td>
+        <td><p> {{ $dadosJanus[0]['rsutrb'] }} </p> </td>
+        <td> {{\App\Models\Agendamento::dadosProfessor($agendamento->orientador)['nompes']}} </td>
         <td> {{date('d/m/Y', strtotime($agendamento->data_horario))}} </td>
     </tr>
     @endforeach
   </tbody>
 </table>
+{{ $agendamentos->appends(request()->query())->links() }}
+  
+<style>
+  p{
+    text-align:justify;
+    display:inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 120ch;"
+  }
+</style>
 
 @endsection

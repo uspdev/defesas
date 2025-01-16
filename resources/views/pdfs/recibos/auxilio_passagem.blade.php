@@ -16,12 +16,12 @@
     <left> <u><b>{{$dados->processo}}</b></u> </left> <br> 
 
     <p> Banca de defesa de <b> {{$agendamento->nome}} </p> 
-    <p> Passageiro(a) {{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}} </p> 
+    <p> Passageiro(a) {{$agendamento->dadosProfessor($banca->codpes)['nompes']}} </p> 
     <p> Itinerário: {{$dados->itinerario}} </p> 
     <p> Partida: {{$dados->partida}}</p> 
     <p> Retorno: {{$dados->retorno}} </p> 
-    <p> Telefone: {{$agendamento->dadosProfessor($banca->codpes)->telefone ?? ' '}} </p> 
-    <p> E-mail: {{$agendamento->dadosProfessor($banca->codpes)->email ?? ' '}}
+    <p> Telefone: {{$agendamento->dadosProfessor($banca->codpes)['numtelfmt']}} </p> 
+    <p> E-mail: {{$agendamento->dadosProfessor($banca->codpes)['codema']}}
     </p> 
     <div class="justificar"> {!! $configs->obs_passagem !!} </div>
             

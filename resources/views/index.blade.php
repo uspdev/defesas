@@ -83,10 +83,10 @@
                     <td>{{ $agendamento->nivel }}</td>
                     <td>{{ $replicado::nomeAreaPrograma($agendamento->area_programa) }}</td>
                     <td>{{ $pessoa::dump($agendamento->orientador)['nompes'] }}</td>
-                    <td>{{ $agendamento->sala }}</td>
+                    <td>{{ $agendamento->sala}} {{$agendamento->sala_virtual}}</td>
                     <td> 
                         @foreach ($agendamento->bancas()->where('tipo', 'Titular')->get() as $banca)
-                            {{ $agendamento->dadosProfessor($banca->codpes)->nome }} ({{ $agendamento->dadosProfessor($banca->codpes)->lotado  ?? ''}})@if($loop->count != $loop->iteration), @endif
+                            {{ $agendamento->dadosProfessor($banca->codpes)['nompes'] }} ({{ $agendamento->dadosProfessor($banca->codpes)['sglclgund']}})@if($loop->count != $loop->iteration), @endif
                         @endforeach
                     </td>
                 </tr>

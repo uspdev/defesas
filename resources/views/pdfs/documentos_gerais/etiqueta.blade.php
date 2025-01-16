@@ -31,9 +31,9 @@
         <tr>
             <td width="9.85cm" height="3.33cm">
                 Ilmo(a) Sr(a).<br>
-                {{$agendamento->dadosProfessor($professor->codpes)['nome'] ?? 'Professor não cadastrado'}}<br>
-                {{$agendamento->dadosProfessor($professor->codpes)->endereco ?? ' '}}, {{$agendamento->dadosProfessor($professor->codpes)->bairro ?? ' '}} <br>
-                CEP:{{$agendamento->dadosProfessor($professor->codpes)->cep ?? ' '}} - {{$agendamento->dadosProfessor($professor->codpes)->cidade ?? ' '}}/{{$agendamento->dadosProfessor($professor->codpes)->estado ?? ' '}}
+                {{$agendamento->dadosProfessor($professor->codpes)['nompes']}}<br>
+                {{$agendamento->endereco($professor->codpes)['epflgr']}}, {{$agendamento->endereco($professor->codpes)['nombro']}} <br>
+                CEP:{{$agendamento->endereco($professor->codpes)['codendptl']}} - {{$agendamento->endereco($professor->codpes)['cidloc']}}/{{$agendamento->endereco($professor->codpes)['sglest']}}
             </td>     
         </tr>
     @endforeach

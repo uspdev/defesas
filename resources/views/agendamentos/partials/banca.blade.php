@@ -27,7 +27,7 @@
                 @foreach ($agendamento->bancas as $banca)
                     <tr>
                         @can('logado')<td>{{ $banca->codpes }}</td>@endcan
-                        <td>{{ $agendamento->dadosProfessor($banca->codpes)->nome  ?? 'Professor não cadastrado'}}</td>
+                        <td>{{ $agendamento->dadosProfessor($banca->codpes)['nompes'] }}</td>
                         <td>{{ $banca->presidente }}</td>
                         <td>{{ $banca->tipo }}</td>
                         @can('admin')
