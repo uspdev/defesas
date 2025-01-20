@@ -9,34 +9,22 @@ use App\Models\Agendamento;
 use App\Models\Communication;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\AgendamentoRequest;
+use App\Utils\ReplicadoUtils;
 
 class CommunicationController extends Controller
 {
     public function index(){
         Gate::authorize('comunicacao');
-        //$comunicacao = Agendamento::where('status',1)->get();
-
-        $agendamentos = Communication::rightJoin('agendamentos','agendamentos.id','communications.agendamento_id')
-        ->where('agendamentos.status',1)
-        ->orderBy('data_horario','desc')
-        ->get();
-
+        $agendamentos = Agendamento::where('status',1)
+        ->orderBy('data_horario', 'desc')
+        ->paginate(15);
+        
         return view('comunicacao.index', ['agendamentos' => $agendamentos]);
     }
-
-    public function show(Agendamento $comunicacao){
+    
+    public function show(Agendamento $agendamento){
         Gate::authorize('comunicacao');
-        return view('comunicacao.show', ['comunicacao' => $comunicacao]);
+        $dadosJanus = ReplicadoUtils::retornarDadosJanus($agendamento->codpes);
+        return view('comunicacao.show', ['agendamento' => $agendamento, 'dadosJanus' => $dadosJanus]);
     }
-    public function store(Request $request, Agendamento $agendamento){
-        Gate::authorize('comunicacao');
-        $comunicacao = new Communication;
-        $comunicacao->nome = Auth::user()->name;
-        $comunicacao->codpes = Auth::user()->codpes;
-        $comunicacao->agendamento_id = $request->agendamento_id;
-        $comunicacao->save();
-        request()->session()->flash('alert-success','Defesa divulgada');
-        return redirect('/comunicacao');
-    }
-
 }

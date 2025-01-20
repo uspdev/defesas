@@ -139,6 +139,19 @@ class ReplicadoUtils {
         return false;
     }
 
+    public static function retornarAgendamentoInfos($codpes){ #pega os dados do janus
+        $query = "SELECT a.nivpgm, r.vinptpbantrb, n.codare, n.nomare FROM R48PGMTRBDOC r 
+        INNER JOIN NOMEAREA n ON r.codare = n.codare
+        INNER JOIN AGPROGRAMA a ON a.codpes = r.codpes
+        WHERE r.codpes = {$codpes}
+        AND a.vinalupgm = 'REGULAR'";
+        $resultado = DBreplicado::fetch($query);
+        if(!empty($resultado)){
+            return $resultado;
+        }
+        return false;
+    }
+
     public static function retornarDadosJanus($codpes){
         $query = "SELECT A.codpes, T.tittrb, T.rsutrb, T.palcha,
                   T.tittrbigl, T.rsutrbigl, T.palchaigl
@@ -161,6 +174,21 @@ class ReplicadoUtils {
             return $result;
         }
         return false;
+    }
+
+    public static function retornarDadosBanca($codpes){
+        $query = "SELECT r.*, p.nompes FROM R48PGMTRBDOC r
+        INNER JOIN PESSOA p
+        ON r.codpesdct = p.codpes
+        WHERE r.codpes = {$codpes}
+        ORDER BY r.vinptpbantrb ASC";
+
+        $result = DBreplicado::fetchAll($query);
+        if(!empty($result)){
+            return $result;
+        }else{
+            return redirect('/');
+        }
     }
 
 }

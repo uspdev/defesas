@@ -9,7 +9,6 @@
     <tr>
       <th scope="col">Titulo</th>
       <th scope="col">Autor</th>
-      <th scope="col">Resumo</th>
       <th scope="col">Orientador</th>
       <th scope="col">Data</th>
     </tr>
@@ -28,12 +27,13 @@
               </div>
             </a>
           </td>
-        <td>{{$agendamento->resumo}}</td>
-        <td> {{\App\Models\Agendamento::dadosProfessor($agendamento->orientador)->nome}} </td>
+          <td> {{$agendamento->docente->nome}} </td>
         <td> {{date('d/m/Y', strtotime($agendamento->data_horario))}} </td>
     </tr>
     @endforeach
   </tbody>
 </table>
+
+{{ $agendamentos->appends(request()->query())->links() }}
 
 @endsection

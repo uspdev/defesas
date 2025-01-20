@@ -16,17 +16,6 @@ $submenu1 =  [
     ],
 ];
 
-$submenu2 =  [
-    [
-        'text' => '<i class="fas fa-plus-square"></i> Cadastrar Docente',
-        'url'  => '/docentes/create',
-    ],
-    [
-        'text' => '<i class="fas fa-list-alt"></i> Listar Docentes',
-        'url'  => '/docentes',
-    ],
-];
-
 $submenu3 =  [
     [
         'text' => '<i class="fas fa-forward"></i> Listar Próximas Defesas',
@@ -42,6 +31,13 @@ $submenu4 =  [
     [
         'text' => 'Defesas aprovadas',
         'url'  => '/comunicacao',
+    ]
+];
+
+$submenu5 = [
+    [
+        'text' => 'Janus',
+        'url' => 'janus/create',
     ]
 ];
 
@@ -103,11 +99,6 @@ return [
             'can' => 'admin',
         ],
         [
-            'text'    => '<i class="fas fa-chalkboard-teacher"></i> Docentes',
-            'submenu' => $submenu2,
-            'can' => 'admin',
-        ],
-        [
             'text'    => '<i class="fas fa-file-export"></i> Publicação',
             'submenu' => $biblioteca,
             'can' => 'biblioteca',
@@ -116,6 +107,11 @@ return [
             'text' => '<i class="fas fa-bullhorn"></i> Comunicação',
             'submenu' => $submenu4,
             'can' => 'comunicacao'
+        ],
+        [
+            'text' => '<i class="fas fa-globe"></i> Janus',
+            'submenu' => $submenu5,
+            'can' => 'admin'
         ],
     ],
     'right_menu' => $right_menu,

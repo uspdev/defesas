@@ -64,12 +64,12 @@
                 {{-- 1. Situação em que não houve tentativa de submissão e é uma edição --}}
                 @if (old('area_programa') == '' and isset($agendamento->area_programa))
                 <option value="{{ $option['codare'] }}" {{ ( $agendamento->area_programa == $option['codare']) ? 'selected' : ''}}>
-                    {{$option['nomare']}}
+                    {{$option['codare']}} - {{$option['nomare']}}
                 </option>
                 {{-- 2. Situação em que houve tentativa de submissão, o valor de old prevalece --}}
                 @else
                 <option value="{{$option['codare']}}" {{ ( old('area_programa') == $option['codare']) ? 'selected' : ''}}>
-                    {{$option['nomare']}}
+                    {{$option['codare']}} - {{$option['nomare']}}
                 </option>
                 @endif
             @endforeach

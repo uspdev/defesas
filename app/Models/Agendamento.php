@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use Uspdev\Replicado\Posgraduacao;
 use App\Utils\ReplicadoUtils;
+use Uspdev\Replicado\DB;
 use App\Models\Banca;
 use App\Models\Docente;
 use App\Models\User;
@@ -95,6 +96,24 @@ class Agendamento extends Model
             'Sim',
             'Não'
         ];
+    }
+
+    public static function dadosPessoa($codpes){
+        $query = "SELECT p.*, l.*, e.*, r.*
+        FROM PESSOA p
+        INNER JOIN LOCALIZAPESSOA l
+        ON p.codpes = l.codpes
+        INNER JOIN ENDPESSOA e 
+        ON e.codpes = l.codpes
+        INNER JOIN LOCALIDADE r
+        ON r.codloc = e.codloc
+        WHERE l.codpes = {$codpes}
+        ";
+        if($query){
+            return DB::fetch($query);
+        }else{
+            return [];
+        }
     }
 
     public static function dadosProfessor($codpes){
