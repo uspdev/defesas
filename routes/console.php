@@ -16,8 +16,4 @@ use App\Console\Commands\EmailSalavirtual;
 |
 */
 
-Artisan::command('inspire', function () {
-    $this->comment(Inspiring::quote());
-})->describe('Display an inspiring quote');
-
-Schedule::command('send:email-salavirtual')->daily()->runInBackground();
+Schedule::command('send:email-salavirtual')->dailyAt('6:00')->runInBackground();
