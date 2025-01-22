@@ -11,8 +11,9 @@ use App\Utils\ReplicadoUtils;
 use Uspdev\Replicado\DB;
 use App\Models\Banca;
 use App\Models\Docente;
-use App\Models\User;
 use App\Models\Communication;
+use Uspdev\Replicado\Pessoa;
+use App\Models\User;
 
 class Agendamento extends Model
 {
@@ -117,15 +118,19 @@ class Agendamento extends Model
     }
 
     public static function dadosProfessor($codpes){
-        $dados = Docente::where('n_usp', '=', $codpes)->first();
-        if($dados != null){
-            return $dados;
-        }
-        return new Docente;
+        return Pessoa::listarVinculosAtivos($codpes)[0];
+    }
+
+    public static function retornarDadosProfessor($codpes){
+        return Pessoa::dump($codpes); //usado para retornar o CPF
     }
 
     public function nomeUsuario($id){
         return User::where('id',$id)->first();
+    }
+
+    public static function endereco($codpes){
+        return Pessoa::obterEndereco($codpes); //método já retorna o endereço completo
     }
 
     //Função para devolver valores de select status

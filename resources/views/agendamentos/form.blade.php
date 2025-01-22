@@ -133,11 +133,19 @@
 <div class="row form-group">
     <div class="col-sm">
         <label for="data" class="required">Data</label>
+        @if(!$agendamento->data_horario)
+        <input type="text" name="data" class="form-control datepicker data" autocomplete="off">
+        @else
         <input type="text" name="data" class="form-control datepicker data" autocomplete="off" value="{{ old('data_horario', date('d/m/Y',strtotime($agendamento->data_horario))) }}">
+        @endif
     </div>
     <div class="col-sm">
         <label for="horario" class="required">Horário</label>
+        @if(!$agendamento->data_horario)
+        <input type="text" name="horario" class="form-control horario">
+        @else
         <input type="text" name="horario" class="form-control horario" value="{{ old('data_horario', date('H:i', strtotime($agendamento->data_horario))) }}">
+        @endif
     </div>
 </div>
 <div class="row form-group">
@@ -176,6 +184,6 @@
 
 <div class="row form-group">
     <div class="col-sm">
-        <button type="submit" class="btn btn-success float-right">Enviar</button>
+        <button dusk="enviar_agendamento" type="submit" class="btn btn-success float-right">Enviar</button>
     </div>
 </div>

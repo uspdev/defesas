@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use App\Http\Requests\CommunicationRequest;
+use App\Utils\ReplicadoUtils;
 use App\Models\Agendamento;
 use App\Models\Communication;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\AgendamentoRequest;
-use App\Utils\ReplicadoUtils;
 
 class CommunicationController extends Controller
 {
@@ -25,6 +25,6 @@ class CommunicationController extends Controller
     public function show(Agendamento $agendamento){
         Gate::authorize('comunicacao');
         $dadosJanus = ReplicadoUtils::retornarDadosJanus($agendamento->codpes);
-        return view('comunicacao.show', ['agendamento' => $agendamento, 'dadosJanus' => $dadosJanus]);
+        return view('comunicacao.show', ['agendamento' => $agendamento]);
     }
 }
