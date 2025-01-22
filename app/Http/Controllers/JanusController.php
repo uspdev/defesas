@@ -7,6 +7,7 @@ use App\Utils\ReplicadoUtils;
 use App\Models\Agendamento;
 use App\Http\Requests\JanusRequest;
 use App\Models\Banca;
+use Carbon\Carbon;
 
 class JanusController extends Controller
 {
@@ -15,45 +16,39 @@ class JanusController extends Controller
     }
 
     public function store(JanusRequest $request, ReplicadoUtils $replicado, Agendamento $agendamento){
-        if(!empty($replicado::retornarDadosJanus($request->codpes)[0])){
-            $dadosJanus = $replicado::retornarDadosJanus($request->codpes)[0];
+        $dadosJanus = ReplicadoUtils::retornarDadosJanus($request->codpes)[0] ?? '';
+        $agendamentosInfo = ReplicadoUtils::retornarAgendamentoInfos($request->codpes) ?? '';
+        if(!empty($dadosJanus) && !empty($agendamentosInfo)){
             $agendamento->codpes = $request->codpes;
             $agendamento->nome = $agendamento::dadosPessoa($request->codpes)['nompes'];
-            $agendamento->titulo = $replicado::retornarDadosJanus($agendamento->codpes)[0]['tittrb'];
-            $agendamento->area_programa = $replicado::retornarAgendamentoInfos($request->codpes)['codare'];
-            $agendamento->regimento = 'A DEFINIR';
-            $agendamento->orientador_votante = 'A DEFINIR';
-            if($replicado::retornarAgendamentoInfos($request->codpes)['nivpgm'] == "ME"){
-                $agendamento->nivel = 'Mestrado';
-            }else{
-                $agendamento->nivel = 'Doutorado';
-            }
-            $agendamento->sala = 'A DEFINIR';
-            $agendamento->data_horario = '2025-12-31 22:00:00';
+            $agendamento->titulo = $dadosJanus['tittrb'];
+            $agendamento->area_programa = $agendamentosInfo['codare'];
+            $agendamento->regimento = $request->regimento;
+            $agendamento->orientador_votante = $request->orientador_votante;
+            $agendamento->nivel = $agendamentosInfo['nivpgm'] == "ME" ? 'Mestrado' : 'Doutorado';
+            $agendamento->sala = $request->sala;
+            $agendamento->data_horario = Carbon::createFromFormat('d/m/Y H:i',$request->data . $request->horario)->format('Y-m-d H:i');
             $data = $replicado::retornarDadosBanca($agendamento->codpes);
             $resultado = array_filter($data, function($item){
                 return $item['vinptpbantrb'] == "PRE";
             });
-            
             $agendamento->orientador = $resultado[0]['codpesdct'];
             $agendamento->resumo = $dadosJanus['rsutrb'];
-            $agendamento->tipo = 'A DEFINIR';
+            $agendamento->tipo = $request->tipo_defesa;
             $agendamento->save();
             
             $dadosBanca = $replicado::retornarDadosBanca($request->codpes);
             
+            $primeiro = true;
             foreach($dadosBanca as $dadoBanca){
                 $banca = new Banca;
                 $banca->agendamento_id = $agendamento->id;
                 $banca->codpes = $dadoBanca['codpesdct'];
-                $banca->presidente = 'Sim';
-                if($dadoBanca['vinptpbantrb'] == "SUP"){
-                    $banca->tipo = "Suplente";
-                }else{
-                    $banca->tipo = "Titular";
-                }
+                $banca->presidente = $primeiro ? 'Sim' : 'Não';
+                $banca->tipo = $dadoBanca['vinptpbantrb'] == "SUP" ? 'Suplente' : 'Titular';
                 $banca->nome = $dadoBanca['nompes'];
                 $agendamento->bancas()->save($banca);
+                $primeiro = false;
             }
 
         }else{
