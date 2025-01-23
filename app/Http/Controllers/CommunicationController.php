@@ -18,13 +18,13 @@ class CommunicationController extends Controller
         $agendamentos = Agendamento::where('status',1)
         ->orderBy('data_horario', 'desc')
         ->paginate(15);
-        
+
         return view('comunicacao.index', ['agendamentos' => $agendamentos]);
     }
     
     public function show(Agendamento $agendamento){
         Gate::authorize('comunicacao');
         $dadosJanus = ReplicadoUtils::retornarDadosJanus($agendamento->codpes);
-        return view('comunicacao.show', ['agendamento' => $agendamento]);
+        return view('comunicacao.show', ['agendamento' => $agendamento, 'dadosJanus' => $dadosJanus]);
     }
 }

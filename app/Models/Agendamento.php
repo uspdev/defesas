@@ -99,6 +99,7 @@ class Agendamento extends Model
         ];
     }
 
+    //caso ocorra de não haver algum docente no banco de dados, este método pode ser usado para puxar os dados do Janus
     public static function dadosPessoa($codpes){
         $query = "SELECT p.*, l.*, e.*, r.*
         FROM PESSOA p
@@ -118,9 +119,12 @@ class Agendamento extends Model
     }
 
     public static function dadosProfessor($codpes){
-        return Pessoa::listarVinculosAtivos($codpes)[0];
+        $dados = Docente::where('n_usp', '=', $codpes)->first();
+        if($dados != null){
+            return $dados;
+        }
+        return new Docente;
     }
-
     public static function retornarDadosProfessor($codpes){
         return Pessoa::dump($codpes); //usado para retornar o CPF
     }

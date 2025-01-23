@@ -86,7 +86,7 @@
                     <td>{{ $agendamento->sala }}</td>
                     <td> 
                         @foreach ($agendamento->bancas()->where('tipo', 'Titular')->get() as $banca)
-                            {{ $agendamento->docente->nome }} ({{ $agendamento->docente->lotado  ?? ''}})@if($loop->count != $loop->iteration), @endif
+                            {{ $agendamento->dadosProfessor($banca->codpes)->nome }} ({{ $agendamento->docente->lotado  ?? ''}})@if($loop->count != $loop->iteration), @endif
                         @endforeach
                     </td>
                 </tr>
