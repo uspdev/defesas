@@ -7,6 +7,10 @@ $submenu1 =  [
         'url'  => '/agendamentos/create',
     ],
     [
+        'text' => '<i class="fa fa-globe"></i> Agendar Defesa via Janus',
+        'url' => '/janus/create'
+    ],
+    [
         'text' => '<i class="fas fa-list-alt"></i> Listar Agendamentos',
         'url'  => '/agendamentos',
     ],
@@ -31,13 +35,6 @@ $submenu4 =  [
     [
         'text' => 'Defesas aprovadas',
         'url'  => '/comunicacao',
-    ]
-];
-
-$submenu5 = [
-    [
-        'text' => 'Janus',
-        'url' => 'janus/create',
     ]
 ];
 
@@ -107,11 +104,6 @@ return [
             'text' => '<i class="fas fa-bullhorn"></i> Comunicação',
             'submenu' => $submenu4,
             'can' => 'comunicacao'
-        ],
-        [
-            'text' => '<i class="fas fa-globe"></i> Janus',
-            'submenu' => $submenu5,
-            'can' => 'admin'
         ],
     ],
     'right_menu' => $right_menu,

@@ -79,7 +79,7 @@ class PdfController extends Controller
                 $nome = 'Professor';
             }
             else{
-                $nome = $docente['nompes'];
+                $nome = $docente->nome;
             }
             return $pdf->download("$nome - $tipo.pdf");
         }
@@ -92,7 +92,7 @@ class PdfController extends Controller
                 $nome = 'Professor';
             }
             else{
-                $nome = $docente['nompes'];
+                $nome = $docente->nome;
             }
             return $pdf->download("$nome - $tipo.pdf");
         }
@@ -115,7 +115,7 @@ class PdfController extends Controller
             $nome = 'Professor';
         }
         else{
-            $nome = $docente['nompes'];
+            $nome = $docente->nome;
         }
         $pdf = PDF::loadView("pdfs.recibos.$tipo", compact(['agendamento','banca','dados','configs']));
         return $pdf->download("$nome - $tipo.pdf");
