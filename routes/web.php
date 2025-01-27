@@ -12,6 +12,7 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\BibliotecaController;
 use App\Http\Controllers\ApprovalStatusDefesaController;
 use App\Http\Controllers\CommunicationController;
+use App\Http\Controllers\JanusController;
 
 // rotas para login/logout
 Route::get('/', [indexController::class, 'index'])->name('index');
@@ -22,6 +23,9 @@ Route::resource('agendamentos', AgendamentoController::class);
 Route::resource('docentes',DocenteController::class);
 Route::resource('bancas', BancaController::class);
 Route::resource('files', FileController::class)->only(['store', 'show', 'destroy']);
+
+Route::get('janus/create', [JanusController::class, 'create']);
+Route::post('janus', [JanusController::Class, 'store']);
 
 // rotas para biblioteca
 Route::get('/teses',[BibliotecaController::class, 'index']);
@@ -57,4 +61,5 @@ Route::get('info', [AgendamentoController::class, 'info'])->name('pedidos.info')
 Route::get('job_email_prof', [AgendamentoController::class, 'job_email_prof']);
 
 #comunicacao
-Route::resource('comunicacao', CommunicationController::class);
+Route::get('/comunicacao', [CommunicationController::class, 'index']);
+Route::get('/comunicacao/{agendamento}', [CommunicationController::class, 'show']);

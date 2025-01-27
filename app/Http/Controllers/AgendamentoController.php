@@ -174,7 +174,7 @@ class AgendamentoController extends Controller
     public function enviarEmailPassagem(Agendamento $agendamento, Banca $banca){
         $this->authorize('admin');
         $docente = Docente::where('n_usp',$banca->codpes)->first();
-        $emails = explode(" /", $docente->email);
+        $emails = Pessoa::emails($docente->n_usp);
         foreach($emails as $email){
             if($email != '') Mail::queue(new PassagemMail($agendamento, $docente, $email));
         }
@@ -184,7 +184,7 @@ class AgendamentoController extends Controller
     public function enviarEmailDeConfirmacaoDadosProfExterno(Agendamento $agendamento, Banca $banca){
         $this->authorize('admin');
         $docente = Docente::where('n_usp',$banca->codpes)->first();
-        $emails = explode(" /", $docente->email);
+        $emails = Pessoa::emails($docente->n_usp);
         foreach($emails as $email){
             if($email != '') Mail::queue(new DadosProfExternoMail($docente, $email));;
         }

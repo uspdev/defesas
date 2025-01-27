@@ -8,11 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use Uspdev\Replicado\Posgraduacao;
 use App\Utils\ReplicadoUtils;
-use App\Models\User;
+use Uspdev\Replicado\DB;
 use App\Models\Banca;
 use App\Models\Docente;
 use App\Models\Communication;
 use Uspdev\Replicado\Pessoa;
+use App\Models\User;
 
 class Agendamento extends Model
 {
@@ -98,10 +99,32 @@ class Agendamento extends Model
         ];
     }
 
-    public static function dadosProfessor($codpes){
-        return Pessoa::listarVinculosAtivos($codpes)[0];
+    //caso ocorra de não haver algum docente no banco de dados, este método pode ser usado para puxar os dados do Janus
+    public static function dadosPessoa($codpes){
+        $query = "SELECT p.*, l.*, e.*, r.*
+        FROM PESSOA p
+        INNER JOIN LOCALIZAPESSOA l
+        ON p.codpes = l.codpes
+        INNER JOIN ENDPESSOA e 
+        ON e.codpes = l.codpes
+        INNER JOIN LOCALIDADE r
+        ON r.codloc = e.codloc
+        WHERE l.codpes = {$codpes}
+        ";
+        if($query){
+            return DB::fetch($query);
+        }else{
+            return [];
+        }
     }
 
+    public static function dadosProfessor($codpes){
+        $dados = Docente::where('n_usp', '=', $codpes)->first();
+        if($dados != null){
+            return $dados;
+        }
+        return new Docente;
+    }
     public static function retornarDadosProfessor($codpes){
         return Pessoa::dump($codpes); //usado para retornar o CPF
     }

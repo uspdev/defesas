@@ -39,17 +39,17 @@
     </b>
 
   @foreach($professores as $professor)
-      @if($agendamento->dadosProfessor($professor->codpes)['tipvinext'] == 'Docente')
+      @if($agendamento->dadosProfessor($professor->codpes)->docente_usp == 'nao')
           <table style="border: 1px solid black; border-spacing: 5px; width: 18.6cm;">
             <tr>
               <td>
-                Prof: <b> {{$agendamento->dadosProfessor($professor->codpes)['nompes']}}  </b>
+                Prof: <b> {{$agendamento->dadosProfessor($professor->codpes)->nome ?? 'Professor não cadastrado'}}  </b>
               </td>
             </tr>
             <tr>
               <td>
-                PASSAGEM: {{$agendamento->endereco($professor->codpes)['cidloc'] ?? 'cidade'}}/
-                {{$agendamento->dadosProfessor($professor->codpes)['sglest'] ?? 'estado'}}
+                PASSAGEM: {{$agendamento->dadosProfessor($professor->codpes)->cidade ?? ''}}/
+                {{$agendamento->dadosProfessor($professor->codpes)->estado ?? ''}}
               </td>
             </tr>
             <tr>

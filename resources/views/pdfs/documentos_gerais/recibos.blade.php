@@ -36,7 +36,7 @@
 	@inject('pessoa','Uspdev\Replicado\Pessoa')
 	@foreach($professores as $professor)
 		<br><br>
-		@if($agendamento->dadosProfessor($professor->codpes)['tipvinext'] == 'Docente')
+		@if($agendamento->dadosProfessor($professor->codpes)->docente_usp == 'sim')
 			<table width="18cm" class="negrito">
 				<tr>
 					<td> RECIBO DE REMESSA DE DOCUMENTOS </td> 
@@ -47,10 +47,10 @@
 				<tr>
 					<td> 
 						<u>DO:</u> SERVIÇO DE PÓS-GRADUAÇÃO DA FFLCH <br>
-						<u>PARA:</u> {{$agendamento->endereco($professor->codpes)['epflgr']}}, {{$agendamento->endereco($professor->codpes)['nombro']}} <br>
-							CEP:{{$agendamento->endereco($professor->codpes)['codendptl']}} - {{$agendamento->endereco($professor->codpes)['cidloc']}}/{{$agendamento->endereco($professor->codpes)['sglest']}}
+						<u>PARA:</u> {{$agendamento->dadosProfessor($professor->codpes)->endereco ?? ' '}}, {{$agendamento->dadosProfessor($professor->codpes)->bairro ?? ' '}} <br>
+							CEP:{{$agendamento->dadosProfessor($professor->codpes)->cep ?? ' '}} - {{$agendamento->dadosProfessor($professor->codpes)->cidade ?? ' '}}/{{$agendamento->dadosProfessor($professor->codpes)->estado ?? ' '}}
 						<div style="text-indent:1.5cm;">
-							A/C: Prof(a). Dr(a). {{$agendamento->dadosProfessor($professor->codpes)['nompes']}}
+							A/C: Prof(a). Dr(a). {{$agendamento->dadosProfessor($professor->codpes)->nome ?? 'Professor não cadastrado'}}
 						</div> 
 					</td> 
 				</tr> 
@@ -88,9 +88,9 @@
 				<tr>
 					<td>
 						<u>DO:</u> SERVIÇO DE PÓS-GRADUAÇÃO DA FFLCH <br>
-						<u>PARA:</u>  {{$agendamento->endereco($professor->codpes)['epflgr']}}, {{$agendamento->endereco($professor->codpes)['nombro']}} <br>
-							CEP:{{$agendamento->endereco($professor->codpes)['codendptl']}} - {{$agendamento->endereco($professor->codpes)['cidloc']}}/{{$agendamento->endereco($professor->codpes)['sglest']}}
-						<div style="text-indent:1.5cm;"> A/C: Prof(a). Dr(a). {{$agendamento->dadosProfessor($professor->codpes)['nompes']}} </div> 
+						<u>PARA:</u>  {{$agendamento->dadosProfessor($professor->codpes)->endereco ?? ' '}}, {{$agendamento->dadosProfessor($professor->codpes)->bairro ?? ' '}} <br>
+							CEP:{{$agendamento->dadosProfessor($professor->codpes)->cep ?? ' '}} - {{$agendamento->dadosProfessor($professor->codpes)->cidade ?? ' '}}/{{$agendamento->dadosProfessor($professor->codpes)->estado ?? ' '}}
+						<div style="text-indent:1.5cm;"> A/C: Prof(a). Dr(a). {{$agendamento->dadosProfessor($professor->codpes)->nome ?? 'Professor não cadastrado'}} </div> 
 					</td> 
 				</tr>
 			</table>
