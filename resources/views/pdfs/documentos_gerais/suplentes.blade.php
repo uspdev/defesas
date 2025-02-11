@@ -63,7 +63,7 @@
             São Paulo, {{ strftime('%d de %B de %Y', strtotime('today')) }}
         </div><br><br>
 
-        Ilmo(a). Sr(a). {{$agendamento->dadosProfessor($professor->codpes)['nome'] ?? 'Professor não cadastrado'}}<br>
+        Ilmo(a). Sr(a). {{$agendamento->dadosProfessor($professor->codpes)->nome ?? 'Professor não cadastrado'}}<br>
         {{$agendamento->dadosProfessor($professor->codpes)->endereco ?? ' '}}, {{$agendamento->dadosProfessor($professor->codpes)->bairro ?? ' '}} <br>
         CEP:{{$agendamento->dadosProfessor($professor->codpes)->cep ?? ' '}} - {{$agendamento->dadosProfessor($professor->codpes)->cidade ?? ' '}}/{{$agendamento->dadosProfessor($professor->codpes)->estado ?? ' '}}
         <br> telefone: {{$agendamento->dadosProfessor($professor->codpes)->telefone ?? ' '}}

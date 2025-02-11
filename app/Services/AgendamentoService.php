@@ -7,6 +7,8 @@ use App\Models\Agendamento;
 use App\Models\Banca;
 use Carbon\Carbon;
 use App\Utils\ReplicadoUtils;
+use App\Models\Docente;
+use Uspdev\Replicado\Pessoa;
 
 class AgendamentoService
 {
@@ -40,6 +42,13 @@ class AgendamentoService
             $banca->presidente = $dadoBanca['vinptpbantrb'] == "PRE" ? 'Sim' : 'Não';
             $banca->tipo = $dadoBanca['vinptpbantrb'] == "SUP" ? 'Suplente' : 'Titular';
             $banca->save();
+        }
+        if(!Docente::where('n_usp',$banca->codpes)->first()){ //inserindo novo docente, caso ele não haja na table
+            $docente = new Docente;
+            $docente->nome = Pessoa::dump($banca->codpes)['nompes'];
+            $docente->n_usp = Pessoa::dump($banca->codpes)['codpes'];
+            $docente->email = Pessoa::email($banca->codpes);
+            $docente->save();
         }
     }
 }

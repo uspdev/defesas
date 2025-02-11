@@ -139,6 +139,15 @@ class ReplicadoUtils {
         return false;
     }
 
+    /*sendo utilizado somente para docentes externos à usp e que não estejam na table "LOCALIZAPESSOA"
+    Feito somente para que "nompes" retorne como "nome", para não
+    ser necessário alterar vários arquivos
+    */
+    public static function retornarPessoa($codpes){
+        $query = "SELECT p.nompes as nome, p.codpes FROM PESSOA p WHERE p.codpes = {$codpes}";
+        return DBreplicado::fetch($query);
+    }
+
     public static function retornarDadosJanus($codpes){
         $query = "SELECT A.codpes, A.codare, A.nivpgm, A.numseqpgm, P.nompes, T.tittrb, T.rsutrb, T.palcha,
                   T.tittrbigl, T.rsutrbigl, T.palchaigl, R.codpes as orientador
@@ -151,7 +160,7 @@ class ReplicadoUtils {
                   INNER JOIN PESSOA AS P
                   ON A.codpes = P.codpes
                   WHERE A.codpes = convert(int, :codpes)
-                  AND A.stacsldfatrb = 'N' AND A.dtadpopgm = T.dtacad AND R.tiport = 'ORI'";
+                  AND A.stacsldfatrb = 'N' AND A.dtadpopgm = T.dtacad AND R.tiport = 'ORI' AND R.dtafimort IS NULL";
         $param = [
             'codpes' => $codpes,
         ];
