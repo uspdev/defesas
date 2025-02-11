@@ -151,7 +151,7 @@ class ReplicadoUtils {
                   INNER JOIN PESSOA AS P
                   ON A.codpes = P.codpes
                   WHERE A.codpes = convert(int, :codpes)
-                  AND A.stacsldfatrb = 'N' AND A.dtadpopgm = T.dtacad AND R.tiport = 'ORI'";
+                  AND A.stacsldfatrb = 'N' AND A.dtadpopgm = T.dtacad AND R.tiport = 'ORI' AND R.dtafimort IS NULL";
         $param = [
             'codpes' => $codpes,
         ];
