@@ -63,18 +63,18 @@
         São Paulo, {{ strftime('%d de %B de %Y', strtotime('today')) }}    
     </div><br>
 
-    Ilmo(a). Sr(a). {{$agendamento->dadosProfessor($professor->codpes)['nompes'] }}<br>
-    {{$agendamento->endereco($professor->codpes)['nomloc'] ?? 'epflgr'}}, {{$agendamento->endereco($professor->codpes)['nombro'] ?? 'bairro'}} <br>
-    CEP:{{$agendamento->endereco($professor->codpes)['codendptl']}} - {{$agendamento->dadosProfessor($professor->codpes)['nomloc'] ?? 'cidade'}}/{{$agendamento->dadosProfessor($professor->codpes)['nomloc'] ?? 'estado'}}
-    <br> telefone: {{$agendamento->dadosProfessor($professor->codpes)['numtelfmt']}}
-    <br>e-mail: {{$agendamento->dadosProfessor($professor->codpes)['codema']}}
+    Ilmo(a). Sr(a). {{$agendamento->dadosProfessor($professor->codpes)->nome ?? 'Professor não cadastrado'}}<br>
+    {{$agendamento->dadosProfessor($professor->codpes)->endereco ?? ' '}}, {{$agendamento->dadosProfessor($professor->codpes)->bairro ?? ' '}} <br>
+    CEP:{{$agendamento->dadosProfessor($professor->codpes)->cep ?? ' '}} - {{$agendamento->dadosProfessor($professor->codpes)->cidade ?? ' '}}/{{$agendamento->dadosProfessor($professor->codpes)->estado ?? ' '}}
+    <br> telefone: {{$agendamento->dadosProfessor($professor->codpes)->telefone ?? ' '}}
+    <br>e-mail: {{$agendamento->dadosProfessor($professor->codpes)->email ?? ' '}}
     <br><br>
 
     <div class="boxSuplente">
         <div class="moremargin">Assunto: Banca Examinadora de <b>{{$agendamento->nivel}}</b></div> 
         <div class="moremargin">Candidato(a): <b>{{$agendamento->nome}}</b> </div>
         <div class="moremargin">Área: <b>{{$agendamento->nome_area}}</b> </div>
-        <div class="moremargin">Orientador(a) Prof(a). Dr(a). {{ $agendamento::dadosProfessor($agendamento->orientador)['nompes']}} @if($agendamento->co_orientador) e {{$agendamento->dadosProfessor($agendamento->co_orientador)['nompes']}} @endif</div>
+        <div class="moremargin">Orientador(a) Prof(a). Dr(a). {{ $agendamento->nome_orientador ?? $pessoa::dump($agendamento->orientador)['nompes']}} @if($agendamento->co_orientador) e {{$agendamento->nome_co_orientador ?? $agendamento->dadosProfessor($agendamento->co_orientador)->nome}} @endif</div>
         <div class="moremargin">Título do Trabalho: <i>{{$agendamento->titulo}} </i></div>
     </div>
 

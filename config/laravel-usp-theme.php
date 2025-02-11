@@ -7,23 +7,16 @@ $submenu1 =  [
         'url'  => '/agendamentos/create',
     ],
     [
+        'text' => '<i class="fa fa-globe"></i> Agendar Defesa via Janus',
+        'url' => '/janus/create'
+    ],
+    [
         'text' => '<i class="fas fa-list-alt"></i> Listar Agendamentos',
         'url'  => '/agendamentos',
     ],
     [
         'text' => '<i class="fas fa-search"></i> Pendência de sala virtual',
         'url' => '/pendencia_sala_virtual'
-    ],
-];
-
-$submenu2 =  [
-    [
-        'text' => '<i class="fas fa-plus-square"></i> Cadastrar Docente',
-        'url'  => '/docentes/create',
-    ],
-    [
-        'text' => '<i class="fas fa-list-alt"></i> Listar Docentes',
-        'url'  => '/docentes',
     ],
 ];
 
@@ -100,11 +93,6 @@ return [
         [
             'text'    => '<i class="fas fa-calendar-alt"></i> Agendamentos',
             'submenu' => $submenu1,
-            'can' => 'admin',
-        ],
-        [
-            'text'    => '<i class="fas fa-chalkboard-teacher"></i> Docentes',
-            'submenu' => $submenu2,
             'can' => 'admin',
         ],
         [

@@ -8,11 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use Uspdev\Replicado\Posgraduacao;
 use App\Utils\ReplicadoUtils;
-use App\Models\User;
+use Uspdev\Replicado\DB;
 use App\Models\Banca;
 use App\Models\Docente;
 use App\Models\Communication;
 use Uspdev\Replicado\Pessoa;
+use App\Models\User;
 
 class Agendamento extends Model
 {
@@ -99,9 +100,12 @@ class Agendamento extends Model
     }
 
     public static function dadosProfessor($codpes){
-        return Pessoa::listarVinculosAtivos($codpes)[0];
+        $dados = Docente::where('n_usp', '=', $codpes)->first();
+        if($dados != null){
+            return $dados;
+        }
+        return new Docente;
     }
-
     public static function retornarDadosProfessor($codpes){
         return Pessoa::dump($codpes); //usado para retornar o CPF
     }

@@ -43,13 +43,13 @@
 		<li>Programa: <b>{{$agendamento->nome_area}} </b> </li>  
     <li><b>{{$agendamento->nivel}} </b> </li>  
 		<li>Defesa do Sr.(a): <b> {{$agendamento->nome}} </b> </li>  
-		<li>Orientador(a): Prof(a) Dr(a)<b> {{$agendamento->nome_orientador ?? $pessoa::dump($agendamento->orientador)['nompes']}} @if($agendamento->co_orientador) e {{$agendamento->nome_co_orientador ?? $agendamento->dadosProfessor($agendamento->co_orientador)['nompes']}} @endif </b> </li>
+		<li>Orientador(a): Prof(a) Dr(a)<b> {{$agendamento->nome_orientador ?? $pessoa::dump($agendamento->orientador)['nompes']}} @if($agendamento->co_orientador) e {{$agendamento->nome_co_orientador ?? $agendamento->dadosProfessor($agendamento->co_orientador)->nome}} @endif </b> </li>
     </ul>
 	<div class="justificar" style="text-indent:1cm;" >{!! $configs->agencia_texto !!} </div>
 	<div class="importante">  
-		Interessado(a): Prof(a). Dr(a). <b> {{$agendamento->dadosProfessor($banca->codpes)['nompes']}}</b> <br>
-		E-mail: <b>{{$agendamento->dadosProfessor($banca->codpes)['codema']}}</b> <br>
-		Telefone:<b> {{$agendamento->dadosProfessor($banca->codpes)['numtelfmt']}} </b> <br>
+		Interessado(a): Prof(a). Dr(a). <b> {{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}</b> <br>
+		E-mail: <b>{{$agendamento->dadosProfessor($banca->codpes)->email ?? ' '}}</b> <br>
+		Telefone:<b> {{$agendamento->dadosProfessor($banca->codpes)->telefone ?? ' '}} </b> <br>
 		Data da defesa:<b> {{date('d/m/Y', strtotime($agendamento->data_horario))}}</b> <br>
 		Trajeto da passagem aérea <b> {{$dados->trajeto}}</b> <br>
 	</div> <br>

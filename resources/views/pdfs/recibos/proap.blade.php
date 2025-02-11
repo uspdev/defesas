@@ -45,18 +45,18 @@
         <hr>
         <table width="16.5cm" style="border:0px;">
 			<tr>
-				<td style="border:0px;" colspan="2">Nome do Convidado: {{$agendamento->dadosProfessor($banca->codpes)['nompes']}} </td>
+				<td style="border:0px;" colspan="2">Nome do Convidado: {{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}} </td>
 			</tr>
 			<tr>
-				<td style="border:0px;"> CPF: {{$agendamento->retornarDadosProfessor($banca->codpes)['numcpf']}}</td>
-				<td style="border:0px;">  RG: {{$agendamento->retornarDadosProfessor($banca->codpes)['numdocidf']}}  </td>
+				<td style="border:0px;"> CPF: {{$agendamento->dadosProfessor($banca->codpes)->cpf ?? ' '}}</td>
+				<td style="border:0px;">  RG: {{$agendamento->dadosProfessor($banca->codpes)->documento ?? ' '}}  </td>
 			</tr>
 		</table>				
 	    <hr>
 	    <table width="16.5cm" style="border:0px;">
 			<tr>
 				<td style="border:0px;">Unidade: </td>
-				<td style="border:0px;"> {{$agendamento->dadosProfessor($banca->codpes)['sglclgund']}} </td>
+				<td style="border:0px;"> {{$agendamento->dadosProfessor($banca->codpes)->lotado ?? ' '}} </td>
 				<td style="border:0px;">Cargo: </td>
 				<td style="border:0px;"> <b> Professor(a) Doutor(a) </b> </td>
 			</tr>
@@ -107,14 +107,14 @@
 	    <table width="18cm"> 
 			<tr>
 				<td style="border:none;"> <hr style="width:10cm;"> 
-					{{$agendamento->dadosProfessor($banca->codpes)['nompes']}} <br> 
-					<b>{{$agendamento->endereco($banca->codpes)['epflgr']}}, {{$agendamento->endereco($banca->codpes)['nombro']}} <br>
-        			CEP:{{$agendamento->endereco($banca->codpes)['codendptl']}} - {{$agendamento->endereco($banca->codpes)['cidloc']}}/{{$agendamento->endereco($banca->codpes)['sglest']}}
+					{{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}} <br> 
+					<b>{{$agendamento->dadosProfessor($banca->codpes)->endereco ?? ' '}}, {{$agendamento->dadosProfessor($banca->codpes)->bairro ?? ' '}} <br>
+        			CEP:{{$agendamento->dadosProfessor($banca->codpes)->cep ?? ' '}} - {{$agendamento->dadosProfessor($banca->codpes)->cidade ?? ' '}}/{{$agendamento->dadosProfessor($banca->codpes)->estado ?? ' '}}
 				</td>
 			</tr> 
 		</table>
 
-	    <center> <b> {{$agendamento->dadosProfessor($banca->codpes)['codema']}}</b> </center>
+	    <center> <b> {{$agendamento->dadosProfessor($banca->codpes)->email ?? ' '}}</b> </center>
 	    <br> <center> <b>RELATÓRIO </center></b> <br> <div class="justificar">  {!! $configs->capes_proap !!} </div> 
 	    Banca de: {{$agendamento->nome}} <br><br><br><br><br><br><br>
         <table width="18cm"> 

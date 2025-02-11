@@ -67,7 +67,7 @@
             <div class="moremargin">Subject: @if($agendamento->nivel == 'Mestrado') <b>Master's</b> @else <b>Doctorate's</b> @endif Examination Committee</div> 
             <div class="moremargin">Candidate: <b>{{$agendamento->nome}}</b> </div>
             <div class="moremargin">Area: <b>{{$replicado->nomeAreaProgramaEmIngles($agendamento->area_programa)}}</b> </div>
-            <div class="moremargin">Supervisor: {{ $agendamento->nome_orientador ?? $agendamento::dadosProfessor($agendamento->orientador)['nompes']}} @if($agendamento->co_orientador) and {{$agendamento->nome_co_orientador ?? $agendamento->dadosProfessor($agendamento->co_orientador)['nompes']}} @endif</div>
+            <div class="moremargin">Supervisor: {{ $agendamento->nome_orientador ?? $pessoa::dump($agendamento->orientador)['nompes']}} @if($agendamento->co_orientador) and {{$agendamento->nome_co_orientador ?? $agendamento->dadosProfessor($agendamento->co_orientador)->nome}} @endif</div>
             <div class="moremargin">Title of the thesis: <i>{{$agendamento->title ?? $agendamento->titulo}} </i></div>
             <div class="importante">
                 {!! $configs->important !!}
@@ -81,8 +81,8 @@
 
                 @foreach($bancas as $banca)    
                 <div class="col">
-                    {{$agendamento->dadosProfessor($banca->codpes)['nompes']}} 
-                   <b>{{$agendamento->dadosProfessor($banca->codpes)['sglclgund']}}</b>
+                    {{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}} 
+                   <b>{{$agendamento->dadosProfessor($banca->codpes)->lotado ?? ' '}}</b>
                 </div>
                 @endforeach
             <div class="importante" align="center"> 
@@ -96,11 +96,11 @@
                 </b>
             </div>
             <br>
-            {{$agendamento->dadosProfessor($professor->codpes)['nompes'] ?? 'Professor não cadastrado'}}<br>
-            {{$agendamento->endereco($professor->codpes)['epflgr']}}, {{$agendamento->endereco($professor->codpes)['nombro']}} <br>
-            Post Code:{{$agendamento->endereco($professor->codpes)['codendptl']}} - {{$agendamento->endereco($professor->codpes)['cidloc']}}/{{$agendamento->endereco($professor->codpes)['sglest'] ?? 'ESTADO'}}
-            <br> Phone: {{$agendamento->dadosProfessor($professor->codpes)['numtelfmt']}}
-            <br>Email: {{$agendamento->dadosProfessor($professor->codpes)['codema']}}
+            {{$agendamento->dadosProfessor($professor->codpes)['nome'] ?? 'Professor não cadastrado'}}<br>
+            {{$agendamento->dadosProfessor($professor->codpes)->endereco ?? ' '}}, {{$agendamento->dadosProfessor($professor->codpes)->bairro ?? ' '}} <br>
+            Post Code:{{$agendamento->dadosProfessor($professor->codpes)->cep ?? ' '}} - {{$agendamento->dadosProfessor($professor->codpes)->cidade ?? ' '}}/{{$agendamento->dadosProfessor($professor->codpes)->estado ?? ' '}}
+            <br> Phone: {{$agendamento->dadosProfessor($professor->codpes)->telefone ?? ' '}}
+            <br>Email: {{$agendamento->dadosProfessor($professor->codpes)->email ?? ' '}}
         </p>
         <p class="page-break"></p> 
     @endforeach

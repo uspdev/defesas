@@ -16,18 +16,15 @@ class CommunicationController extends Controller
     public function index(){
         Gate::authorize('comunicacao');
         $agendamentos = Agendamento::where('status',1)
-        ->orderBy('data_horario','desc')
+        ->orderBy('data_horario', 'desc')
         ->paginate(15);
-        
-        foreach($agendamentos as  $agendamento){
-            $dadosJanus = ReplicadoUtils::retornarDadosJanus($agendamento->codpes);
-        }
-        return view('comunicacao.index', ['agendamentos' => $agendamentos, 'dadosJanus' => $dadosJanus]);
+
+        return view('comunicacao.index', ['agendamentos' => $agendamentos]);
     }
 
-    public function show(Agendamento $comunicacao){
+    public function show(Agendamento $agendamento){
         Gate::authorize('comunicacao');
         $dadosJanus = ReplicadoUtils::retornarDadosJanus($agendamento->codpes);
-        return view('comunicacao.show', ['comunicacao' => $comunicacao, 'dadosJanus' => $dadosJanus]);
+        return view('comunicacao.show', ['agendamento' => $agendamento, 'dadosJanus' => $dadosJanus]);
     }
 }

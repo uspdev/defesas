@@ -140,27 +140,37 @@ class ReplicadoUtils {
     }
 
     public static function retornarDadosJanus($codpes){
-        $query = "SELECT A.codpes, T.tittrb, T.rsutrb, T.palcha,
-                  T.tittrbigl, T.rsutrbigl, T.palchaigl
+        $query = "SELECT A.codpes, A.codare, A.nivpgm, A.numseqpgm, P.nompes, T.tittrb, T.rsutrb, T.palcha,
+                  T.tittrbigl, T.rsutrbigl, T.palchaigl, R.codpes as orientador
                   FROM AGPROGRAMA AS A INNER JOIN DDTDEPOSITOTRABALHO AS D
                   ON A.codpes = D.codpes
                   INNER JOIN DDTENTREGATRABALHO AS T
                   ON D.coddpodgttrb = T.coddpodgttrb
+                  INNER JOIN R39PGMORIDOC R
+                  ON A.codpes = R.codpespgm AND A.numseqpgm = R.numseqpgm AND A.codare = R.codare
+                  INNER JOIN PESSOA AS P
+                  ON A.codpes = P.codpes
                   WHERE A.codpes = convert(int, :codpes)
-                  AND A.codare = D.codare
-                  AND A.numseqpgm = D.numseqpgm";
+                  AND A.stacsldfatrb = 'N' AND A.dtadpopgm = T.dtacad AND R.tiport = 'ORI'";
         $param = [
             'codpes' => $codpes,
         ];
 
-        $result = DBreplicado::fetchAll($query, $param);
+        return DBreplicado::fetch($query, $param);
+    }
 
-        if(!empty($result)) {
-            $result = Uteis::utf8_converter($result);
-            $result = Uteis::trim_recursivo($result);
-            return $result;
-        }
-        return false;
+    public static function retornarDadosBanca(int $codpes, int $numseqpgm){
+        $query = "SELECT R.codpesdct, R.vinptpbantrb, P.nompes FROM R48PGMTRBDOC R
+        INNER JOIN PESSOA P
+        ON R.codpesdct = P.codpes
+        WHERE R.codpes = convert(int, :codpes) AND
+        R.numseqpgm = convert(int, :numseqpgm)";
+        $param = [
+            'codpes'    => $codpes,
+            'numseqpgm' => $numseqpgm
+        ];
+
+        return DBreplicado::fetchAll($query, $param);
     }
 
 }

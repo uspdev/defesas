@@ -74,7 +74,7 @@ class PdfController extends Controller
                 $configs = Config::orderbyDesc('created_at')->first();
             }
             $pdf = PDF::loadView("pdfs.documentos_bancas.$tipo", compact(['agendamento','professores','professor','configs']));
-            $docente = Docente::where('n_usp', '=', $banca->codpes)->first();
+            $docente = Agendamento::dadosProfessor($banca->codpes);
             if($docente == null){
                 $nome = 'Professor';
             }
@@ -87,7 +87,7 @@ class PdfController extends Controller
             $configs = Config::setConfigOficioSuplente($agendamento);
             $professor = $banca;
             $pdf = PDF::loadView("pdfs.documentos_bancas.$tipo", compact(['agendamento','professor','configs']));
-            $docente = Docente::where('n_usp', '=', $banca->codpes)->first();
+            $docente = Agendamento::dadosProfessor($banca->codpes);
             if($docente == null){
                 $nome = 'Professor';
             }
@@ -104,7 +104,7 @@ class PdfController extends Controller
         $dados = $request;
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         $configs = Config::orderbyDesc('created_at')->first();
-        $docente = Docente::where('n_usp', '=', $banca->codpes)->first();
+        $docente = Agendamento::dadosProfessor($banca->codpes);
         if($tipo == 'auxilio_passagem'){
             config(['laravel-fflch-pdf.setor' => "Serviço de Compras"]);
         }

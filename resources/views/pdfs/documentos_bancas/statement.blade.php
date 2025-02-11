@@ -69,8 +69,8 @@
 
         @foreach($professores as $componente)    
         <div class="col">
-            <b>{{$agendamento->dadosProfessor($componente->codpes)['nompes']}}</b> 
-            <b>{{$agendamento->dadosProfessor($componente->codpes)['sglclgund']}}</b>
+            <b>{{$agendamento->dadosProfessor($componente->codpes)->nome ?? 'Professor não cadastrado'}}</b> 
+            <b>{{$agendamento->dadosProfessor($componente->codpes)->lotado ?? ' '}}</b>
         </div>
         @endforeach
     <br><br>
