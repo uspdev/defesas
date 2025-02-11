@@ -1,14 +1,14 @@
 <div class="row">
     <div class="col">
         <label for="codpes">Insira o número USP</label>
-        <input type="text" class="form-control" name="codpes" value="{{ old('codpes', $agendamento->codpes) }}" placeholder="Insira o número USP">
+        <input type="text" class="form-control" name="codpes" value="{{ old('codpes') }}" placeholder="Insira o número USP">
     </div>
 </div>
 
 <div class="row">
     <div class="col">
         <label for="sala">Sala</label>
-        <input type="text" class="form-control" name="sala" value="{{old('sala', $agendamento->sala) }}" placeholder="Insira a sala">
+        <input type="text" class="form-control" name="sala" value="{{ old('sala') }}" placeholder="Insira a sala">
     </div>
     <div class="col">
     <label for="tipo_defesa">Tipo da Defesa</label>

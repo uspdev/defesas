@@ -139,56 +139,38 @@ class ReplicadoUtils {
         return false;
     }
 
-    public static function retornarAgendamentoInfos($codpes){ #pega os dados do janus
-        $query = "SELECT a.nivpgm, r.vinptpbantrb, n.codare, n.nomare FROM R48PGMTRBDOC r 
-        INNER JOIN NOMEAREA n ON r.codare = n.codare
-        INNER JOIN AGPROGRAMA a ON a.codpes = r.codpes
-        WHERE r.codpes = {$codpes}
-        AND a.vinalupgm = 'REGULAR'";
-        $resultado = DBreplicado::fetch($query);
-        if(!empty($resultado)){
-            return $resultado;
-        }
-        return false;
-    }
-
     public static function retornarDadosJanus($codpes){
-        $query = "SELECT A.codpes, T.tittrb, T.rsutrb, T.palcha,
-                  T.tittrbigl, T.rsutrbigl, T.palchaigl
+        $query = "SELECT A.codpes, A.codare, A.nivpgm, A.numseqpgm, P.nompes, T.tittrb, T.rsutrb, T.palcha,
+                  T.tittrbigl, T.rsutrbigl, T.palchaigl, R.codpes as orientador
                   FROM AGPROGRAMA AS A INNER JOIN DDTDEPOSITOTRABALHO AS D
                   ON A.codpes = D.codpes
                   INNER JOIN DDTENTREGATRABALHO AS T
                   ON D.coddpodgttrb = T.coddpodgttrb
+                  INNER JOIN R39PGMORIDOC R
+                  ON A.codpes = R.codpespgm AND A.numseqpgm = R.numseqpgm AND A.codare = R.codare
+                  INNER JOIN PESSOA AS P
+                  ON A.codpes = P.codpes
                   WHERE A.codpes = convert(int, :codpes)
-                  AND A.codare = D.codare
-                  AND A.numseqpgm = D.numseqpgm";
+                  AND A.stacsldfatrb = 'N' AND A.dtadpopgm = T.dtacad AND R.tiport = 'ORI'";
         $param = [
             'codpes' => $codpes,
         ];
 
-        $result = DBreplicado::fetchAll($query, $param);
-
-        if(!empty($result)) {
-            $result = Uteis::utf8_converter($result);
-            $result = Uteis::trim_recursivo($result);
-            return $result;
-        }
-        return false;
+        return DBreplicado::fetch($query, $param);
     }
 
-    public static function retornarDadosBanca($codpes){
-        $query = "SELECT r.*, p.nompes FROM R48PGMTRBDOC r
-        INNER JOIN PESSOA p
-        ON r.codpesdct = p.codpes
-        WHERE r.codpes = {$codpes}
-        ORDER BY r.vinptpbantrb ASC";
+    public static function retornarDadosBanca(int $codpes, int $numseqpgm){
+        $query = "SELECT R.codpesdct, R.vinptpbantrb, P.nompes FROM R48PGMTRBDOC R
+        INNER JOIN PESSOA P
+        ON R.codpesdct = P.codpes
+        WHERE R.codpes = convert(int, :codpes) AND
+        R.numseqpgm = convert(int, :numseqpgm)";
+        $param = [
+            'codpes'    => $codpes,
+            'numseqpgm' => $numseqpgm
+        ];
 
-        $result = DBreplicado::fetchAll($query);
-        if(!empty($result)){
-            return $result;
-        }else{
-            return redirect('/');
-        }
+        return DBreplicado::fetchAll($query, $param);
     }
 
 }

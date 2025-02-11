@@ -13,7 +13,7 @@
                     <p><b>Autor:</b> {{ $agendamento->nome }}, {{ $agendamento->codpes }}</p>
                     <p><b>Orientador:</b> {{ $agendamento->docente->nome }}, {{ $agendamento->orientador }}</p>
                     <p><b>Data:</b> {{ date('d/m/Y', strtotime($agendamento->data_horario)) }}</p>
-                    <p style="text-align:justify;"><b>Resumo: </b>{{ $dadosJanus[0]['rsutrb'] ?? $agendamento->resumo }}</p>
+                    <p style="text-align:justify;"><b>Resumo: </b>{{ $dadosJanus['rsutrb'] ?? $agendamento->resumo }}</p>
             </div>
         </div>
         </div>

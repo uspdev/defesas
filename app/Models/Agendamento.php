@@ -99,25 +99,6 @@ class Agendamento extends Model
         ];
     }
 
-    //caso ocorra de não haver algum docente no banco de dados, este método pode ser usado para puxar os dados do Janus
-    public static function dadosPessoa($codpes){
-        $query = "SELECT p.*, l.*, e.*, r.*
-        FROM PESSOA p
-        INNER JOIN LOCALIZAPESSOA l
-        ON p.codpes = l.codpes
-        INNER JOIN ENDPESSOA e 
-        ON e.codpes = l.codpes
-        INNER JOIN LOCALIDADE r
-        ON r.codloc = e.codloc
-        WHERE l.codpes = {$codpes}
-        ";
-        if($query){
-            return DB::fetch($query);
-        }else{
-            return [];
-        }
-    }
-
     public static function dadosProfessor($codpes){
         $dados = Docente::where('n_usp', '=', $codpes)->first();
         if($dados != null){

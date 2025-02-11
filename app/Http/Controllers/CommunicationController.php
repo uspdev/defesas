@@ -21,7 +21,7 @@ class CommunicationController extends Controller
 
         return view('comunicacao.index', ['agendamentos' => $agendamentos]);
     }
-    
+
     public function show(Agendamento $agendamento){
         Gate::authorize('comunicacao');
         $dadosJanus = ReplicadoUtils::retornarDadosJanus($agendamento->codpes);

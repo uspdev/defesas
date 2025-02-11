@@ -30,6 +30,9 @@ class JanusRequest extends FormRequest
             'data' => 'required|date_format:d/m/Y',
             'horario' => 'required|date_format:H:i',
             'sala' => 'required',
+            'regimento' => 'required',
+            'orientador_votante' => 'required',
+            'tipo_defesa' => 'required'
         ];
     }
 
@@ -42,7 +45,10 @@ class JanusRequest extends FormRequest
             'data.date_format' => 'Insira uma data no padrão d/m/a',
             'horario.required' => 'Insira um horário',
             'horario.date_format' => 'Insira um horário válido no formato H:m',
-            'sala.required' => 'Insira uma sala'
+            'sala.required' => 'Insira uma sala',
+            'tipo_defesa.required' => 'Escolha o tipo da defesa',
+            'regimento.required' => 'Escolha o regimento',
+            'orientador.required' => 'Escolha se o orientador é votante'
         ];
     }
 }
