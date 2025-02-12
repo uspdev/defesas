@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use App\Utils\ReplicadoUtils;
 use App\Models\Docente;
 use Uspdev\Replicado\Pessoa;
+use App\Actions\DocenteAction;
 
 class AgendamentoService
 {
@@ -32,23 +33,18 @@ class AgendamentoService
         return $agendamento;
     }
 
-    public function newBanca(int $agendamento_id, int $codpes, int $numseqpgm) {
+    public function newBanca(Agendamento $agendamento, int $codpes, int $numseqpgm) {
         $dadosBanca = ReplicadoUtils::retornarDadosBanca($codpes, $numseqpgm);
+        $bancas = [];
         foreach($dadosBanca as $dadoBanca){
-            $banca = new Banca();
-            $banca->agendamento_id = $agendamento_id;
-            $banca->codpes = $dadoBanca['codpesdct'];
-            $banca->nome = $dadoBanca['nompes'];
-            $banca->presidente = $dadoBanca['vinptpbantrb'] == "PRE" ? 'Sim' : 'Não';
-            $banca->tipo = $dadoBanca['vinptpbantrb'] == "SUP" ? 'Suplente' : 'Titular';
-            $banca->save();
+            DocenteAction::handle($dadoBanca['codpesdct'], $dadoBanca['nompes']);
+            $bancas[] = [
+                'codpes' => $dadoBanca['codpesdct'],
+                'nome' => $dadoBanca['nompes'],
+                'presidente' => $dadoBanca['vinptpbantrb'] == "PRE" ? 'Sim' : 'Não',
+                'tipo' => $dadoBanca['vinptpbantrb'] == "SUP" ? 'Suplente' : 'Titular',
+            ];
         }
-        if(!Docente::where('n_usp',$banca->codpes)->first()){ //inserindo novo docente, caso ele não haja na table
-            $docente = new Docente;
-            $docente->nome = Pessoa::dump($banca->codpes)['nompes'];
-            $docente->n_usp = Pessoa::dump($banca->codpes)['codpes'];
-            $docente->email = Pessoa::email($banca->codpes);
-            $docente->save();
-        }
+        $agendamento->bancas()->createMany($bancas);
     }
 }
