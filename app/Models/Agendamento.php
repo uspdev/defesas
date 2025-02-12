@@ -101,11 +101,10 @@ class Agendamento extends Model
 
     public static function dadosProfessor($codpes){
         $dados = Docente::where('n_usp', '=', $codpes)->first();
-        if(!$dados){ //talvez não seja mais tão necessário
-            $pessoa = ReplicadoUtils::retornarPessoa($codpes);
-            $dados = (object) $pessoa;
+        if($dados != null){
+            return $dados;
         }
-        return $dados;
+        return new Docente;
     }
     public static function retornarDadosProfessor($codpes){
         return Pessoa::dump($codpes); //usado para retornar o CPF
