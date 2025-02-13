@@ -8,11 +8,11 @@
         <div class="card-body">
             <p><i>Copiar esse dados e colar em corpo de e-mail para: tesourariafflch@usp.br</p></i><br>
             <p><b>Nome:</b> {{$docente->nome}} </p> 
-            <p><b>N° USP:</b> {{$docente->n_usp}} </p> 
+            <p><b>N° USP:</b> {{$docente->n_usp ?? $docente->codpes }} </p> 
             <p><b>Origem:</b> {{$dados->origem}} </p> 
             <p><b>Ida:</b> {{$dados->ida}} </p>
             <p><b>Volta:</b> {{$dados->volta}} </p> 
-            <p><b>E-mail:</b> {{$docente->email}}
+            <p><b>E-mail:</b> {{$docente->email ?? \Uspdev\Replicado\Pessoa::email($docente->codpes)}}
             </p><br>
             <p>Banca de <b> {{$agendamento->nome_area}} / {{$agendamento->nivel}} </b> </p>
             <p>Do(a) aluno(a) <b> {{$agendamento->nome}} </b> </p>
