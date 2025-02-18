@@ -14,6 +14,7 @@ use App\Models\Docente;
 use App\Models\Communication;
 use Uspdev\Replicado\Pessoa;
 use App\Models\User;
+use Illuminate\Support\Facades\DB as QueryBuilder;
 
 class Agendamento extends Model
 {
@@ -124,6 +125,16 @@ class Agendamento extends Model
             'Aprovado',
             'Reprovado'
         ];
+    }
+    
+    public static function retornarAnoPublicacao(){
+        $datas = QueryBuilder::select(
+            "SELECT YEAR(data_publicacao) as data_publicacao FROM agendamentos
+            GROUP BY YEAR(data_publicacao)
+            ORDER BY YEAR(data_publicacao) DESC
+            "
+        );
+        return $datas;
     }
 
     public function docente() {

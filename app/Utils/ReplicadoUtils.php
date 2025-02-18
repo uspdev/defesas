@@ -159,6 +159,21 @@ class ReplicadoUtils {
         return DBreplicado::fetch($query, $param);
     }
 
+    public static function retornarDadosComunicacao($codpes){
+        $query = "SELECT A.nivpgm, T.rsutrb
+                FROM AGPROGRAMA AS A 
+                INNER JOIN DDTDEPOSITOTRABALHO AS D
+                ON A.codpes = D.codpes
+                INNER JOIN DDTENTREGATRABALHO AS T
+                ON D.coddpodgttrb = T.coddpodgttrb
+                WHERE A.codpes = convert(int, :codpes)";
+            $param = [
+            'codpes' => $codpes,
+            ];
+
+        return DBreplicado::fetch($query, $param);
+    }
+
     public static function retornarDadosBanca(int $codpes, int $numseqpgm){
         $query = "SELECT R.codpesdct, R.vinptpbantrb, P.nompes FROM R48PGMTRBDOC R
         INNER JOIN PESSOA P
