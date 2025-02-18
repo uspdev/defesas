@@ -20,7 +20,7 @@ class JanusController extends Controller
         $dadosJanus = ReplicadoUtils::retornarDadosJanus($request->codpes);
         if($dadosJanus){
             $agendamento = $agendamentoService->newAgendamento($request->validated(), $dadosJanus);
-            $agendamentoService->newBanca($agendamento->id, $dadosJanus['codpes'], $dadosJanus['numseqpgm']);
+            $agendamentoService->newBanca($agendamento, $dadosJanus['codpes'], $dadosJanus['numseqpgm']);
 
             return redirect("/agendamentos/$agendamento->id");
         }
