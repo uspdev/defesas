@@ -18,8 +18,6 @@ class AgendamentoService
         $agendamento = new Agendamento();
         $agendamento->codpes = $agendamentoData['codpes'];
         $agendamento->sala = $agendamentoData['sala'];
-        $agendamento->regimento = $agendamentoData['regimento'];
-        $agendamento->orientador_votante = $agendamentoData['orientador_votante'];
         $agendamento->tipo = $agendamentoData['tipo_defesa'];
         $agendamento->data_horario = Carbon::createFromFormat('d/m/Y H:i', $agendamentoData['data'] . $agendamentoData['horario'])->format('Y-m-d H:i');
         $agendamento->nome = $dadosJanus['nompes'];
@@ -28,6 +26,7 @@ class AgendamentoService
         $agendamento->nivel = $dadosJanus['nivpgm'] == "ME" ? 'Mestrado' : 'Doutorado';
         $agendamento->orientador = $dadosJanus['orientador'];
         $agendamento->resumo = $dadosJanus['rsutrb'];
+        $agendamento->sala_virtual = $agendamentoData['sala_virtual'] ?? NULL;
         $agendamento->save();
 
         return $agendamento;
