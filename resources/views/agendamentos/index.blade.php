@@ -40,6 +40,10 @@
             </form>
         </div>
     </div>
+    @if(!request()->filled('busca') && !request()->filled('busca_data'))
+    <div class="alert alert-info" style="margin-top:8px;">Para visualizar os agendamentos procure por algum no campo de pesquisa</div>
+    @endif
+    @if($agendamentos)
     <table class="table table-striped">
         <theader>
             <tr>
@@ -52,7 +56,7 @@
             </tr>
         </theader>
         <tbody>
-        @foreach ($agendamentos as $agendamento)
+        @forelse ($agendamentos as $agendamento)
             <tr>
                 <td>{{ $agendamento->codpes }}</td>
                 <td><a href="/agendamentos/{{$agendamento->id}}">{{ $agendamento->nome }}</a></td>
@@ -70,8 +74,11 @@
                     </form>
                 </td>
             </tr>
-        @endforeach
+        @empty
+        <div class="alert alert-danger">Sem registros!</div>
+        @endforelse
         </tbody>
     </table>
     {{ $agendamentos->appends(request()->query())->links() }}
+    @endif
 @endsection('content')
