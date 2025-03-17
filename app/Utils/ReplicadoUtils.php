@@ -46,7 +46,11 @@ class ReplicadoUtils {
     {
         $codundclgi = getenv('REPLICADO_CODUNDCLG');
         //obtém programas
-        $query = "SELECT DISTINCT (n.nomare) FROM AREA a inner join CURSO c ON a.codcur = c.codcur INNER JOIN NOMEAREA n on n.codare = a.codare INNER JOIN CREDAREA ca ON a.codare = ca.codare where c.codclg = convert(int,:codundclgi) and n.dtafimare = NULL and a.codare = convert(int,:codare)";
+        $query = "SELECT DISTINCT (n.nomare) FROM AREA a inner join CURSO c
+                  ON a.codcur = c.codcur INNER JOIN NOMEAREA n
+                  on n.codare = a.codare INNER JOIN CREDAREA ca
+                  ON a.codare = ca.codare
+                  where c.codclg = convert(int,:codundclgi) and n.dtafimare = NULL and a.codare = convert(int,:codare)";
         $param = [
             'codundclgi' => $codundclgi,
             'codare' => $codare,
