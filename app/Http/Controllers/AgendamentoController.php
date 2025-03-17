@@ -28,34 +28,33 @@ class AgendamentoController extends Controller
     public function index(Request $request)
     {
         $this->authorize('admin');
-        $query = Agendamento::orderBy('data_horario', 'asc');
-        $query2 = Docente::orderBy('nome', 'asc');
-        if($request->filtro_busca == 'numero_nome') {
-            $query->where('codpes', '=', $request->busca);
-            if($query->count() == null){
-                $query->orWhere('nome', 'LIKE', "%$request->busca%");
-            }
-            $query2->where('nome', 'LIKE', "%$request->busca%");
-            foreach($query2->get() as $orientador){
-                $query->orWhere('orientador', '=', $orientador->n_usp);
-            }
-        }
-        elseif($request->filtro_busca == 'data'){
-            $validated = $request->validate([
-                'busca_data' => 'required|date_format:d/m/Y', //arrumado para date_format
-            ]);
-            $data = Carbon::CreatefromFormat('d/m/Y H:i', $validated['busca_data']." 00:00");
-            $query->whereDate('data_horario','=', $data);
-        }
-        else{
-            $query->where('data_horario','>=',date('Y-m-d H:i:s'));
-        }
-        $agendamentos = $query->paginate(20);
 
-        if ($agendamentos->count() == null) {
-            $request->session()->flash('alert-danger', 'Não há registros!');
-        }
-        return view('agendamentos.index')->with('agendamentos',$agendamentos);
+        if($request->busca || $request->filled('busca_data')){
+            $query = Agendamento::orderBy('data_horario', 'desc');
+            $query2 = Docente::orderBy('nome', 'desc');
+            if($request->filtro_busca == 'numero_nome') {
+                $query->where('codpes', '=', $request->busca);
+                if($query->count() == null){
+                    $query->orWhere('nome', 'LIKE', "%$request->busca%");
+                }
+                $query2->where('nome', 'LIKE', "%$request->busca%");
+                foreach($query2->get() as $orientador){
+                    $query->orWhere('orientador', '=', $orientador->n_usp);
+                }
+                
+                }elseif($request->filtro_busca == 'data'){
+                    $validated = $request->validate([
+                        'busca_data' => 'required|date_format:d/m/Y', //arrumado para date_format
+                    ]);
+                    $data = Carbon::CreatefromFormat('d/m/Y H:i', $validated['busca_data']." 00:00");
+                    $query->whereDate('data_horario','=', $data);
+                }else{
+                    $query->where('data_horario','>=',date('Y-m-d H:i:s')); 
+                }
+            }
+        return view('agendamentos.index', [
+            'agendamentos' => $request->busca || $request->busca_data ? $query->paginate(20) : []
+        ]);
     }
 
     public function create()

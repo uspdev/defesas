@@ -13,18 +13,19 @@ use App\Http\Requests\AgendamentoRequest;
 
 class CommunicationController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         Gate::authorize('comunicacao');
+        
         $agendamentos = Agendamento::where('status',1)
-        ->orderBy('data_horario', 'desc')
-        ->paginate(15);
-
-        return view('comunicacao.index', ['agendamentos' => $agendamentos]);
+        ->orderBy('data_publicacao','desc')
+        ->where('data_publicacao',">=","$request->filtro_ano" . '-01-01 00:00:00')
+        ->where('data_publicacao',"<=","$request->filtro_ano" . '-12-31 23:59:59'); // Não dá pra fazer group by com id...
+        return view('comunicacao.index', ['agendamentos' => $agendamentos->paginate(15)]);
     }
-
+    
     public function show(Agendamento $agendamento){
         Gate::authorize('comunicacao');
-        $dadosJanus = ReplicadoUtils::retornarDadosJanus($agendamento->codpes);
+        $dadosJanus = ReplicadoUtils::retornarDadosComunicacao($agendamento->codpes);
         return view('comunicacao.show', ['agendamento' => $agendamento, 'dadosJanus' => $dadosJanus]);
     }
 }

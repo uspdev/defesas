@@ -30,9 +30,10 @@ class JanusRequest extends FormRequest
             'data' => 'required|date_format:d/m/Y',
             'horario' => 'required|date_format:H:i',
             'sala' => 'required',
-            'regimento' => 'required',
-            'orientador_votante' => 'required',
-            'tipo_defesa' => 'required'
+            'regimento' => 'nullable',
+            'orientador_votante' => 'nullable',
+            'tipo_defesa' => 'required',
+            'sala_virtual' => 'nullable'
         ];
     }
 
