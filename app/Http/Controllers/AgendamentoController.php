@@ -21,6 +21,7 @@ use App\Mail\SalaVirtual;
 use App\Jobs\SendDailyMail;
 use Storage;
 use Illuminate\Support\Arr;
+use App\Actions\DadosJanusAction;
 
 class AgendamentoController extends Controller
 {
@@ -41,7 +42,7 @@ class AgendamentoController extends Controller
                 foreach($query2->get() as $orientador){
                     $query->orWhere('orientador', '=', $orientador->n_usp);
                 }
-                
+
                 }elseif($request->filtro_busca == 'data'){
                     $validated = $request->validate([
                         'busca_data' => 'required|date_format:d/m/Y', //arrumado para date_format
@@ -49,7 +50,7 @@ class AgendamentoController extends Controller
                     $data = Carbon::CreatefromFormat('d/m/Y H:i', $validated['busca_data']." 00:00");
                     $query->whereDate('data_horario','=', $data);
                 }else{
-                    $query->where('data_horario','>=',date('Y-m-d H:i:s')); 
+                    $query->where('data_horario','>=',date('Y-m-d H:i:s'));
                 }
             }
         return view('agendamentos.index', [
@@ -97,9 +98,9 @@ class AgendamentoController extends Controller
     public function show(Agendamento $agendamento)
     {
         $this->authorize('biblioteca');
-        $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
-        $dadosJanus = ReplicadoUtils::retornarDadosJanus($agendamento->codpes);
-        return view('agendamentos.show', compact(['agendamento','dadosJanus']));
+        $agendamento = DadosJanusAction::handle($agendamento);
+        //dd($agendamento);
+        return view('agendamentos.show', compact(['agendamento']));
     }
 
     public function edit(Agendamento $agendamento)

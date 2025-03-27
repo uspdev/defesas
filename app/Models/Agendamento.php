@@ -15,6 +15,7 @@ use App\Models\Communication;
 use Uspdev\Replicado\Pessoa;
 use App\Models\User;
 use Illuminate\Support\Facades\DB as QueryBuilder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Agendamento extends Model
 {
@@ -126,7 +127,7 @@ class Agendamento extends Model
             'Reprovado'
         ];
     }
-    
+
     public static function retornarAnoPublicacao(){
         $datas = QueryBuilder::select(
             "SELECT YEAR(data_publicacao) as data_publicacao FROM agendamentos
@@ -150,4 +151,14 @@ class Agendamento extends Model
         return $this->hasOne(Communication::class,'agendamento_id','id');
     }
 
+    protected function nivpgm(): Attribute
+    {
+        return Attribute::make(
+            get: fn (string $value) => match($value) {
+                'ME' => 'Mestrado',
+                'DO' => 'Doutorado',
+                'DD' => 'Doutorado'
+            },
+        );
+    }
 }

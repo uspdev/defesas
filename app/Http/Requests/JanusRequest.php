@@ -30,10 +30,8 @@ class JanusRequest extends FormRequest
             'data' => 'required|date_format:d/m/Y',
             'horario' => 'required|date_format:H:i',
             'sala' => 'required',
-            'regimento' => 'nullable',
-            'orientador_votante' => 'nullable',
             'tipo_defesa' => 'required',
-            'sala_virtual' => 'nullable'
+            'sala_virtual' => 'required_if:tipo_defesa,Virtual'
         ];
     }
 
@@ -49,7 +47,8 @@ class JanusRequest extends FormRequest
             'sala.required' => 'Insira uma sala',
             'tipo_defesa.required' => 'Escolha o tipo da defesa',
             'regimento.required' => 'Escolha o regimento',
-            'orientador.required' => 'Escolha se o orientador é votante'
+            'orientador.required' => 'Escolha se o orientador é votante',
+            'sala_virtual.required_if' => 'O link da sala virtual é obrigatório se o tipo da defesa for Virtual'
         ];
     }
 }

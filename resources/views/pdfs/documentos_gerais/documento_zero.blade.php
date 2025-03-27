@@ -23,7 +23,7 @@
         <td> Data da Defesa: {{date('d/m/Y', strtotime($agendamento->data_horario))}} </td>
       </tr>
       <tr>
-        <td> {{$agendamento->nivel}}: {{$agendamento->nome_area}} </td>
+        <td> {{$agendamento->nivpgm}}: {{$agendamento->area}} </td>
         <td> Hora: {{date('H:i', strtotime($agendamento->data_horario))}} </td>
       </tr>
       <tr>
@@ -43,7 +43,7 @@
           <table style="border: 1px solid black; border-spacing: 5px; width: 18.6cm;">
             <tr>
               <td>
-                Prof: <b> {{$agendamento->dadosProfessor($professor->codpes)->nome ?? 'Professor não cadastrado'}}  </b>
+                Prof: <b>{{$professor->codpes}} {{$agendamento->dadosProfessor($professor->codpes)->nome ?? 'Professor não cadastrado'}}  </b>
               </td>
             </tr>
             <tr>

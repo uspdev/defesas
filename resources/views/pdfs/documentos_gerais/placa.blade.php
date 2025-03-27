@@ -5,8 +5,8 @@
 			<title></title>
 		<style type="text/css">
 			body {
-				background-image: url(images/placa.jpg); 
-				background-repeat:no-repeat; 
+				background-image: url(images/placa.jpg);
+				background-repeat:no-repeat;
 				background-position:center;
 				font-family: DejaVu Sans, sans-serif;
 			}
@@ -24,13 +24,11 @@
 			<br>
 			<div class="cabecalho">
 				Universidade de São Paulo<br>
-				Faculdade de Filosofia, Letras e Ciências Humanas <br> 
-				Serviço de Pós-Graduação 
+				Faculdade de Filosofia, Letras e Ciências Humanas <br>
+				Serviço de Pós-Graduação
 			</div>
 			<br><br><br>
-			<div class="candidato">Candidato(a): {{$agendamento->nome}}</div> 
-			<div class="candidato">Data e Hora: {{date('d/m/Y H:i', strtotime($agendamento->data_horario))}}.</div>
-			<div class="candidato">Defesa de {{$agendamento->nivel}} em {{$agendamento->nome_area}}</div> 
+			<div class="candidato">Candidato(a): {{$agendamento->nome}}</div> <div class="candidato">Data e Hora: {{date('d/m/Y H:i', strtotime($agendamento->data_horario))}}.</div> <div class="candidato">Defesa de {{$agendamento->nivpgm}} em {{$agendamento->area}}</div>
 			<div class="candidato">Título: <i>"{{$agendamento->titulo}}"</i></div>
 
 		</div>

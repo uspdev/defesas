@@ -9,8 +9,10 @@ use App\Models\Docente;
 use App\Models\Banca;
 use App\Models\Config;
 use Carbon\Carbon;
-use App\Utils\ReplicadoUtils;
+//use App\Utils\ReplicadoUtils;
 use Uspdev\Replicado\Pessoa;
+use App\Actions\DadosJanusAction;
+use App\Actions\TitularesAction;
 
 class PdfController extends Controller
 {
@@ -22,7 +24,9 @@ class PdfController extends Controller
     public function gerarDocumentosGerais(Agendamento $agendamento, $tipo){
         $this->authorize('admin');
         $configs = Config::orderbyDesc('created_at')->first();
-        $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
+        $agendamento = DadosJanusAction::handle($agendamento);
+        //dd($agendamento);
+        //$agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         if($tipo == 'placa'){
             $pdf = PDF::loadView('pdfs.documentos_gerais.placa', compact('agendamento'))->setPaper('a4', 'landscape');
             return $pdf->download('placa.pdf');
@@ -35,6 +39,8 @@ class PdfController extends Controller
         }
 
         if(in_array($tipo, ['titulares', 'invites', 'documento_zero', 'statements', 'declaracoes', 'recibos'])){
+            $titulares = TitularesAction::handle($agendamento->banca);
+
             $professores = Banca::where('agendamento_id',$agendamento->id)->where('tipo', 'Titular')->get();
             $bancas = $professores;
         }

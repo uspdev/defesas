@@ -36,7 +36,9 @@ class ReplicadoService
             'codare' => $codare
         ];
 
-        return DBreplicado::fetch($query, $param);
+        $result = DBreplicado::fetch($query, $param);
+
+        return $result['nomare'];
     }
 
     public static function getOrientador(int $codpespgm, int $codare, int $numseqpgm) {
@@ -53,11 +55,13 @@ class ReplicadoService
             'numseqpgm' => $numseqpgm
         ];
 
-        return DBreplicado::fetch($query, $param);
+        $result = DBreplicado::fetch($query, $param);
+
+        return $result['nompesttd'];
     }
 
     public static function getBanca(int $codpes, int $codare, int $numseqpgm) {
-        $query = "SELECT R.codpesdct, R.vinptpbantrb, R.staptp, P.nompes FROM R48PGMTRBDOC R
+        $query = "SELECT R.codpesdct, R.vinptpbantrb, R.staptp, P.nompesttd FROM R48PGMTRBDOC R
         INNER JOIN PESSOA P
         ON R.codpesdct = P.codpes
         WHERE R.codpes = convert(int, :codpes) AND
@@ -88,4 +92,62 @@ class ReplicadoService
         return DBreplicado::fetch($query, $param);
     }
 
+    public static function getNome(int $codpes) {
+        $query = "SELECT P.nompesttd
+                  FROM PESSOA P
+                  WHERE P.codpes = convert(int, :codpes)";
+        $param = [
+            'codpes'    => $codpes,
+        ];
+
+        $result = DBreplicado::fetch($query, $param);
+
+        return $result['nompesttd'];
+    }
+
+    public static function getDataDepositoTrabalho(int $codpes, int $codare, string $nivpgm, int $numseqpgm) {
+        $query = "SELECT A.dtadpopgm
+                  FROM AGPROGRAMA AS A
+                  WHERE A.codpes = convert(int, :codpes) AND
+                  A.codare = convert(int, :codare) AND
+                  A.nivpgm = :nivpgm AND
+                  A.numseqpgm = convert(int, :numseqpgm)";
+        $param = [
+            'codpes'    => $codpes,
+            'codare'    => $codare,
+            'nivpgm'    => $nivpgm,
+            'numseqpgm' => $numseqpgm
+        ];
+
+        $result =  DBreplicado::fetch($query, $param);
+
+        return $result['dtadpopgm'];
+    }
+
+    public static function getDataTitulares(int $codpes) {
+        $query = "SELECT L.sglest, L.cidloc
+                  FROM LOCALIDADE AS L INNER JOIN ENDPESSOA AS E
+                  ON (L.codloc = E.codloc)
+                  WHERE E.codpes = convert(int, :codpes)";
+        $param = [
+            'codpes' => $codpes,
+        ];
+
+        return DBreplicado::fetch($query, $param);
+
+    }
+
+    public static function getVinculo(int $codpes) {
+        $query = "SELECT V.tipvin
+                  FROM VINCULOPESSOAUSP as V
+                  WHERE V.codpes = convert(int, :codpes)
+                  AND V.tipvin = 'SERVIDOR' AND V.tipfnc = 'Docente' AND V.sitatl <> 'D'";
+        $param = [
+            'codpes' => $codpes,
+        ];
+
+        $result = DBreplicado::fetch($query, $param);
+
+        return $result['tipvin'] ?? 'EXTERNO';
+    }
 }
