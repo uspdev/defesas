@@ -1,5 +1,4 @@
 @inject('pessoa','Uspdev\Replicado\Pessoa')
-@inject('replicado','App\Utils\ReplicadoUtils')
 
 @extends('pdfs.fflch')
 @section('other_styles')
@@ -65,11 +64,11 @@
                 São Paulo, {{ strftime('%d de %B de %Y', strtotime('today')) }}
             </div><br>
 
-            <div class="moremargin">Assunto: Banca Examinadora de <b>{{$agendamento->nivel}}</b></div>
-            <div class="moremargin">Candidato(a): <b>{{$agendamento->nome}}</b> </div>
-            <div class="moremargin">Área: <b>{{$agendamento->nome_area}}</b> </div>
-            <div class="moremargin">Orientador(a) Prof(a). Dr(a). {{ $agendamento->nome_orientador ?? $pessoa::dump($agendamento->orientador)['nompes'] }} @if($agendamento->co_orientador) e {{$agendamento->nome_co_orientador ?? $agendamento->dadosProfessor($agendamento->co_orientador)->nome}} @endif</div>
-            <div class="moremargin">Título do Trabalho: <i>{{$agendamento->titulo}} </i></div>
+            <div class="moremargin">Assunto: Banca Examinadora de <b>{{ $agendamento->nivpgm }}</b></div>
+            <div class="moremargin">Candidato(a): <b>{{ $agendamento->nome }}</b> </div>
+            <div class="moremargin">Área: <b>{{ $agendamento->area['nomare'] }}</b> </div>
+            <div class="moremargin">Orientador(a) Prof(a). Dr(a). {{ $agendamento->orientador }}</div>
+            <div class="moremargin">Título do Trabalho: <i>{{ $agendamento->trabalho['tittrb'] }} </i></div>
             <div class="importante" align="center">
                 {!! $configs->importante_oficio !!}
             </div>
@@ -81,8 +80,8 @@
 
                 @foreach($bancas as $banca)
                 <div class="col">
-                    {{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}} 
-                   <b>{{$agendamento->dadosProfessor($banca->codpes)->lotado ?? ' '}}</b>
+                    {{ $banca['nompesttd'] }}
+                    <b>{{ $banca['setor']['sglclgund'] }} {{ ($banca['tipvin'] == 'SERVIDOR') ? ' - USP' : ''}}</b>
                 </div>
                 @endforeach
             <div class="importante" align="center">
@@ -94,11 +93,15 @@
                     {{Auth::user()->name}} @if($pessoa::cracha(Auth::user()->codpes)) - Defesas de Mestrado e Doutorado da {{$pessoa::cracha(Auth::user()->codpes)['nomorg']}}/USP @endif
                 </b>
             </div><br>
-            Ilmo(a). Sr(a). {{$agendamento->dadosProfessor($professor->codpes)['nome'] ?? 'Professor não cadastrado'}}<br>
-            {{$agendamento->dadosProfessor($professor->codpes)->endereco ?? ' '}}, {{$agendamento->dadosProfessor($professor->codpes)->bairro ?? ' '}} <br>
-            CEP:{{$agendamento->dadosProfessor($professor->codpes)->cep ?? ' '}} - {{$agendamento->dadosProfessor($professor->codpes)->cidade ?? ' '}}/{{$agendamento->dadosProfessor($professor->codpes)->estado ?? ' '}}
-            <br> telefone: {{$agendamento->dadosProfessor($professor->codpes)->telefone ?? ' '}}
-            <br>e-mail: {{$agendamento->dadosProfessor($professor->codpes)->email ?? ' '}}
+            Ilmo(a). Sr(a). {{ $professor['nompesttd'] }}<br>
+            @if ( $professor['tipvin'] == 'SERVIDOR' )
+              Depto. de {{ $professor['setor']['nomset'] }}<br />
+            @else
+              {{ $professor['nomtiplgr'] . ' ' . $professor['epflgr'] . ' ' .  $professor['numlgr'] . ' ' . $professor['cpllgr'] }}, {{ $professor['nombro'] }} <br>
+            @endif
+            CEP: {{ $professor['codendptl'] }} - {{ $professor['cidloc'] }}/{{ $professor['sglest'] }}
+            <br> telefone: {{ implode(' / ', $professor['telefones']) }}
+            <br>e-mail: {{ $professor['email'] }}
         </p>
         <p class="page-break"></p>
     @endforeach

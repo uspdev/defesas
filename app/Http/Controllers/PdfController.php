@@ -13,20 +13,20 @@ use Carbon\Carbon;
 use Uspdev\Replicado\Pessoa;
 use App\Actions\DadosJanusAction;
 use App\Actions\TitularesAction;
+use App\Actions\SuplentesAction;
 
 class PdfController extends Controller
 {
-    public function __construct()
-    {
+
+    public function __construct() {
         $this->middleware('auth');
     }
+
     //Bloco destinado aos documentos gerais
     public function gerarDocumentosGerais(Agendamento $agendamento, $tipo){
         $this->authorize('admin');
         $configs = Config::orderbyDesc('created_at')->first();
         $agendamento = DadosJanusAction::handle($agendamento);
-        //dd($agendamento);
-        //$agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         if($tipo == 'placa'){
             $pdf = PDF::loadView('pdfs.documentos_gerais.placa', compact('agendamento'))->setPaper('a4', 'landscape');
             return $pdf->download('placa.pdf');
@@ -39,18 +39,17 @@ class PdfController extends Controller
         }
 
         if(in_array($tipo, ['titulares', 'invites', 'documento_zero', 'statements', 'declaracoes', 'recibos'])){
-            $titulares = TitularesAction::handle($agendamento->banca);
-
-            $professores = Banca::where('agendamento_id',$agendamento->id)->where('tipo', 'Titular')->get();
+            $professores = TitularesAction::handle($agendamento->banca);
             $bancas = $professores;
         }
         elseif($tipo == 'suplentes'){
             $configs = Config::setConfigOficioSuplente($agendamento);
-            $professores = Banca::where('agendamento_id',$agendamento->id)->where('tipo', 'Suplente')->get();
+            $professores = SuplentesAction::handle($agendamento->banca);
             $bancas = $professores;
         }
         else{
-            $professores = Banca::where('agendamento_id',$agendamento->id)->get();
+            $professores = TitularesAction::handle($agendamento->banca)->merge(
+                SuplentesAction::handle($agendamento->banca));
             $bancas = $professores;
         }
         $pdf = PDF::loadView("pdfs.documentos_gerais.$tipo", compact(['agendamento','professores','configs','bancas']));
@@ -59,6 +58,7 @@ class PdfController extends Controller
 
     //Bloco destinado aos documentos individuais
     public function gerarDocumentosIndividuais(Agendamento $agendamento, Banca $banca, $tipo){
+        dd('oi');
         $this->authorize('admin');
         $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         if($tipo == 'statement' or $tipo == 'invite'){

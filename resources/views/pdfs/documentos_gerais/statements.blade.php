@@ -5,10 +5,10 @@
 @section('other_styles')
 <style type="text/css">
     .data_hoje{
-        margin-left: 10cm; margin-bottom:0.8cm; 
+        margin-left: 10cm; margin-bottom:0.8cm;
     }
-    .conteudo{ 
-        margin: 1cm 
+    .conteudo{
+        margin: 1cm
     }
     .boxSuplente {
         border: 1px solid; padding: 4px;
@@ -17,7 +17,7 @@
         border: 1px solid; padding: 4px; text-align: justify;
     }
     .oficioSuplente{
-        text-align: justify; 
+        text-align: justify;
     }
     .rodapeFFLCH{
         padding-top:3cm; text-align: center;
@@ -63,23 +63,23 @@
         <br><br><br>
 
         <p class="recuo justificar" style="line-height: 190%;">
-            {!! App\Models\Config::setConfigStatement($agendamento,$bancas,$professor)->statement !!}
+            {!! App\Models\Config::setConfigStatement($agendamento, $professor['nompesttd'])->statement !!}
         </p><br>
 
-            @foreach($bancas as $banca)    
+            @foreach($bancas as $banca)
             <div class="col">
-                <b>{{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}</b> 
-                <b>{{$agendamento->dadosProfessor($banca->codpes)->lotado ?? ' '}}</b>
+                <b>{{ $banca['nompesttd'] ?? 'Professor não cadastrado' }}</b>
+                <b>{{ $banca['setor']['sglclgund'] }} {{ ($banca['tipvin'] == 'SERVIDOR') ? ' - USP' : ' '}}</b>
             </div>
             @endforeach
         <br>
         <div align="right">
-            Graduate Studies Services of University of São Paulo, {{Carbon\Carbon::parse($agendamento->data_horario)->format('F jS\, Y')}}    
+            Graduate Studies Services of University of São Paulo, {{Carbon\Carbon::parse($agendamento->data_horario)->format('F jS\, Y')}}
         </div>
-        <p class="page-break"></p> 
+        <p class="page-break"></p>
     @endforeach
 @endsection('content')
 
 @section('footer')
     {!! $configs->footer !!}
-@endsection('footer') 
+@endsection('footer')

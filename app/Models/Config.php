@@ -31,76 +31,60 @@ class Config extends Model
     }
 
     //Função para modificar a mensagem padrão da Declaração
-    public static function setConfigDeclaracao($agendamento, $professores, $professor){
+    public static function setConfigDeclaracao($agendamento, $professor){
         //Busca a última configuração
         $configs = Config::orderbyDesc('created_at')->first();
-        //Faz as primeiras trocas
-        if(Agendamento::dadosProfessor($professor->codpes) == null){
-            $docenteNome = 'Professor não cadastrado';
-        }
-        else{
-            $docenteNome = Agendamento::dadosProfessor($professor->codpes)->nome;
-        }
+        //Faz as trocas
         $configs['declaracao'] = str_replace(
-            ["%docente_nome","%nivel","%candidato_nome", "%titulo"],
-            [$docenteNome,$agendamento['nivel'], $agendamento['nome'], $agendamento['titulo']],
+            [
+                "%docente_nome",
+                "%nivel",
+                "%candidato_nome",
+                "%titulo",
+                "%area",
+                "%orientador"
+            ],
+            [
+                $professor ?? 'Professor não cadastrado' ,
+                $agendamento['nivel'],
+                $agendamento['nome'],
+                $agendamento['titulo'],
+                $agendamento['area']['nomare'],
+                $agendamento['orientador'] ?? 'Professor não cadastrado' ,
+            ],
             $configs['declaracao']
         );
 
-        $configs['declaracao'] = str_replace("%area", ReplicadoUtils::nomeAreaPrograma($agendamento['area_programa']), $configs['declaracao']);
-
-        //Altera a informação de presidente de acordo com o tipo do professor informado
-        foreach($professores as $presidente){
-            if($presidente['presidente'] == 'Sim'){
-                if(Agendamento::dadosProfessor($presidente->codpes) == null){
-                    $docenteNome = 'Professor não cadastrado';
-                }
-                else{
-                    $docenteNome = Agendamento::dadosProfessor($presidente->codpes)->nome;
-                }
-                $configs['declaracao'] = str_replace("%orientador", $docenteNome, $configs['declaracao']);
-            }
-        }
         return $configs;
     }
 
     //Função para modificar a mensagem padrão da Stament of Participation
-    public static function setConfigStatement($agendamento, $professores, $professor){
+    public static function setConfigStatement($agendamento, $professor){
         //Busca a última configuração
         $configs = Config::orderbyDesc('created_at')->first();
-        //Faz as primeiras trocas
-        if(Agendamento::dadosProfessor($professor->codpes) == null){
-            $docenteNome = 'Professor não cadastrado';
-        }
-        else{
-            $docenteNome = Agendamento::dadosProfessor($professor->codpes)->nome;
-        }
-
-        if($agendamento['nivel'] == 'Mestrado'){
-            $nivel = "Master's";
-        }else{
-            $nivel = "Doctorate's";
-        }
+        //Faz as trocas
         $configs['statement'] = str_replace(
-            ["%docente_nome","%nivel","%candidato_nome", "%titulo", "%data"],
-            [$docenteNome,$nivel, $agendamento['nome'], $agendamento->title ?? $agendamento->titulo, Carbon::parse($agendamento['data_horario'])->format('F jS\, Y')],
+            [
+                "%docente_nome",
+                "%nivel",
+                "%candidato_nome",
+                "%titulo",
+                "%area",
+                "%orientador",
+                "%data"
+            ],
+            [
+                $professor ?? 'Professor não cadastrado' ,
+                $agendamento['nivel'] == 'Mestrado' ? "Master's" : "Doctorate's",
+                $agendamento['nome'],
+                $agendamento['title'] ?? $agendamento['titulo'],
+                $agendamento['area']['nomareigl'],
+                $agendamento['orientador'] ?? 'Professor não cadastrado' ,
+                Carbon::parse($agendamento['data_horario'])->format('F jS\, Y')
+            ],
             $configs['statement']
         );
 
-        $configs['statement'] = str_replace("%area", ReplicadoUtils::nomeAreaProgramaEmIngles($agendamento['area_programa']), $configs['statement']);
-
-        //Altera a informação de presidente de acordo com o tipo do professor informado
-        foreach($professores as $presidente){
-            if($presidente['presidente'] == 'Sim'){
-                if(Agendamento::dadosProfessor($presidente->codpes) == null){
-                    $docenteNome = 'Professor não cadastrado';
-                }
-                else{
-                    $docenteNome = Agendamento::dadosProfessor($presidente->codpes)->nome;
-                }
-                $configs['statement'] = str_replace("%orientador", $docenteNome, $configs['statement']);
-            }
-        }
         return $configs;
     }
 
@@ -140,7 +124,7 @@ class Config extends Model
         setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8','portuguese');
         $configs['mail_passagem'] = str_replace(
             ["%docente","%candidato", "%data", "%sala"],
-            [$docente['nome'], $agendamento['nome'], 
+            [$docente['nome'], $agendamento['nome'],
              strftime("%d de %B de %Y", strtotime($agendamento['data_horario'])) . " às " . date('H:i',strtotime($agendamento["data_horario"])), $agendamento['sala']],
             $configs['mail_passagem']
         );

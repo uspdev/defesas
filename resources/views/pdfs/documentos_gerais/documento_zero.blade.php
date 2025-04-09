@@ -1,5 +1,3 @@
-@inject('pessoa','Uspdev\Replicado\Pessoa')
-
 @extends('laravel-fflch-pdf::main')
 @section('other_styles')
 <style type="text/css">
@@ -23,7 +21,7 @@
         <td> Data da Defesa: {{date('d/m/Y', strtotime($agendamento->data_horario))}} </td>
       </tr>
       <tr>
-        <td> {{$agendamento->nivpgm}}: {{$agendamento->area}} </td>
+        <td> {{$agendamento->nivpgm}}: {{ $agendamento->area['nomare'] }} </td>
         <td> Hora: {{date('H:i', strtotime($agendamento->data_horario))}} </td>
       </tr>
       <tr>
@@ -39,17 +37,16 @@
     </b>
 
   @foreach($professores as $professor)
-      @if($agendamento->dadosProfessor($professor->codpes)->docente_usp == 'nao')
+      @if($professor['tipvin'] == 'EXTERNO')
           <table style="border: 1px solid black; border-spacing: 5px; width: 18.6cm;">
             <tr>
               <td>
-                Prof: <b>{{$professor->codpes}} {{$agendamento->dadosProfessor($professor->codpes)->nome ?? 'Professor não cadastrado'}}  </b>
+                Prof: <b>{{ $professor['nompesttd'] }}  </b>
               </td>
             </tr>
             <tr>
               <td>
-                PASSAGEM: {{$agendamento->dadosProfessor($professor->codpes)->cidade ?? ''}}/
-                {{$agendamento->dadosProfessor($professor->codpes)->estado ?? ''}}
+                PASSAGEM: {{ $professor['cidloc'] }}/{{ $professor['sglest'] }}
               </td>
             </tr>
             <tr>

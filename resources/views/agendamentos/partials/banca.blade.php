@@ -23,7 +23,7 @@
                 @foreach ($agendamento->banca as $banca)
                     <tr>
                         @can('logado')<td>{{ $banca['codpesdct'] }}</td>@endcan
-                        <td>{{ $banca['nompes']  ?? 'Professor não cadastrado'}}</td>
+                        <td>{{ $banca['nompesttd']  ?? 'Professor não cadastrado'}}</td>
                         <td>{{ $banca['vinptpbantrb'] }}</td>
                         <td>{{ $banca['staptp'] }}</td>
                         @can('admin')
@@ -35,14 +35,14 @@
                                 @endif
                             </td>
                             <td>
-                                @if($banca['vinptpbantrb'] == 'Titular')
+                                @if($banca['vinptpbantrb'] == 'TIT')
                                     <a href="/agendamentos/{{$agendamento->id}}/bancas/invite" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
                                 @else
                                     #
                                 @endif
                             </td>
                             <td>
-                                @if($banca['vinptpbantrb'] == 'Suplente')
+                                @if($banca['vinptpbantrb'] == 'SUP')
                                     <a href="/agendamentos/{{$agendamento->id}}/bancas/suplente" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
                                 @else
                                     #

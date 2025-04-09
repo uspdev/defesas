@@ -4,12 +4,12 @@ namespace App\Actions;
 
 use App\Services\ReplicadoService;
 
-class TitularesAction
+class SuplentesAction
 {
     public static function handle(array $banca)
     {
-        $titulares = collect($banca)->filter(function ($item) {
-            return $item['vinptpbantrb'] != 'SUP';
+        $suplentes = collect($banca)->filter(function ($item) {
+            return $item['vinptpbantrb'] == 'SUP';
         })->map(function ($item) {
             $data = ReplicadoService::getEndereco($item['codpesdct']);
             $data['tipvin'] = ReplicadoService::getVinculo($item['codpesdct']);
@@ -20,6 +20,6 @@ class TitularesAction
             return array_merge($item, $data);
         });
 
-        return $titulares;
+        return $suplentes;
     }
 }

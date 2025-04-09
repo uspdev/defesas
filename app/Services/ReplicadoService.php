@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Uspdev\Replicado\DB as DBreplicado;
+use Uspdev\Replicado\Pessoa;
 
 class ReplicadoService
 {
@@ -28,7 +29,7 @@ class ReplicadoService
     }
 
     public static function getNomeArea(int $codare) {
-        $query = "SELECT nomare from NOMEAREA
+        $query = "SELECT nomare, nomareigl from NOMEAREA
                   WHERE codare = convert(int, :codare)
                   AND dtafimare IS NULL";
 
@@ -36,9 +37,7 @@ class ReplicadoService
             'codare' => $codare
         ];
 
-        $result = DBreplicado::fetch($query, $param);
-
-        return $result['nomare'];
+        return DBreplicado::fetch($query, $param);
     }
 
     public static function getOrientador(int $codpespgm, int $codare, int $numseqpgm) {
@@ -48,7 +47,7 @@ class ReplicadoService
                   R.codare = convert(int, :codare) AND
                   R.numseqpgm = convert(int, :numseqpgm) AND
                   R.tiport = 'ORI' AND
-                  R.dtafimort IS NULL";
+                  R.staort = 'AT'";
         $param = [
             'codpespgm' => $codpespgm,
             'codare'    => $codare,
@@ -124,19 +123,6 @@ class ReplicadoService
         return $result['dtadpopgm'];
     }
 
-    public static function getDataTitulares(int $codpes) {
-        $query = "SELECT L.sglest, L.cidloc
-                  FROM LOCALIDADE AS L INNER JOIN ENDPESSOA AS E
-                  ON (L.codloc = E.codloc)
-                  WHERE E.codpes = convert(int, :codpes)";
-        $param = [
-            'codpes' => $codpes,
-        ];
-
-        return DBreplicado::fetch($query, $param);
-
-    }
-
     public static function getVinculo(int $codpes) {
         $query = "SELECT V.tipvin
                   FROM VINCULOPESSOAUSP as V
@@ -149,5 +135,50 @@ class ReplicadoService
         $result = DBreplicado::fetch($query, $param);
 
         return $result['tipvin'] ?? 'EXTERNO';
+    }
+
+    public static function getNomeSetor(int $codpes, string $tipvin) {
+        if($tipvin == 'SERVIDOR') {
+            $query = "SELECT L.nomset, L.sglclgund
+                    FROM LOCALIZAPESSOA L
+                    WHERE L.codpes = convert(int, :codpes)
+                    AND L.tipvin = :tipvin";
+            $param = [
+                'codpes' => $codpes,
+                'tipvin' => $tipvin
+            ];
+
+            return DBreplicado::fetch($query, $param);
+        }
+        else {
+            $query = "SELECT TOP 1 O.sglorg, O.nomrazsoc
+                    FROM HISTPES H INNER JOIN ORGANIZACAO O
+                    ON (H.codorg = O.codorg)
+                    WHERE H.codpes = convert(int, :codpes)
+                    AND H.tipfnc = 'Docente'
+                    ORDER BY H.dtainifnchst DESC";
+            $param = [
+                'codpes' => $codpes,
+            ];
+            $result = DBreplicado::fetch($query, $param);
+
+            return [
+                'nomset' => $result['nomrazsoc'],
+                'sglclgund' => $result['sglorg']
+            ];
+        }
+
+    }
+
+    public static function getEndereco(int $codpes) {
+        return Pessoa::obterEndereco($codpes);
+    }
+
+    public static function getEmail(int $codpes) {
+        return Pessoa::email($codpes);
+    }
+
+    public static function getTelefones(int $codpes) {
+        return Pessoa::telefones($codpes);
     }
 }

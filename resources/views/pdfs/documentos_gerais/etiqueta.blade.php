@@ -5,7 +5,7 @@
 <style type="text/css">
     body {
         margin: 1cm -1.2cm 0cm -1.2cm;
-        padding:0; 
+        padding:0;
     }
     .negrito {
         font-weight: bolder;
@@ -31,10 +31,14 @@
         <tr>
             <td width="9.85cm" height="3.33cm">
                 Ilmo(a) Sr(a).<br>
-                {{$agendamento->dadosProfessor($professor->codpes)->nome ?? 'Professor não cadastrado'}}<br>
-                {{$agendamento->dadosProfessor($professor->codpes)->endereco ?? ' '}}, {{$agendamento->dadosProfessor($professor->codpes)->bairro ?? ' '}} <br>
-                CEP:{{$agendamento->dadosProfessor($professor->codpes)->cep ?? ' '}} - {{$agendamento->dadosProfessor($professor->codpes)->cidade ?? ' '}}/{{$agendamento->dadosProfessor($professor->codpes)->estado ?? ' '}}
-            </td>     
+                {{$professor['nompesttd'] ?? 'Professor não cadastrado'}}<br>
+                @if ( $professor['tipvin'] == 'SERVIDOR' )
+                  Depto. de {{ $professor['setor']['nomset'] }}<br />
+                @else
+                  {{ $professor['nomtiplgr'] . ' ' . $professor['epflgr'] . ' ' .  $professor['numlgr'] . ' ' . $professor['cpllgr'] }}, {{ $professor['nombro'] }} <br>
+                @endif
+                CEP: {{ $professor['codendptl'] }} - {{ $professor['cidloc'] }}/{{ $professor['sglest'] }}
+            </td>
         </tr>
     @endforeach
     </table>
