@@ -99,7 +99,6 @@ class AgendamentoController extends Controller
     {
         $this->authorize('biblioteca');
         $agendamento = DadosJanusAction::handle($agendamento);
-        //dd($agendamento);
         return view('agendamentos.show', compact(['agendamento']));
     }
 

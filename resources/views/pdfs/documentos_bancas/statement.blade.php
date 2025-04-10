@@ -1,14 +1,13 @@
 @inject('pessoa','Uspdev\Replicado\Pessoa')
-@inject('replicado','App\Utils\ReplicadoUtils')
 
 @extends('laravel-fflch-pdf::main')
 @section('other_styles')
 <style type="text/css">
     .data_hoje{
-        margin-left: 10cm; margin-bottom:0.8cm; 
+        margin-left: 10cm; margin-bottom:0.8cm;
     }
-    .conteudo{ 
-        margin: 1cm 
+    .conteudo{
+        margin: 1cm
     }
     .boxSuplente {
         border: 1px solid; padding: 4px;
@@ -17,7 +16,7 @@
         border: 1px solid; padding: 4px; text-align: justify;
     }
     .oficioSuplente{
-        text-align: justify; 
+        text-align: justify;
     }
     .rodapeFFLCH{
         padding-top:3cm; text-align: center;
@@ -58,28 +57,24 @@
 @endsection('other_styles')
 
 @section('content')
-
-    <h1 align="center"> STATEMENT OF PARTICIPATION </h1>
-    <br><br><br>
-
-    <p class="recuo justificar" style="line-height: 190%;">  
-        
-        {!!$configs->statement!!}
-    </p> <br>
-
-        @foreach($professores as $componente)    
-        <div class="col">
-            <b>{{$agendamento->dadosProfessor($componente->codpes)->nome ?? 'Professor não cadastrado'}}</b> 
-            <b>{{$agendamento->dadosProfessor($componente->codpes)->lotado ?? ' '}}</b>
-        </div>
-        @endforeach
-    <br><br>
-    <div align="right">
-        @php(setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese'))
-        Graduate Studies Services of University of São Paulo, {{Carbon\Carbon::parse($agendamento->data_horario)->format('F jS\, Y')}}    
-    </div><br>
+  <h1 align="center"> STATEMENT OF PARTICIPATION </h1>
+  <br><br><br>
+  <p class="recuo justificar" style="line-height: 190%;">
+    {!!$configs->statement!!}
+  </p><br>
+  @foreach($professores as $docente)
+    <div class="col">
+      <b>{{ $docente['nompesttd'] ?? 'Professor não cadastrado' }}</b>
+      <b>{{ $docente['setor']['sglclgund'] }} {{ ($docente['tipvin'] == 'SERVIDOR') ? ' - USP' : ''  }}</b>
+    </div>
+  @endforeach
+  <br><br>
+  <div align="right">
+    @php(setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese'))
+    Graduate Studies Services of University of São Paulo, {{Carbon\Carbon::parse($agendamento['data_horario'])->format('F jS\, Y')}}
+  </div><br>
 @endsection('content')
 
 @section('footer')
     {!! $configs->footer !!}
-@endsection('footer') 
+@endsection('footer')

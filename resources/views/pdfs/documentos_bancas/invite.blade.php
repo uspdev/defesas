@@ -1,14 +1,13 @@
 @inject('pessoa','Uspdev\Replicado\Pessoa')
-@inject('replicado','App\Utils\ReplicadoUtils')
 
 @extends('laravel-fflch-pdf::main')
 @section('other_styles')
 <style type="text/css">
     .data_hoje{
-        margin-left: 10cm; margin-bottom:0.8cm; 
+        margin-left: 10cm; margin-bottom:0.8cm;
     }
-    .conteudo{ 
-        margin: 1cm 
+    .conteudo{
+        margin: 1cm
     }
     .boxSuplente {
         border: 1px solid; padding: 4px;
@@ -17,7 +16,7 @@
         border: 1px solid; padding: 4px; text-align: justify;
     }
     .oficioSuplente{
-        text-align: justify; 
+        text-align: justify;
     }
     .rodapeFFLCH{
         padding-top:3cm; text-align: center;
@@ -58,51 +57,49 @@
 @endsection('other_styles')
 
 @section('content')
-
-    <div align="right">
-        São Paulo, {{date('F jS\, Y')}}
-    </div><br>
-
-    <div class="moremargin">Subject: @if($agendamento->nivel == 'Mestrado') <b>Master's</b> @else <b>Doctorate's</b> @endif Examination Committee</div> 
-    <div class="moremargin">Candidate: <b>{{$agendamento->nome}}</b> </div>
-    <div class="moremargin">Area: <b>{{$replicado->nomeAreaProgramaEmIngles($agendamento->area_programa)}}</b> </div>
-    <div class="moremargin">Supervisor: {{ $agendamento->nome_orientador ?? $pessoa::dump($agendamento->orientador)['nompes']}} @if($agendamento->co_orientador) and {{$agendamento->nome_co_orientador ?? $agendamento->dadosProfessor($agendamento->co_orientador)->nome}} @endif</div>
-    <div class="moremargin">Title of the thesis: <i>{{$agendamento->title ?? $agendamento->titulo}} </i></div>
-    <div class="importante">
-        {!! $configs->important !!}
-    </div>
-    <p>
-        <i>Defense's date and time:  </i> <b> {{Carbon\Carbon::parse($agendamento->data_horario)->format('F jS\, Y \a\t g a')}} (Brasília's Time)</b> <br> 
-        <i>Place:</i> <b> {{$agendamento->sala}} </b> - FFLCH Administration 
-    </p>  
-    <i>Composition of the examination committee:</i> 
-
-
-        @foreach($professores as $componente)    
-        <div class="col">
-            {{$agendamento->dadosProfessor($componente->codpes)->nome ?? 'Professor não cadastrado'}} 
-           <b>{{$agendamento->dadosProfessor($componente->codpes)->lotado ?? ' '}}</b>
-        </div>
-        @endforeach
-	<div class="importante" align="center"> 
-        {!! $configs->regiment !!}
-    </div>
-
-    <p align="center">
-        Sincerely, 
-		<br>
-        <b> 
-            {{Auth::user()->name}} @if($pessoa::cracha(Auth::user()->codpes)) - Defenses of Master and Doctorate {{$pessoa::cracha(Auth::user()->codpes)['nomorg']}}/USP @endif 
-		</b>
-    </p>
-    <br>
-    {{$agendamento->dadosProfessor($professor->codpes)['nome'] ?? 'Professor não cadastrado'}}<br>
-    {{$agendamento->dadosProfessor($professor->codpes)->endereco ?? ' '}}, {{$agendamento->dadosProfessor($professor->codpes)->bairro ?? ' '}} <br>
-    Post Code:{{$agendamento->dadosProfessor($professor->codpes)->cep ?? ' '}} - {{$agendamento->dadosProfessor($professor->codpes)->cidade ?? ' '}}/{{$agendamento->dadosProfessor($professor->codpes)->estado ?? ' '}}
-    <br> Phone: {{$agendamento->dadosProfessor($professor->codpes)->telefone ?? ' '}}
-    <br>Email: {{$agendamento->dadosProfessor($professor->codpes)->email ?? ' '}}
+  <div align="right">
+    São Paulo, {{date('F jS\, Y')}}
+  </div><br>
+  <div class="moremargin">Subject: @if($agendamento['nivel'] == 'Mestrado') <b>Master's</b> @else <b>Doctorate's</b> @endif Examination Committee</div>
+  <div class="moremargin">Candidate: <b>{{ $agendamento['nome'] }}</b> </div>
+  <div class="moremargin">Area: <b>{{ $agendamento['area']['nomareigl'] }}</b> </div>
+  <div class="moremargin">Supervisor: {{ $agendamento['orientador'] }}</div>
+  <div class="moremargin">Title of the thesis: <i>{{ $agendamento['title'] ?? $agendamento->titulo }} </i></div>
+  <div class="importante">
+    {!! $configs->important !!}
+  </div>
+  <p>
+    <i>Defense's date and time:  </i> <b> {{ Carbon\Carbon::parse($agendamento['data_horario'])->format('F jS\, Y \a\t g a') }} (Brasília's Time)</b><br>
+    <i>Place:</i> <b> {{ $agendamento['sala']}} </b> - FFLCH Administration
+  </p>
+  <i>Composition of the examination committee:</i>
+    @foreach($professores as $docente)
+      <div class="col">
+        {{ $docente['nompesttd'] ?? 'Professor não cadastrado' }}
+        <b>{{ $docente['setor']['sglclgund'] }} {{ ($docente['tipvin'] == 'SERVIDOR') ? ' - USP' : '' }}</b>
+      </div>
+    @endforeach
+  <div class="importante" align="center">
+    {!! $configs->regiment !!}
+  </div>
+  <p align="center">
+    Sincerely,<br>
+    <b>
+      {{Auth::user()->name}} @if($pessoa::cracha(Auth::user()->codpes)) - Defenses of Master and Doctorate {{$pessoa::cracha(Auth::user()->codpes)['nomorg']}}/USP @endif
+    </b>
+  </p>
+  <br>
+  {{ $professor['nompesttd'] }}<br>
+  @if ( $professor['tipvin'] == 'SERVIDOR' )
+    {{ $professor['setor']['nomset'] }}<br />
+  @else
+    {{ $professor['nomtiplgr'] . ' ' . $professor['epflgr'] . ' ' .  $professor['numlgr'] . ' ' . $professor['cpllgr'] }}, {{ $professor['nombro'] }} <br>
+  @endif
+  Post Code: {{ $professor['codendptl'] }} - {{ $professor['cidloc'] }}/{{ $professor['sglest'] }}
+  <br> Phone: {{ implode(' / ', $professor['telefones']) }}
+  <br> Email: {{ $professor['email'] }}
 @endsection('content')
 
 @section('footer')
-    {!! $configs->footer !!}
+  {!! $configs->footer !!}
 @endsection('footer')

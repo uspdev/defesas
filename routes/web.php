@@ -34,7 +34,7 @@ Route::get('/teses/publicadas',[BibliotecaController::class, 'published']);
 
 // rotas para pdfs
 Route::get('/agendamentos/{agendamento}/{tipo}',[PdfController::class, 'gerarDocumentosGerais']);
-Route::get('/agendamentos/{agendamento}/bancas/{banca}/{tipo}',[PdfController::class, 'gerarDocumentosIndividuais']);
+Route::get('/agendamentos/{agendamento}/{codpes}/{tipo}',[PdfController::class, 'gerarDocumentosIndividuais']);
 Route::post('/agendamentos/{agendamento}/bancas/{banca}/{tipo}',[PdfController::class, 'gerarRecibosAuxilios']);
 
 // rotas para configs

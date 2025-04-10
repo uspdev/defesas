@@ -1,23 +1,28 @@
 <?php
 
 namespace App\Actions;
-use App\Models\Docente;
-use Uspdev\Replicado\Pessoa;
+
+use App\Services\ReplicadoService;
 
 class DocenteAction
 {
     /**
-     * Create a new class instance.
+     * Retorna dados do docente
      */
-    public static function handle(int $codpes, string $nompes)
+    public static function handle(array $banca, int $codpes)
     {
-        $docenteExiste = Docente::where('n_usp',$codpes)->exists();
-        if(!$docenteExiste){ //inserindo novo docente, caso ele não haja na table
-            $docente = new Docente;
-            $docente->nome = $nompes;
-            $docente->n_usp = $codpes;
-            $docente->email = Pessoa::email($codpes);
-            $docente->save();
-        }
+        $docente = collect($banca)->filter(function ($item) use ($codpes) {
+            return $item['codpesdct'] == $codpes;
+        })->map(function ($item) use ($codpes) {
+            $data = ReplicadoService::getEndereco($item['codpesdct']);
+            $data['tipvin'] = ReplicadoService::getVinculo($item['codpesdct']);
+            $data['email'] = ReplicadoService::getEmail($item['codpesdct']);
+            $data['telefones'] = ReplicadoService::getTelefones($item['codpesdct']);
+            $data['setor'] = ReplicadoService::getNomeSetor($item['codpesdct'], $data['tipvin']);
+
+            return array_merge($item, $data);
+        });
+
+        return $docente->collapseWithKeys();
     }
 }

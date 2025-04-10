@@ -6,6 +6,9 @@ use App\Services\ReplicadoService;
 
 class TitularesAction
 {
+    /**
+     * Retorna dados dos titulares da banca
+     */
     public static function handle(array $banca)
     {
         $titulares = collect($banca)->filter(function ($item) {

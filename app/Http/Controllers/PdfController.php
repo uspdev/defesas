@@ -14,6 +14,7 @@ use Uspdev\Replicado\Pessoa;
 use App\Actions\DadosJanusAction;
 use App\Actions\TitularesAction;
 use App\Actions\SuplentesAction;
+use App\Actions\DocenteAction;
 
 class PdfController extends Controller
 {
@@ -57,10 +58,9 @@ class PdfController extends Controller
     }
 
     //Bloco destinado aos documentos individuais
-    public function gerarDocumentosIndividuais(Agendamento $agendamento, Banca $banca, $tipo){
-        dd('oi');
+    public function gerarDocumentosIndividuais(Agendamento $agendamento, $codpes, $tipo){
         $this->authorize('admin');
-        $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
+        $agendamento = DadosJanusAction::handle($agendamento);
         if($tipo == 'statement' or $tipo == 'invite'){
             config(['laravel-fflch-pdf.setor' => "Graduate Service"]);
         }
@@ -68,26 +68,20 @@ class PdfController extends Controller
             config(['laravel-fflch-pdf.setor' => "Serviço de Pós-Graduação"]);
         }
         if($tipo == 'titular' or $tipo == 'declaracao' or $tipo == 'invite' or $tipo == 'statement'){
-            $professores = Banca::where('agendamento_id',$agendamento->id)->where('tipo', 'Titular')->get();
-            $professor = $banca;
+            $professores = TitularesAction::handle($agendamento->banca);
+            $professor = DocenteAction::handle($agendamento->banca, $codpes);
             if($tipo == 'declaracao'){
-                $configs = Config::setConfigDeclaracao($agendamento,$professores,$professor);
+                $configs = Config::setConfigDeclaracao($agendamento, $professor['nompesttd']);
             }
             elseif($tipo == 'statement'){
-                $configs = Config::setConfigStatement($agendamento,$professores,$professor);
+                $configs = Config::setConfigStatement($agendamento, $professor['nompesttd']);
             }
             else{
                 $configs = Config::orderbyDesc('created_at')->first();
             }
             $pdf = PDF::loadView("pdfs.documentos_bancas.$tipo", compact(['agendamento','professores','professor','configs']));
-            $docente = Agendamento::dadosProfessor($banca->codpes);
-            if($docente == null){
-                $nome = 'Professor';
-            }
-            else{
-                $nome = $docente->nome;
-            }
-            return $pdf->download("$nome - $tipo.pdf");
+
+            return $pdf->download("$tipo.pdf");
         }
         elseif($tipo == 'suplente'){
             $configs = Config::setConfigOficioSuplente($agendamento);

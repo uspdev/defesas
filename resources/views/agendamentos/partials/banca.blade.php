@@ -28,31 +28,31 @@
                         <td>{{ $banca['staptp'] }}</td>
                         @can('admin')
                             <td>
-                                @if($banca['vinptpbantrb'] == 'Titular')
-                                    <a href="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->id}}/titular" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
+                                @if(in_array($banca['vinptpbantrb'], ['TIT', 'PRE']))
+                                <a href="/agendamentos/{{$agendamento->id}}/{{$banca['codpesdct']}}/titular" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
                                 @else
                                     #
                                 @endif
                             </td>
                             <td>
-                                @if($banca['vinptpbantrb'] == 'TIT')
-                                    <a href="/agendamentos/{{$agendamento->id}}/bancas/invite" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
+                                @if(in_array($banca['vinptpbantrb'], ['TIT', 'PRE']))
+                                <a href="/agendamentos/{{$agendamento->id}}/{{$banca['codpesdct']}}/invite" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
                                 @else
                                     #
                                 @endif
                             </td>
                             <td>
                                 @if($banca['vinptpbantrb'] == 'SUP')
-                                    <a href="/agendamentos/{{$agendamento->id}}/bancas/suplente" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
+                                <a href="/agendamentos/{{$agendamento->id}}/{{$banca['codpesdct']}}/suplente" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
                                 @else
                                     #
                                 @endif
                             </td>
                             <td>
-                                <a href="/agendamentos/{{$agendamento->id}}/bancas/declaracao" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
+                              <a href="/agendamentos/{{$agendamento->id}}/{{$banca['codpesdct']}}/declaracao" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
                             </td>
                             <td>
-                                <a href="/agendamentos/{{$agendamento->id}}/bancas/statement" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
+                              <a href="/agendamentos/{{$agendamento->id}}/{{$banca['codpesdct']}}/statement" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
                             </td>
                         @endcan
                     </tr>

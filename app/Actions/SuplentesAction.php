@@ -6,6 +6,9 @@ use App\Services\ReplicadoService;
 
 class SuplentesAction
 {
+    /**
+     * Retorna dados dos suplentes da banca
+     */
     public static function handle(array $banca)
     {
         $suplentes = collect($banca)->filter(function ($item) {
