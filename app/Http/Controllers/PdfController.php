@@ -107,20 +107,15 @@ class PdfController extends Controller
         $dados = $request;
         $configs = Config::orderbyDesc('created_at')->first();
         $docente = DocenteAction::handle($agendamento->banca, $codpes);
+        #dump($agendamento);
+        #dd($docente);
         if($tipo == 'auxilio_passagem'){
             config(['laravel-fflch-pdf.setor' => "Serviço de Compras"]);
         }
         else{
             config(['laravel-fflch-pdf.setor' => "Serviço de Pós-Graduação"]);
         }
-        $nome = transform($agendamento['nompesttd'], fn ($nome) => $nome, 'Professor');
-        #$nome = $agendamento['nompesttd'] ?? 'Professor';
-        #if($docente == null){
-        #    $nome = 'Professor';
-        #}
-        #else{
-        #    $nome = $docente->nome;
-        #}
+        $nome = $docente['nompesttd'] ?? 'Professor';
         $pdf = PDF::loadView("pdfs.recibos.$tipo", compact(['agendamento', 'coordenador', 'docente','dados','configs']));
         return $pdf->download("$nome - $tipo.pdf");
     }

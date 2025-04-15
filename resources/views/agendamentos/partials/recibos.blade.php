@@ -88,7 +88,7 @@
             <tbody>
                 @foreach($agendamento->bancas as $banca)
                     <tr>
-                        <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->id}}/proap" class="form-group" method="POST">
+                      <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->codpes}}/proap" class="form-group" method="POST">
                             @csrf
                             <td>{{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}</td>
                             <td><input type="text" class="form-control" size="1" name="ano"></td>
@@ -122,7 +122,7 @@
             <tbody>
                 @foreach($agendamento->bancas as $banca)
                     <tr>
-                        <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->id}}/passagem" class="form-group" method="POST">
+                        <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->codpes}}/passagem" class="form-group" method="POST">
                             @csrf
                             <td>{{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}</td>
                             <td><input  type="text" class="form-control" size="6" name="ida"></td>
@@ -153,7 +153,7 @@
             <tbody>
                 @foreach($agendamento->bancas as $banca)
                     <tr>
-                        <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->id}}/auxilio_passagem" class="form-group" method="POST">
+                        <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->codpes}}/auxilio_passagem" class="form-group" method="POST">
                             @csrf
                             <td>{{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}</td>
                             <td><input  type="text" size="6" class="form-control datepicker" name="partida"></td>
@@ -180,7 +180,7 @@
         <tbody>
             @foreach($agendamento->bancas as $banca)
                 <tr>
-                    <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->id}}/recibos/exibir_email_docente" class="form-group" method="POST">
+                    <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->codpes}}/recibos/exibir_email_docente" class="form-group" method="POST">
                         @csrf
                         <td>{{ $agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}</td>
                         <td><button type="submit" size="4" class="btn btn-primary" @if($agendamento->dadosProfessor($banca->codpes) == null) disabled @endif><b>Visualizar E-mail</b></button></td>

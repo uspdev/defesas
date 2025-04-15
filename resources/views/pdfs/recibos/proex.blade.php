@@ -27,8 +27,6 @@
 @endsection('header')
 
 @section('content')
-@inject('pessoa','Uspdev\Replicado\Pessoa')
-@inject('replicado','App\Utils\ReplicadoUtils')
   <br>
   <table width="18cm" cellspacing="0" cellpadding="0">
     <tr>
