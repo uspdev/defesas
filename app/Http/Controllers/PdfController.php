@@ -3,18 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Agendamento;
-use App\Models\Docente;
+#use App\Models\Docente;
 use App\Models\Banca;
 use App\Models\Config;
-use Carbon\Carbon;
-//use App\Utils\ReplicadoUtils;
-use Uspdev\Replicado\Pessoa;
+#use Carbon\Carbon;
+use App\Utils\ReplicadoUtils;
+#use Uspdev\Replicado\Pessoa;
 use App\Actions\DadosJanusAction;
 use App\Actions\TitularesAction;
 use App\Actions\SuplentesAction;
 use App\Actions\DocenteAction;
+use App\Services\ReplicadoService;
 
 class PdfController extends Controller
 {
@@ -99,25 +100,28 @@ class PdfController extends Controller
     }
 
     //Função única para geração de Proex, Proap, Passagem e Passagem Auxilio
-    public function gerarRecibosAuxilios(Agendamento $agendamento, Banca $banca, Request $request, $tipo){
+    public function gerarRecibosAuxilios(Agendamento $agendamento, $codpes, Request $request, $tipo){
         $this->authorize('admin');
+        $agendamento = DadosJanusAction::handle($agendamento);
+        $coordenador = ReplicadoService::getCoordenadorArea($agendamento->codare, env('REPLICADO_CODUNDCLG'));
         $dados = $request;
-        $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
         $configs = Config::orderbyDesc('created_at')->first();
-        $docente = Agendamento::dadosProfessor($banca->codpes);
+        $docente = DocenteAction::handle($agendamento->banca, $codpes);
         if($tipo == 'auxilio_passagem'){
             config(['laravel-fflch-pdf.setor' => "Serviço de Compras"]);
         }
         else{
             config(['laravel-fflch-pdf.setor' => "Serviço de Pós-Graduação"]);
         }
-        if($docente == null){
-            $nome = 'Professor';
-        }
-        else{
-            $nome = $docente->nome;
-        }
-        $pdf = PDF::loadView("pdfs.recibos.$tipo", compact(['agendamento','banca','dados','configs']));
+        $nome = transform($agendamento['nompesttd'], fn ($nome) => $nome, 'Professor');
+        #$nome = $agendamento['nompesttd'] ?? 'Professor';
+        #if($docente == null){
+        #    $nome = 'Professor';
+        #}
+        #else{
+        #    $nome = $docente->nome;
+        #}
+        $pdf = PDF::loadView("pdfs.recibos.$tipo", compact(['agendamento', 'coordenador', 'docente','dados','configs']));
         return $pdf->download("$nome - $tipo.pdf");
     }
 }

@@ -20,7 +20,7 @@ class ReciboExternoMail extends Mailable
      *
      * @return void
      */
-    public function __construct(Agendamento $agendamento, Docente $docente, array $dados)
+    public function __construct(Agendamento $agendamento, $docente, array $dados)
     {
         $this->agendamento = $agendamento;
         $this->docente = $docente;
@@ -34,7 +34,7 @@ class ReciboExternoMail extends Mailable
      */
     public function build()
     {
-        $subject = "Recibo de diária para docentes externos - {$this->docente->nome}";
+        $subject = "Recibo de diária para docentes externos - {$this->docente['nompesttd']}";
 
         return $this->view('emails.recibo_externo')
         ->to('tesouraria@fflch.usp.br')
@@ -43,6 +43,6 @@ class ReciboExternoMail extends Mailable
             'agendamento' => $this->agendamento,
             'docente' => $this->docente,
             'dados' => $this->dados,
-        ]);     
+        ]);
     }
 }

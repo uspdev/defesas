@@ -6,29 +6,29 @@
             <tr>
                 <th scope="col">Docente</th>
                 <th scope="col">Ida</th>
-                <th scope="col">Volta</th>		
+                <th scope="col">Volta</th>
                 <th scope="col">Origem</th>
                 <th scope="col">Diária</th>
-                <th scope="col"></th> 
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
-            @foreach($agendamento->bancas as $banca)
+            @foreach($agendamento->banca as $banca)
                 <tr>
-                    <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->id}}/recibos/exibir_recibo_externo" class="form-group" method="POST">
+                  <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca['codpesdct']}}/recibos/exibir_recibo_externo" class="form-group" method="POST">
                         @csrf
-                        <td>{{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}</td>
+                        <td>{{ $banca['nompesttd'] ?? 'Professor não cadastrado' }}</td>
                         <td> <input type="text" class="datepicker form-control" size="7" autocomplete="off" name="ida"> </td>
                         <td> <input type="text" class="datepicker form-control" size="7" autocomplete="off" name="volta"> </td>
                         <td> <input type="text" class="form-control" size="7" name="origem"> </td>
-                        <td> 	
-                            <select name="diaria" class="form-control"> 
+                        <td>
+                            <select name="diaria" class="form-control">
                                 <option value="diaria_simples" selected="selected"> Simples </option>
                                 <option value="diaria_completa"> Completa </option>
                                 <option value="duas_diarias"> 2 diárias </option>
                             </select>
                         </td>
-                        <td> <button type="submit" class="btn btn-primary" @if($agendamento->dadosProfessor($banca->codpes) == null) disabled @endif><b>Visualizar E-mail</b></button></td>
+                        <td> <button type="submit" class="btn btn-primary"><b>Visualizar E-mail</b></button></td>
                     </form>
                 </tr>
             @endforeach
@@ -42,17 +42,17 @@
                 <tr>
                     <th>Docente</th>
                     <th>Importância recebida</th>
-                    <th>Período</th>	
-                    <th>Valor remuneração</th>	
-                    <th colspan="2">Outros</th>	
+                    <th>Período</th>
+                    <th>Valor remuneração</th>
+                    <th colspan="2">Outros</th>
                     <th>Líquido</th>
-                    <th></th> 
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($agendamento->bancas as $banca)
                     <tr>
-                        <form class="form-group" action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->id}}/proex" method="POST">
+                        <form class="form-group" action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->codpes}}/proex" method="POST">
                             @csrf
                             <td> {{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}} </td>
                             <td><input type="text" class="form-control" size="4" name="importancia"></td>
@@ -65,7 +65,7 @@
                         </form>
                     </tr>
                 @endforeach
-            </tbody>	
+            </tbody>
         </table>
     </form>
 </div>
@@ -76,13 +76,13 @@
                 <tr>
                     <th>Docente</th>
                     <th>Ano PROAP</th>
-                    <th>N. Diárias</th>	
+                    <th>N. Diárias</th>
                     <th>Origem </th>
-                    <th>Chegada</th>	
+                    <th>Chegada</th>
                     <th>Saída</th>
                     <th>Valor</th>
-                    <th>Valor por extenso </th>	
-                    <th></th> 
+                    <th>Valor por extenso </th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -102,7 +102,7 @@
                         </form>
                     </tr>
                 @endforeach
-            </tbody>	
+            </tbody>
         </table>
     </form>
 </div>
@@ -113,10 +113,10 @@
                 <tr>
                     <th>Docente</th>
                     <th>Ida (dia - horário) </th>
-                    <th>Volta (dia - horário)</th>		
+                    <th>Volta (dia - horário)</th>
                     <th>Trajeto</th>
                     <th>Nº. da Requisição</th>
-                    <th></th> 
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -133,7 +133,7 @@
                         </form>
                     </tr>
                 @endforeach
-            </tbody>	
+            </tbody>
         </table>
     </form>
 </div>
@@ -144,10 +144,10 @@
                 <tr>
                     <th>Docente</th>
                     <th>Partida</th>
-                    <th>Retorno</th>		
+                    <th>Retorno</th>
                     <th>Itinerário</th>
                     <th>Processo/Pregão</th>
-                    <th></th> 
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -174,19 +174,19 @@
         <thead class="thead-light">
             <tr>
                 <th>Docente</th>
-                <th></th> 
+                <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach($agendamento->bancas as $banca)
                 <tr>
                     <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->id}}/recibos/exibir_email_docente" class="form-group" method="POST">
-                        @csrf 
+                        @csrf
                         <td>{{ $agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}</td>
                         <td><button type="submit" size="4" class="btn btn-primary" @if($agendamento->dadosProfessor($banca->codpes) == null) disabled @endif><b>Visualizar E-mail</b></button></td>
-                    </form> 
+                    </form>
                 </tr>
             @endforeach
         </tbody>
-    </table>	
+    </table>
 </div>

@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\indexController;
 use App\Http\Controllers\AgendamentoController;
 use App\Http\Controllers\BancaController;
@@ -7,10 +8,10 @@ use App\Http\Controllers\DocenteController;
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\EmailController;
-use App\Http\Controllers\DevController;
+#use App\Http\Controllers\DevController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\BibliotecaController;
-use App\Http\Controllers\ApprovalStatusDefesaController;
+#use App\Http\Controllers\ApprovalStatusDefesaController;
 use App\Http\Controllers\CommunicationController;
 use App\Http\Controllers\JanusController;
 
@@ -35,18 +36,18 @@ Route::get('/teses/publicadas',[BibliotecaController::class, 'published']);
 // rotas para pdfs
 Route::get('/agendamentos/{agendamento}/{tipo}',[PdfController::class, 'gerarDocumentosGerais']);
 Route::get('/agendamentos/{agendamento}/{codpes}/{tipo}',[PdfController::class, 'gerarDocumentosIndividuais']);
-Route::post('/agendamentos/{agendamento}/bancas/{banca}/{tipo}',[PdfController::class, 'gerarRecibosAuxilios']);
+Route::post('/agendamentos/{agendamento}/bancas/{codpes}/{tipo}',[PdfController::class, 'gerarRecibosAuxilios']);
 
 // rotas para configs
 Route::get('/configs',[ConfigController::class, 'edit']);
 Route::post('/configs',[ConfigController::class, 'store']);
 
 // rotas para visualização de e-mails
-Route::post('/agendamentos/{agendamento}/bancas/{banca}/recibos/exibir_recibo_externo',[EmailController::class, 'exibirReciboExterno']);
-Route::post('/agendamentos/{agendamento}/bancas/{banca}/recibos/exibir_email_docente',[EmailController::class, 'exibirEmailDocente']);
+Route::post('/agendamentos/{agendamento}/bancas/{codpes}/recibos/exibir_recibo_externo',[EmailController::class, 'exibirReciboExterno']);
+Route::post('/agendamentos/{agendamento}/bancas/{codpes}/recibos/exibir_email_docente',[EmailController::class, 'exibirEmailDocente']);
 
 //Rota para envio de e-mails
-Route::post('agendamentos/recibo_externo/{agendamento}/{docente}', [AgendamentoController::class,'enviarEmailReciboExterno']);
+Route::post('agendamentos/recibo_externo/{agendamento}/{codpes}', [AgendamentoController::class,'enviarEmailReciboExterno']);
 Route::post('agendamentos/pro_labore/{agendamento}/{docente}', [AgendamentoController::class,'enviarEmailProLabore']);
 Route::post('agendamentos/passagem/{agendamento}/{banca}', [AgendamentoController::class,'enviarEmailPassagem']);
 Route::post('agendamentos/dados_prof_externo/{agendamento}/{banca}', [AgendamentoController::class,'enviarEmailDeConfirmacaoDadosProfExterno']);

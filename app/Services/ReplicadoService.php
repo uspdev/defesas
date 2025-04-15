@@ -170,6 +170,21 @@ class ReplicadoService
 
     }
 
+    public static function getCoordenadorArea(int $codare, int $codundclg) {
+        $query = "SELECT L.nompes FROM LOCALIZAPESSOA L INNER JOIN R10DOCCOOCUR R
+                  on (L.codpes = R.codpes) INNER JOIN AREA A
+                  on (A.codcur = R.codcur)
+                  WHERE L.codundclg = convert(int, :codundclg) AND L.nomfnc = 'Coord Prog Pg'
+                  AND L.sitatl = 'A' AND A.codare = convert(int, :codare)";
+        $param = [
+            'codare' => $codare,
+            'codundclg' => $codundclg
+        ];
+
+        $result = DBreplicado::fetch($query, $param);
+        return $result['nompes'];
+    }
+
     public static function getEndereco(int $codpes) {
         return Pessoa::obterEndereco($codpes);
     }
@@ -181,4 +196,9 @@ class ReplicadoService
     public static function getTelefones(int $codpes) {
         return Pessoa::telefones($codpes);
     }
+
+    public static function getDocumentos(int $codpes, array $documentos) {
+        return Pessoa::dump($codpes, $documentos);
+    }
+
 }

@@ -22,6 +22,7 @@ use App\Jobs\SendDailyMail;
 use Storage;
 use Illuminate\Support\Arr;
 use App\Actions\DadosJanusAction;
+use App\Actions\DadosProfessorAction;
 
 class AgendamentoController extends Controller
 {
@@ -99,6 +100,7 @@ class AgendamentoController extends Controller
     {
         $this->authorize('biblioteca');
         $agendamento = DadosJanusAction::handle($agendamento);
+        #dd($agendamento);
         return view('agendamentos.show', compact(['agendamento']));
     }
 
@@ -131,8 +133,10 @@ class AgendamentoController extends Controller
         return redirect('/agendamentos');
     }
 
-    public function enviarEmailReciboExterno(Agendamento $agendamento, Docente $docente, Request $request){
+    public function enviarEmailReciboExterno(Agendamento $agendamento, $codpes, Request $request){
         $this->authorize('admin');
+        $agendamento = DadosJanusAction::handle($agendamento);
+        $docente = DadosProfessorAction::handle($agendamento->banca, $codpes);
         $dados = $request->all(); //tratado como array agora.
         /* evitando o erro "Serialization of 'Closure' is not allowed" que dá ao trocar o método send pelo queue.
 */

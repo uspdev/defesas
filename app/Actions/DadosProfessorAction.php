@@ -4,7 +4,7 @@ namespace App\Actions;
 
 use App\Services\ReplicadoService;
 
-class DocenteAction
+class DadosProfessorAction
 {
     /**
      * Retorna dados do docente
@@ -14,12 +14,7 @@ class DocenteAction
         $docente = collect($banca)->filter(function ($item) use ($codpes) {
             return $item['codpesdct'] == $codpes;
         })->map(function ($item) {
-            $data = ReplicadoService::getEndereco($item['codpesdct']);
-            $data['tipvin'] = ReplicadoService::getVinculo($item['codpesdct']);
             $data['email'] = ReplicadoService::getEmail($item['codpesdct']);
-            $data['telefones'] = ReplicadoService::getTelefones($item['codpesdct']);
-            $data['setor'] = ReplicadoService::getNomeSetor($item['codpesdct'], $data['tipvin']);
-            $data['documentos'] = ReplicadoService::getDocumentos($item['codpesdct'], ['numdocidf', 'numcpf']);
 
             return array_merge($item, $data);
         });

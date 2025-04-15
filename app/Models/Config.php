@@ -147,7 +147,7 @@ class Config extends Model
 
     public static function configMailReciboExterno($agendamento, $docente, $dados){
         $configs = Config::orderbyDesc('created_at')->first();
-        $nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento['area_programa']);
+        #$nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento['area_programa']);
         setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese');
         $datahora = strftime("%d de %B de %Y", strtotime($agendamento['data_horario']))." às ".date('H:i',strtotime($agendamento['data_horario']));
         //acessando $dados como array (devido ao método queue no Mail)
@@ -161,10 +161,35 @@ class Config extends Model
             $diaria = "<p><b>2 Diárias:</b> {$configs->duas_diarias}</p>";
         }
         $configs['mail_recibo_externo'] = str_replace(
-            ["%docente", "%nusp", "%origem", "%ida", "%volta", "%email", "%programa", "%nivel", "%candidato", "%datahora", "%diaria"],
-            [$docente['nome'], $docente['n_usp'], $dados['origem'], $dados['ida'], $dados['volta'], $docente['email'], $nome_area, $agendamento['nivel'], $agendamento['nome'], $datahora, $diaria],
+            [
+                "%docente",
+                "%nusp",
+                "%origem",
+                "%ida",
+                "%volta",
+                "%email",
+                "%programa",
+                "%nivel",
+                "%candidato",
+                "%datahora",
+                "%diaria"
+            ],
+            [
+                $docente['nompesttd'],
+                $docente['codpesdct'],
+                $dados['origem'],
+                $dados['ida'],
+                $dados['volta'],
+                $docente['email'],
+                $agendamento['area']['nomare'],
+                $agendamento['nivel'],
+                $agendamento['nome'],
+                $datahora,
+                $diaria
+            ],
             $configs['mail_recibo_externo']
         );
+
         return $configs['mail_recibo_externo'];
     }
 
