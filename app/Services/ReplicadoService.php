@@ -41,7 +41,7 @@ class ReplicadoService
     }
 
     public static function getOrientador(int $codpespgm, int $codare, int $numseqpgm) {
-        $query = "SELECT P.nompesttd FROM R39PGMORIDOC R
+        $query = "SELECT P.codpes, P.nompesttd FROM R39PGMORIDOC R
                   INNER JOIN PESSOA P ON (R.codpes = P.codpes)
                   WHERE R.codpespgm = convert(int, :codpespgm) AND
                   R.codare = convert(int, :codare) AND
@@ -54,9 +54,7 @@ class ReplicadoService
             'numseqpgm' => $numseqpgm
         ];
 
-        $result = DBreplicado::fetch($query, $param);
-
-        return $result['nompesttd'];
+        return DBreplicado::fetch($query, $param);
     }
 
     public static function getBanca(int $codpes, int $codare, int $numseqpgm) {
@@ -185,12 +183,22 @@ class ReplicadoService
         return $result['nompes'];
     }
 
+    public static function getSetorOrientador(int $codpes) {
+        $query = "SELECT L.nomset from LOCALIZAPESSOA L
+                  WHERE L.codpes = convert(int, :codpes)
+                  AND L.tipvinext = 'Docente'";
+        $param = [
+            'codpes' => $codpes
+        ];
+
+        return DBreplicado::fetch($query, $param);
+    }
+
     public static function getEndereco(int $codpes) {
         return Pessoa::obterEndereco($codpes);
     }
 
-    public static function getEmail(int $codpes) {
-        return Pessoa::email($codpes);
+    public static function getEmail(int $codpes) { return Pessoa::email($codpes);
     }
 
     public static function getTelefones(int $codpes) {
@@ -198,7 +206,14 @@ class ReplicadoService
     }
 
     public static function getDocumentos(int $codpes, array $documentos) {
-        return Pessoa::dump($codpes, $documentos);
+        $query = "SELECT P.numpispsp FROM COMPLPESSOA P
+                  WHERE P.codpes = convert(int, :codpes)";
+        $param = [
+            'codpes' => $codpes
+        ];
+        $pispasep = DBreplicado::fetch($query, $param);
+
+        return array_merge($pispasep, Pessoa::dump($codpes, $documentos));
     }
 
 }

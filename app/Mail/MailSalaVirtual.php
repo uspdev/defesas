@@ -3,18 +3,16 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use App\Models\Agendamento;
-use App\Models\Docente;
-use App\Utils\ReplicadoUtils;
-use Uspdev\Replicado\Pessoa;
+use App\Services\ReplicadoService;
 
 class MailSalaVirtual extends Mailable
 {
     use Queueable, SerializesModels;
 
+    private $aluno;
     private $agendamento;
 
     /**
@@ -24,6 +22,7 @@ class MailSalaVirtual extends Mailable
      */
     public function __construct(Agendamento $agendamento)
     {
+        $this->aluno = ReplicadoService::getNome($agendamento->codpes);
         $this->agendamento = $agendamento;
     }
 
@@ -34,7 +33,7 @@ class MailSalaVirtual extends Mailable
      */
     public function build()
     {
-        $subject = "Criação da Sala Virtual de " . $this->agendamento->nome;
+        $subject = "Criação da Sala Virtual de " . $this->aluno;
         return $this->view('emails.virtual_class')
             ->subject($subject)
             ->with([

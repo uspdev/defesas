@@ -67,7 +67,7 @@
             <div class="moremargin">Assunto: Banca Examinadora de <b>{{ $agendamento->nivpgm }}</b></div>
             <div class="moremargin">Candidato(a): <b>{{ $agendamento->nome }}</b> </div>
             <div class="moremargin">Área: <b>{{ $agendamento->area['nomare'] }}</b> </div>
-            <div class="moremargin">Orientador(a) Prof(a). Dr(a). {{ $agendamento->orientador }}</div>
+            <div class="moremargin">Orientador(a) Prof(a). Dr(a). {{ $agendamento->orientador['nompesttd'] }}</div>
             <div class="moremargin">Título do Trabalho: <i>{{ $agendamento->trabalho['tittrb'] }} </i></div>
             <div class="importante" align="center">
                 {!! $configs->importante_oficio !!}

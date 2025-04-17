@@ -62,6 +62,7 @@ class PdfController extends Controller
     public function gerarDocumentosIndividuais(Agendamento $agendamento, $codpes, $tipo){
         $this->authorize('admin');
         $agendamento = DadosJanusAction::handle($agendamento);
+        dd($agendamento);
         if($tipo == 'statement' or $tipo == 'invite'){
             config(['laravel-fflch-pdf.setor' => "Graduate Service"]);
         }
@@ -81,20 +82,16 @@ class PdfController extends Controller
                 $configs = Config::orderbyDesc('created_at')->first();
             }
             $pdf = PDF::loadView("pdfs.documentos_bancas.$tipo", compact(['agendamento','professores','professor','configs']));
+            $nome = $professor['nompesttd'] ?? 'Professor';
 
-            return $pdf->download("$tipo.pdf");
+            return $pdf->download("$nome - $tipo.pdf");
         }
         elseif($tipo == 'suplente'){
             $configs = Config::setConfigOficioSuplente($agendamento);
-            $professor = $banca;
+            $professor = DocenteAction::handle($agendamento->banca, $codpes);
             $pdf = PDF::loadView("pdfs.documentos_bancas.$tipo", compact(['agendamento','professor','configs']));
-            $docente = Agendamento::dadosProfessor($banca->codpes);
-            if($docente == null){
-                $nome = 'Professor';
-            }
-            else{
-                $nome = $docente->nome;
-            }
+            $nome = $professor['nompesttd'] ?? 'Professor';
+
             return $pdf->download("$nome - $tipo.pdf");
         }
     }
@@ -107,8 +104,6 @@ class PdfController extends Controller
         $dados = $request;
         $configs = Config::orderbyDesc('created_at')->first();
         $docente = DocenteAction::handle($agendamento->banca, $codpes);
-        #dump($agendamento);
-        #dd($docente);
         if($tipo == 'auxilio_passagem'){
             config(['laravel-fflch-pdf.setor' => "Serviço de Compras"]);
         }
@@ -117,6 +112,7 @@ class PdfController extends Controller
         }
         $nome = $docente['nompesttd'] ?? 'Professor';
         $pdf = PDF::loadView("pdfs.recibos.$tipo", compact(['agendamento', 'coordenador', 'docente','dados','configs']));
+
         return $pdf->download("$nome - $tipo.pdf");
     }
 }

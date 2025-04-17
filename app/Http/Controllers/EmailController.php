@@ -8,6 +8,7 @@ use App\Models\Docente;
 use Illuminate\Http\Request;
 use App\Utils\ReplicadoUtils;
 use App\Actions\DadosJanusAction;
+use App\Actions\DocenteAction;
 use App\Actions\DadosProfessorAction;
 
 class EmailController extends Controller
@@ -28,12 +29,12 @@ class EmailController extends Controller
     }
 
     //Função que exibe apenas uma view com os dados a serem copiados e enviados via e-mail para o docente. Automatização desse processo será realizada mais para frente.
-    public function exibirEmailDocente(Agendamento $agendamento, Banca $banca, Request $request){
+    public function exibirEmailDocente(Agendamento $agendamento, $codpes, Request $request){
         $this->authorize('admin');
+        $agendamento = DadosJanusAction::handle($agendamento);
         $dados = $request;
-        $docente = Agendamento::dadosProfessor($banca->codpes);
-        $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
-        $configs = Config::setConfigEmail($agendamento,$banca);
+        $docente = DocenteAction::handle($agendamento->banca, $codpes);
+        $configs = Config::setConfigEmail($agendamento, $docente);
         return view('agendamentos.recibos.email', compact(['agendamento','docente','dados','configs']));
     }
 

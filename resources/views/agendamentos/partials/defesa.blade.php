@@ -5,22 +5,22 @@
             <b>Candidato:</b> {{$agendamento->aluno }} </br>
             @can('logado')
                 <b>Nº USP:</b> {{ $agendamento->codpes }}</br>
-                <b>Regimento:</b> {{$agendamento->regimento}}</br>
+                <b>Regimento:</b> {{$agendamento->regimento }}</br>
             @endcan
-            <b>Nível:</b> {{$agendamento->nivpgm}}</br>
+            <b>Nível:</b> {{ $agendamento->nivpgm }}</br>
             <b>Programa:</b> {{$agendamento->area['nomare']}}</br>
             @can('logado')<b>Orientador Votante:</b> {{$agendamento->orientador_votante}}</br>@endcan
-            <b>Orientador:</b> {{$agendamento->orientador ?? $agendamento->dadosProfessor($agendamento->orientador)->nome}} @if($agendamento->co_orientador) e {{$agendamento->nome_co_orientador ?? $agendamento->dadosProfessor($agendamento->co_orientador)->nome}} @endif</br>
+            <b>Orientador:</b> {{ $agendamento->orientador['nompesttd'] }}</br>
             <b>Data:</b> {{ date('d/m/Y', strtotime($agendamento->data_horario))}} às {{date('H:i', strtotime($agendamento->data_horario))}}</br>
-            <b>Local:</b> {{$agendamento->sala}}</br>
+            <b>Local:</b> {{ $agendamento->sala }}</br>
             @if($agendamento->tipo == 'Virtual' || $agendamento->tipo == 'Hibrido')
-            <b>Link da Sala Virtual: </b>{{$agendamento->sala_virtual ?? 'não encontrado'}}<br/>
+            <b>Link da Sala Virtual: </b>{{ $agendamento->sala_virtual ?? 'não encontrado' }}<br/>
             @endif
-            <b>Tipo da Defesa:</b> {{$agendamento->tipo}}</br>
+            <b>Tipo da Defesa:</b> {{ $agendamento->tipo }}</br>
             @if($agendamento->status == 1)
                 <b>URL:</b> {{$agendamento->url}}</br>
-                <b>Data de Publicação:</b> {{Carbon\Carbon::parse($agendamento->data_publicacao)->format('d/m/Y')}}</br>
-                <b>Responsável Biblioteca: </b> {{$agendamento->user->name}}, {{$agendamento->user->codpes}}
+                <b>Data de Publicação:</b> {{ Carbon\Carbon::parse($agendamento->data_publicacao)->format('d/m/Y') }}</br>
+                <b>Responsável Biblioteca: </b> {{ $agendamento->user->name }}, {{ $agendamento->user->codpes }}
             @endif
         </div>
     </div>

@@ -63,7 +63,7 @@
   <div class="moremargin">Subject: @if($agendamento['nivel'] == 'Mestrado') <b>Master's</b> @else <b>Doctorate's</b> @endif Examination Committee</div>
   <div class="moremargin">Candidate: <b>{{ $agendamento['nome'] }}</b> </div>
   <div class="moremargin">Area: <b>{{ $agendamento['area']['nomareigl'] }}</b> </div>
-  <div class="moremargin">Supervisor: {{ $agendamento['orientador'] }}</div>
+  <div class="moremargin">Supervisor: {{ $agendamento['orientador']['nompesttd'] }}</div>
   <div class="moremargin">Title of the thesis: <i>{{ $agendamento['title'] ?? $agendamento->titulo }} </i></div>
   <div class="importante">
     {!! $configs->important !!}

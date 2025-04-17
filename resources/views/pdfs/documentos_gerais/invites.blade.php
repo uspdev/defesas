@@ -58,58 +58,56 @@
 @endsection('other_styles')
 
 @section('content')
-    @foreach($professores as $professor)
-        <p>
-            <div align="right">
-                São Paulo, {{date('F jS\, Y')}}
-            </div><br>
+  @foreach($professores as $professor)
+    <p>
+      <div align="right">
+          São Paulo, {{date('F jS\, Y')}}
+      </div><br>
 
-            <div class="moremargin">Subject: @if($agendamento->nivpgm == 'Mestrado') <b>Master's</b> @else <b>Doctorate's</b> @endif Examination Committee</div>
-            <div class="moremargin">Candidate: <b>{{ $agendamento->nome }}</b> </div>
-            <div class="moremargin">Area: <b>{{ $agendamento->area['nomareigl'] }}</b> </div>
-            <div class="moremargin">Supervisor: {{ $agendamento->orientador }}</div>
-            <div class="moremargin">Title of the thesis: <i>{{ $agendamento->trabalho['tittrbigl'] ?? $agendamento->trabalho['tittrb'] }} </i></div>
-            <div class="importante">
-                {!! $configs->important !!}
-            </div>
-            <div>
-                <i>Defense's date and time:  </i> <b> {{Carbon\Carbon::parse($agendamento->data_horario)->format('F jS\, Y \a\t g a')}} (Brasília's Time)</b> <br>
-                <i>Place:</i> <b> {{$agendamento->sala}} </b> - FFLCH Administration
-            </div>
-            <i>Composition of the examination committee:</i>
+      <div class="moremargin">Subject: @if($agendamento->nivpgm == 'Mestrado') <b>Master's</b> @else <b>Doctorate's</b> @endif Examination Committee</div>
+      <div class="moremargin">Candidate: <b>{{ $agendamento->nome }}</b> </div>
+      <div class="moremargin">Area: <b>{{ $agendamento->area['nomareigl'] }}</b> </div>
+      <div class="moremargin">Supervisor: {{ $agendamento->orientador['nompesttd'] }}</div>
+      <div class="moremargin">Title of the thesis: <i>{{ $agendamento->trabalho['tittrbigl'] ?? $agendamento->trabalho['tittrb'] }} </i></div>
+      <div class="importante">
+          {!! $configs->important !!}
+      </div>
+      <div>
+          <i>Defense's date and time:  </i> <b> {{Carbon\Carbon::parse($agendamento->data_horario)->format('F jS\, Y \a\t g a')}} (Brasília's Time)</b> <br>
+          <i>Place:</i> <b> {{$agendamento->sala}} </b> - FFLCH Administration
+      </div>
+      <i>Composition of the examination committee:</i>
+        @foreach($bancas as $banca)
+        <div class="col">
+            {{ $banca['nompesttd'] }}
+            <b>{{ $banca['setor']['sglclgund'] }} {{ ($banca['tipvin'] == 'SERVIDOR') ? ' - USP' : ''}}</b>
+        </div>
+        @endforeach
+      <div class="importante" align="center">
+          {!! $configs->regiment !!}
+      </div>
 
-
-                @foreach($bancas as $banca)
-                <div class="col">
-                    {{ $banca['nompesttd'] }}
-                    <b>{{ $banca['setor']['sglclgund'] }} {{ ($banca['tipvin'] == 'SERVIDOR') ? ' - USP' : ''}}</b>
-                </div>
-                @endforeach
-            <div class="importante" align="center">
-                {!! $configs->regiment !!}
-            </div>
-
-            <div align="center">
-                Sincerely,
-                <br> <b>
-                    {{Auth::user()->name}} @if($pessoa::cracha(Auth::user()->codpes)) - Defesas de Mestrado e Doutorado da {{$pessoa::cracha(Auth::user()->codpes)['nomorg']}}/USP @endif
-                </b>
-            </div>
-            <br>
-            {{ $professor['nompesttd'] }}<br>
-            @if ( $professor['tipvin'] == 'SERVIDOR' )
-              Depto. de {{ $professor['setor']['nomset'] }}<br />
-            @else
-              {{ $professor['nomtiplgr'] . ' ' . $professor['epflgr'] . ' ' .  $professor['numlgr'] . ' ' . $professor['cpllgr'] }}, {{ $professor['nombro'] }} <br>
-            @endif
-            Post Code: {{ $professor['codendptl'] }} - {{ $professor['cidloc'] }}/{{ $professor['sglest'] }}
-            <br> Phone: {{ implode(' / ', $professor['telefones']) }}
-            <br>Email: {{ $professor['email'] }}
-        </p>
-        <p class="page-break"></p>
-    @endforeach
+      <div align="center">
+          Sincerely,
+          <br> <b>
+              {{Auth::user()->name}} @if($pessoa::cracha(Auth::user()->codpes)) - Defesas de Mestrado e Doutorado da {{$pessoa::cracha(Auth::user()->codpes)['nomorg']}}/USP @endif
+          </b>
+      </div>
+      <br>
+      {{ $professor['nompesttd'] }}<br>
+      @if ( $professor['tipvin'] == 'SERVIDOR' )
+        Depto. de {{ $professor['setor']['nomset'] }}<br />
+      @else
+        {{ $professor['nomtiplgr'] . ' ' . $professor['epflgr'] . ' ' .  $professor['numlgr'] . ' ' . $professor['cpllgr'] }}, {{ $professor['nombro'] }} <br>
+      @endif
+      Post Code: {{ $professor['codendptl'] }} - {{ $professor['cidloc'] }}/{{ $professor['sglest'] }}
+      <br> Phone: {{ implode(' / ', $professor['telefones']) }}
+      <br>Email: {{ $professor['email'] }}
+    </p>
+    <p class="page-break"></p>
+  @endforeach
 @endsection('content')
 
 @section('footer')
-    {!! $configs->footer !!}
+  {!! $configs->footer !!}
 @endsection('footer')

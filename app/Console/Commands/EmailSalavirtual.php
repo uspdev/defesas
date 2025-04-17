@@ -5,15 +5,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Console\Command;
 use App\Mail\MailSalaVirtual;
 use App\Models\Agendamento;
-use App\Models\Docente;
-use App\Models\Banca;
-use App\Models\User;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Notifications\AnnouncementCreated;
-use Illuminate\Support\Facades\Notification;
 use Uspdev\Replicado\Pessoa;
+use App\Services\ReplicadoService;
 
 class EmailSalavirtual extends Command
 {
@@ -43,7 +36,8 @@ class EmailSalavirtual extends Command
             ->get();
 
         foreach($agendamentos as $agendamento){
-            $email = Pessoa::email($agendamento->orientador);
+            $docente = ReplicadoService::getOrientador($agendamento->codpes, $agendamento->codare, $agendamento->numseqpgm);
+            $email = Pessoa::email($docente->orientador['codpes']);
             if($email) {
                 Mail::to($email)->queue(new MailSalaVirtual($agendamento));
                 $agendamento->enviar_email = TRUE; //mostra que o e-mail já foi enviado
