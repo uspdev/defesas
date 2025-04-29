@@ -20,7 +20,7 @@ class indexController extends Controller
         }
         if($request->busca_programa != '') {
             $query->where('agendamentos.area_programa', '=', $request->busca_programa);
-        } 
+        }
         if($request->busca != ''){
             $query->where(function($query) use($request){
                 $query->orWhere('agendamentos.nome', 'LIKE', "%$request->busca%");
@@ -47,7 +47,7 @@ class indexController extends Controller
         }
         if($request->busca_programa != '') {
             $query->where('agendamentos.area_programa', '=', $request->busca_programa);
-        } 
+        }
         if($request->busca != '') {
             $query->where(function($query) use($request){
                 $query->orWhere('agendamentos.nome', 'LIKE', "%$request->busca%");

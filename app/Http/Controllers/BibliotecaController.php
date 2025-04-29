@@ -4,11 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Agendamento;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
-use Auth;
-use Uspdev\Replicado\Pessoa;
+use Illuminate\Support\Facades\Auth;
 use App\Utils\ReplicadoUtils;
 use App\Models\Biblioteca;
+use App\Services\ReplicadoService;
 
 class BibliotecaController extends Controller
 {
@@ -18,10 +17,11 @@ class BibliotecaController extends Controller
         $this->authorize('biblioteca');
 
         $agendamentos = Biblioteca::returnSchedules($request);
+        $nomes = $this->nomes($agendamentos);
 
         $action = '/teses';
 
-        return view('biblioteca.index', compact(['agendamentos', 'action']));
+        return view('biblioteca.index', compact(['agendamentos', 'nomes', 'action']));
     }
 
     public function published(Request $request)
@@ -29,17 +29,10 @@ class BibliotecaController extends Controller
         $this->authorize('biblioteca');
 
         $agendamentos = Biblioteca::returnSchedules($request, 1);
-
+        $nomes = $this->nomes($agendamentos);
         $action = '/teses/publicadas';
 
-        return view('biblioteca.index', compact(['agendamentos', 'action']));
-    }
-
-    public function show(Agendamento $agendamento)
-    {
-        $this->authorize('biblioteca');
-        $agendamento->nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento->area_programa);
-        return view('agendamentos.show', compact('agendamento'));
+        return view('biblioteca.index', compact(['agendamentos', 'nomes', 'action']));
     }
 
     public function publish(Request $request, Agendamento $agendamento){
@@ -54,5 +47,20 @@ class BibliotecaController extends Controller
         $agendamento->save();
 
         return redirect("/agendamentos/$agendamento->id");
+    }
+
+    public function nomes($agendamentos) {
+        if ($agendamentos->count() > 0) {
+            $codpes = $agendamentos->map(function ($item) {
+                return $item['codpes'];
+            })->implode(',');
+            $nomes = collect(ReplicadoService::getNomes($codpes))->mapWithKeys(function (array $item) {
+                return [
+                    $item['codpes'] => $item['nompesttd']
+                ];
+            });
+        }
+
+        return $nomes ?? null;
     }
 }

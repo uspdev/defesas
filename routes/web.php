@@ -26,7 +26,7 @@ Route::resource('bancas', BancaController::class);
 Route::resource('files', FileController::class)->only(['store', 'show', 'destroy']);
 
 Route::get('janus/create', [JanusController::class, 'create']);
-Route::post('janus', [JanusController::Class, 'store']);
+Route::post('janus', [JanusController::class, 'store']);
 
 // rotas para biblioteca
 Route::get('/teses',[BibliotecaController::class, 'index']);

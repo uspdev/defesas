@@ -46,8 +46,7 @@ class ReplicadoService
                   WHERE R.codpespgm = convert(int, :codpespgm) AND
                   R.codare = convert(int, :codare) AND
                   R.numseqpgm = convert(int, :numseqpgm) AND
-                  R.tiport = 'ORI' AND
-                  R.staort = 'AT'";
+                  R.tiport = 'ORI'";
         $param = [
             'codpespgm' => $codpespgm,
             'codare'    => $codare,
@@ -86,7 +85,17 @@ class ReplicadoService
             'dtacad' => $dtacad
         ];
 
-        return DBreplicado::fetch($query, $param);
+        $result = DBreplicado::fetch($query, $param);
+
+        return $result ? $result :
+            [
+                'tittrb' => null,
+                'rsutrb' => null,
+                'palcha' => null,
+                'tittrbigl' => null,
+                'rsutrbigl' => null,
+                'palchaigl' => null,
+            ];
     }
 
     public static function getNome(int $codpes) {
@@ -191,14 +200,17 @@ class ReplicadoService
             'codpes' => $codpes
         ];
 
-        return DBreplicado::fetch($query, $param);
+        $result = DBreplicado::fetch($query, $param);
+
+        return  $result ? $result : ['nomset' => ''];
     }
 
     public static function getEndereco(int $codpes) {
         return Pessoa::obterEndereco($codpes);
     }
 
-    public static function getEmail(int $codpes) { return Pessoa::email($codpes);
+    public static function getEmail(int $codpes) {
+        return Pessoa::email($codpes);
     }
 
     public static function getTelefones(int $codpes) {
@@ -214,6 +226,13 @@ class ReplicadoService
         $pispasep = DBreplicado::fetch($query, $param);
 
         return array_merge($pispasep, Pessoa::dump($codpes, $documentos));
+    }
+
+    public static function getNomes($codpes) {
+        $query = "SELECT P.codpes, P.nompesttd FROM PESSOA P
+                  WHERE P.codpes in ($codpes)";
+
+        return DBreplicado::fetchAll($query) ?? [];
     }
 
 }
