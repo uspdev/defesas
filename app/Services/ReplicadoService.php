@@ -103,7 +103,7 @@ class ReplicadoService
                   FROM PESSOA P
                   WHERE P.codpes = convert(int, :codpes)";
         $param = [
-            'codpes'    => $codpes,
+            'codpes' => $codpes,
         ];
 
         $result = DBreplicado::fetch($query, $param);

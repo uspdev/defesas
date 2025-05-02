@@ -25,29 +25,33 @@ class JanusRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'codpes' => 'required|integer|codpes',
+        $rules = [
             'data' => 'required|date_format:d/m/Y',
             'horario' => 'required|date_format:H:i',
             'sala' => 'required',
             'tipo_defesa' => 'required',
             'sala_virtual' => 'required_if:tipo_defesa,Virtual'
         ];
+
+        if ($this->method() == 'POST') {
+            $rules = array_merge($rules, [
+                'codpes' => 'required|integer'
+            ]);
+        }
+
+        return $rules;
     }
 
     public function messages(){
         return [
             'codpes.required' => 'O Número USP é obrigatório',
             'codpes.integer' => 'O Número USP precisa ser um número inteiro',
-            'codpes.codpes' => 'Insira um Número USP válido',
-            'data.required' => 'Insira uma data',
+            'data.required' => 'A data é obrigatório',
             'data.date_format' => 'Insira uma data no padrão d/m/a',
-            'horario.required' => 'Insira um horário',
+            'horario.required' => 'O horário é obrigatório',
             'horario.date_format' => 'Insira um horário válido no formato H:m',
-            'sala.required' => 'Insira uma sala',
+            'sala.required' => 'A sala é obrigatório',
             'tipo_defesa.required' => 'Escolha o tipo da defesa',
-            'regimento.required' => 'Escolha o regimento',
-            'orientador.required' => 'Escolha se o orientador é votante',
             'sala_virtual.required_if' => 'O link da sala virtual é obrigatório se o tipo da defesa for Virtual'
         ];
     }

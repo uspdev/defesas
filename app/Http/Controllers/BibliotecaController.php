@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Agendamento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Utils\ReplicadoUtils;
 use App\Models\Biblioteca;
-use App\Services\ReplicadoService;
+use App\Actions\MapCodpesNomeAction;
 
 class BibliotecaController extends Controller
 {
@@ -17,7 +16,7 @@ class BibliotecaController extends Controller
         $this->authorize('biblioteca');
 
         $agendamentos = Biblioteca::returnSchedules($request);
-        $nomes = $this->nomes($agendamentos);
+        $nomes = MapCodpesNomeAction::handle(collect($agendamentos->items()));
 
         $action = '/teses';
 
@@ -29,7 +28,7 @@ class BibliotecaController extends Controller
         $this->authorize('biblioteca');
 
         $agendamentos = Biblioteca::returnSchedules($request, 1);
-        $nomes = $this->nomes($agendamentos);
+        $nomes = MapCodpesNomeAction::handle(collect($agendamentos->items()));
         $action = '/teses/publicadas';
 
         return view('biblioteca.index', compact(['agendamentos', 'nomes', 'action']));
@@ -49,18 +48,4 @@ class BibliotecaController extends Controller
         return redirect("/agendamentos/$agendamento->id");
     }
 
-    public function nomes($agendamentos) {
-        if ($agendamentos->count() > 0) {
-            $codpes = $agendamentos->map(function ($item) {
-                return $item['codpes'];
-            })->implode(',');
-            $nomes = collect(ReplicadoService::getNomes($codpes))->mapWithKeys(function (array $item) {
-                return [
-                    $item['codpes'] => $item['nompesttd']
-                ];
-            });
-        }
-
-        return $nomes ?? null;
-    }
 }

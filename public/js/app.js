@@ -14,12 +14,12 @@ jQuery(function ($) {
             }
         }
         $.get('info', data, success);
-        
+
     });
-    
+
     $(".horario").mask('00:00');
-    $(".data").mask('00/00/0000'); 
-     
+    $(".data").mask('00/00/0000');
+
     $('.datepicker, .datePicker').datepicker({
         dateFormat: 'dd/mm/yy'
         , dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
@@ -31,16 +31,18 @@ jQuery(function ($) {
         , prevText: 'Anterior'
     });
 
-    $("#numero_nome").click(function() {
-        if ($("#numero_nome").prop("checked")) {
+    $("#codpes").click(function() {
+        console.log('codpes');
+        if ($("#codpes").prop("checked")) {
             $("#busca_data").hide();
-            $("#busca").show();
+            $("#busca_codpes").show();
         }
     });
-    
+
     $("#data").click(function() {
+        console.log('data');
         if($("#data").prop("checked")) {
-            $("#busca").hide();
+            $("#busca_codpes").hide();
             $("#busca_data").show();
         }
     });

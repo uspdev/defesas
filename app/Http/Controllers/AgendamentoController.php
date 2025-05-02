@@ -5,24 +5,23 @@ namespace App\Http\Controllers;
 use App\Models\Agendamento;
 use App\Models\Banca;
 use App\Models\Docente;
-use App\Models\Config;
 use Illuminate\Http\Request;
 use App\Http\Requests\AgendamentoRequest;
 use Carbon\Carbon;
 use Uspdev\Replicado\Pessoa;
-use App\Utils\ReplicadoUtils;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ReciboExternoMail;
 use App\Mail\ProLaboreMail;
 use App\Mail\PassagemMail;
 use App\Mail\DadosProfExternoMail;
-use App\Mail\MailSalaVirtual;
-use App\Mail\SalaVirtual;
 use App\Jobs\SendDailyMail;
 use Storage;
-use Illuminate\Support\Arr;
 use App\Actions\DadosJanusAction;
 use App\Actions\DadosProfessorAction;
+use App\Actions\MapCodpesNomeAction;
+use App\Services\ReplicadoService;
+use App\Services\AgendamentoService;
+use App\Http\Requests\JanusRequest;
 
 class AgendamentoController extends Controller
 {
@@ -31,73 +30,81 @@ class AgendamentoController extends Controller
     {
         $this->authorize('admin');
 
-        if($request->busca || $request->filled('busca_data')){
-            $query = Agendamento::orderBy('data_horario', 'desc');
-            $query2 = Docente::orderBy('nome', 'desc');
-            if($request->filtro_busca == 'numero_nome') {
-                $query->where('codpes', '=', $request->busca);
-                if($query->count() == null){
-                    $query->orWhere('nome', 'LIKE', "%$request->busca%");
-                }
-                $query2->where('nome', 'LIKE', "%$request->busca%");
-                foreach($query2->get() as $orientador){
-                    $query->orWhere('orientador', '=', $orientador->n_usp);
-                }
+        if ($request->filtro_busca == 'codpes' && $request->filled('busca_codpes')) {
+            $validated = $request->validate([
+                'busca_codpes' => 'required|integer',
+            ]);
+            $agendamento = Agendamento::where('codpes', '=', $request->busca_codpes)->paginate(20);
+            $nomes = MapCodpesNomeAction::handle(collect($agendamento->items()));
+        }
+        if ($request->filtro_busca == 'data' && $request->filled('busca_data')) {
+            $validated = $request->validate([
+                'busca_data' => 'required|date_format:d/m/Y',
+            ]);
+            $data = Carbon::CreatefromFormat('d/m/Y H:i', $validated['busca_data'] . " 00:00");
+            $agendamento =  Agendamento::whereDate('data_horario', '=', $data)->paginate(20);
+            $nomes = MapCodpesNomeAction::handle(collect($agendamento->items()));
+        }
 
-                }elseif($request->filtro_busca == 'data'){
-                    $validated = $request->validate([
-                        'busca_data' => 'required|date_format:d/m/Y', //arrumado para date_format
-                    ]);
-                    $data = Carbon::CreatefromFormat('d/m/Y H:i', $validated['busca_data']." 00:00");
-                    $query->whereDate('data_horario','=', $data);
-                }else{
-                    $query->where('data_horario','>=',date('Y-m-d H:i:s'));
-                }
-            }
         return view('agendamentos.index', [
-            'agendamentos' => $request->busca || $request->busca_data ? $query->paginate(20) : []
+            'agendamentos' => $agendamento ?? [],
+            'nomes' => $nomes ?? []
         ]);
     }
 
-    public function create()
-    {
+    public function create(Agendamento $agendamento){
+        dump('create');
         $this->authorize('admin');
-        $agendamento = new Agendamento;
-        return view('agendamentos.create')->with('agendamento', $agendamento);
+        return view('agendamentos.create', compact('agendamento'));
+
+        /* $this->authorize('admin'); */
+        /* $agendamento = new Agendamento; */
+        /* return view('agendamentos.create')->with('agendamento', $agendamento); */
     }
 
-    public function store(AgendamentoRequest $request)
-    {
+    public function store(JanusRequest $request, AgendamentoService $agendamentoService){
+    /* public function store(AgendamentoRequest $request) */
+        dump("store");
         $this->authorize('admin');
-        $validated = $request->validated();
-        if($validated['nome'] == ''){
-            $validated['nome'] = Pessoa::dump($validated['codpes'])['nompes'];
-        }
-        $validated['nome_orientador'] = Pessoa::dump($validated['orientador'])['nompes'];
-        $agendamento = Agendamento::create($validated);
-        //Salva o orientador na banca
-        $banca = new Banca;
-        $banca->codpes = $validated['orientador'];
-        $banca->presidente = 'Sim';
-        $banca->tipo = 'Titular';
-        $banca->agendamento_id = $agendamento->id;
-        $agendamento->bancas()->save($banca);
-        //Salva o co-orientador na banca
-        if($validated['co_orientador']){
-            $validated['nome_co_orientador'] = Pessoa::dump($validated['co_orientador'])['nompes'];
-            $banca = new Banca;
-            $banca->codpes = $validated['co_orientador'];
-            $banca->presidente = 'Não';
-            $banca->tipo = 'Titular';
-            $banca->agendamento_id = $agendamento->id;
-            $agendamento->bancas()->save($banca);
+        $alunoPos = ReplicadoService::getAlunoPos($request->codpes);
+        if($alunoPos) {
+            $agendamento = $agendamentoService->newAgendamento($request->validated(), $alunoPos);
+            return redirect("/agendamentos/$agendamento->id");
         }
 
-        return redirect("/agendamentos/$agendamento->id");
+        return back()->with('alert-danger','Aluno não encontrado ou Defesa não consolidada no Janus!');
+
+        /* $this->authorize('admin'); */
+        /* $validated = $request->validated(); */
+        /* if($validated['nome'] == ''){ */
+        /*     $validated['nome'] = Pessoa::dump($validated['codpes'])['nompes']; */
+        /* } */
+        /* $validated['nome_orientador'] = Pessoa::dump($validated['orientador'])['nompes']; */
+        /* $agendamento = Agendamento::create($validated); */
+        /* //Salva o orientador na banca */
+        /* $banca = new Banca; */
+        /* $banca->codpes = $validated['orientador']; */
+        /* $banca->presidente = 'Sim'; */
+        /* $banca->tipo = 'Titular'; */
+        /* $banca->agendamento_id = $agendamento->id; */
+        /* $agendamento->bancas()->save($banca); */
+        /* //Salva o co-orientador na banca */
+        /* if($validated['co_orientador']){ */
+        /*     $validated['nome_co_orientador'] = Pessoa::dump($validated['co_orientador'])['nompes']; */
+        /*     $banca = new Banca; */
+        /*     $banca->codpes = $validated['co_orientador']; */
+        /*     $banca->presidente = 'Não'; */
+        /*     $banca->tipo = 'Titular'; */
+        /*     $banca->agendamento_id = $agendamento->id; */
+        /*     $agendamento->bancas()->save($banca); */
+        /* } */
+        /**/
+        /* return redirect("/agendamentos/$agendamento->id"); */
     }
 
     public function show(Agendamento $agendamento)
     {
+        dump('show');
         $this->authorize('biblioteca');
         $agendamento = DadosJanusAction::handle($agendamento);
         #dd($agendamento);
@@ -106,18 +113,17 @@ class AgendamentoController extends Controller
 
     public function edit(Agendamento $agendamento)
     {
+        dump('edit');
         $this->authorize('admin');
+        $agendamento = DadosJanusAction::handle($agendamento);
         return view('agendamentos.edit')->with('agendamento', $agendamento);
     }
 
-    public function update(AgendamentoRequest $request, Agendamento $agendamento)
+    public function update(JanusRequest $request, Agendamento $agendamento)
     {
         $this->authorize('admin');
-        $validated = $request->validated();
-        if($validated['nome'] == ''){
-            $validated['nome'] = Pessoa::dump($validated['codpes'])['nompes'];
-        }
-        $agendamento->update($validated);
+        $agendamento->update($request->validated());
+
         return redirect("/agendamentos/$agendamento->id");
     }
 
