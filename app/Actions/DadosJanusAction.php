@@ -13,7 +13,8 @@ class DadosJanusAction
         $agendamento->aluno = ReplicadoService::getNome($agendamento->codpes);
         $agendamento->orientador = array_merge($orientador, ReplicadoService::getSetorOrientador($orientador['codpes']));
         $agendamento->area = ReplicadoService::getNomeArea($agendamento->codare);
-        $agendamento->trabalho = ReplicadoService::getTrabalho($agendamento->codpes, $dataDeposito);
+        $titulo = ReplicadoService::getTituloTrabalho($agendamento->codpes, $agendamento->codare, $agendamento->numseqpgm);
+        $agendamento->trabalho = array_merge($titulo, ReplicadoService::getComplementoTrabalho($agendamento->codpes, $dataDeposito));
         $agendamento->banca = ReplicadoService::getBanca($agendamento->codpes, $agendamento->codare, $agendamento->numseqpgm);
 
         return $agendamento;

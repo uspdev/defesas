@@ -23,7 +23,7 @@ class Agendamento extends Model
 
     protected $guarded = ['id'];
 
-    public static function tipodefesaOptions() {
+    public static function tipos() {
         return [
             'Presencial',
             'Hibrido',

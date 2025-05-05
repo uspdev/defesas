@@ -101,16 +101,16 @@
         <label for="tipo" class="required">Tipo</label>
         <select class="form-control" name="tipo" id="tipo">
             <option value="" selected="">- Selecione -</option>
-            @foreach ($agendamento->tipodefesaOptions() as $option)
+            @foreach ($agendamento->tipos() as $tipo)
                 {{-- 1. Situação em que não houve tentativa de submissão e é uma edição --}}
                 @if (old('tipo') == '' and isset($agendamento->tipo))
-                <option value="{{$option}}" {{ ( $agendamento->tipo == $option) ? 'selected' : ''}}>
-                    {{$option}}
+                <option value="{{$tipo}}" {{ ( $agendamento->tipo == $tipo) ? 'selected' : ''}}>
+                    {{$tipo}}
                 </option>
                 {{-- 2. Situação em que houve tentativa de submissão, o valor de old prevalece --}}
                 @else
-                <option value="{{$option}}" {{ ( old('tipo') == $option) ? 'selected' : ''}}>
-                    {{$option}}
+                <option value="{{$tipo}}" {{ ( old('tipo') == $option) ? 'selected' : ''}}>
+                    {{$tipo}}
                 </option>
                 @endif
             @endforeach

@@ -62,7 +62,6 @@ class PdfController extends Controller
     public function gerarDocumentosIndividuais(Agendamento $agendamento, $codpes, $tipo){
         $this->authorize('admin');
         $agendamento = DadosJanusAction::handle($agendamento);
-        dd($agendamento);
         if($tipo == 'statement' or $tipo == 'invite'){
             config(['laravel-fflch-pdf.setor' => "Graduate Service"]);
         }

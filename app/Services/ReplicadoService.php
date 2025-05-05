@@ -72,14 +72,27 @@ class ReplicadoService
         return DBreplicado::fetchAll($query, $param);
     }
 
-    public static function getTrabalho(int $codpes, $dtacad) {
-        $query = "SELECT T.tittrb, T.rsutrb, T.palcha, T.tittrbigl, T.rsutrbigl, T.palchaigl
-                FROM DDTENTREGATRABALHO T INNER JOIN DDTANDAMENTODEPOSITO A
-                ON T.coddpodgttrb = A.coddpodgttrb INNER JOIN DDTDEPOSITOTRABALHO D
+    public static function getTituloTrabalho(int $codpes, int $codare, int $numseqpgm) {
+        $query = "SELECT T.tittrb, T.tittrbigl
+                FROM TRABALHOPROG T
+                WHERE T.codpes = convert(int, :codpes) AND
+                T.codare = convert(int, :codare) AND
+                T.numseqpgm = convert(int, :numseqpgm)";
+        $param = [
+            'codpes' => $codpes,
+            'codare' => $codare,
+            'numseqpgm' => $numseqpgm
+        ];
+
+        return DBreplicado::fetch($query, $param);
+    }
+
+    public static function getComplementoTrabalho(int $codpes, $dtacad) {
+        $query = "SELECT T.rsutrb, T.palcha, T.rsutrbigl, T.palchaigl
+                FROM DDTENTREGATRABALHO T INNER JOIN DDTDEPOSITOTRABALHO D
                 ON T.coddpodgttrb = D.coddpodgttrb
                 WHERE D.codpes = convert(int, :codpes) AND
-                A.sitanddpo = 'HOMOLOGADO' AND
-                T.dtacad = :dtacad";
+                T.dtaultalt = :dtacad";
         $param = [
             'codpes' => $codpes,
             'dtacad' => $dtacad
@@ -89,10 +102,8 @@ class ReplicadoService
 
         return $result ? $result :
             [
-                'tittrb' => null,
                 'rsutrb' => null,
                 'palcha' => null,
-                'tittrbigl' => null,
                 'rsutrbigl' => null,
                 'palchaigl' => null,
             ];

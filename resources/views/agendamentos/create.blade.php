@@ -6,7 +6,7 @@
   <div class="row justify-content-center">
     <div class="col-8">
       <div class="card">
-        <div class="card-header"><b>Agendamento - Novo</b></div>
+        <div class="card-header"><b>Agendamentos - Novo</b></div>
           <div class="card-body">
             <form method="post" action="/agendamentos">
               @csrf
@@ -32,19 +32,11 @@
               <div class="form-row">
                 <div class="form-group col-md-3">
                   <label for="tipo_defesa">Tipo da Defesa</label>
-                  <select class="form-control" id="tipo_defesa" name="tipo_defesa">
-                    @foreach ($agendamento->tipodefesaOptions() as $option)
-                        {{-- 1. Situação em que não houve tentativa de submissão e é uma edição --}}
-                        @if (old('tipo') == '' and isset($agendamento->tipo))
-                          <option value="{{$option}}" {{ ( $agendamento->tipo == $option) ? 'selected' : ''}}>
-                              {{$option}}
-                          </option>
-                        {{-- 2. Situação em que houve tentativa de submissão, o valor de old prevalece --}}
-                        @else
-                          <option value="{{$option}}" {{ ( old('tipo') == $option) ? 'selected' : ''}}>
-                              {{$option}}
-                          </option>
-                        @endif
+                  <select class="form-control" id="tipo" name="tipo">
+                    @foreach ($agendamento->tipos() as $tipo)
+                      <option value="{{ $tipo }}"  @if(old('tipo') == $tipo) selected @endif>
+                          {{$tipo}}
+                      </option>
                     @endforeach
                   </select>
                 </div>

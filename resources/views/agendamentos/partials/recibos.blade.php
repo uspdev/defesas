@@ -50,18 +50,18 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($agendamento->bancas as $banca)
+                @foreach($agendamento->banca as $banca)
                     <tr>
-                        <form class="form-group" action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->codpes}}/proex" method="POST">
+                        <form class="form-group" action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca['codpesdct']}}/proex" method="POST">
                             @csrf
-                            <td> {{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}} </td>
+                            <td> {{$agendamento->dadosProfessor($banca['codpesdct'])->nome ?? 'Professor não cadastrado'}} </td>
                             <td><input type="text" class="form-control" size="4" name="importancia"></td>
                             <td><input type="text" class="form-control" size="4" name="periodo"></td>
                             <td><input type="text" class="form-control" size="4" name="valor"></td>
                             <td><input type="text" class="form-control" size="4" name="outro_tipo" placeholder="Tipo"></td>
                             <td><input type="text" class="form-control" size="4" name="outro_valor" placeholder="Valor"></td>
                             <td><input type="text" class="form-control" size="4" name="liquido"></td>
-                            <td><button type="submit" class="btn btn-primary" @if($agendamento->dadosProfessor($banca->codpes) == null) disabled @endif><b>Gerar Documento</b></button></td>
+                            <td><button type="submit" class="btn btn-primary" @if($agendamento->dadosProfessor($banca['codpesdct']) == null) disabled @endif><b>Gerar Documento</b></button></td>
                         </form>
                     </tr>
                 @endforeach
@@ -86,11 +86,11 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($agendamento->bancas as $banca)
+                @foreach($agendamento->banca as $banca)
                     <tr>
-                      <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->codpes}}/proap" class="form-group" method="POST">
+                      <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca['codpesdct']}}/proap" class="form-group" method="POST">
                             @csrf
-                            <td>{{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}</td>
+                            <td>{{$agendamento->dadosProfessor($banca['codpesdct'])->nome ?? 'Professor não cadastrado'}}</td>
                             <td><input type="text" class="form-control" size="1" name="ano"></td>
                             <td><input type="text" class="form-control" size="1" name="diaria_proap"></td>
                             <td><input type="text" class="form-control" size="6" name="origem"></td>
@@ -98,7 +98,7 @@
                             <td><input type="text" class="form-control datepicker" size="6" name="saida"></td>
                             <td><input type="text" class="form-control" size="2" name="valor_proap"></td>
                             <td><input type="text" class="form-control" size="5" name="extenso"></td>
-                            <td><button type="submit" size="4" class="btn btn-primary" @if($agendamento->dadosProfessor($banca->codpes) == null) disabled @endif><b>Gerar Documento</b></button></td>
+                            <td><button type="submit" size="4" class="btn btn-primary" @if($agendamento->dadosProfessor($banca['codpesdct']) == null) disabled @endif><b>Gerar Documento</b></button></td>
                         </form>
                     </tr>
                 @endforeach
@@ -120,16 +120,16 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($agendamento->bancas as $banca)
+                @foreach($agendamento->banca as $banca)
                     <tr>
-                        <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->codpes}}/passagem" class="form-group" method="POST">
+                        <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca['codpesdct']}}/passagem" class="form-group" method="POST">
                             @csrf
-                            <td>{{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}</td>
+                            <td>{{$agendamento->dadosProfessor($banca['codpesdct'])->nome ?? 'Professor não cadastrado'}}</td>
                             <td><input  type="text" class="form-control" size="6" name="ida"></td>
                             <td><input type="text" class="form-control" size="6" name="volta"></td>
                             <td><input  type="text" class="form-control" size="6" name="trajeto"></td>
                             <td><input type="text" class="form-control" size="6" name="requisicao"></td>
-                            <td><button type="submit" size="4" class="btn btn-primary" @if($agendamento->dadosProfessor($banca->codpes) == null) disabled @endif><b>Gerar documento</b></button></td>
+                            <td><button type="submit" size="4" class="btn btn-primary" @if($agendamento->dadosProfessor($banca['codpesdct']) == null) disabled @endif><b>Gerar documento</b></button></td>
                         </form>
                     </tr>
                 @endforeach
@@ -151,16 +151,16 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($agendamento->bancas as $banca)
+                @foreach($agendamento->banca as $banca)
                     <tr>
-                        <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->codpes}}/auxilio_passagem" class="form-group" method="POST">
+                        <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca['codpesdct']}}/auxilio_passagem" class="form-group" method="POST">
                             @csrf
-                            <td>{{$agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}</td>
+                            <td>{{$agendamento->dadosProfessor($banca['codpesdct'])->nome ?? 'Professor não cadastrado'}}</td>
                             <td><input  type="text" size="6" class="form-control datepicker" name="partida"></td>
                             <td><input  type="text" size="6" class="form-control datepicker" name="retorno"></td>
                             <td><input  type="text" size="6" class="form-control" name="itinerario"></td>
                             <td><input type="text" size="6" class="form-control"name="processo"></td>
-                            <td><button type="submit" size="4" class="btn btn-primary" @if($agendamento->dadosProfessor($banca->codpes) == null) disabled @endif><b>Gerar Documento</b></button></td>
+                            <td><button type="submit" size="4" class="btn btn-primary" @if($agendamento->dadosProfessor($banca['codpesdct']) == null) disabled @endif><b>Gerar Documento</b></button></td>
                         </form>
                     </tr>
                 @endforeach
@@ -178,12 +178,12 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($agendamento->bancas as $banca)
+            @foreach($agendamento->banca as $banca)
                 <tr>
-                    <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca->codpes}}/recibos/exibir_email_docente" class="form-group" method="POST">
+                    <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca['codpesdct']}}/recibos/exibir_email_docente" class="form-group" method="POST">
                         @csrf
-                        <td>{{ $agendamento->dadosProfessor($banca->codpes)->nome ?? 'Professor não cadastrado'}}</td>
-                        <td><button type="submit" size="4" class="btn btn-primary" @if($agendamento->dadosProfessor($banca->codpes) == null) disabled @endif><b>Visualizar E-mail</b></button></td>
+                        <td>{{ $agendamento->dadosProfessor($banca['codpesdct'])->nome ?? 'Professor não cadastrado'}}</td>
+                        <td><button type="submit" size="4" class="btn btn-primary" @if($agendamento->dadosProfessor($banca['codpesdct']) == null) disabled @endif><b>Visualizar E-mail</b></button></td>
                     </form>
                 </tr>
             @endforeach

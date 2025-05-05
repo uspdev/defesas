@@ -21,7 +21,6 @@ use App\Actions\DadosProfessorAction;
 use App\Actions\MapCodpesNomeAction;
 use App\Services\ReplicadoService;
 use App\Services\AgendamentoService;
-use App\Http\Requests\JanusRequest;
 
 class AgendamentoController extends Controller
 {
@@ -53,7 +52,6 @@ class AgendamentoController extends Controller
     }
 
     public function create(Agendamento $agendamento){
-        dump('create');
         $this->authorize('admin');
         return view('agendamentos.create', compact('agendamento'));
 
@@ -62,9 +60,8 @@ class AgendamentoController extends Controller
         /* return view('agendamentos.create')->with('agendamento', $agendamento); */
     }
 
-    public function store(JanusRequest $request, AgendamentoService $agendamentoService){
+    public function store(AgendamentoRequest $request, AgendamentoService $agendamentoService){
     /* public function store(AgendamentoRequest $request) */
-        dump("store");
         $this->authorize('admin');
         $alunoPos = ReplicadoService::getAlunoPos($request->codpes);
         if($alunoPos) {
@@ -104,22 +101,19 @@ class AgendamentoController extends Controller
 
     public function show(Agendamento $agendamento)
     {
-        dump('show');
         $this->authorize('biblioteca');
         $agendamento = DadosJanusAction::handle($agendamento);
-        #dd($agendamento);
         return view('agendamentos.show', compact(['agendamento']));
     }
 
     public function edit(Agendamento $agendamento)
     {
-        dump('edit');
         $this->authorize('admin');
         $agendamento = DadosJanusAction::handle($agendamento);
         return view('agendamentos.edit')->with('agendamento', $agendamento);
     }
 
-    public function update(JanusRequest $request, Agendamento $agendamento)
+    public function update(AgendamentoRequest $request, Agendamento $agendamento)
     {
         $this->authorize('admin');
         $agendamento->update($request->validated());
