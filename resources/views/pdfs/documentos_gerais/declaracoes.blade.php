@@ -73,7 +73,7 @@
         @foreach($bancas as $banca)
         <div class="col">
             <b>{{ $banca['nompesttd'] ?? 'Professor não cadastrado' }}</b>
-            <b>{{ $banca['setor']['sglclgund'] ? $banca['setor']['sglclgund'] . ' - USP' : ''}}</b>
+            <b>{{ $banca['setor']['sglclgund'] }} {{ ($banca['tipvin'] == 'SERVIDOR') ? ' - USP' : '' }}</b>
         </div>
             @endforeach
         <div style="margin-top:2cm;" align="center">

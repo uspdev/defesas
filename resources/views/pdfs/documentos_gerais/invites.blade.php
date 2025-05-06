@@ -65,8 +65,8 @@
       </div><br>
 
       <div class="moremargin">Subject: @if($agendamento->nivpgm == 'Mestrado') <b>Master's</b> @else <b>Doctorate's</b> @endif Examination Committee</div>
-      <div class="moremargin">Candidate: <b>{{ $agendamento->nome }}</b> </div>
-      <div class="moremargin">Area: <b>{{ $agendamento->area['nomareigl'] }}</b> </div>
+      <div class="moremargin">Candidate: <b>{{ $agendamento->aluno }}</b> </div>
+      <div class="moremargin">Area: <b>{{ $agendamento->area['nomareigl'] ?? $agendamento->area['nomare'] }}</b> </div>
       <div class="moremargin">Supervisor: {{ $agendamento->orientador['nompesttd'] }}</div>
       <div class="moremargin">Title of the thesis: <i>{{ $agendamento->trabalho['tittrbigl'] ?? $agendamento->trabalho['tittrb'] }} </i></div>
       <div class="importante">

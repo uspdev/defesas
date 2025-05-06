@@ -29,6 +29,7 @@ class PdfController extends Controller
         $this->authorize('admin');
         $configs = Config::orderbyDesc('created_at')->first();
         $agendamento = DadosJanusAction::handle($agendamento);
+        /* dd($agendamento); */
         if($tipo == 'placa'){
             $pdf = PDF::loadView('pdfs.documentos_gerais.placa', compact('agendamento'))->setPaper('a4', 'landscape');
             return $pdf->download('placa.pdf');

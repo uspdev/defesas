@@ -74,11 +74,11 @@
         <br>
 
         <div class="boxSuplente">
-          <div class="moremargin">Assunto: Banca Examinadora de <b>{{ $agendamento->nivel }}</b></div>
-          <div class="moremargin">Candidato(a): <b>{{ $agendamento->nome }}</b> </div>
+          <div class="moremargin">Assunto: Banca Examinadora de <b>{{ $agendamento->nivpgm }}</b></div>
+          <div class="moremargin">Candidato(a): <b>{{ $agendamento->aluno }}</b> </div>
           <div class="moremargin">Área: <b>{{ $agendamento->area['nomare'] }}</b> </div>
           <div class="moremargin">Orientador(a) Prof(a). Dr(a). {{ $agendamento->orientador['nompesttd'] }}</div>
-          <div class="moremargin">Título do Trabalho: <i>{{ $agendamento->titulo }} </i></div>
+          <div class="moremargin">Título do Trabalho: <i>{{ $agendamento->trabalho['tittrb'] }} </i></div>
         </div>
 
         <br>

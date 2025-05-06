@@ -1,5 +1,3 @@
-@inject('pessoa','Uspdev\Replicado\Pessoa')
-
 @extends('laravel-fflch-pdf::main')
 @section('other_styles')
 <style type="text/css">
@@ -71,7 +69,7 @@
   <br><br>
   <div align="right">
     @php(setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese'))
-    Graduate Studies Services of University of São Paulo, {{Carbon\Carbon::parse($agendamento['data_horario'])->format('F jS\, Y')}}
+    Graduate Studies Services of University of São Paulo, {{ Carbon\Carbon::parse($agendamento->data_horario)->format('F jS\, Y') }}
   </div><br>
 @endsection('content')
 

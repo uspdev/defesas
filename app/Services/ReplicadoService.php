@@ -36,8 +36,12 @@ class ReplicadoService
         $param = [
             'codare' => $codare
         ];
+        $result = DBreplicado::fetch($query, $param);
 
-        return DBreplicado::fetch($query, $param);
+        return [
+            'nomare' => $result['nomare'] <> '' ? $result['nomare'] : null,
+            'nomareigl' => $result['nomareigl'] <> '' ? $result['nomareigl'] : null
+        ];
     }
 
     public static function getOrientador(int $codpespgm, int $codare, int $numseqpgm) {
@@ -83,8 +87,12 @@ class ReplicadoService
             'codare' => $codare,
             'numseqpgm' => $numseqpgm
         ];
+        $result =  DBreplicado::fetch($query, $param);
 
-        return DBreplicado::fetch($query, $param);
+        return [
+            'tittrb' => $result['tittrb'] <> '' ? $result['tittrb'] : null,
+            'tittrbigl' => $result['tittrbigl'] <> '' ? $result['tittrbigl'] : null
+        ];
     }
 
     public static function getComplementoTrabalho(int $codpes, $dtacad) {

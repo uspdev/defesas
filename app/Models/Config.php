@@ -24,10 +24,11 @@ class Config extends Model
         $configs['oficio_suplente'] = str_replace(
             [
                 "%data_oficio_suplente",
-                "%nome_sala","%predio"
+                "%nome_sala",
+                "%predio"
             ],
             [
-                date('%d de %B de %Y', strtotime($agendamento->data_horario))." - ". $agendamento['horario'],
+                Carbon::parse($agendamento['data_horario'])->translatedFormat('d \\de F \\de Y'),
                 $agendamento['sala'],
                 'FFLCH'
             ],
@@ -52,11 +53,11 @@ class Config extends Model
             ],
             [
                 $professor ?? 'Professor não cadastrado' ,
-                $agendamento['nivel'],
-                $agendamento['nome'],
-                $agendamento['titulo'],
-                $agendamento['area']['nomare'],
-                $agendamento['orientador']['nompesttd'] ?? 'Professor não cadastrado' ,
+                $agendamento->nivpgm,
+                $agendamento->aluno,
+                $agendamento->trabalho['tittrb'],
+                $agendamento->area['nomare'],
+                $agendamento->orientador['nompesttd'] ?? 'Professor não cadastrado' ,
             ],
             $configs['declaracao']
         );
@@ -81,12 +82,12 @@ class Config extends Model
             ],
             [
                 $professor ?? 'Professor não cadastrado' ,
-                $agendamento['nivel'] == 'Mestrado' ? "Master's" : "Doctorate's",
-                $agendamento['nome'],
-                $agendamento['title'] ?? $agendamento['titulo'],
-                $agendamento['area']['nomareigl'],
-                $agendamento['orientador']['nompesttd'] ?? 'Professor não cadastrado' ,
-                Carbon::parse($agendamento['data_horario'])->format('F jS\, Y')
+                $agendamento->nivpgm == 'Mestrado' ? "Master's" : "Doctorate's",
+                $agendamento->aluno,
+                $agendamento->trabalho['tittrbigl'] ?? $agendamento->trabalho['tittrb'],
+                $agendamento->area['nomareigl'] ?? $agendamento->area['nomare'],
+                $agendamento->orientador['nompesttd'] ?? 'Professor não cadastrado' ,
+                Carbon::parse($agendamento->data_horario)->format('F jS\, Y')
             ],
             $configs['statement']
         );

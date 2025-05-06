@@ -17,7 +17,7 @@
   <b>
     <table width="18cm">
       <tr>
-        <td width="9cm" > Nome: {{$agendamento->nome}} </td>
+        <td width="9cm" > Nome: {{$agendamento->aluno}} </td>
         <td> Data da Defesa: {{date('d/m/Y', strtotime($agendamento->data_horario))}} </td>
       </tr>
       <tr>
