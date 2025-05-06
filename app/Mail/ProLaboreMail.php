@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Collection;
 use App\Models\Agendamento;
 use App\Models\Docente;
 
@@ -19,10 +20,10 @@ class ProLaboreMail extends Mailable
      *
      * @return void
      */
-    public function __construct(Agendamento $agendamento, Docente $docente)
+    public function __construct(Agendamento $agendamento, Collection $docente)
     {
         $this->agendamento = $agendamento;
-        $this->docente = $docente;    
+        $this->docente = $docente;
     }
 
     /**
@@ -32,7 +33,7 @@ class ProLaboreMail extends Mailable
      */
     public function build()
     {
-        $subject = "Pagamento de Pró-Labore para banca de Doutorado  - {$this->docente->nome}";
+        $subject = "Pagamento de Pró-Labore para banca de Doutorado  - {$this->docente['nompesttd']}";
 
         return $this->view('emails.pro_labore')
         ->to('tesouraria@fflch.usp.br')
@@ -40,6 +41,6 @@ class ProLaboreMail extends Mailable
         ->with([
             'agendamento' => $this->agendamento,
             'docente' => $this->docente,
-        ]);    
+        ]);
     }
 }

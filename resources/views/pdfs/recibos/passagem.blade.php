@@ -40,10 +40,10 @@
 	<br>
     <ul>
 		<li>Requisição passagem aérea nº <b>{{ $dados->requisicao }} </b> </li>
-		<li>Programa: <b>{{ $agendamento['area']['nomare'] }} </b> </li>
-    <li><b>{{ $agendamento['nivel'] }} </b> </li>
-		<li>Defesa do Sr.(a): <b> {{ $agendamento['nome'] }} </b> </li>
-		<li>Orientador(a): Prof(a) Dr(a)<b> {{ $agendamento['orientador'] }} </b> </li>
+    <li>Programa: <b>{{ $agendamento->area['nomare'] }} </b> </li>
+    <li><b>{{ $agendamento->nivpgm }} </b> </li>
+    <li>Defesa do Sr.(a): <b> {{ $agendamento->aluno }} </b> </li>
+    <li>Orientador(a): Prof(a) Dr(a)<b> {{ $agendamento->orientador['nompesttd'] }} </b> </li>
     </ul>
 	<div class="justificar" style="text-indent:1cm;" >{!! $configs->agencia_texto !!} </div>
 	<div class="importante">

@@ -37,7 +37,7 @@
     <tr>
       <td>
       @php(setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese'))
-      <div class="justificar">	Recebi da Fundação CAPES / <b>{{ $coordenador }}</b> a importância de <b>{{ $dados->importancia }}</b>, em caráter eventual e sem vínculo empregatício, a título de DIÁRIAS(S), no período de <b>{{$dados->periodo}}</b> pela participação na banca examinadora de <b>{{$agendamento->nivel}}</b> de <b>{{$agendamento->nome}}</b>, no dia <b>{{strftime("%d de %B de %Y", strtotime($agendamento->data_horario))}}.</b></div>
+      <div class="justificar">	Recebi da Fundação CAPES / <b>{{ $coordenador }}</b> a importância de <b>{{ $dados->importancia }}</b>, em caráter eventual e sem vínculo empregatício, a título de DIÁRIAS(S), no período de <b>{{$dados->periodo}}</b> pela participação na banca examinadora de <b>{{$agendamento->nivpgm}}</b> de <b>{{$agendamento->aluno}}</b>, no dia <b>{{strftime("%d de %B de %Y", strtotime($agendamento->data_horario))}}.</b></div>
         <table width="15cm" cellspacing="0" cellpadding="0">
           <tr >
             <td ><b>Deduções(*)  </td>

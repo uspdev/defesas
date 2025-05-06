@@ -112,9 +112,8 @@ class Config extends Model
             ],
             [
                 $professor['nompesttd'] ?? 'Professor não cadastrado',
-                $agendamento->nome,
-                date("%d de %B de %Y",
-                strtotime($agendamento->data_horario)) ." às " . date('H:i', strtotime($agendamento->data_horario)),
+                $agendamento->aluno,
+                Carbon::parse($agendamento['data_horario'])->translatedFormat('d \\de F \\de Y \à\s H:i'),
                 $agendamento->sala,
                 $agendamento->id,
                 $professor['codpesdct'],
@@ -167,10 +166,7 @@ class Config extends Model
 
     public static function configMailProLabore($agendamento, $docente){
         $configs = Config::orderbyDesc('created_at')->first();
-        #$departamento = ReplicadoUtils::departamentoPrograma($agendamento['orientador'])['nomset'];
-        #$nome_area = ReplicadoUtils::nomeAreaPrograma($agendamento['area_programa']);
         setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese');
-        $datahora = date("%d de %B de %Y", strtotime($agendamento['data_horario']))." às ".date('H:i',strtotime($agendamento['data_horario']));
         $configs['mail_pro_labore'] = str_replace(
             [
                 "%candidato",
@@ -181,22 +177,16 @@ class Config extends Model
                 "%nusp",
                 "%pispasep",
                 "%cpf",
-                "%banco",
-                "%agencia",
-                "%conta"
             ],
             [
-                $agendamento['nome'],
-                $nome_area,
-                $departamento,
-                $datahora,
-                $docente['nome'],
-                $docente['n_usp'],
-                $docente['pis_pasep'],
-                $docente['cpf'],
-                $docente['banco'],
-                $docente['agencia'],
-                $docente['c_corrente']
+                $agendamento->aluno,
+                $agendamento->area['nomare'],
+                $agendamento->orientador['nomset'],
+                Carbon::parse($agendamento['data_horario'])->translatedFormat('d \\de F \\de Y \à\s H:i'),
+                $docente['nompesttd'],
+                $docente['codpesdct'],
+                $docente['documentos']['numpispsp'],
+                $docente['documentos']['numcpf'],
             ],
             $configs['mail_pro_labore']
         );
@@ -206,7 +196,7 @@ class Config extends Model
     public static function configMailReciboExterno($agendamento, $docente, $dados){
         $configs = Config::orderbyDesc('created_at')->first();
         setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese');
-        $datahora = date("%d de %B de %Y", strtotime($agendamento['data_horario']))." às ".date('H:i',strtotime($agendamento['data_horario']));
+        $datahora = Carbon::parse($agendamento['data_horario'])->translatedFormat('d \\de F \\de Y \à\s H:i');
         //acessando $dados como array (devido ao método queue no Mail)
         if($dados['diaria'] == "diaria_simples"){
             $diaria = "<p><b>Diária Simples:</b> {$configs->diaria_simples}</p>";
@@ -238,9 +228,9 @@ class Config extends Model
                 $dados['ida'],
                 $dados['volta'],
                 $docente['email'],
-                $agendamento['area']['nomare'],
-                $agendamento['nivel'],
-                $agendamento['nome'],
+                $agendamento->area['nomare'],
+                $agendamento->nivpgm,
+                $agendamento->aluno,
                 $datahora,
                 $diaria
             ],

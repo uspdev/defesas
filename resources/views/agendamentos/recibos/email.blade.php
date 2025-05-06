@@ -8,7 +8,7 @@
         <div class="card-body">
             <p> <i> Copiar esse dados e colar em corpo de e-mail para: tesourariafflch@usp.br </p> </i> <br>
 
-            <h4> <u> Pagamento de Pró-Labore para banca de {{ $agendamento->nivel }} </u> </h4>
+            <h4> <u> Pagamento de Pró-Labore para banca de {{ $agendamento->nivpgm }} </u> </h4>
             <p>Candidato(a): <b> {{$agendamento->nome}} </b> </p>
             <p>Programa: <b>{{ $agendamento->area['nomare'] }}</b> / <b>Departamento de {{ $agendamento->orientador['nomset'] }} </b> </p>
             @php(setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese'))
@@ -16,7 +16,6 @@
             <br>
             Item(s):
             <p>Prof. Dr. {{ $docente['nompesttd'] }} - Número USP: {{ $docente['codpesdct'] }} - PIS/PASEP: {{ $docente['documentos']['numpispsp'] }} - CPF: {{ $docente['documentos']['numcpf'] }}</p>
-            <p>Banco: {{ $docente['banco'] ?? '' }} - Agência: {{ $docente['agencia'] ?? '' }} - Conta: {{ $docente['c_corrente'] ?? '' }} </p>
             <br>
             <hr />
 <!-- a pedido do usuario. serve somente para copiar  -->

@@ -19,6 +19,7 @@ use Storage;
 use App\Actions\DadosJanusAction;
 use App\Actions\DadosProfessorAction;
 use App\Actions\MapCodpesNomeAction;
+use App\Actions\DocenteAction;
 use App\Services\ReplicadoService;
 use App\Services\AgendamentoService;
 
@@ -144,8 +145,10 @@ class AgendamentoController extends Controller
         return redirect('/agendamentos/'.$agendamento->id);
     }
 
-    public function enviarEmailProLabore(Agendamento $agendamento, Docente $docente){
+    public function enviarEmailProLabore(Agendamento $agendamento, int $codpes){
         $this->authorize('admin');
+        $agendamento = DadosJanusAction::handle($agendamento);
+        $docente = DocenteAction::handle($agendamento->banca, $codpes);
         Mail::queue(new ProLaboreMail($agendamento, $docente));
         return redirect('/agendamentos/'.$agendamento->id);
     }

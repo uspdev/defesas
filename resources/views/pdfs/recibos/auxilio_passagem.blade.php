@@ -15,7 +15,7 @@
     <left> {!! $configs->header_auxilio !!} </left>
     <left> <u><b>{{ $dados->processo }}</b></u> </left> <br>
 
-    <p> Banca de defesa de <b> {{ $agendamento['nome'] }} </p>
+    <p> Banca de defesa de <b> {{ $agendamento->aluno }} </p>
     <p> Passageiro(a) {{ $docente['nompesttd'] ?? 'Professor não cadastrado'}} </p>
     <p> Itinerário: {{ $dados->itinerario }} </p>
     <p> Partida: {{ $dados->partida }}</p>

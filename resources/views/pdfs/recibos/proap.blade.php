@@ -60,7 +60,7 @@
       </tr>
       <tr>
         <td style="border:0px;">Pós Graduação em: </td>
-        <td style="border:0px;"> {{ $agendamento['area']['nomare'] }} </td>
+        <td style="border:0px;"> {{ $agendamento->area['nomare'] }} </td>
         <td style="border:0px;"> Mês: </td>
         @php(setlocale(LC_TIME, 'pt_BR','pt_BR.utf-8','portuguese'))
         <td style="border:0px;"> <b> {{ strftime("%B de %Y", strtotime($agendamento->data_horario)) }}</b> </td>
@@ -118,7 +118,7 @@
 
     <center> <b> {{ $docente['email'] ?? ' '}}</b> </center>
     <br> <center> <b>RELATÓRIO </center></b> <br> <div class="justificar">  {!! $configs->capes_proap !!} </div>
-    Banca de: {{$agendamento->nome}} <br><br><br><br><br><br><br>
+    Banca de: {{$agendamento->aluno}} <br><br><br><br><br><br><br>
     <table width="18cm">
       <tr>
         <td style="border:none;"> <hr style="width:10cm;">
