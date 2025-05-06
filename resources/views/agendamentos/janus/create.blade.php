@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-8">
             <div class="card">
-                <div class="card-header"><b>Agendamentos - Create</b></div>
+                <div class="card-header"><b>Agendamentos - Novo</b></div>
                 <div class="card-body">
                     <form method="post" action="/janus">
                         @csrf

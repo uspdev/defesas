@@ -13,7 +13,7 @@
     <div class="col">
     <label for="tipo_defesa">Tipo da Defesa</label>
         <select class="form-control" name="tipo_defesa" id="tipo_defesa">
-            @foreach($agendamento::tipoDefesaOptions() as $option)
+            @foreach($agendamento::tipos() as $option)
                 <option value="{{$option}}">{{$option}}</option>
             @endforeach
         </select>
@@ -42,7 +42,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         let container = document.createElement('input');
         let tipoDefesaSelect = document.getElementById('tipo_defesa');
-        
+
         tipoDefesaSelect.addEventListener('change', function() {
             if (tipoDefesaSelect.value === 'Virtual') {
                 createInput();
@@ -65,7 +65,7 @@
             row.appendChild(div);
             div.appendChild(container);
             let parentDiv = tipoDefesaSelect.closest('.row');
-            
+
             if (!document.querySelector('input[name="sala_virtual"]')) {
                 parentDiv.appendChild(row);
             }

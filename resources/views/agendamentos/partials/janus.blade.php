@@ -1,5 +1,5 @@
   <div class="card" style="margin-bottom: 0.5em;">
-      <div class="card-header"><b>Dados do Janus</b></div>
+      <div class="card-header"><b>Dados da tese</b></div>
       <div class="card-body">
         <b>Título:</b> {{ $agendamento->trabalho['tittrb'] ?? '' }}</br>
         <b>Palavras-chave:</b> {{ $agendamento->trabalho['palcha'] ?? '' }}</br>
