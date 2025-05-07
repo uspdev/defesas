@@ -49,7 +49,7 @@ Route::post('/agendamentos/{agendamento}/bancas/{codpes}/recibos/exibir_email_do
 //Rota para envio de e-mails
 Route::post('agendamentos/recibo_externo/{agendamento}/{codpes}', [AgendamentoController::class,'enviarEmailReciboExterno']);
 Route::post('agendamentos/pro_labore/{agendamento}/{docente}', [AgendamentoController::class,'enviarEmailProLabore']);
-Route::post('agendamentos/passagem/{agendamento}/{banca}', [AgendamentoController::class,'enviarEmailPassagem']);
+Route::post('agendamentos/passagem/{agendamento}/{codpes}', [AgendamentoController::class,'enviarEmailPassagem']);
 Route::post('agendamentos/dados_prof_externo/{agendamento}/{banca}', [AgendamentoController::class,'enviarEmailDeConfirmacaoDadosProfExterno']);
 
 Route::get('/pendencia_sala_virtual', [AgendamentoController::class, 'pendencia']);

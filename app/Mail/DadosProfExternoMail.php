@@ -12,16 +12,14 @@ class DadosProfExternoMail extends Mailable
 {
     use Queueable, SerializesModels;
     private $docente;
-    private $email;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Docente $docente, $email)
+    public function __construct($docente)
     {
         $this->docente = $docente;
-        $this->email = $email;    
     }
 
     /**
@@ -31,12 +29,12 @@ class DadosProfExternoMail extends Mailable
      */
     public function build()
     {
-        $subject = "Atualização e Confirmação de Dados Cadastrais de Professor Externo - {$this->docente->nome}";
+        $subject = "Atualização e Confirmação de Dados Cadastrais de Professor Externo - {$this->docente['nompesttd']}";
         return $this->view('emails.dados_prof_externo')
-        ->to($this->email)
+        ->to($this->docente['email'])
         ->subject($subject)
         ->with([
             'docente' => $this->docente,
-        ]);    
+        ]);
     }
 }

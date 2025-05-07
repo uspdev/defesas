@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agendamento;
-use App\Models\Banca;
 use App\Models\Docente;
 use Illuminate\Http\Request;
 use App\Http\Requests\AgendamentoRequest;
 use Carbon\Carbon;
-use Uspdev\Replicado\Pessoa;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ReciboExternoMail;
 use App\Mail\ProLaboreMail;
@@ -148,49 +146,22 @@ class AgendamentoController extends Controller
         ]);
     }
 
-    public function enviarEmailPassagem(Agendamento $agendamento, Banca $banca){
+    public function enviarEmailPassagem(Agendamento $agendamento, int $codpes){
         $this->authorize('admin');
-        $docente = Docente::where('n_usp',$banca->codpes)->first();
-        $emails = Pessoa::emails($docente->n_usp);
-        foreach($emails as $email){
-            if($email != '') Mail::queue(new PassagemMail($agendamento, $docente, $email));
-        }
+        $agendamento = DadosJanusAction::handle($agendamento);
+        $docente = DocenteAction::handle($agendamento->banca, $codpes);
+        Mail::queue(new PassagemMail($agendamento, $docente));
+
         return redirect('/agendamentos/'.$agendamento->id);
     }
 
-    public function enviarEmailDeConfirmacaoDadosProfExterno(Agendamento $agendamento, Banca $banca){
+    public function enviarEmailDeConfirmacaoDadosProfExterno(Agendamento $agendamento, int $codpes){
         $this->authorize('admin');
-        $docente = Docente::where('n_usp',$banca->codpes)->first();
-        $emails = Pessoa::emails($docente->n_usp);
-        foreach($emails as $email){
-            if($email != '') Mail::queue(new DadosProfExternoMail($docente, $email));;
-        }
+        $agendamento = DadosJanusAction::handle($agendamento);
+        $docente = DocenteAction::handle($agendamento->banca, $codpes);
+        Mail::queue(new DadosProfExternoMail($docente));;
+
         return redirect('/agendamentos/'.$agendamento->id);
-    }
-
-    /*Api para entregar nome do(a) aluno(a) no blade */
-    public function info(Request $request){
-        if(empty($request->codpes)){
-            return response('Pessoa não encontrada');
-        }
-
-        if(!is_int((int)$request->codpes)){
-            return response('Pessoa não encontrada');
-        }
-
-        if(strlen($request->codpes) < 6){
-            return response('Pessoa não encontrada');
-        }
-
-        $info = Pessoa::nomeCompleto($request->codpes);
-        if($info){
-            $infos['nome'] = Pessoa::nomeCompleto($request->codpes);
-            $infos['sexo'] = Pessoa::dump($request->codpes)['sexpes'];
-            return response($infos);
-        }
-        else{
-            return response('Pessoa não encontrada');
-        }
     }
 
     public function job_email_prof(Agendamento $agendamento, Docente $docente){

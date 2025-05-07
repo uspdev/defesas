@@ -126,7 +126,13 @@ class Config extends Model
 
     public static function configMailDadosProfExterno($docente){
         $configs = Config::orderbyDesc('created_at')->first();
-        $endereco = $docente['endereco']." ".$docente['bairro']." CEP:".$docente['cep']." ".$docente['cidade']."/".$docente['estado'];
+        $endereco = $docente['nomtiplgr'] . " " .
+            $docente['epflgr'] . " " .
+            $docente['numlgr'] . " " .
+            $docente['nombro'] . " CEP: " .
+            $docente['codendptl'] . " " .
+            $docente['cidloc'] . "/" .
+            $docente['sglest'];
         $configs['mail_dados_prof_externo'] = str_replace(
             [
                 "%docente",
@@ -134,9 +140,9 @@ class Config extends Model
                 "%telefones"
             ],
             [
-                $docente['nome'],
+                $docente['nompesttd'],
                 $endereco,
-                $docente['telefone']
+                implode(" - ", $docente['telefones'])
             ],
             $configs['mail_dados_prof_externo']
         );
@@ -154,10 +160,10 @@ class Config extends Model
                 "%sala"
             ],
             [
-                $docente['nome'],
-                $agendamento['nome'],
-                date("%d de %B de %Y", strtotime($agendamento['data_horario'])) . " às " . date('H:i',strtotime($agendamento["data_horario"])),
-                $agendamento['sala']
+                $docente['nompesttd'],
+                $agendamento->aluno,
+                Carbon::parse($agendamento['data_horario'])->translatedFormat('d \\de F \\de Y \à\s H:i'),
+                $agendamento->sala
             ],
             $configs['mail_passagem']
         );

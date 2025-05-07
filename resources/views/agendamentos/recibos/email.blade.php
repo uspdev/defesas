@@ -1,8 +1,6 @@
 @extends('laravel-usp-theme::master')
 
 @section('content')
-    @inject('replicado','App\Utils\ReplicadoUtils')
-
     <div class="card">
         <div class="card-header">Recibo de diária para docentes externos</div>
         <div class="card-body">

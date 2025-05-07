@@ -15,17 +15,15 @@ class PassagemMail extends Mailable
     use Queueable, SerializesModels;
     private $agendamento;
     private $docente;
-    private $email;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Agendamento $agendamento, Docente $docente, $email)
+    public function __construct($agendamento, $docente)
     {
         $this->agendamento = $agendamento;
         $this->docente = $docente;
-        $this->email = $email;    
     }
 
     /**
@@ -35,13 +33,13 @@ class PassagemMail extends Mailable
      */
     public function build()
     {
-        $subject = "Dados de passagem - Participação em Banca  - {$this->docente->nome}";
+        $subject = "Dados de passagem - Participação em Banca  - {$this->docente['nompesttd']}";
         return $this->view('emails.passagem')
-        ->to($this->email)
+        ->to($this->docente['email'])
         ->subject($subject)
         ->with([
             'agendamento' => $this->agendamento,
             'docente' => $this->docente,
-        ]);    
+        ]);
     }
 }
