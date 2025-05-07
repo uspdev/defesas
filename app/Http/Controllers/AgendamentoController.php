@@ -15,7 +15,7 @@ use App\Mail\ProLaboreMail;
 use App\Mail\PassagemMail;
 use App\Mail\DadosProfExternoMail;
 use App\Jobs\SendDailyMail;
-use Storage;
+use Illuminate\Support\Facades\Storage;
 use App\Actions\DadosJanusAction;
 use App\Actions\DadosProfessorAction;
 use App\Actions\MapCodpesNomeAction;
@@ -54,15 +54,11 @@ class AgendamentoController extends Controller
 
     public function create(Agendamento $agendamento){
         $this->authorize('admin');
-        return view('agendamentos.create', compact('agendamento'));
 
-        /* $this->authorize('admin'); */
-        /* $agendamento = new Agendamento; */
-        /* return view('agendamentos.create')->with('agendamento', $agendamento); */
+        return view('agendamentos.create', compact('agendamento'));
     }
 
     public function store(AgendamentoRequest $request, AgendamentoService $agendamentoService){
-    /* public function store(AgendamentoRequest $request) */
         $this->authorize('admin');
         $alunoPos = ReplicadoService::getAlunoPos($request->codpes);
         if($alunoPos) {
@@ -71,39 +67,13 @@ class AgendamentoController extends Controller
         }
 
         return back()->with('alert-danger','Aluno não encontrado ou Defesa não consolidada no Janus!');
-
-        /* $this->authorize('admin'); */
-        /* $validated = $request->validated(); */
-        /* if($validated['nome'] == ''){ */
-        /*     $validated['nome'] = Pessoa::dump($validated['codpes'])['nompes']; */
-        /* } */
-        /* $validated['nome_orientador'] = Pessoa::dump($validated['orientador'])['nompes']; */
-        /* $agendamento = Agendamento::create($validated); */
-        /* //Salva o orientador na banca */
-        /* $banca = new Banca; */
-        /* $banca->codpes = $validated['orientador']; */
-        /* $banca->presidente = 'Sim'; */
-        /* $banca->tipo = 'Titular'; */
-        /* $banca->agendamento_id = $agendamento->id; */
-        /* $agendamento->bancas()->save($banca); */
-        /* //Salva o co-orientador na banca */
-        /* if($validated['co_orientador']){ */
-        /*     $validated['nome_co_orientador'] = Pessoa::dump($validated['co_orientador'])['nompes']; */
-        /*     $banca = new Banca; */
-        /*     $banca->codpes = $validated['co_orientador']; */
-        /*     $banca->presidente = 'Não'; */
-        /*     $banca->tipo = 'Titular'; */
-        /*     $banca->agendamento_id = $agendamento->id; */
-        /*     $agendamento->bancas()->save($banca); */
-        /* } */
-        /**/
-        /* return redirect("/agendamentos/$agendamento->id"); */
     }
 
     public function show(Agendamento $agendamento)
     {
         $this->authorize('biblioteca');
         $agendamento = DadosJanusAction::handle($agendamento);
+
         return view('agendamentos.show', compact(['agendamento']));
     }
 
@@ -111,6 +81,7 @@ class AgendamentoController extends Controller
     {
         $this->authorize('admin');
         $agendamento = DadosJanusAction::handle($agendamento);
+
         return view('agendamentos.edit')->with('agendamento', $agendamento);
     }
 
@@ -138,10 +109,9 @@ class AgendamentoController extends Controller
         $this->authorize('admin');
         $agendamento = DadosJanusAction::handle($agendamento);
         $docente = DadosProfessorAction::handle($agendamento->banca, $codpes);
-        $dados = $request->all(); //tratado como array agora.
-        /* evitando o erro "Serialization of 'Closure' is not allowed" que dá ao trocar o método send pelo queue.
-*/
+        $dados = $request->all();
         Mail::queue(new ReciboExternoMail($agendamento, $docente, $dados));
+
         return redirect('/agendamentos/'.$agendamento->id);
     }
 
@@ -150,6 +120,7 @@ class AgendamentoController extends Controller
         $agendamento = DadosJanusAction::handle($agendamento);
         $docente = DocenteAction::handle($agendamento->banca, $codpes);
         Mail::queue(new ProLaboreMail($agendamento, $docente));
+
         return redirect('/agendamentos/'.$agendamento->id);
     }
 
