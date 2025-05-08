@@ -25,8 +25,7 @@ Route::resource('docentes',DocenteController::class);
 Route::resource('bancas', BancaController::class);
 Route::resource('files', FileController::class)->only(['store', 'show', 'destroy']);
 
-Route::get('janus/create', [JanusController::class, 'create']);
-Route::post('janus', [JanusController::class, 'store']);
+/* Route::post('janus', [JanusController::class, 'store']); */
 
 // rotas para biblioteca
 Route::get('/teses',[BibliotecaController::class, 'index']);
@@ -50,7 +49,7 @@ Route::post('/agendamentos/{agendamento}/bancas/{codpes}/recibos/exibir_email_do
 Route::post('agendamentos/recibo_externo/{agendamento}/{codpes}', [AgendamentoController::class,'enviarEmailReciboExterno']);
 Route::post('agendamentos/pro_labore/{agendamento}/{docente}', [AgendamentoController::class,'enviarEmailProLabore']);
 Route::post('agendamentos/passagem/{agendamento}/{codpes}', [AgendamentoController::class,'enviarEmailPassagem']);
-Route::post('agendamentos/dados_prof_externo/{agendamento}/{banca}', [AgendamentoController::class,'enviarEmailDeConfirmacaoDadosProfExterno']);
+Route::post('agendamentos/dados_prof_externo/{agendamento}/{codpes}', [AgendamentoController::class,'enviarEmailDeConfirmacaoDadosProfExterno']);
 
 Route::get('/pendencia_sala_virtual', [AgendamentoController::class, 'pendencia']);
 

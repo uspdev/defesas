@@ -24,7 +24,7 @@
                     <tr>
                         @can('logado')<td>{{ $banca['codpesdct'] }}</td>@endcan
                         <td>{{ $banca['nompesttd']  ?? 'Professor não cadastrado'}}</td>
-                        <td>{{ $banca['vinptpbantrb'] }}</td>
+                        <td>{{ $banca['vinptpbantrb'] === 'SUP' ? 'Suplente' : 'Titular' }}{{ $banca['vinptpbantrb'] === 'PRE' ? ' ( Presidente )' : null }}</td>
                         <td>{{ $banca['staptp'] }}</td>
                         @can('admin')
                             <td>

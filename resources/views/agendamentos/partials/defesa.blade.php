@@ -11,7 +11,7 @@
             <b>Data:</b> {{ date('d/m/Y', strtotime($agendamento->data_horario))}} às {{date('H:i', strtotime($agendamento->data_horario))}}</br>
             <b>Local:</b> {{ $agendamento->sala }}</br>
             @if($agendamento->tipo == 'Virtual' || $agendamento->tipo == 'Hibrido')
-            <b>Link da Sala Virtual: </b>{{ $agendamento->sala_virtual ?? 'não encontrado' }}<br/>
+            <b>Link da Sala Virtual: </b>{{ $agendamento->sala_virtual ?? 'não cadastrado' }}<br/>
             @endif
             <b>Tipo da Defesa:</b> {{ $agendamento->tipo }}</br>
             @if($agendamento->status == 1)

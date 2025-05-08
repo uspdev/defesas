@@ -12,7 +12,6 @@ class MapCodpesNomeAction
      */
     public static function handle(Collection $agendamentos): Collection
     {
-        /* dump($agendamentos); */
         if ($agendamentos->count() > 1) {
             $codpes = $agendamentos->map(function ($item) {
                 return $item['codpes'];

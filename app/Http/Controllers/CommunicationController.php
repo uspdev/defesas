@@ -3,29 +3,44 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Http\Request;
-use App\Http\Requests\CommunicationRequest;
 use App\Utils\ReplicadoUtils;
 use App\Models\Agendamento;
-use App\Models\Communication;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\AgendamentoRequest;
+use Illuminate\Support\Carbon;
+use App\Services\ReplicadoService;
+use App\Actions\DadosJanusAction;
 
 class CommunicationController extends Controller
 {
-    public function index(Request $request){
+    public function index(){
         Gate::authorize('comunicacao');
-        
-        $agendamentos = Agendamento::where('status',1)
-        ->orderBy('data_publicacao','desc')
-        ->where('data_publicacao',">=","$request->filtro_ano" . '-01-01 00:00:00')
-        ->where('data_publicacao',"<=","$request->filtro_ano" . '-12-31 23:59:59'); // Não dá pra fazer group by com id...
-        return view('comunicacao.index', ['agendamentos' => $agendamentos->paginate(15)]);
+
+        $agendamentos = Agendamento::select(['id', 'codpes', 'codare', 'numseqpgm', 'data_horario'])
+            ->orderBy('data_horario','desc')
+            ->where('data_horario',">=", Carbon::now()->subMonths(3))
+            ->where('data_horario',"<=", now())
+            ->toBase()
+            ->paginate(15);
+
+        $defesas = collect($agendamentos->items())->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'titulo' => ReplicadoService::getTituloTrabalho($item->codpes, $item->codare, $item->numseqpgm),
+                'nome' => ReplicadoService::getNome($item->codpes),
+                'data_horario' => Carbon::parse($item->data_horario)->format('d/m/Y')
+            ];
+        });
+
+        return view('comunicacao.index', [
+            'agendamentos' => $agendamentos,
+            'defesas' => $defesas,
+        ]);
     }
-    
+
     public function show(Agendamento $agendamento){
         Gate::authorize('comunicacao');
-        $dadosJanus = ReplicadoUtils::retornarDadosComunicacao($agendamento->codpes);
-        return view('comunicacao.show', ['agendamento' => $agendamento, 'dadosJanus' => $dadosJanus]);
+
+        $agendamento = DadosJanusAction::handle($agendamento);
+
+        return view('comunicacao.show', ['agendamento' => $agendamento]);
     }
 }

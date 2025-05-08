@@ -7,10 +7,6 @@ $submenu1 =  [
         'url'  => '/agendamentos/create',
     ],
     [
-        'text' => '<i class="fa fa-globe"></i> Agendar Defesa via Janus',
-        'url' => '/janus/create'
-    ],
-    [
         'text' => '<i class="fas fa-list-alt"></i> Listar Agendamentos',
         'url'  => '/agendamentos',
     ],
@@ -33,7 +29,7 @@ $submenu3 =  [
 
 $submenu4 =  [
     [
-        'text' => 'Defesas aprovadas',
+        'text' => 'Defesas defendidas',
         'url'  => '/comunicacao',
     ]
 ];

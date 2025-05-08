@@ -66,14 +66,20 @@ class ReplicadoService
         ON R.codpesdct = P.codpes
         WHERE R.codpes = convert(int, :codpes) AND
         R.codare = convert(int, :codare) AND
-        R.numseqpgm = convert(int, :numseqpgm)";
+        R.numseqpgm = convert(int, :numseqpgm)
+        ORDER BY R.vinptpbantrb";
         $param = [
             'codpes'    => $codpes,
             'codare'    => $codare,
             'numseqpgm' => $numseqpgm
         ];
 
-        return DBreplicado::fetchAll($query, $param);
+        $result = DBreplicado::fetchAll($query, $param);
+        [$suplentes, $titulares] = collect($result)->partition(function ($item) {
+            return $item['vinptpbantrb'] === 'SUP';
+        })->toArray();
+
+        return array_merge($titulares, $suplentes);
     }
 
     public static function getTituloTrabalho(int $codpes, int $codare, int $numseqpgm) {
@@ -100,7 +106,7 @@ class ReplicadoService
                 FROM DDTENTREGATRABALHO T INNER JOIN DDTDEPOSITOTRABALHO D
                 ON T.coddpodgttrb = D.coddpodgttrb
                 WHERE D.codpes = convert(int, :codpes) AND
-                T.dtaultalt = :dtacad";
+                D.dtadpotrb = :dtacad";
         $param = [
             'codpes' => $codpes,
             'dtacad' => $dtacad

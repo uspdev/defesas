@@ -128,15 +128,15 @@ class Agendamento extends Model
         ];
     }
 
-    public static function retornarAnoPublicacao(){
-        $datas = QueryBuilder::select(
-            "SELECT YEAR(data_publicacao) as data_publicacao FROM agendamentos
-            GROUP BY YEAR(data_publicacao)
-            ORDER BY YEAR(data_publicacao) DESC
-            "
-        );
-        return $datas;
-    }
+    /* public static function retornarAnoPublicacao(){ */
+    /*     $datas = QueryBuilder::select( */
+    /*         "SELECT YEAR(data_publicacao) as data_publicacao FROM agendamentos */
+    /*         GROUP BY YEAR(data_publicacao) */
+    /*         ORDER BY YEAR(data_publicacao) DESC */
+    /*         " */
+    /*     ); */
+    /*     return $datas; */
+    /* } */
 
     public function docente() {
         return $this->hasOne(Docente::class, 'n_usp', 'orientador');
