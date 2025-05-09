@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\indexController;
+use App\Http\Controllers\IndexController;
 use App\Http\Controllers\AgendamentoController;
 use App\Http\Controllers\BancaController;
 use App\Http\Controllers\DocenteController;
@@ -16,7 +16,7 @@ use App\Http\Controllers\CommunicationController;
 use App\Http\Controllers\JanusController;
 
 // rotas para login/logout
-Route::get('/', [indexController::class, 'index'])->name('index');
+Route::get('/', [IndexController::class, 'index'])->name('index');
 Route::get('/anteriores',[indexController::class, 'exibirDefesasAnteriores'])->name('exibirDefesasAnteriores');
 
 // rotas de Agendamento de Defesa

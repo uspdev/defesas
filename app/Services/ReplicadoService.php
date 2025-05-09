@@ -260,4 +260,21 @@ class ReplicadoService
         return DBreplicado::fetchAll($query) ?? [];
     }
 
+    public static function getProgramas() {
+        $codundclgi = getenv('REPLICADO_CODUNDCLG');
+
+        $query = "SELECT DISTINCT (A.codare), N.nomare
+            FROM AREA A INNER JOIN CURSO C ON A.codcur = C.codcur
+            INNER JOIN NOMEAREA N ON N.codare = A.codare
+            INNER JOIN CREDAREA CA ON A.codare = CA.codare
+            WHERE C.codclg = convert(int, :codundclgi)
+            AND N.dtafimare IS NULL";
+        $param = [
+            'codundclgi' => $codundclgi,
+        ];
+
+        return DBreplicado::fetchAll($query, $param);
+
+    }
+
 }
