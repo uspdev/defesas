@@ -47,7 +47,7 @@
         <theader>
           <tr>
             <th>Nº USP</th>
-            <th>Nome</th>
+            <th>Aluno</th>
             <th>Data</th>
             <th>Horário</th>
             <th colspan="2">Ações</th>

@@ -128,21 +128,28 @@ class AgendamentoController extends Controller
         $query = Agendamento::with('docente')
             ->whereNull('sala_virtual')
             ->whereDate('data_horario', '>=', now())
+            ->where('tipo', '=', 'Virtual')
             ->orderBy('data_horario');
-
-        $query->when(!$request->busca, function ($query) {
-            return $query->where('tipo', '=', 'Virtual');
-        });
 
         $query->when($request->busca, function ($query) use ($request) {
             return $query->where('codpes', $request->busca)
-               ->orWhere('orientador', $request->busca)
-               ->where('tipo','=', 'Virtual')
-               ->whereNull('sala_virtual');
+               ->where('tipo','=','Virtual');
         });
 
-        return view('agendamentos.recibos.defesa')->with([
-            'agendamentos' => $query->get(),
+        $agendamentos =  $query->get()->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'codpes' => $item->codpes,
+                'aluno' => ReplicadoService::getNome($item->codpes),
+                'nivpgm' => $item->nivpgm,
+                'trabalho' => ReplicadoService::getTituloTrabalho($item->codpes, $item->codare, $item->numseqpgm),
+                'enviar_email' => $item->enviar_email,
+                'data_horario' => $item->data_horario
+            ];
+        });
+
+        return view('agendamentos.pendencia')->with([
+            'agendamentos' => $agendamentos,
         ]);
     }
 
