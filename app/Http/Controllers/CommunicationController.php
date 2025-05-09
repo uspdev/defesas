@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Gate;
-use App\Utils\ReplicadoUtils;
 use App\Models\Agendamento;
 use Illuminate\Support\Carbon;
 use App\Services\ReplicadoService;

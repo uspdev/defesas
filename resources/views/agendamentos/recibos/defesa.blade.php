@@ -1,6 +1,5 @@
 @extends('laravel-usp-theme::master')
 @section('content')
-
 <div class="container-fluid">
   <div class="row justify-content-center">
     <div class="col-md-8">
@@ -15,7 +14,6 @@
             </div>
           </div>
       </form>
-
       <div class="card">
         <div class="card-header">
           <b>Agendamentos virtuais sem o link da sala virtual</b>
@@ -55,5 +53,4 @@
     </div>
   </div>
 </div>
-
 @endsection

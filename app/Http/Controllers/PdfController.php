@@ -5,12 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Agendamento;
-#use App\Models\Docente;
-use App\Models\Banca;
 use App\Models\Config;
-#use Carbon\Carbon;
-use App\Utils\ReplicadoUtils;
-#use Uspdev\Replicado\Pessoa;
 use App\Actions\DadosJanusAction;
 use App\Actions\TitularesAction;
 use App\Actions\SuplentesAction;
@@ -29,7 +24,6 @@ class PdfController extends Controller
         $this->authorize('admin');
         $configs = Config::orderbyDesc('created_at')->first();
         $agendamento = DadosJanusAction::handle($agendamento);
-        /* dd($agendamento); */
         if($tipo == 'placa'){
             $pdf = PDF::loadView('pdfs.documentos_gerais.placa', compact('agendamento'))->setPaper('a4', 'landscape');
             return $pdf->download('placa.pdf');

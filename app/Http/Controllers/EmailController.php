@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\Agendamento;
-use App\Models\Banca;
 use App\Models\Config;
-use App\Models\Docente;
 use Illuminate\Http\Request;
-use App\Utils\ReplicadoUtils;
 use App\Actions\DadosJanusAction;
 use App\Actions\DocenteAction;
 use App\Actions\DadosProfessorAction;

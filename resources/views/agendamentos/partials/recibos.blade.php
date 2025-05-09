@@ -1,39 +1,39 @@
-
 <div class="card" style="margin-bottom: 0.5em;">
-    <div class="card-header"><b>Recibo de diária para docentes externos</b></div>
+  <div class="card-header"><b>Recibo de diária para docentes externos</b></div>
     <table class="table table-striped" style="text-align:center;">
-        <thead class="thead-light">
-            <tr>
-                <th scope="col">Docente</th>
-                <th scope="col">Ida</th>
-                <th scope="col">Volta</th>
-                <th scope="col">Origem</th>
-                <th scope="col">Diária</th>
-                <th scope="col"></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($agendamento->banca as $banca)
-                <tr>
-                  <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca['codpesdct']}}/recibos/exibir_recibo_externo" class="form-group" method="POST">
-                        @csrf
-                        <td>{{ $banca['nompesttd'] ?? 'Professor não cadastrado' }}</td>
-                        <td> <input type="text" class="datepicker form-control" size="7" autocomplete="off" name="ida"> </td>
-                        <td> <input type="text" class="datepicker form-control" size="7" autocomplete="off" name="volta"> </td>
-                        <td> <input type="text" class="form-control" size="7" name="origem"> </td>
-                        <td>
-                            <select name="diaria" class="form-control">
-                                <option value="diaria_simples" selected="selected"> Simples </option>
-                                <option value="diaria_completa"> Completa </option>
-                                <option value="duas_diarias"> 2 diárias </option>
-                            </select>
-                        </td>
-                        <td> <button type="submit" class="btn btn-primary"><b>Visualizar E-mail</b></button></td>
-                    </form>
-                </tr>
-            @endforeach
-        </tbody>
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Docente</th>
+          <th scope="col">Ida</th>
+          <th scope="col">Volta</th>
+          <th scope="col">Origem</th>
+          <th scope="col">Diária</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach($agendamento->banca as $banca)
+          <tr>
+            <form action="/agendamentos/{{$agendamento->id}}/bancas/{{$banca['codpesdct']}}/recibos/exibir_recibo_externo" class="form-group" method="POST">
+              @csrf
+              <td>{{ $banca['nompesttd'] ?? 'Professor não cadastrado' }}</td>
+              <td> <input type="text" class="datepicker form-control" size="7" autocomplete="off" name="ida"> </td>
+              <td> <input type="text" class="datepicker form-control" size="7" autocomplete="off" name="volta"> </td>
+              <td> <input type="text" class="form-control" size="7" name="origem"> </td>
+              <td>
+                <select name="diaria" class="form-control">
+                  <option value="diaria_simples" selected="selected"> Simples </option>
+                  <option value="diaria_completa"> Completa </option>
+                  <option value="duas_diarias"> 2 diárias </option>
+                </select>
+              </td>
+              <td> <button type="submit" class="btn btn-primary"><b>Visualizar E-mail</b></button></td>
+          </form>
+          </tr>
+        @endforeach
+      </tbody>
     </table>
+  </div>
 </div>
 <div class="card" style="margin-bottom: 0.5em;">
     <div class="card-header"><b>PROEX</b></div>
