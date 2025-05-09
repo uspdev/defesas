@@ -32,13 +32,13 @@
     @forelse ($agendamentos as $agendamento)
       <tr>
         <td>{{ $agendamento['codpes'] }}</td>
-        <td><a href="/agendamentos/{{ $agendamento['id'] }}">{{ $agendamento['aluno'] }}</a></td>
+        <td><a href="/agendamentos/{{ $agendamento['id'] }}/edit">{{ $agendamento['aluno'] }}</a></td>
         <td>{!! $agendamento['trabalho']['tittrb'] !!}</td>
         <td>{{ $agendamento['nivpgm'] }}</td>
         <td>{{ Carbon\Carbon::parse($agendamento['data_horario'])->format('d/m/Y H:i') }}</td>
         <td>{{ $agendamento['enviar_email'] ? 'Sim' : 'Não' }}</td>
         <td>
-          <a href="/agendamentos/{{ $agendamento['id'] }}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
+          <a href="/agendamentos/{{ $agendamento['id'] }}/edit" class="btn btn-primary"><i class="fas fa-eye"></i></a>
         </td>
       </tr>
     @empty
