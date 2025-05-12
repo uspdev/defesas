@@ -262,9 +262,9 @@ class Config extends Model
             [
                 $agendamento['orientador']['nompesttd'],
                 $agendamento['orientador']['codpes'],
-                $agendamento['nome'],
+                $agendamento['aluno'],
                 $agendamento['codpes'],
-                $agendamento['titulo'],
+                $agendamento['trabalho']['tittrb'],
                 $agendamento['tipo']
             ],
             $configs['mail_sala_virtual']

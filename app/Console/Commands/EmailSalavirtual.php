@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Console\Command;
 use App\Mail\MailSalaVirtual;
 use App\Models\Agendamento;
-use Uspdev\Replicado\Pessoa;
 use App\Services\ReplicadoService;
 
 class EmailSalavirtual extends Command
@@ -29,7 +28,8 @@ class EmailSalavirtual extends Command
         antes da meia-noite.
         */
 
-        $agendamentos = Agendamento::where('sala_virtual', null)
+        $agendamentos = Agendamento::select(['id', 'codpes', 'codare', 'numseqpgm', 'nivpgm', 'tipo'])
+            ->where('sala_virtual', null)
             ->whereDate('data_horario', '>=', now())
             ->where('tipo','=','Virtual')
             ->orderBy('data_horario')
@@ -37,11 +37,11 @@ class EmailSalavirtual extends Command
 
         foreach($agendamentos as $agendamento){
             $docente = ReplicadoService::getOrientador($agendamento->codpes, $agendamento->codare, $agendamento->numseqpgm);
-            $email = Pessoa::email($docente->orientador['codpes']);
+            $email = ReplicadoService::getEmail($docente['codpes']);
             if($email) {
                 Mail::to($email)->queue(new MailSalaVirtual($agendamento));
-                $agendamento->enviar_email = TRUE; //mostra que o e-mail já foi enviado
-                $agendamento->update();
+                Agendamento::where('id', $agendamento->id)
+                    ->update(['enviar_email' => TRUE]);
             }
         }
     }
