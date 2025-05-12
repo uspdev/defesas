@@ -1,22 +1,4 @@
 jQuery(function ($) {
-    $('#codpes').change(function(){
-        var data = { codpes: $( "#codpes" ).val() };
-
-        function success(response) {
-            if(!$( "#nome" ).val()){
-                $( "#nome" ).val(response['nome']);
-            }
-            if(response['sexo'] == 'M'){
-                $( "#sexo" ).val('Masculino');
-            }
-            else{
-                $( "#sexo" ).val('Feminino');
-            }
-        }
-        $.get('info', data, success);
-
-    });
-
     $(".horario").mask('00:00');
     $(".data").mask('00/00/0000');
 
@@ -32,7 +14,6 @@ jQuery(function ($) {
     });
 
     $("#codpes").click(function() {
-        console.log('codpes');
         if ($("#codpes").prop("checked")) {
             $("#busca_data").hide();
             $("#busca_codpes").show();
@@ -40,7 +21,6 @@ jQuery(function ($) {
     });
 
     $("#data").click(function() {
-        console.log('data');
         if($("#data").prop("checked")) {
             $("#busca_codpes").hide();
             $("#busca_data").show();
