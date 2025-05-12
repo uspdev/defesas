@@ -13,15 +13,15 @@ jQuery(function ($) {
         , prevText: 'Anterior'
     });
 
-    $("#codpes").click(function() {
-        if ($("#codpes").prop("checked")) {
+    $("#filtro_codpes").click(function() {
+        if ($("#filtro_codpes").prop("checked")) {
             $("#busca_data").hide();
             $("#busca_codpes").show();
         }
     });
 
-    $("#data").click(function() {
-        if($("#data").prop("checked")) {
+    $("#filtro_data").click(function() {
+        if($("#filtro_data").prop("checked")) {
             $("#busca_codpes").hide();
             $("#busca_data").show();
         }

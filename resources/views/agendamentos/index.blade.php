@@ -20,10 +20,10 @@
             </div>
             <div class="btn-group btn-group-toggle" data-toggle="buttons" style="padding-bottom: 1em;">
               <label class="btn btn-light">
-                  <input type="radio" name="filtro_busca" id="codpes" value="codpes" autocomplete="off" @if(Request()->filtro_busca == 'codpes' or Request()->filtro_busca == '') checked @endif> Número USP
+                  <input type="radio" name="filtro_busca" id="filtro_codpes" value="codpes" autocomplete="off" @if(Request()->filtro_busca == 'codpes' or Request()->filtro_busca == '') checked @endif> Número USP
               </label>
               <label class="btn btn-light">
-                  <input type="radio" name="filtro_busca" id="data" value="data" autocomplete="off" @if(Request()->filtro_busca == 'data') checked @endif> Data
+                  <input type="radio" name="filtro_busca" id="filtro_data" value="data" autocomplete="off" @if(Request()->filtro_busca == 'data') checked @endif> Data
               </label>
             </div>
             <div class="col-sm" id="busca_codpes" @if(Request()->filtro_busca == 'data') style="display:none;" @endif>
