@@ -4,13 +4,11 @@
   <script type="text/javascript">
     $(document).ready(function() {
       $("#filtro_codpes").click(function() {
-          console.log('codpes');
           $("#busca_data").hide();
           $("#busca_codpes").show();
       });
 
       $("#filtro_data").click(function() {
-          console.log('data');
           $("#busca_codpes").hide();
           $("#busca_data").show();
       });
