@@ -1,7 +1,21 @@
 @extends('laravel-usp-theme::master')
 
 @section('javascripts_bottom')
-  <script src="{{asset('/js/app.js')}}"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#filtro_codpes").click(function() {
+          console.log('codpes');
+          $("#busca_data").hide();
+          $("#busca_codpes").show();
+      });
+
+      $("#filtro_data").click(function() {
+          console.log('data');
+          $("#busca_codpes").hide();
+          $("#busca_data").show();
+      });
+    });
+  </script>
 @endsection('javascripts_bottom')
 
 @section('content')

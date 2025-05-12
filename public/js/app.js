@@ -14,17 +14,15 @@ jQuery(function ($) {
     });
 
     $("#filtro_codpes").click(function() {
-        if ($("#filtro_codpes").prop("checked")) {
-            $("#busca_data").hide();
-            $("#busca_codpes").show();
-        }
+        console.log('codpes');
+        $("#busca_data").hide();
+        $("#busca_codpes").show();
     });
 
     $("#filtro_data").click(function() {
-        if($("#filtro_data").prop("checked")) {
-            $("#busca_codpes").hide();
-            $("#busca_data").show();
-        }
+        console.log('data');
+        $("#busca_codpes").hide();
+        $("#busca_data").show();
     });
 
 });
