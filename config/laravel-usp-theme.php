@@ -21,10 +21,6 @@ $submenu3 =  [
         'text' => '<i class="fas fa-forward"></i> Listar Próximas Defesas',
         'url'  => '/',
     ],
-    [
-        'text' => '<i class="fas fa-certificate"></i> Listar Defesas Anteriores',
-        'url'  => '/anteriores',
-    ],
 ];
 
 $submenu4 =  [

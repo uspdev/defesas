@@ -6,70 +6,68 @@ use Illuminate\Http\Request;
 use App\Models\Agendamento;
 use Illuminate\Validation\Rule;
 use App\Services\ReplicadoService;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 
 class IndexController extends Controller
 {
     protected $programas;
     protected $nivel;
+    protected $areas;
 
     public function __construct() {
-        $this->programas = collect(ReplicadoService::getProgramas())
-             ->map(function ($item) { return $item['codare']; });
+        $this->programas = collect(ReplicadoService::getProgramas());
         $this->nivel = Agendamento::nivelOptions();
+        $this->areas = $this->programas->map(function ($item) {
+            return $item['codare'];
+        });
     }
 
     public function index(Request $request){
         $request->validate([
-            'busca_programa' => ['nullable',Rule::in($this->programas)],
-            'busca_nivel' => ['nullable',Rule::in($this->nivel)],
+            'programa' => ['nullable', Rule::in($this->areas)],
+            'nivel' => ['nullable', Rule::in($this->nivel)],
         ]);
-        $query = Agendamento::join('docentes', 'docentes.n_usp', '=', 'agendamentos.orientador')->where('agendamentos.data_horario','>=',date('Y-m-d H:i:s'))->orderBy('agendamentos.data_horario', 'asc')->select('agendamentos.*');
-        if($request->busca_nivel != '') {
-            $query->where('agendamentos.nivel', '=', $request->busca_nivel);
-        }
-        if($request->busca_programa != '') {
-            $query->where('agendamentos.area_programa', '=', $request->busca_programa);
-        }
-        if($request->busca != ''){
-            $query->where(function($query) use($request){
-                $query->orWhere('agendamentos.nome', 'LIKE', "%$request->busca%");
-                $query->orWhere('agendamentos.titulo', 'LIKE', "%$request->busca%");
-                $query->orWhere('docentes.nome', 'LIKE', "%$request->busca%");
-            });
-        }
-        $agendamentos = $query->paginate(20);
 
-        if ($agendamentos->count() == null) {
-            $request->session()->flash('alert-danger', 'Não há registros!');
-        }
-        return view('index')->with('agendamentos',$agendamentos);
-    }
+        $query = Agendamento::where('data_horario', '>=', now())
+            ->orderBy('data_horario')
+            ->toBase();
 
-    public function exibirDefesasAnteriores(Request $request){
-        $request->validate([
-            'busca_programa' => ['nullable',Rule::in(Agendamento::devolverCodProgramas())],
-            'busca_nivel' => ['nullable',Rule::in(Agendamento::nivelOptions())],
-        ]);
-        $query = Agendamento::join('docentes', 'docentes.n_usp', '=', 'agendamentos.orientador')->where('data_horario','<',date('Y-m-d H:i:s'))->orderBy('data_horario', 'desc')->select('agendamentos.*');
-        if($request->busca_nivel != '') {
-            $query->where('agendamentos.nivel', '=', $request->busca_nivel);
-        }
-        if($request->busca_programa != '') {
-            $query->where('agendamentos.area_programa', '=', $request->busca_programa);
-        }
-        if($request->busca != '') {
-            $query->where(function($query) use($request){
-                $query->orWhere('agendamentos.nome', 'LIKE', "%$request->busca%");
-                $query->orWhere('agendamentos.titulo', 'LIKE', "%$request->busca%");
-                $query->orWhere('docentes.nome', 'LIKE', "%$request->busca%");
-            });
-        }
+        $query->when($request->programa, function ($q) use ($request) {
+            return $q->where('codare', '=', $request->programa);
+        });
+
+        $query->when($request->nivel, function ($q) use ($request) {
+            $conditional = $request->nivel === 'Mestrado' ? '=' : '<>';
+            return $q->where('nivpgm', $conditional, 'ME');
+        });
 
         $agendamentos = $query->paginate(20);
+        $defesas = $this->defesas($agendamentos);
 
-        if ($agendamentos->count() == null) {
-            $request->session()->flash('alert-danger', 'Não há registros!');
-        }
-        return view('anteriores')->with('agendamentos',$agendamentos);
+        return view('index', [
+            'agendamentos' => $agendamentos,
+            'programas' => $this->programas,
+            'niveis' => $this->nivel,
+            'defesas' => $defesas
+        ]);
     }
+
+    private function defesas($agendamentos): Collection {
+        $defesas = $agendamentos->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'aluno' => ReplicadoService::getNome($item->codpes),
+                'trabalho' => ReplicadoService::getTituloTrabalho($item->codpes, $item->codare, $item->numseqpgm),
+                'data_horario' => Carbon::parse($item->data_horario)->format('d/m/Y H:i'),
+                'nivpgm' => $item->nivpgm,
+                'area' => ReplicadoService::getNomeArea($item->codare),
+                'orientador' => ReplicadoService::getOrientador($item->codpes, $item->codare, $item->numseqpgm),
+                'local' => $item->sala,
+            ];
+        });
+
+        return $defesas;
+    }
+
 }

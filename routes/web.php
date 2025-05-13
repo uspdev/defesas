@@ -17,7 +17,6 @@ use App\Http\Controllers\JanusController;
 
 // rotas para login/logout
 Route::get('/', [IndexController::class, 'index'])->name('index');
-Route::get('/anteriores',[indexController::class, 'exibirDefesasAnteriores'])->name('exibirDefesasAnteriores');
 
 // rotas de Agendamento de Defesa
 Route::resource('agendamentos', AgendamentoController::class);
@@ -56,7 +55,7 @@ Route::get('/pendencia_sala_virtual', [AgendamentoController::class, 'pendencia'
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->middleware('can:admin');
 
 #Api para devolução de dados do aluno
-Route::get('info', [AgendamentoController::class, 'info'])->name('pedidos.info');
+#Route::get('info', [AgendamentoController::class, 'info'])->name('pedidos.info');
 
 Route::get('job_email_prof', [AgendamentoController::class, 'job_email_prof']);
 
