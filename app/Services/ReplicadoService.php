@@ -231,7 +231,18 @@ class ReplicadoService
     }
 
     public static function getEndereco(int $codpes) {
-        return Pessoa::obterEndereco($codpes);
+        $result =  Pessoa::obterEndereco($codpes);
+
+        return $result ? $result : [
+            'nomtiplgr' => null,
+            'epflgr' => null,
+            'numlgr' => null,
+            'cpllgr' => null,
+            'nombro' => null,
+            'cidloc' => null,
+            'sglest' => null,
+            'codendptl' => null
+        ];
     }
 
     public static function getEmail(int $codpes) {
@@ -248,7 +259,8 @@ class ReplicadoService
         $param = [
             'codpes' => $codpes
         ];
-        $pispasep = DBreplicado::fetch($query, $param);
+        $result = DBreplicado::fetch($query, $param);
+        $pispasep = $result ? $result : [];
 
         return array_merge($pispasep, Pessoa::dump($codpes, $documentos));
     }
