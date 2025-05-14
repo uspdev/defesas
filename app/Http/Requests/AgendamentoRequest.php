@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Agendamento;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Carbon;
 
 class AgendamentoRequest extends FormRequest
 {
@@ -43,6 +44,12 @@ class AgendamentoRequest extends FormRequest
         }
 
         return $rules;
+    }
+
+    public function validated($key = null, $default = null) {
+        return array_merge(parent::validated(), [
+            'data_horario' => Carbon::createFromFormat('d/m/Y H:i', $this->data . $this->horario)->format('Y-m-d H:i')
+        ]);
     }
 
     public function messages(){
