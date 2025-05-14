@@ -260,7 +260,9 @@ class ReplicadoService
             'codpes' => $codpes
         ];
         $result = DBreplicado::fetch($query, $param);
-        $pispasep = $result ? $result : [];
+        $pispasep = $result ? $result : [
+            'numpispsp' => null
+        ];
 
         return array_merge($pispasep, Pessoa::dump($codpes, $documentos));
     }
