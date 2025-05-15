@@ -45,7 +45,7 @@ class ReplicadoService
     }
 
     public static function getOrientador(int $codpespgm, int $codare, int $numseqpgm) {
-        $query = "SELECT TOP 1 P.codpes, P.nompesttd, R.dtainiort FROM R39PGMORIDOC R
+        $query = "SELECT TOP 1 P.codpes, P.nompesttd FROM R39PGMORIDOC R
                   INNER JOIN PESSOA P ON (R.codpes = P.codpes)
                   WHERE R.codpespgm = convert(int, :codpespgm) AND
                   R.codare = convert(int, :codare) AND
