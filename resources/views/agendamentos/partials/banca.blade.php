@@ -49,10 +49,18 @@
                   @endif
               </td>
               <td>
+                  @if(in_array($banca['vinptpbantrb'], ['TIT', 'PRE']))
                 <a href="/agendamentos/{{$agendamento->id}}/{{$banca['codpesdct']}}/declaracao" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
+                  @else
+                      #
+                  @endif
               </td>
               <td>
+                  @if(in_array($banca['vinptpbantrb'], ['TIT', 'PRE']))
                 <a href="/agendamentos/{{$agendamento->id}}/{{$banca['codpesdct']}}/statement" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
+                  @else
+                      #
+                  @endif
               </td>
             @endcan
           </tr>

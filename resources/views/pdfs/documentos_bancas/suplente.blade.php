@@ -65,10 +65,10 @@
   @if ( $professor['tipvin'] == 'SERVIDOR' )
     Depto. de {{ $professor['setor']['nomset'] }}<br />
   @else
-    {{ $professor['nomtiplgr'] . ' ' . $professor['epflgr'] . ' ' .  $professor['numlgr'] . ' ' . $professor['cpllgr'] }}, {{ $professor['nombro'] }} <br>
-    CEP: {{ $professor['codendptl'] }} - {{ $professor['cidloc'] }}/{{ $professor['sglest'] }}
+    {{ $professor['endereco']['nomtiplgr'] . ' ' . $professor['endereco']['epflgr'] . ' ' .  $professor['endereco']['numlgr'] . ' ' . $professor['endereco']['cpllgr'] }}, {{ $professor['endereco']['nombro'] }} <br>
+    CEP: {{ $professor['endereco']['codendptl'] }} - {{ $professor['endereco']['cidloc'] }}/{{ $professor['endereco']['sglest'] }}<br>
   @endif
-  <br>telefone: {{ implode(' / ', $professor['telefones']) }}
+  telefone: {{ implode(' / ', $professor['telefones']) }}
   <br>e-mail: {{ $professor['email'] }}
   <br><br>
 

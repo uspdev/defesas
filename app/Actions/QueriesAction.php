@@ -11,8 +11,10 @@ class QueriesAction
      */
     public static function handle(array $item)
     {
-        $data = ReplicadoService::getEndereco($item['codpesdct']);
         $data['tipvin'] = ReplicadoService::getVinculo($item['codpesdct']);
+        if ($data['tipvin'] === 'EXTERNO') {
+            $data['endereco'] = ReplicadoService::getEndereco($item['codpesdct']);
+        };
         $data['email'] = ReplicadoService::getEmail($item['codpesdct']);
         $data['telefones'] = ReplicadoService::getTelefones($item['codpesdct']);
         $data['setor'] = ReplicadoService::getNomeSetor($item['codpesdct'], $data['tipvin']);
