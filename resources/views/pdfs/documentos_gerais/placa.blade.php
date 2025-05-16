@@ -29,7 +29,7 @@
 			</div>
 			<br><br><br>
 			<div class="candidato">Candidato(a): {{ $agendamento->aluno }}</div> <div class="candidato">Data e Hora: {{date('d/m/Y H:i', strtotime($agendamento->data_horario))}}.</div> <div class="candidato">Defesa de {{ $agendamento->nivpgm }} em {{ $agendamento->area['nomare'] }}</div>
-			<div class="candidato">Título: <i>"{{ $agendamento->trabalho['tittrb'] }}"</i></div>
+			<div class="candidato">Título: <i>"{!! $agendamento->trabalho['tittrb'] !!}"</i></div>
 
 		</div>
 	</body>

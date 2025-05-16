@@ -74,26 +74,6 @@ class Agendamento extends Model
     }
 
     //Função para devolver valores de select
-    public static function programaOptions(){
-        $programas = ReplicadoUtils::programasPosUnidade();
-        foreach($programas as $programa){
-            $programas_pos[] = [
-                "codare" => $programa['codare'],
-                "nomare" => $programa['nomare'],
-            ];
-        }
-        return $programas_pos;
-    }
-
-    public static function devolverCodProgramas(){
-        $programas = ReplicadoUtils::programasPosUnidade();
-        foreach($programas as $programa){
-            $cod_programas_pos[] = $programa['codare'];
-        }
-        return $cod_programas_pos;
-    }
-
-    //Função para devolver valores de select
     public static function orientadorvotanteOptions(){
         return [
             'Sim',

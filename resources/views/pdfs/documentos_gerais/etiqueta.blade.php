@@ -35,9 +35,9 @@
                 @if ( $professor['tipvin'] == 'SERVIDOR' )
                   Depto. de {{ $professor['setor']['nomset'] }}<br />
                 @else
-                  {{ $professor['nomtiplgr'] . ' ' . $professor['epflgr'] . ' ' .  $professor['numlgr'] . ' ' . $professor['cpllgr'] }}, {{ $professor['nombro'] }} <br>
+                  {{ $professor['endereco']['nomtiplgr'] . ' ' . $professor['endereco']['epflgr'] . ' ' .  $professor['endereco']['numlgr'] . ' ' . $professor['endereco']['cpllgr'] }}, {{ $professor['endereco']['nombro'] }} <br>
+                CEP: {{ $professor['endereco']['codendptl'] }} - {{ $professor['endereco']['cidloc'] }}/{{ $professor['endereco']['sglest'] }}
                 @endif
-                CEP: {{ $professor['codendptl'] }} - {{ $professor['cidloc'] }}/{{ $professor['sglest'] }}
             </td>
         </tr>
     @endforeach

@@ -46,7 +46,7 @@
             </tr>
             <tr>
               <td>
-                PASSAGEM: {{ $professor['cidloc'] }}/{{ $professor['sglest'] }}
+                PASSAGEM: {{ $professor['endereco']['cidloc'] }}/{{ $professor['endereco']['sglest'] }}
               </td>
             </tr>
             <tr>

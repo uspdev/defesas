@@ -11,6 +11,7 @@ use App\Actions\TitularesAction;
 use App\Actions\SuplentesAction;
 use App\Actions\DocenteAction;
 use App\Services\ReplicadoService;
+use App\Actions\EnderecoDocenteExternoAction;
 
 class PdfController extends Controller
 {
@@ -24,19 +25,19 @@ class PdfController extends Controller
         $this->authorize('admin');
         $configs = Config::orderbyDesc('created_at')->first();
         $agendamento = DadosJanusAction::handle($agendamento);
-
-        if($tipo == 'placa'){
+        if($tipo === 'placa'){
             $pdf = PDF::loadView('pdfs.documentos_gerais.placa', compact('agendamento'))->setPaper('a4', 'landscape');
             return $pdf->download('placa.pdf');
         }
         config(['laravel-fflch-pdf.setor' => "Serviço de Pós-Graduação"]);
-
-        if(in_array($tipo, ['documento_zero', 'recibos'])){
+        if ($tipo === 'documento_zero') {
+            $professores = EnderecoDocenteExternoAction::handle(TitularesAction::handle($agendamento->banca));
+        };
+        if ($tipo === 'recibos') {
             $professores = TitularesAction::handle($agendamento->banca);
-            dd($professores);
         }
-        else{
-            $professores = TitularesAction::handle($agendamento->banca)->merge(
+        if ($tipo === 'etiqueta') {
+            $professores = EnderecoDocenteExternoAction::handle(TitularesAction::handle($agendamento->banca))->merge(
                 SuplentesAction::handle($agendamento->banca));
         }
         $bancas = $professores;

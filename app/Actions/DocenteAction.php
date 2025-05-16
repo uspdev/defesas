@@ -15,12 +15,9 @@ class DocenteAction
         $docente = $banca->filter(function ($item) use ($codpes) {
             return $item['codpesdct'] == $codpes;
         })->map(function ($item) {
-
             $data['endereco'] = ReplicadoService::getEndereco($item['codpesdct']);
             $data['email'] = ReplicadoService::getEmail($item['codpesdct']);
             $data['telefones'] = ReplicadoService::getTelefones($item['codpesdct']);
-
-            /* $data = QueriesAction::handle($item); */
             $data['documentos'] = ReplicadoService::getDocumentos($item['codpesdct'], ['numdocidf', 'numcpf']);
             if ($item['vinptpbantrb'] === 'SUP') {
                 $data['tipvin'] = ReplicadoService::getVinculo($item['codpesdct']);
