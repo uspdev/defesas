@@ -116,7 +116,7 @@ class AgendamentoController extends Controller
     public function enviarEmailProLabore(Agendamento $agendamento, int $codpes){
         $this->authorize('admin');
         $agendamento = DadosJanusAction::handle($agendamento);
-        $docente = DocenteAction::handle($agendamento->banca, $codpes);
+        $docente = DocenteAction::handle(collect($agendamento->banca), $codpes);
         Mail::queue(new ProLaboreMail($agendamento, $docente));
 
         return redirect('/agendamentos/'.$agendamento->id);
@@ -156,7 +156,7 @@ class AgendamentoController extends Controller
     public function enviarEmailPassagem(Agendamento $agendamento, int $codpes){
         $this->authorize('admin');
         $agendamento = DadosJanusAction::handle($agendamento);
-        $docente = DocenteAction::handle($agendamento->banca, $codpes);
+        $docente = DocenteAction::handle(collect($agendamento->banca), $codpes);
         Mail::queue(new PassagemMail($agendamento, $docente));
 
         return redirect('/agendamentos/'.$agendamento->id);
@@ -165,7 +165,7 @@ class AgendamentoController extends Controller
     public function enviarEmailDeConfirmacaoDadosProfExterno(Agendamento $agendamento, int $codpes){
         $this->authorize('admin');
         $agendamento = DadosJanusAction::handle($agendamento);
-        $docente = DocenteAction::handle($agendamento->banca, $codpes);
+        $docente = DocenteAction::handle(collect($agendamento->banca), $codpes);
         Mail::queue(new DadosProfExternoMail($docente));;
 
         return redirect('/agendamentos/'.$agendamento->id);
@@ -175,6 +175,14 @@ class AgendamentoController extends Controller
         $this->authorize('admin');
         $daily = SendDailyMail::dispatch_sync();
         return 'Emails Enviados com sucesso';
+    }
+
+    public function emailsBanca(Agendamento $agendamento) {
+        $this->authorize('admin');
+        $agendamento = DadosJanusAction::handle($agendamento);
+        $emails = ReplicadoService::getEmailsBanca(collect($agendamento->banca));
+
+        return response()->json($emails);
     }
 
 }

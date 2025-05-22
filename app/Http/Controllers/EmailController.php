@@ -30,7 +30,7 @@ class EmailController extends Controller
         $this->authorize('admin');
         $agendamento = DadosJanusAction::handle($agendamento);
         $dados = $request;
-        $docente = DocenteAction::handle($agendamento->banca, $codpes);
+        $docente = DocenteAction::handle(collect($agendamento->banca), $codpes);
         $configs = Config::setConfigEmail($agendamento, $docente);
         return view('agendamentos.recibos.email', compact(['agendamento','docente','dados','configs']));
     }

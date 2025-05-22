@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Uspdev\Replicado\DB as DBreplicado;
 use Uspdev\Replicado\Pessoa;
+use Illuminate\Support\Collection;
 
 class ReplicadoService
 {
@@ -289,6 +290,41 @@ class ReplicadoService
         ];
 
         return DBreplicado::fetchAll($query, $param);
+
+    }
+
+    public static function getEmailsBanca(Collection $banca): array {
+        $codpes = $banca->map(function ($item) {
+            return $item['codpesdct'];
+        })->implode(',');
+
+        $query = "SELECT E.codpes, E.codema FROM EMAILPESSOA E
+            WHERE E.codpes IN($codpes) and E.stamtr='S'";
+
+        $result = DBreplicado::fetchAll($query);
+
+        $emails_banca = collect($result)->mapWithKeys(function ($item) {
+            return [
+                $item['codpes'] => $item['codema']
+            ];
+        });
+
+        [$suplentes, $titulares] = $banca->partition(function ($item) {
+            return $item['vinptpbantrb'] === 'SUP';
+        });
+
+        $suplentes = $suplentes->map(function ($item) use ($emails_banca) {
+            return $emails_banca->get($item['codpesdct']);
+        })->filter()->implode(';');
+
+        $titulares = $titulares->map(function ($item) use ($emails_banca) {
+            return $emails_banca->get($item['codpesdct']);
+        })->filter()->implode(';');
+
+        return [
+            'titulares' => $titulares,
+            'suplentes' => $suplentes
+        ];
 
     }
 

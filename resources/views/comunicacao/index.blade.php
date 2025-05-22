@@ -11,7 +11,7 @@
     <tr>
       <th scope="col">Titulo</th>
       <th scope="col">Autor</th>
-      <th scope="col">Data</th>
+      <th scope="col">Data da Defesa</th>
     </tr>
   </thead>
   <tbody>
@@ -30,31 +30,4 @@
   </tbody>
 </table>
 {{ $agendamentos->appends(request()->query())->links() }}
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    let select = document.querySelector('select[name="filtro_ano"]');
-    function validaCampo(){
-      if(select.value == ''){
-        select.classList.add('blinking-border');
-      }else{
-        select.classList.remove('blinking-border');
-      }
-    }
-    validaCampo();
-    select.addEventListener('change', validaCampo);
-  });
-</script>
-
-<style>
-  @keyframes piscar {
-  0% { border-color: rgba(255, 0, 0, 1); }
-  50% { border-color: rgba(255, 0, 0, 0.3); }
-  100% { border-color: rgba(255, 0, 0, 1); }
-}
-
-.blinking-border {
-    animation: piscar 1s infinite;
-}
-</style>
 @endsection

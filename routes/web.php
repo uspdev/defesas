@@ -62,3 +62,5 @@ Route::get('job_email_prof', [AgendamentoController::class, 'job_email_prof']);
 #comunicacao
 Route::get('/comunicacao', [CommunicationController::class, 'index']);
 Route::get('/comunicacao/{agendamento}', [CommunicationController::class, 'show']);
+
+Route::get('/emails/banca/{agendamento}', [AgendamentoController::class, 'emailsBanca']);

@@ -57,6 +57,24 @@
         @endforeach
         </tbody>
       </table>
+    <div>
+      <a href="/emails/banca/{{ $agendamento->id }}" id="buscar">Show E-mails</a><br />
+      <div id="busca" class="d-none">
+        <p>Aguarde...</p>
+      </div>
+      <div id="email" class="d-none">
+        <div class="bg-light mx-4 p-2">
+          <span class="font-weight-bold col-sm-2">Titulares:</span>
+          <span id="titulares" class="mx-4"></span>
+          <button type="button" class="btn btn-outline-secondary btn-sm" name="titulares" data-toogle="tooltip" data-placement="top" title="Copiar p/ área de transferência">Copiar</button>
+        </div>
+        <div class="bg-light mx-4 p-2">
+          <span class="font-weight-bold col-sm-2">Suplentes:</span>
+          <span id="suplentes" class="mx-3"></span>
+          <button type="button" class="btn btn-outline-secondary btn-sm" name="suplentes" data-toogle="tooltip" data-placement="top" title="Copiar p/ área de transferência">Copiar</button>
+        </div>
+      </div>
+    </div>
     </div>
   </div>
 </div>

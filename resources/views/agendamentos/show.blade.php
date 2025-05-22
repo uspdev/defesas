@@ -37,3 +37,48 @@
   @can('admin') @include('agendamentos.partials.documentos') @endcan
   @can('admin') @include('agendamentos.partials.recibos') @endcan
 @endsection('content')
+
+@section('javascripts_bottom')
+<script type="text/javascript">
+  $(document).ready(function() {
+
+    $("#buscar").on("click", function(e) {
+      e.preventDefault();
+      $.ajax({
+        url: "/emails/banca/{{ $agendamento->id }}",
+        method: "GET",
+        dataType: 'json',
+        beforeSend: function() {
+          $("#email").removeClass("d-block");
+          $("#busca").addClass("d-block");
+        },
+        success: function(data) {
+          $("#titulares").html(data.titulares);
+          $("#suplentes").html(data.suplentes);
+        },
+        complete: function() {
+          $("#email").addClass("d-block");
+          $("#busca").addClass("d-none").removeClass("d-block");
+        }
+      });
+    });
+
+    $(".btn-sm").on("click", function(e) {
+      let name = $(this).attr("name");
+      getValues(name);
+      $(this).html("Copiado!");
+      setTimeout(function() {
+        $("[name=" + name + "]").html("Copiar");
+      }, 2000);
+
+    });
+
+    function getValues(name) {
+      let emails = $("#" + name).html();
+      navigator.clipboard.writeText(emails);
+    }
+
+  });
+</script>
+@endsection('javascripts_bottom')
+
