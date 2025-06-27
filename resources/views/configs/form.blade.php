@@ -63,7 +63,7 @@
 	<div class="col-sm">
 		<label class="config" for="declaracao">Declaração de participação</label>
 		<textarea rows="10" class="form-control" cols="70" name="declaracao">{{$config->declaracao}}</textarea>
-		<span class="badge badge-warning">Token de substituição: %docente_nome, %nivel, %candidato_nome, %titulo, %area, %orientador </span>
+		<span class="badge badge-warning">Token de substituição: %docente_nome, %nivel, %candidato_nome, %titulo, %area, %presidente </span>
 	</div>
 </div>
 

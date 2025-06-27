@@ -41,6 +41,7 @@ class Config extends Model
     public static function setConfigDeclaracao($agendamento, $professor){
         //Busca a última configuração
         $configs = Config::orderbyDesc('created_at')->first();
+        $presidente = collect($agendamento->banca)->firstWhere('vinptpbantrb', 'PRE');
         //Faz as trocas
         $configs['declaracao'] = str_replace(
             [
@@ -49,7 +50,7 @@ class Config extends Model
                 "%candidato_nome",
                 "%titulo",
                 "%area",
-                "%orientador"
+                "%presidente"
             ],
             [
                 $professor ?? 'Professor não cadastrado' ,
@@ -57,7 +58,7 @@ class Config extends Model
                 $agendamento->aluno,
                 $agendamento->trabalho['tittrb'],
                 $agendamento->area['nomare'],
-                $agendamento->orientador['nompesttd'] ?? 'Professor não cadastrado' ,
+                $presidente['nompesttd'] ?? 'Professor não cadastrado' ,
             ],
             $configs['declaracao']
         );
