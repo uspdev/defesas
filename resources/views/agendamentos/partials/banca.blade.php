@@ -43,12 +43,12 @@
                   @endif
               </td>
               <td>
-                  @if(in_array($banca['vinptpbantrb'], ['TIT', 'PRE']))
+                  @if($banca['staptp'] == 'S')
                 <a href="/agendamentos/{{$agendamento->id}}/{{$banca['codpesdct']}}/declaracao" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
                   @endif
               </td>
               <td>
-                  @if(in_array($banca['vinptpbantrb'], ['TIT', 'PRE']))
+                  @if($banca['staptp'] == 'S')
                 <a href="/agendamentos/{{$agendamento->id}}/{{$banca['codpesdct']}}/statement" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
                   @endif
               </td>

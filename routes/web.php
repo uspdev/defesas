@@ -20,7 +20,7 @@ Route::get('/', [IndexController::class, 'index'])->name('index');
 
 // rotas de Agendamento de Defesa
 Route::resource('agendamentos', AgendamentoController::class);
-Route::resource('docentes',DocenteController::class);
+/* Route::resource('docentes',DocenteController::class); */
 Route::resource('bancas', BancaController::class);
 Route::resource('files', FileController::class)->only(['store', 'show', 'destroy']);
 
@@ -64,3 +64,8 @@ Route::get('/comunicacao', [CommunicationController::class, 'index']);
 Route::get('/comunicacao/{agendamento}', [CommunicationController::class, 'show']);
 
 Route::get('/emails/banca/{agendamento}', [AgendamentoController::class, 'emailsBanca']);
+
+Route::get('/docentes', [DocenteController::class, 'index']);
+Route::get('/docentes/search', [DocenteController::class, 'search']);
+Route::get('/docentes/{codpes}', [DocenteController::class, 'participacao']);
+

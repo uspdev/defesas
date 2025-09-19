@@ -97,6 +97,11 @@ return [
             'submenu' => $submenu4,
             'can' => 'comunicacao'
         ],
+        [
+            'text' => '<i class="fas fa-user"></i> Docentes',
+            'url' => config('app.url') . '/docentes',
+            'can' => 'admin'
+        ],
     ],
     'right_menu' => $right_menu,
 ];

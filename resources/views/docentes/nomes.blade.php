@@ -14,7 +14,7 @@
                       <label style="margin-top:0.35em; margin-bottom:0em;"><b>Buscar por Nome ou N° USP:</b></label>
                   </div>
                   <div class="col-auto">
-                    <input type="text" class="form-control" name="search" value="{{ old('search') }}">
+                    <input type="text" class="form-control" name="search" value="{{ old('search') ?? $search }}">
                   </div>
                   <div class="col-auto">
                       <button type="submit" class="btn btn-success">Buscar</button>
@@ -23,4 +23,24 @@
           </form>
         </div>
     </div>
+    <table class="table table-striped">
+      <theader>
+        <tr>
+          <th>N° USP</th>
+          <th>Nome</th>
+        </tr>
+      </theader>
+      <tbody>
+        @forelse ($pessoas as $pessoa)
+          <tr>
+            <td>{{ $pessoa['codpes'] }}</td>
+            <td><a href="docentes/{{$pessoa['codpes']}}">{{ $pessoa['nompesttd'] }}</a></td>
+          </tr>
+        @empty
+          <tr>
+            <td colspan="2">Nenhum registro encontrado para a pesquisa.</td>
+          </tr>
+        @endforelse
+      </tbody>
+    </table>
 @endsection('content')
