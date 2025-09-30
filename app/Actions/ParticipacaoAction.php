@@ -11,8 +11,6 @@ class ParticipacaoAction
     public static function handle($banca)
     {
         if ( !empty($banca) ) {
-            $codpesdct = $banca[0]['codpesdct'];
-            /* $docente = ReplicadoService::getNome($codpesdct); */
             $participacao = collect($banca)->map(function ($item) {
                 $agendamento = Agendamento::where([
                     'codare' => $item['codare'],

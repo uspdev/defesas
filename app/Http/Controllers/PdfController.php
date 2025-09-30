@@ -12,6 +12,7 @@ use App\Actions\SuplentesAction;
 use App\Actions\DocenteAction;
 use App\Services\ReplicadoService;
 use App\Actions\EnderecoDocenteExternoAction;
+use App\Actions\DocentesParticipacaoAction;
 
 class PdfController extends Controller
 {
@@ -31,14 +32,14 @@ class PdfController extends Controller
         }
         config(['laravel-fflch-pdf.setor' => "Serviço de Pós-Graduação"]);
         if ($tipo === 'documento_zero') {
-            $professores = EnderecoDocenteExternoAction::handle(TitularesAction::handle($agendamento->banca));
+            $professores = EnderecoDocenteExternoAction::handle(DocentesParticipacaoAction::handle($agendamento->banca));
         };
         if ($tipo === 'recibos') {
             $professores = TitularesAction::handle($agendamento->banca);
         }
         if ($tipo === 'etiqueta') {
-            $professores = EnderecoDocenteExternoAction::handle(TitularesAction::handle($agendamento->banca))->merge(
-                SuplentesAction::handle($agendamento->banca));
+            $professores = EnderecoDocenteExternoAction::handle(TitularesAction::handle($agendamento->banca)->merge(
+                SuplentesAction::handle($agendamento->banca)));
         }
         $bancas = $professores;
         $pdf = PDF::loadView("pdfs.documentos_gerais.$tipo", compact(['agendamento','professores','configs','bancas']));
@@ -46,38 +47,65 @@ class PdfController extends Controller
         return $pdf->download("$tipo.pdf");
     }
 
-    //Bloco destinado aos documentos individuais
-    public function gerarDocumentosIndividuais(Agendamento $agendamento, $codpes, $tipo){
+    public function declaracao(Agendamento $agendamento, $codpes) {
         $this->authorize('admin');
         $agendamento = DadosJanusAction::handle($agendamento);
-        if($tipo == 'statement' or $tipo == 'invite'){
-            config(['laravel-fflch-pdf.setor' => "Graduate Service"]);
-        }
-        else{
-            config(['laravel-fflch-pdf.setor' => "Serviço de Pós-Graduação"]);
-        }
-        if($tipo == 'titular' or $tipo == 'declaracao' or $tipo == 'invite' or $tipo == 'statement'){
-            $professores = TitularesAction::handle($agendamento->banca);
-            $professor = DocenteAction::handle($professores, $codpes);
-            if($tipo == 'declaracao'){
-                $configs = Config::setConfigDeclaracao($agendamento, $professor['nompesttd']);
-            }
-            elseif($tipo == 'statement'){
-                $configs = Config::setConfigStatement($agendamento, $professor['nompesttd']);
-            }
-            else{
-                $configs = Config::orderbyDesc('created_at')->first();
-            }
-            $pdf = PDF::loadView("pdfs.documentos_bancas.$tipo", compact(['agendamento','professores','professor','configs']));
-        }
-        elseif($tipo == 'suplente'){
-            $configs = Config::setConfigOficioSuplente($agendamento);
-            $professor = DocenteAction::handle(collect($agendamento->banca), $codpes);
-            $pdf = PDF::loadView("pdfs.documentos_bancas.$tipo", compact(['agendamento','professor','configs']));
-        }
-        $nome = $professor['nompesttd'] ?? 'Professor';
+        $professores = DocentesParticipacaoAction::handle($agendamento->banca);
+        $professor = DocenteAction::handle($professores, $codpes);
+        config(['laravel-fflch-pdf.setor' => "Serviço de Pós-Graduação"]);
+        $configs = Config::setConfigDeclaracao($agendamento, $professor['nompesttd']);
+        $pdf = pdf::loadView("pdfs.documentos_bancas.declaracao", compact(['agendamento','professores','professor','configs']));
 
-        return $pdf->download("$nome - $tipo.pdf");
+        return $pdf->download($professor['nompesttd'] . " - declaracao.pdf");
+
+    }
+
+    public function statement(Agendamento $agendamento, $codpes) {
+        $this->authorize('admin');
+        $agendamento = DadosJanusAction::handle($agendamento);
+        $professores = DocentesParticipacaoAction::handle($agendamento->banca);
+        $professor = DocenteAction::handle($professores, $codpes);
+        config(['laravel-fflch-pdf.setor' => "Graduate Service"]);
+        $configs = Config::setConfigStatement($agendamento, $professor['nompesttd']);
+        $pdf = pdf::loadView("pdfs.documentos_bancas.statement", compact(['agendamento','professores','professor','configs']));
+
+        return $pdf->download($professor['nompesttd'] . " - declaracao.pdf");
+
+    }
+
+    public function suplente(Agendamento $agendamento, $codpes) {
+        $this->authorize('admin');
+        $agendamento = DadosJanusAction::handle($agendamento);
+        config(['laravel-fflch-pdf.setor' => "Serviço de Pós-Graduação"]);
+        $configs = Config::setConfigOficioSuplente($agendamento);
+        $professor = DocenteAction::handle(collect($agendamento->banca), $codpes);
+        $pdf = PDF::loadView("pdfs.documentos_bancas.suplente", compact(['agendamento','professor','configs']));
+
+        return $pdf->download($professor['nompesttd'] . " - suplente.pdf");
+    }
+
+    public function titular(Agendamento $agendamento, $codpes) {
+        $this->authorize('admin');
+        $agendamento = DadosJanusAction::handle($agendamento);
+        $professores = TitularesAction::handle($agendamento->banca);
+        $professor = DocenteAction::handle($professores, $codpes);
+        config(['laravel-fflch-pdf.setor' => "Serviço de Pós-Graduação"]);
+        $configs = Config::orderbyDesc('created_at')->first();
+        $pdf = PDF::loadView("pdfs.documentos_bancas.titular", compact(['agendamento','professores','professor','configs']));
+
+        return $pdf->download($professor['nompesttd'] . " - titular.pdf");
+    }
+
+    public function invite(Agendamento $agendamento, $codpes) {
+        $this->authorize('admin');
+        $agendamento = DadosJanusAction::handle($agendamento);
+        $professores = TitularesAction::handle($agendamento->banca);
+        $professor = DocenteAction::handle($professores, $codpes);
+        config(['laravel-fflch-pdf.setor' => "Graduate Service"]);
+        $configs = Config::orderbyDesc('created_at')->first();
+        $pdf = PDF::loadView("pdfs.documentos_bancas.invite", compact(['agendamento','professores','professor','configs']));
+
+        return $pdf->download($professor['nompesttd'] . " - invite.pdf");
     }
 
     //Função única para geração de Proex, Proap, Passagem e Passagem Auxilio
