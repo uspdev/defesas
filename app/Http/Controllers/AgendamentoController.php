@@ -20,34 +20,49 @@ use App\Actions\MapCodpesNomeAction;
 use App\Actions\DocenteAction;
 use App\Services\ReplicadoService;
 use App\Services\AgendamentoService;
+use App\Http\Requests\AgendamentoSearchRequest;
 
 class AgendamentoController extends Controller
 {
 
-    public function index(Request $request)
+    public function index()
     {
         $this->authorize('admin');
 
-        if ($request->filtro_busca == 'codpes' && $request->filled('busca_codpes')) {
-            $validated = $request->validate([
-                'busca_codpes' => 'required|integer',
-            ]);
-            $agendamento = Agendamento::where('codpes', '=', $request->busca_codpes)->paginate(20);
-            $nomes = MapCodpesNomeAction::handle(collect($agendamento->items()));
-        }
-        if ($request->filtro_busca == 'data' && $request->filled('busca_data')) {
-            $validated = $request->validate([
-                'busca_data' => 'required|date_format:d/m/Y',
-            ]);
-            $data = Carbon::CreatefromFormat('d/m/Y H:i', $validated['busca_data'] . " 00:00");
-            $agendamento =  Agendamento::whereDate('data_horario', '=', $data)->paginate(20);
-            $nomes = MapCodpesNomeAction::handle(collect($agendamento->items()));
-        }
+        return view('agendamentos.index', [
+            'agendamentos' => [],
+            'nomes' => [],
+            'filtro' => 'nome'
+        ]);
+    }
+
+    public function search (AgendamentoSearchRequest $request) {
+        $this->authorize('admin');
+
+        $query = Agendamento::query();
+
+        $query->when($request->validated('filtro') == 'nome', function ($query)  use ($request) {
+            $pessoas = ReplicadoService::getPorCodigoOuNome($request->validated('nome'));
+            $codpes = collect($pessoas)->pluck('codpes');
+            return $query->whereIn('codpes', $codpes);
+        });
+        $query->when($request->validated('filtro') == 'codpes', function ($query)  use ($request) {
+            return $query->where('codpes', '=', $request->validated('codpes'));
+        });
+        $query->when($request->validated('filtro') == 'data', function ($query)  use ($request) {
+            $data = Carbon::CreatefromFormat('d/m/Y H:i', $request->validated('data') . " 00:00");
+            return $query->whereDate('data_horario', '=', $data);
+        });
+
+        $agendamentos = $query->paginate(20);
+        $nomes = MapCodpesNomeAction::handle(collect($agendamentos->items()));
 
         return view('agendamentos.index', [
-            'agendamentos' => $agendamento ?? [],
-            'nomes' => $nomes ?? []
+            'agendamentos' => $agendamentos ?? [],
+            'nomes' => $nomes ?? [],
+            'filtro' => $request->validated('filtro')
         ]);
+
     }
 
     public function create(Agendamento $agendamento){

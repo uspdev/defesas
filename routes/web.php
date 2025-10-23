@@ -19,8 +19,8 @@ use App\Http\Controllers\JanusController;
 Route::get('/', [IndexController::class, 'index'])->name('index');
 
 // rotas de Agendamento de Defesa
+Route::get('agendamentos/search', [AgendamentoController::class, 'search']);
 Route::resource('agendamentos', AgendamentoController::class);
-/* Route::resource('docentes',DocenteController::class); */
 Route::resource('bancas', BancaController::class);
 Route::resource('files', FileController::class)->only(['store', 'show', 'destroy']);
 

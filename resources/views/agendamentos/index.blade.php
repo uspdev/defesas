@@ -3,14 +3,11 @@
 @section('javascripts_bottom')
   <script type="text/javascript">
     $(document).ready(function() {
-      $("#filtro_codpes").click(function() {
-          $("#busca_data").hide();
-          $("#busca_codpes").show();
-      });
-
-      $("#filtro_data").click(function() {
-          $("#busca_codpes").hide();
-          $("#busca_data").show();
+      $('input[type="radio"][name="filtro"]').on('change', function () {
+        const selectedFiltro = this.value;
+        $(".search").css("display", "none");
+        $(".form-control").val('');
+        $("#" + selectedFiltro + '_input').css("display", "block");
       });
     });
   </script>
@@ -25,24 +22,30 @@
   </div>
     <div class="card">
       <div class="card-body">
-        <form method="GET" action="/agendamentos">
+        <form method="GET" action="/agendamentos/search">
           <div class="row">
             <div class="col-auto">
               <label style="margin-top:0.35em; margin-bottom:0em;"><b>Filtros: </b></label>
             </div>
             <div class="btn-group btn-group-toggle" data-toggle="buttons" style="padding-bottom: 1em;">
               <label class="btn btn-light">
-                  <input type="radio" name="filtro_busca" id="filtro_codpes" value="codpes" autocomplete="off" @if(Request()->filtro_busca == 'codpes' or Request()->filtro_busca == '') checked @endif> Número USP
+                  <input type="radio" name="filtro" id="filtro_nome" value="nome" autocomplete="off" @checked(old('filtro', $filtro) == 'nome')> Nome
               </label>
               <label class="btn btn-light">
-                  <input type="radio" name="filtro_busca" id="filtro_data" value="data" autocomplete="off" @if(Request()->filtro_busca == 'data') checked @endif> Data
+                  <input type="radio" name="filtro" id="filtro_codpes" value="codpes" autocomplete="off" @checked(old('filtro', $filtro) == 'codpes')> Número USP
+              </label>
+              <label class="btn btn-light">
+                  <input type="radio" name="filtro" id="filtro_data" value="data" autocomplete="off" @checked(old('filtro', $filtro) == 'data')> Data
               </label>
             </div>
-            <div class="col-sm" id="busca_codpes" @if(Request()->filtro_busca == 'data') style="display:none;" @endif>
-              <input type="text" class="form-control busca" autocomplete="off" name="busca_codpes" value="{{ Request()->busca_codpes }}" placeholder="Digite o número USP">
+            <div class="col-md-2 search" id="nome_input" @if (old('filtro', $filtro) == 'nome')  style="display:block" @else style="display:none" @endif>
+              <input type="text" class="form-control" autocomplete="off" name="nome" id="nome" value="{{ old('nome') ?? request('nome') }}" placeholder="Digite o nome">
             </div>
-            <div class="col-sm" id="busca_data" @if(Request()->filtro_busca == 'codpes' or Request()->filtro_busca == '') style="display:none;" @endif>
-              <input class="form-control data datepicker" autocomplete="off" name="busca_data" value="{{ Request()->busca_data }}" placeholder="Selecione a data">
+            <div class="col-md-2 search" id="codpes_input" @if (old('filtro', $filtro) == 'codpes')  style="display:block" @else style="display:none" @endif>
+              <input type="text" class="form-control" autocomplete="off" name="codpes" id="codpes" value="{{ old('codpes') ?? request('codpes') }}" placeholder="Digite o número USP">
+            </div>
+            <div class="col-md-2 search" id="data_input" @if (old('filtro', $filtro) == 'data')  style="display:block" @else style="display:none" @endif>
+              <input class="form-control data datepicker" autocomplete="off" name="data" name="data" value="{{ old('data') ?? request('data') }}" placeholder="Selecione a data">
             </div>
             <div class=" col-auto">
               <button type="submit" class="btn btn-success">Buscar</button>
@@ -51,9 +54,6 @@
         </form>
       </div>
     </div>
-    @if(!request()->filled('busca') && !request()->filled('busca_data'))
-      <div class="alert alert-info" style="margin-top:8px;">Para visualizar os agendamentos procure por algum no campo de pesquisa</div>
-    @endif
     @if($agendamentos)
       <table class="table table-striped">
         <theader>
@@ -84,7 +84,7 @@
               </td>
             </tr>
           @empty
-          <div class="alert alert-danger">Sem registros!</div>
+          <div class="alert alert-danger">Nenhum registro encontrado!</div>
           @endforelse
           </tbody>
       </table>
