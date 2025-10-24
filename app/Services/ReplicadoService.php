@@ -340,6 +340,17 @@ class ReplicadoService
         return DBreplicado::fetchAll($query, $param);
     }
 
+    public static function getPorNome(string $busca) {
+        $query = "SELECT P.codpes, P.nompesttd FROM PESSOA P
+                WHERE UPPER(P.nompesttd) LIKE UPPER(:nome)
+                ORDER BY P.nompesttd ASC";
+
+        $param = [
+            'nome' => '%' . $busca . '%',
+        ];
+        return DBreplicado::fetchAll($query, $param);
+    }
+
     public static function getBancasProfessor($nusp) {
         $query = "select R.codpesdct, R.codpes, R.codare, R.numseqpgm
             FROM R48PGMTRBDOC R

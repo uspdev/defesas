@@ -42,7 +42,7 @@ class AgendamentoController extends Controller
         $query = Agendamento::query();
 
         $query->when($request->validated('filtro') == 'nome', function ($query)  use ($request) {
-            $pessoas = ReplicadoService::getPorCodigoOuNome($request->validated('nome'));
+            $pessoas = ReplicadoService::getPorNome($request->validated('nome'));
             $codpes = collect($pessoas)->pluck('codpes');
             return $query->whereIn('codpes', $codpes);
         });

@@ -23,7 +23,7 @@ class AgendamentoSearchRequest extends FormRequest
     {
         return [
             'filtro' => 'required', 'in:nome,data,codpes',
-            'nome' => 'nullable|required_if:filtro,nome|max:255|alpha:ascii',
+            'nome' => 'nullable|required_if:filtro,nome|max:255',
             'codpes' => 'nullable|required_if:filtro,codpes|integer',
             'data' => 'nullable|required_if:filtro,data|date_format:d/m/Y'
         ];
@@ -38,7 +38,6 @@ class AgendamentoSearchRequest extends FormRequest
             'codpes.required_if' => 'O número USP é obrigatório',
             'nome.required_if' => 'O nome é obrigatório',
             'nome.max' => 'O nome pode conter no máximo de 255 caracteres',
-            'nome.alpha' => 'O nome só pode conter letras',
             'codpes.integer' => 'O número USP deve ser inteiro'
         ];
     }
