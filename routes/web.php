@@ -8,12 +8,10 @@ use App\Http\Controllers\DocenteController;
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\EmailController;
-#use App\Http\Controllers\DevController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\BibliotecaController;
-#use App\Http\Controllers\ApprovalStatusDefesaController;
 use App\Http\Controllers\CommunicationController;
-use App\Http\Controllers\JanusController;
+use App\Http\Controllers\AnteriorController;
 
 // rotas para login/logout
 Route::get('/', [IndexController::class, 'index'])->name('index');
@@ -23,8 +21,6 @@ Route::get('agendamentos/search', [AgendamentoController::class, 'search']);
 Route::resource('agendamentos', AgendamentoController::class);
 Route::resource('bancas', BancaController::class);
 Route::resource('files', FileController::class)->only(['store', 'show', 'destroy']);
-
-/* Route::post('janus', [JanusController::class, 'store']); */
 
 // rotas para biblioteca
 Route::get('/teses',[BibliotecaController::class, 'index']);
@@ -73,3 +69,5 @@ Route::get('/docentes', [DocenteController::class, 'index']);
 Route::get('/docentes/search', [DocenteController::class, 'search']);
 Route::get('/docentes/{codpes}', [DocenteController::class, 'participacao']);
 
+Route::get('/anteriores', [AnteriorController::class, 'index']);
+Route::get('/anteriores/search', [AnteriorController::class, 'search']);

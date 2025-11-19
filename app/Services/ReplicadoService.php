@@ -98,8 +98,8 @@ class ReplicadoService
         $result =  DBreplicado::fetch($query, $param);
 
         return [
-            'tittrb' => $result['tittrb'] <> '' ? $result['tittrb'] : null,
-            'tittrbigl' => $result['tittrbigl'] <> '' ? $result['tittrbigl'] : null
+            'tittrb' => isset($result['tittrb']) ? $result['tittrb'] : null,
+            'tittrbigl' => isset($result['tittrbigl']) ? $result['tittrbigl'] : null
         ];
     }
 
