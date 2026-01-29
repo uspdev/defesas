@@ -51,7 +51,7 @@ class ReplicadoService
                   WHERE R.codpespgm = convert(int, :codpespgm) AND
                   R.codare = convert(int, :codare) AND
                   R.numseqpgm = convert(int, :numseqpgm) AND
-                  R.tiport = 'ORI'
+                  R.tiport IN ('ORI','EXC')
                   ORDER BY R.dtainiort DESC";
         $param = [
             'codpespgm' => $codpespgm,

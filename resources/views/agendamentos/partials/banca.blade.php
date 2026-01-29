@@ -28,17 +28,17 @@
             <td>{{ $banca['staptp'] }}</td>
             @can('admin')
               <td>
-                  @if(in_array($banca['vinptpbantrb'], ['TIT', 'PRE']))
+                  @if($banca['staptp'] == 'S')
                   <a href="/titular/{{$agendamento->id}}/{{$banca['codpesdct']}}" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
                   @endif
               </td>
               <td>
-                  @if(in_array($banca['vinptpbantrb'], ['TIT', 'PRE']))
+                  @if($banca['staptp'] == 'S')
                   <a href="/invite/{{$agendamento->id}}/{{$banca['codpesdct']}}" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
                   @endif
               </td>
               <td>
-                  @if($banca['vinptpbantrb'] == 'SUP')
+                  @if($banca['staptp'] <> 'S')
                   <a href="/suplente/{{$agendamento->id}}/{{$banca['codpesdct']}}" class="btn btn-info"><i class="fas fa-file-pdf"></i></a>
                   @endif
               </td>
