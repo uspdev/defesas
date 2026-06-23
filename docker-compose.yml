@@ -1,0 +1,53 @@
+services:
+  defesas:
+    build: .
+    image: defesas:latest
+    container_name: defesas
+    ports:
+      - "8000:80"
+    depends_on:
+      - mariadb
+    networks:
+      - defesas-network
+    volumes:
+      - ./:/var/www/html
+    environment:
+      HOME: /tmp
+    user: "${UID:-1000}:${GID:-1000}"
+
+  mariadb:
+    image: mariadb:11
+    container_name: defesas_mariadb
+    restart: always
+    environment:
+      MYSQL_DATABASE: defesas
+      MYSQL_USER: defesas
+      MYSQL_PASSWORD: defesas
+      MYSQL_ROOT_PASSWORD: defesas
+    networks:
+      - defesas-network
+
+  selenium:
+    image: selenium/standalone-chrome
+    container_name: defesas_selenium
+    ports:
+      - "7900:7900" # VNC (pra ver o browser rodando)
+    networks:
+      - defesas-network
+    shm_size: 2gb
+
+  senhaunica-faker:
+    image: uspdev/senhaunica-faker
+    container_name: defesas_senhaunica-faker
+    ports:
+      - "3141:3141"
+    environment:
+          - APP_URL=http://auth.local:3141
+    networks:
+      defesas-network:
+        aliases:
+          - auth.local
+
+networks:
+  defesas-network:
+  
