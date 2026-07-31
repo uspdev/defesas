@@ -9,6 +9,7 @@ use Illuminate\Support\Collection;
 class ReplicadoService
 {
     public static function getAlunoPos(int $codpes) {
+        return null;
         $codundclgi = getenv('REPLICADO_CODUNDCLG');
 
         $query = "SELECT A.codpes, A.codare, A.nivpgm, A.numseqpgm, A.dtadpopgm, P.nompesttd
@@ -25,11 +26,13 @@ class ReplicadoService
             'codundclg' => $codundclgi
         ];
 
+        return null;
         return DBreplicado::fetch($query, $param);
 
     }
 
     public static function getNomeArea(int $codare) {
+        return null;
         $query = "SELECT nomare, nomareigl from NOMEAREA
                   WHERE codare = convert(int, :codare)
                   AND dtafimare IS NULL";
@@ -39,6 +42,7 @@ class ReplicadoService
         ];
         $result = DBreplicado::fetch($query, $param);
 
+        return null;
         return [
             'nomare' => $result['nomare'] <> '' ? $result['nomare'] : null,
             'nomareigl' => $result['nomareigl'] <> '' ? $result['nomareigl'] : null
@@ -46,6 +50,7 @@ class ReplicadoService
     }
 
     public static function getOrientador(int $codpespgm, int $codare, int $numseqpgm) {
+        return null;
         $query = "SELECT TOP 1 P.codpes, P.nompesttd FROM R39PGMORIDOC R
                   INNER JOIN PESSOA P ON (R.codpes = P.codpes)
                   WHERE R.codpespgm = convert(int, :codpespgm) AND
@@ -59,10 +64,12 @@ class ReplicadoService
             'numseqpgm' => $numseqpgm
         ];
 
+        return null;
         return DBreplicado::fetch($query, $param);
     }
 
     public static function getBanca(int $codpes, int $codare, int $numseqpgm) {
+        return null;
         $query = "SELECT R.codpesdct, R.vinptpbantrb, R.staptp, P.nompesttd FROM R48PGMTRBDOC R
         INNER JOIN PESSOA P
         ON R.codpesdct = P.codpes
@@ -81,10 +88,12 @@ class ReplicadoService
             return $item['vinptpbantrb'] === 'SUP';
         })->toArray();
 
+        return null;
         return array_merge($titulares, $suplentes);
     }
 
     public static function getTituloTrabalho(int $codpes, int $codare, int $numseqpgm) {
+        return null;
         $query = "SELECT T.tittrb, T.tittrbigl
                 FROM TRABALHOPROG T
                 WHERE T.codpes = convert(int, :codpes) AND
@@ -97,6 +106,7 @@ class ReplicadoService
         ];
         $result =  DBreplicado::fetch($query, $param);
 
+        return null;
         return [
             'tittrb' => isset($result['tittrb']) ? $result['tittrb'] : null,
             'tittrbigl' => isset($result['tittrbigl']) ? $result['tittrbigl'] : null
@@ -104,6 +114,7 @@ class ReplicadoService
     }
 
     public static function getComplementoTrabalho(int $codpes, $dtacad) {
+        return null;
         $query = "SELECT T.rsutrb, T.palcha, T.rsutrbigl, T.palchaigl
                 FROM DDTENTREGATRABALHO T INNER JOIN DDTDEPOSITOTRABALHO D
                 ON T.coddpodgttrb = D.coddpodgttrb
@@ -116,6 +127,7 @@ class ReplicadoService
 
         $result = DBreplicado::fetch($query, $param);
 
+        return null;
         return $result ? $result :
             [
                 'rsutrb' => null,
@@ -126,6 +138,7 @@ class ReplicadoService
     }
 
     public static function getNome(int $codpes) {
+        return null;
         $query = "SELECT P.nompesttd
                   FROM PESSOA P
                   WHERE P.codpes = convert(int, :codpes)";
@@ -135,10 +148,12 @@ class ReplicadoService
 
         $result = DBreplicado::fetch($query, $param);
 
+        return null;
         return $result['nompesttd'];
     }
 
     public static function getDataDepositoTrabalho(int $codpes, int $codare, string $nivpgm, int $numseqpgm) {
+        return null;
         $query = "SELECT A.dtadpopgm
                   FROM AGPROGRAMA AS A
                   WHERE A.codpes = convert(int, :codpes) AND
@@ -154,10 +169,12 @@ class ReplicadoService
 
         $result =  DBreplicado::fetch($query, $param);
 
+        return null;
         return $result['dtadpopgm'];
     }
 
     public static function getVinculo(int $codpes) {
+        return null;
         $query = "SELECT V.tipvin
                   FROM VINCULOPESSOAUSP as V
                   WHERE V.codpes = convert(int, :codpes)
@@ -168,10 +185,13 @@ class ReplicadoService
 
         $result = DBreplicado::fetch($query, $param);
 
+        return null;
         return $result['tipvin'] ?? 'EXTERNO';
     }
 
     public static function getNomeSetor(int $codpes, string $tipvin) {
+        return null;
+
         if($tipvin == 'SERVIDOR') {
             $query = "SELECT L.nomset, L.sglclgund
                     FROM LOCALIZAPESSOA L
@@ -220,6 +240,7 @@ class ReplicadoService
     }
 
     public static function getSetorOrientador(int $codpes) {
+        return null;
         $query = "SELECT L.nomset from LOCALIZAPESSOA L
                   WHERE L.codpes = convert(int, :codpes)
                   AND L.tipvinext = 'Docente'";
@@ -233,6 +254,7 @@ class ReplicadoService
     }
 
     public static function getEndereco(int $codpes) {
+        return null;
         $result =  Pessoa::obterEndereco($codpes);
 
         return $result ? $result : [
@@ -256,6 +278,7 @@ class ReplicadoService
     }
 
     public static function getDocumentos(int $codpes, array $documentos) {
+        return null;
         $query = "SELECT P.numpispsp FROM COMPLPESSOA P
                   WHERE P.codpes = convert(int, :codpes)";
         $param = [
@@ -270,6 +293,7 @@ class ReplicadoService
     }
 
     public static function getNomes($codpes) {
+        return null;
         $query = "SELECT P.codpes, P.nompesttd FROM PESSOA P
                   WHERE P.codpes in ($codpes)";
 
@@ -277,6 +301,7 @@ class ReplicadoService
     }
 
     public static function getProgramas() {
+        return null;
         $codundclgi = getenv('REPLICADO_CODUNDCLG');
 
         $query = "SELECT DISTINCT (A.codare), N.nomare
@@ -294,6 +319,7 @@ class ReplicadoService
     }
 
     public static function getEmailsBanca(Collection $banca): array {
+        return null;
         $codpes = $banca->map(function ($item) {
             return $item['codpesdct'];
         })->implode(',');
@@ -329,6 +355,7 @@ class ReplicadoService
     }
 
     public static function getPorCodigoOuNome(string $busca) {
+        return null;
         $query = "SELECT P.codpes, P.nompesttd FROM PESSOA P
                 WHERE (CAST(P.codpes AS NVARCHAR) LIKE :codpes OR UPPER(P.nompesttd) LIKE UPPER(:nome))
                 ORDER BY P.nompesttd ASC";
@@ -341,6 +368,7 @@ class ReplicadoService
     }
 
     public static function getPorNome(string $busca) {
+        return null;
         $query = "SELECT P.codpes, P.nompesttd FROM PESSOA P
                 WHERE UPPER(P.nompesttd) LIKE UPPER(:nome)
                 ORDER BY P.nompesttd ASC";
@@ -352,6 +380,7 @@ class ReplicadoService
     }
 
     public static function getBancasProfessor($nusp) {
+        return null;
         $query = "select R.codpesdct, R.codpes, R.codare, R.numseqpgm
             FROM R48PGMTRBDOC R
             WHERE R.codpesdct = CONVERT(int, :nusp)";

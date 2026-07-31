@@ -10,10 +10,8 @@
     "require": {
         "php": "^8.3.10",
         "barryvdh/laravel-dompdf": "^3.1",
-
         "fakerphp/faker": "^1.9",
         "fflch/laravel-fflch-pdf": "^1.0.10",
-
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.0",
@@ -24,8 +22,8 @@
         "uspdev/laravel-usp-faker": "^1.0",
         "uspdev/laravel-usp-theme": "^2.0",
         "uspdev/laravel-usp-validators": "^1.0",
-        "uspdev/replicado": "^1.15",
-        "uspdev/senhaunica-socialite": "^4.3"
+        "uspdev/replicado": "^1.28.0",
+        "uspdev/senhaunica-socialite": "^4.5.8"
     },
     "require-dev": {
         "laravel/dusk": "^8.6",
