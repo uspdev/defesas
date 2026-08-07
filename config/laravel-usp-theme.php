@@ -1,4 +1,3 @@
-
 <?php
 
 $submenu1 =  [
@@ -79,8 +78,8 @@ return [
     'skin' => env('USP_THEME_SKIN', 'uspdev'),
     'app_url' => config('app.url'),
     'logout_method' => 'POST',
-    'logout_url' => config('app.url') . '/logout',
-    'login_url' => config('app.url') . '/login',
+    'logout_url' => 'logout',
+    'login_url' => 'login',
     'menu' => [
         [
             'text'    => '<i class="fas fa-graduation-cap"></i> Defesas',
