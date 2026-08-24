@@ -19,8 +19,9 @@ class LoginTest extends DuskTestCase
                  ->waitForText('Usuário')
                  ->type('#loginUsuario', '111111')
                  ->press('Login')
-                 ->pause(100)
-                 ->clickLink('Sair');
+                 ->pause(1000)
+                 ->visit('/')
+                 ->assertSee('Sair');
                 
         });
     }
