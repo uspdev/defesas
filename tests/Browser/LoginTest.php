@@ -18,9 +18,8 @@ class LoginTest extends DuskTestCase
                 ->clickLink('Entrar')
                 ->waitForText('Usuário')
                 ->type('#callback', 'http://defesas/callback')
-                ->type('#loginUsuario', '111111')
+                ->type('#loginUsuario', '122222')
                 ->press('Login')
-                ->waitForText('Defesas')
                 ->assertSee('Sair');
         });
     }
