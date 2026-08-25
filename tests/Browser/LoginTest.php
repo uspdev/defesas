@@ -15,14 +15,11 @@ class LoginTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/')
-                 ->clickLink('Entrar')
-                 ->waitForText('Usuário')
-                 ->type('#loginUsuario', '111111')
-                 ->press('Login')
-                 ->pause(1000)
-                 ->visit('/')
-                 ->assertSee('Sair');
-                
+                ->clickLink('Entrar')
+                ->waitForText('Usuário')
+                ->type('#loginUsuario', '1111')
+                ->press('Login')
+                ->assertSee('Sair');
         });
     }
 }
