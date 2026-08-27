@@ -47,7 +47,7 @@ class FileController extends Controller
     public function destroy(File $file, Request $request){
         $this->authorize('admin');
         $agendamento = Agendamento::find($file->agendamento_id);
-        if($agendamento->status == 0 && $agendamento->user_id_biblioteca == null){
+        if($agendamento->status == 0){
             Storage::delete($file->path);
             $file->delete();
         }
