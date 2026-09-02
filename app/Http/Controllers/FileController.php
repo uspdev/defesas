@@ -20,7 +20,7 @@ class FileController extends Controller
         ]);
 
         $agendamento = Agendamento::find($request->agendamento_id);
-        if($agendamento->user_id_biblioteca == null){
+        if($agendamento->status == 0){
             $file = new File;
             $file->agendamento_id = $request->agendamento_id;
             $file->original_name = $request->file('file')->getClientOriginalName();
