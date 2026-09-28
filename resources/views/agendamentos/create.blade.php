@@ -45,7 +45,7 @@
                   <input type="text" class="form-control" id="sala_virtual" name="sala_virtual" value="{{ old('sala_virtual', $agendamento->sala_virtual) }}" placeholder="Insira o link da sala virtual">
                 </div>
               </div>
-              <button type="submit" class="btn btn-success">Alterar Defesa</button>
+              <button type="submit" class="btn btn-success">Agendar Defesa</button>
             </form>
           </div>
         </div>
