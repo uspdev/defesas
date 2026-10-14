@@ -2,47 +2,21 @@
 
 namespace App\Services;
 
-use Uspdev\Replicado\DB as DBreplicado;
 use Uspdev\Replicado\Pessoa;
 use Illuminate\Support\Collection;
+use Uspdev\Replicado\Posgraduacao;
 
 class ReplicadoService
 {
     public static function getAlunoPos(int $codpes) {
-        return null;
         $codundclgi = getenv('REPLICADO_CODUNDCLG');
 
-        $query = "SELECT A.codpes, A.codare, A.nivpgm, A.numseqpgm, A.dtadpopgm, P.nompesttd
-                  FROM AGPROGRAMA AS A INNER JOIN LOCALIZAPESSOA L
-                  ON (A.codpes = L.codpes) INNER JOIN PESSOA P
-                  ON (A.codpes = P.codpes)
-                  WHERE A.codpes = convert(int, :codpes) AND
-                  A.stacsldfatrb = 'N' AND
-                  L.tipvin = 'ALUNOPOS' AND
-                  L.sitatl = 'A' AND
-                  L.codundclg = convert(int, :codundclg)";
-        $param = [
-            'codpes'    => $codpes,
-            'codundclg' => $codundclgi
-        ];
-
-        return null;
-        return DBreplicado::fetch($query, $param);
-
+        return Posgraduacao::obterAlunoPos($codpes, $codundclgi);
     }
 
     public static function getNomeArea(int $codare) {
-        return null;
-        $query = "SELECT nomare, nomareigl from NOMEAREA
-                  WHERE codare = convert(int, :codare)
-                  AND dtafimare IS NULL";
+        $result = Posgraduacao::obterNomeArea($codare);
 
-        $param = [
-            'codare' => $codare
-        ];
-        $result = DBreplicado::fetch($query, $param);
-
-        return null;
         return [
             'nomare' => $result['nomare'] <> '' ? $result['nomare'] : null,
             'nomareigl' => $result['nomareigl'] <> '' ? $result['nomareigl'] : null
@@ -50,63 +24,23 @@ class ReplicadoService
     }
 
     public static function getOrientador(int $codpespgm, int $codare, int $numseqpgm) {
-        return null;
-        $query = "SELECT TOP 1 P.codpes, P.nompesttd FROM R39PGMORIDOC R
-                  INNER JOIN PESSOA P ON (R.codpes = P.codpes)
-                  WHERE R.codpespgm = convert(int, :codpespgm) AND
-                  R.codare = convert(int, :codare) AND
-                  R.numseqpgm = convert(int, :numseqpgm) AND
-                  R.tiport IN ('ORI','EXC')
-                  ORDER BY R.dtainiort DESC";
-        $param = [
-            'codpespgm' => $codpespgm,
-            'codare'    => $codare,
-            'numseqpgm' => $numseqpgm
-        ];
 
-        return null;
-        return DBreplicado::fetch($query, $param);
+        return Posgraduacao::obterOrientador($codpespgm, $codare, $numseqpgm);
     }
 
     public static function getBanca(int $codpes, int $codare, int $numseqpgm) {
-        return null;
-        $query = "SELECT R.codpesdct, R.vinptpbantrb, R.staptp, P.nompesttd FROM R48PGMTRBDOC R
-        INNER JOIN PESSOA P
-        ON R.codpesdct = P.codpes
-        WHERE R.codpes = convert(int, :codpes) AND
-        R.codare = convert(int, :codare) AND
-        R.numseqpgm = convert(int, :numseqpgm)
-        ORDER BY R.vinptpbantrb";
-        $param = [
-            'codpes'    => $codpes,
-            'codare'    => $codare,
-            'numseqpgm' => $numseqpgm
-        ];
+        $result = Posgraduacao::listarBanca($codpes, $codare, $numseqpgm);
 
-        $result = DBreplicado::fetchAll($query, $param);
         [$suplentes, $titulares] = collect($result)->partition(function ($item) {
             return $item['vinptpbantrb'] === 'SUP';
         })->toArray();
 
-        return null;
         return array_merge($titulares, $suplentes);
     }
 
     public static function getTituloTrabalho(int $codpes, int $codare, int $numseqpgm) {
-        return null;
-        $query = "SELECT T.tittrb, T.tittrbigl
-                FROM TRABALHOPROG T
-                WHERE T.codpes = convert(int, :codpes) AND
-                T.codare = convert(int, :codare) AND
-                T.numseqpgm = convert(int, :numseqpgm)";
-        $param = [
-            'codpes' => $codpes,
-            'codare' => $codare,
-            'numseqpgm' => $numseqpgm
-        ];
-        $result =  DBreplicado::fetch($query, $param);
+        $result =  Posgraduacao::obterTituloTrabalho($codpes, $codare, $numseqpgm);
 
-        return null;
         return [
             'tittrb' => isset($result['tittrb']) ? $result['tittrb'] : null,
             'tittrbigl' => isset($result['tittrbigl']) ? $result['tittrbigl'] : null
@@ -114,20 +48,8 @@ class ReplicadoService
     }
 
     public static function getComplementoTrabalho(int $codpes, $dtacad) {
-        return null;
-        $query = "SELECT T.rsutrb, T.palcha, T.rsutrbigl, T.palchaigl
-                FROM DDTENTREGATRABALHO T INNER JOIN DDTDEPOSITOTRABALHO D
-                ON T.coddpodgttrb = D.coddpodgttrb
-                WHERE D.codpes = convert(int, :codpes) AND
-                D.dtadpotrb = :dtacad";
-        $param = [
-            'codpes' => $codpes,
-            'dtacad' => $dtacad
-        ];
+        $result = Posgraduacao::obterComplementoTrabalho($codpes, $dtacad);
 
-        $result = DBreplicado::fetch($query, $param);
-
-        return null;
         return $result ? $result :
             [
                 'rsutrb' => null,
@@ -138,123 +60,48 @@ class ReplicadoService
     }
 
     public static function getNome(int $codpes) {
-        return null;
-        $query = "SELECT P.nompesttd
-                  FROM PESSOA P
-                  WHERE P.codpes = convert(int, :codpes)";
-        $param = [
-            'codpes' => $codpes,
-        ];
+        $result = Pessoa::dump($codpes, ['nompesttd']);
 
-        $result = DBreplicado::fetch($query, $param);
-
-        return null;
         return $result['nompesttd'];
     }
 
     public static function getDataDepositoTrabalho(int $codpes, int $codare, string $nivpgm, int $numseqpgm) {
-        return null;
-        $query = "SELECT A.dtadpopgm
-                  FROM AGPROGRAMA AS A
-                  WHERE A.codpes = convert(int, :codpes) AND
-                  A.codare = convert(int, :codare) AND
-                  A.nivpgm = :nivpgm AND
-                  A.numseqpgm = convert(int, :numseqpgm)";
-        $param = [
-            'codpes'    => $codpes,
-            'codare'    => $codare,
-            'nivpgm'    => $nivpgm,
-            'numseqpgm' => $numseqpgm
-        ];
+        $result =  Posgraduacao::obterDataDepositoTrabalho($codpes, $codare, $nivpgm, $numseqpgm);
 
-        $result =  DBreplicado::fetch($query, $param);
-
-        return null;
         return $result['dtadpopgm'];
     }
 
     public static function getVinculo(int $codpes) {
-        return null;
-        $query = "SELECT V.tipvin
-                  FROM VINCULOPESSOAUSP as V
-                  WHERE V.codpes = convert(int, :codpes)
-                  AND V.tipvin = 'SERVIDOR' AND V.tipfnc = 'Docente' AND V.sitatl <> 'D'";
-        $param = [
-            'codpes' => $codpes,
-        ];
+        $result = Posgraduacao::obterVinculoDocente($codpes);
 
-        $result = DBreplicado::fetch($query, $param);
-
-        return null;
         return $result['tipvin'] ?? 'EXTERNO';
     }
 
     public static function getNomeSetor(int $codpes, string $tipvin) {
-        return null;
 
-        if($tipvin == 'SERVIDOR') {
-            $query = "SELECT L.nomset, L.sglclgund
-                    FROM LOCALIZAPESSOA L
-                    WHERE L.codpes = convert(int, :codpes)
-                    AND L.tipvin = :tipvin";
-            $param = [
-                'codpes' => $codpes,
-                'tipvin' => $tipvin
-            ];
+        if($tipvin == 'SERVIDOR' || $tipvin == 'Docente') {
+            $result =  Posgraduacao::obterNomeSetor($codpes, $tipvin);
 
-            return DBreplicado::fetch($query, $param);
+            return  $result ? $result : ['nomset' => ''];
         }
         else {
-            $query = "SELECT TOP 1 O.sglorg, O.nomrazsoc
-                    FROM HISTPES H INNER JOIN ORGANIZACAO O
-                    ON (H.codorg = O.codorg)
-                    WHERE H.codpes = convert(int, :codpes)
-                    AND H.tipfnc = 'Docente'
-                    ORDER BY H.dtainifnchst DESC";
-            $param = [
-                'codpes' => $codpes,
-            ];
-            $result = DBreplicado::fetch($query, $param);
+            $result = Posgraduacao::obterOrganizacaoDocente($codpes);
 
             return [
-                'nomset' => $result['nomrazsoc'],
-                'sglclgund' => $result['sglorg']
+                'nomset' => $result['nomrazsoc'] ?? '',
+                'sglclgund' => $result['sglorg'] ?? ''
             ];
         }
 
     }
 
     public static function getCoordenadorArea(int $codare, int $codundclg) {
-        $query = "SELECT L.nompes FROM LOCALIZAPESSOA L INNER JOIN R10DOCCOOCUR R
-                  on (L.codpes = R.codpes) INNER JOIN AREA A
-                  on (A.codcur = R.codcur)
-                  WHERE L.codundclg = convert(int, :codundclg) AND L.nomfnc = 'Coord Prog Pg'
-                  AND L.sitatl = 'A' AND A.codare = convert(int, :codare)";
-        $param = [
-            'codare' => $codare,
-            'codundclg' => $codundclg
-        ];
+        $result = Posgraduacao::obterCoordenadorArea($codare, $codundclg);
 
-        $result = DBreplicado::fetch($query, $param);
         return $result['nompes'];
     }
 
-    public static function getSetorOrientador(int $codpes) {
-        return null;
-        $query = "SELECT L.nomset from LOCALIZAPESSOA L
-                  WHERE L.codpes = convert(int, :codpes)
-                  AND L.tipvinext = 'Docente'";
-        $param = [
-            'codpes' => $codpes
-        ];
-
-        $result = DBreplicado::fetch($query, $param);
-
-        return  $result ? $result : ['nomset' => ''];
-    }
-
     public static function getEndereco(int $codpes) {
-        return null;
         $result =  Pessoa::obterEndereco($codpes);
 
         return $result ? $result : [
@@ -278,13 +125,8 @@ class ReplicadoService
     }
 
     public static function getDocumentos(int $codpes, array $documentos) {
-        return null;
-        $query = "SELECT P.numpispsp FROM COMPLPESSOA P
-                  WHERE P.codpes = convert(int, :codpes)";
-        $param = [
-            'codpes' => $codpes
-        ];
-        $result = DBreplicado::fetch($query, $param);
+        $result = Pessoa::obterNumeroPis($codpes);
+
         $pispasep = $result ? $result : [
             'numpispsp' => null
         ];
@@ -293,41 +135,22 @@ class ReplicadoService
     }
 
     public static function getNomes($codpes) {
-        return null;
-        $query = "SELECT P.codpes, P.nompesttd FROM PESSOA P
-                  WHERE P.codpes in ($codpes)";
-
-        return DBreplicado::fetchAll($query) ?? [];
+        return Pessoa::obterNome($codpes) ?? [];
     }
 
     public static function getProgramas() {
-        return null;
         $codundclgi = getenv('REPLICADO_CODUNDCLG');
 
-        $query = "SELECT DISTINCT (A.codare), N.nomare
-            FROM AREA A INNER JOIN CURSO C ON A.codcur = C.codcur
-            INNER JOIN NOMEAREA N ON N.codare = A.codare
-            INNER JOIN CREDAREA CA ON A.codare = CA.codare
-            WHERE C.codclg = convert(int, :codundclgi)
-            AND N.dtafimare IS NULL";
-        $param = [
-            'codundclgi' => $codundclgi,
-        ];
-
-        return DBreplicado::fetchAll($query, $param);
+        return Posgraduacao::listarAreas($codundclgi);
 
     }
 
     public static function getEmailsBanca(Collection $banca): array {
-        return null;
         $codpes = $banca->map(function ($item) {
             return $item['codpesdct'];
         })->implode(',');
 
-        $query = "SELECT E.codpes, E.codema FROM EMAILPESSOA E
-            WHERE E.codpes IN($codpes) and E.stamtr='S'";
-
-        $result = DBreplicado::fetchAll($query);
+        $result = Pessoa::listarEmails($codpes);
 
         $emails_banca = collect($result)->mapWithKeys(function ($item) {
             return [
@@ -355,40 +178,15 @@ class ReplicadoService
     }
 
     public static function getPorCodigoOuNome(string $busca) {
-        return null;
-        $query = "SELECT P.codpes, P.nompesttd FROM PESSOA P
-                WHERE (CAST(P.codpes AS NVARCHAR) LIKE :codpes OR UPPER(P.nompesttd) LIKE UPPER(:nome))
-                ORDER BY P.nompesttd ASC";
-
-        $param = [
-            'codpes' => '%' . $busca . '%',
-            'nome' => '%' . $busca . '%',
-        ];
-        return DBreplicado::fetchAll($query, $param);
+        return Pessoa::listarPorCodigoOuNome($busca);
     }
 
     public static function getPorNome(string $busca) {
-        return null;
-        $query = "SELECT P.codpes, P.nompesttd FROM PESSOA P
-                WHERE UPPER(P.nompesttd) LIKE UPPER(:nome)
-                ORDER BY P.nompesttd ASC";
-
-        $param = [
-            'nome' => '%' . $busca . '%',
-        ];
-        return DBreplicado::fetchAll($query, $param);
+        return Pessoa::procurarPorNome($busca, false, false);
     }
 
-    public static function getBancasProfessor($nusp) {
-        return null;
-        $query = "select R.codpesdct, R.codpes, R.codare, R.numseqpgm
-            FROM R48PGMTRBDOC R
-            WHERE R.codpesdct = CONVERT(int, :nusp)";
-        $param = [
-            'nusp' => $nusp,
-        ];
-
-        return DBreplicado::fetchAll($query, $param);
+    public static function getBancasProfessor($codpes) {
+        return Posgraduacao::listarBancasProfessor($codpes);
     }
 
 }

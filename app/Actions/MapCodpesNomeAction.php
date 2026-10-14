@@ -15,13 +15,8 @@ class MapCodpesNomeAction
         if ($agendamentos->count() > 1) {
             $codpes = $agendamentos->map(function ($item) {
                 return $item['codpes'];
-            })->implode(',');
-            $nomes = collect(ReplicadoService::getNomes($codpes))
-                ->mapWithKeys(function (array $item) {
-                    return [
-                        $item['codpes'] => $item['nompesttd']
-                    ];
-            });
+            })->toArray();
+            $nomes = collect(ReplicadoService::getNomes($codpes));
         }
         if ($agendamentos->count() == 1) {
             $nomes = $agendamentos->mapWithKeys(function ($item) {

@@ -7,7 +7,7 @@
       <div class="card-body">
         <div class="row">
           <div class="col">
-            <p><b>Título:</b> {{ $agendamento->titulo }}</p>
+            <p><b>Título:</b> {!! $agendamento->trabalho['tittrb'] !!}</p>
             <p><b>Autor:</b> {{ $agendamento->aluno }}, {{ $agendamento->codpes }}</p>
             <p><b>Orientador:</b> {{ $agendamento->orientador['nompesttd'] }}, {{ $agendamento->orientador['codpes'] }}</p>
             <p><b>Data da defesa:</b> {{ date('d/m/Y', strtotime($agendamento->data_horario)) }}</p>

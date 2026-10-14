@@ -16,12 +16,6 @@ class AgendamentoService
         $agendamento->codare = $alunoPos['codare'];
         $agendamento->nivpgm = $alunoPos['nivpgm'];
         $agendamento->numseqpgm = $alunoPos['numseqpgm'];
-        #Apagar as linhas abaixo, isso é para teste somente
-        $agendamento->titulo = 'teste';
-        $agendamento->area_programa = 123;
-        $agendamento->nivel = 'teste';
-        $agendamento->orientador = 'teste';
-        #
         $agendamento->save();
 
         return $agendamento;
