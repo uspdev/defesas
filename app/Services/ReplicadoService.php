@@ -98,7 +98,7 @@ class ReplicadoService
     public static function getCoordenadorArea(int $codare, int $codundclg) {
         $result = Posgraduacao::obterCoordenadorArea($codare, $codundclg);
 
-        return $result['nompes'];
+        return $result['nompes'] ?? '';
     }
 
     public static function getEndereco(int $codpes) {

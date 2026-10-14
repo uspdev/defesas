@@ -72,8 +72,8 @@
         @if ( $docente['tipvin'] == 'SERVIDOR' )
           Depto. de {{ $docente['setor']['nomset'] }}<br />
         @else
-          {{ $docente['nomtiplgr'] . ' ' . $docente['epflgr'] . ' ' .  $docente['numlgr'] . ' ' . $docente['cpllgr'] }}, {{ $docente['nombro'] }} <br>
-        CEP: {{ $docente['codendptl'] }} - {{ $docente['cidloc'] }}/{{ $docente['sglest'] }}
+          {{ $docente['endereco']['nomtiplgr'] . ' ' . $docente['endereco']['epflgr'] . ' ' .  $docente['endereco']['numlgr'] . ' ' . $docente['endereco']['cpllgr'] }}, {{ $docente['endereco']['nombro'] }} <br>
+        CEP: {{ $docente['endereco']['codendptl'] }} - {{ $docente['endereco']['cidloc'] }}/{{ $docente['endereco']['sglest'] }}
         @endif
       </td>
     </tr>
