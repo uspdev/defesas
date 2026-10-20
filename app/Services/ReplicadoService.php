@@ -148,7 +148,7 @@ class ReplicadoService
     public static function getEmailsBanca(Collection $banca): array {
         $codpes = $banca->map(function ($item) {
             return $item['codpesdct'];
-        })->implode(',');
+        })->toArray();
 
         $result = Pessoa::listarEmails($codpes);
 
