@@ -62,7 +62,7 @@ class ReplicadoService
     public static function getNome(int $codpes) {
         $result = Pessoa::dump($codpes, ['nompesttd']);
 
-        return $result['nompesttd'];
+        return $result['nompesttd'] ?? null;
     }
 
     public static function getDataDepositoTrabalho(int $codpes, int $codare, string $nivpgm, int $numseqpgm) {
