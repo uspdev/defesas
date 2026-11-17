@@ -17,6 +17,7 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^4.0",
         "laravellegends/pt-br-validator": "^13.0",
+        "league/flysystem-aws-s3-v3": "^3.0",
         "league/oauth1-client": "^1.7.0",
         "rap2hpoutre/laravel-log-viewer": "^2.4.0",
         "uspdev/laravel-usp-faker": "^1.0",
